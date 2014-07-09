@@ -1,0 +1,73 @@
+<!-- <div ng-include="'components/navbar/navbar.html'"></div>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>'Allo, 'Allo!</h1>
+    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
+    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Features:</h1>
+      <ul class="nav nav-tabs nav-stacked col-lg-6" ng-repeat="thing in awesomeThings">
+        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <form class="thing-form">
+    <label>Syncs in realtime across clients</label>
+    <p class="input-group">
+      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
+      </span>
+    </p>
+  </form>
+</div>
+
+<footer class="footer">
+  <div class="container">
+      <p><a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
+         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
+  </div>
+</footer> -->
+
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div>
+    <video id="intro_video" preload="auto" autoplay="true" loop="loop" muted="true">
+         <source src="assets/videos/intro_video_1.mp4" type="video/mp4">
+            Sorry, your browser does not support HTML5 video.
+    </video>
+
+    <div id="intro_video_control">
+        <span ng-show="muted" class="fa-stack fa-lg" ng-click="unmute()">
+            <i class="fa fa-volume-up fa-stack-1x"></i>
+            <i class="fa fa-ban fa-stack-2x"></i> 
+        </span>
+        <span ng-show="!muted" class="fa-stack fa-lg" ng-click="mute()">
+            <i class="fa fa-volume-up fa-stack-1x"></i>
+            <i class="fa fa-circle-o fa-stack-2x"></i> 
+        </span>
+    </div>
+
+    <div id="intro_create_overlay">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h1 class="intro_create_title">추억, 사랑, 기억</h1>
+            <h2 class="intro_create_sub_title">도래솔은 진심을 다해 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
+            <span class="intro_create_start"><i class="fa fa-facebook-square"></i> Start Now</span>
+            <p class="intro_create_signup">
+                or          <a href="#">Sign up</a>
+                with Email      </p>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    
+</div>
+
+           

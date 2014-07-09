@@ -1,0 +1,138 @@
+/* content below navbar */
+.container {
+    width:100%;
+}
+
+.contents {
+    padding-top:100px;
+}
+
+/* Video */
+
+#intro_video { 
+    /* min-width: 100%;
+     min-height: 100%;
+     width: auto;
+     height: auto;*/
+     width: 100%    !important;
+     height: auto   !important;
+     display:inline;
+     z-index: -1000;
+     overflow: hidden;
+     margin-top:-20px;
+}
+
+#intro_video_control{
+    position: relative;
+    top: -50px;
+    color: white;
+    text-align: right;
+    padding-right: 5px;
+}
+
+@import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+#intro_create_overlay{
+    font-family: 'Nanum Myeongjo', sans-serif;
+    height: 577px;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #fff;
+    background-size: cover;
+    background-position: 50% 50%;
+    overflow: hidden;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    display: block;
+
+    .intro_create_title{
+        margin: auto;
+        padding-top: 140px;
+        font-size: 7.2rem;
+        font-weight: 300;
+        line-height: 9rem;
+    }
+
+    .intro_create_sub_title{
+        margin: 17px auto;
+        width: 680px;
+        line-height: 3.6rem;
+        font-size: 3rem;
+        font-weight: 300;
+    }
+
+    .intro_create_start{
+        display: inline-block;
+        position: relative;
+        height: 70px;
+        margin-top: 36px;
+        padding: 0px 15px 0px 15px;
+        font-size: 2.8rem;
+        font-weight: 500;
+        line-height: 7rem;
+        border-radius: 5px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        background-color: #02caff;
+        cursor: pointer;
+        -webkit-transition: background-color 0.2s;
+        -moz-transition: background-color 0.2s;
+        -ms-transition: background-color 0.2s;
+        -o-transition: background-color 0.2s;
+        transition: background-color 0.2s;
+    }
+
+    .intro_create_signup{
+        margin-top: 8px;
+
+        a{
+            color: #fff;
+            font-weight: normal;
+            text-decoration: underline;
+        }
+    }
+}
+
+/* video small device */
+@media screen and (max-width: 900px) {
+    /* video */
+    #intro_video{
+        margin-top:24px;
+    }
+
+    /* create */
+    #intro_create_overlay{
+        position: relative;
+        height:100%;
+        top: -50px;
+        background-color: #1bbae1;
+        padding-bottom:30px;
+        .intro_create_title{
+            padding-top: 10px;
+            font-size: 3rem;
+        }
+
+        .intro_create_sub_title{
+            width: 100%;
+            font-size: 2rem;
+            margin:0px;
+        }
+
+        .intro_create_start{
+            margin-top:10px;
+            font-size: 2rem;
+        }
+    }
+}
