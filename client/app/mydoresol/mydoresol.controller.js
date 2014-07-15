@@ -8,14 +8,10 @@ angular.module('doresolApp')
       email: 'test@test.com',
       password: 'test'
     });
-    //임시 로그인처리 끝
-
+    
     var user = Auth.getCurrentUser();
     console.log(user);
-    
+  	//임시 로그인처리 끝
 
-    $scope.toggle_create_form = function(){
-    	$scope.create_form = !$scope.create_form;
-    }
 
   });

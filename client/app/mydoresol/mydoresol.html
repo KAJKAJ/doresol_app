@@ -2,29 +2,23 @@
 
 <div class="container contents">	
 	<!-- start my own doresol -->
-	<div ng-hide="create_form">
-		<div class="col-sm-12">
-			내가 생성한거
-		</div>
-		<div class="col-sm-12">
-			<!-- <div class="row-fluid">
-			    <img src="/assets/images/father/1.png" style="width: 300px; height: 300px" >
-			</div> -->
-		</div>
-		<div class="col-sm-12">
-			<button type="button" class="btn btn-success btn_create_new_memorial" ng-click="toggle_create_form()">새로 만들기</button>
-		</div>
-		<!-- end my own doresol -->
+	<div class="col-sm-12">
+		내가 생성한거
+	</div>
+	<div class="col-sm-12">
+		<!-- <div class="row-fluid">
+		    <img src="/assets/images/father/1.png" style="width: 300px; height: 300px" >
+		</div> -->
+	</div>
+	<div class="col-sm-12">
+		<a class="btn btn-success btn_create_new_memorial" ui-sref="memorial_create">새로 만들기</a>
+	</div>
+	<!-- end my own doresol -->
 
-		<!-- favorite start -->
-		<div class="col-sm-12">
-			즐겨찾기
-		</div>
-		<!-- favorite end -->
+	<!-- favorite start -->
+	<div class="col-sm-12">
+		즐겨찾기
 	</div>
-	<div ng-show="create_form">
-		입력폼
-		<button type="button" class="btn btn-success" ng-click="toggle_create_form()">취소</button>
-	</div>
+	<!-- favorite end -->	
 </div>
 
