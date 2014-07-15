@@ -49,6 +49,20 @@ angular.module('doresolApp')
             embed_id:   'timeline-embed'
         });
       } else if( $state.is("memorial_create")){
-        
+        $scope.create_memorial = function($flow){
+          console.log($flow);
+          $flow.upload();
+          
+        };
+
+         $scope.$on('flow::fileAdded', function (event, $flow, flowFile) {
+          console.log(event);
+          console.log($flow);
+          console.log(flowFile);
+
+          console.log($scope.new_memorial.name);
+          //event.preventDefault();//prevent file from uploading
+        });
       }
+
   });
