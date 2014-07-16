@@ -3,6 +3,7 @@
 			 target:'/api/fileuploads', 
 			 testChunks: false,
 			 generateUniqueIdentifier: getUniqueId,
+			 chunkSize:50000
 		 }"
 		 flow-file-added="fileUploading=true"
 		 flow-files-submitted="$flow.upload()"

@@ -21,7 +21,7 @@ function getChunkFilename(chunkNumber, identifier) {
     // Clean up the identifier
     identifier = cleanIdentifier(identifier);
     // What would the file name be?
-    return path.resolve(temporaryFolder, './f-' + identifier + '.' + chunkNumber);
+    return path.resolve(temporaryFolder, identifier + '.' + chunkNumber);
 };
 
 function validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename, fileSize) {
@@ -108,9 +108,9 @@ var post = function(req, callback) {
     if (validation == 'valid') {
         var chunkFilename = getChunkFilename(chunkNumber, identifier);
 
-        console.log('fileParameterName: '+ files[fileParameterName].path);
-        console.log('chunkFilename: '+ chunkFilename);
-        console.log('identifier: ' + identifier);
+        // console.log('fileParameterName: '+ files[fileParameterName].path);
+        // console.log('chunkFilename: '+ chunkFilename);
+        // console.log('identifier: ' + identifier);
 
         // Save the chunk (TODO: OVERWRITE)
         fs.rename(files[fileParameterName].path, chunkFilename, function() {
