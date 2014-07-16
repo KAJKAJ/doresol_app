@@ -9,8 +9,8 @@ angular.module('doresolApp')
       password: 'test'
     });
     
-    var user = Auth.getCurrentUser();
-    console.log(user);
+    // var user = Auth.getCurrentUser();
+    // console.log(user);
   	//임시 로그인처리 끝
 
 

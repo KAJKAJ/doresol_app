@@ -12,7 +12,7 @@ angular.module('doresolApp')
       .state('memorial_create', {
         // url: '/memorial',
         templateUrl: 'app/memorial/memorial_create.html',
-        controller: 'MemorialCtrl',
+        // controller: 'MemorialCtrl',
         authenticate: true
       });
   });

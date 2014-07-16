@@ -21,7 +21,7 @@ function getChunkFilename(chunkNumber, identifier) {
     // Clean up the identifier
     identifier = cleanIdentifier(identifier);
     // What would the file name be?
-    return path.resolve(temporaryFolder, './flow-' + identifier + '.' + chunkNumber);
+    return path.resolve(temporaryFolder, './f-' + identifier + '.' + chunkNumber);
 };
 
 function validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename, fileSize) {

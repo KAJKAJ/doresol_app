@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCtrl', function ($scope,$state,Util) {
+  .controller('MemorialCtrl', function ($scope,$state,Util,Auth) {
     if($state.is("memorial")){
       	$scope.dataObject = {
             "timeline": {
@@ -48,10 +48,25 @@ angular.module('doresolApp')
             source:     $scope.dataObject,
             embed_id:   'timeline-embed'
         });
-      } else if( $state.is("memorial_create")){
+      } else if($state.is("memorial_create")){
+        $scope.new_memorial_form = {};
+
         $scope.create_memorial = function(){
-          
+
+          console.log($scope.new_memorial_form);
         };
+
+        $scope.getUniqueId = function(file){
+          var relativePath = file.relativePath || file.webkitRelativePath || file.fileName || file.name;
+          var user_id = Auth.getCurrentUser()._id;
+          return user_id + '-' + Util.getUniqueId() + '-' + relativePath.replace(/[^0-9a-zA-Z_-]/img, '');
+        };
+
+        $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
+          // console.log('file success');
+          $scope.new_memorial_form.last_uploading_file = flowFile.uniqueIdentifier;
+        });
+
       }
 
   });
