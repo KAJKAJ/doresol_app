@@ -29,7 +29,7 @@ exports.create = function(req, res) {
  flow.post(req, function(status, filename, original_filename, identifier) {
   console.log('POST', status, original_filename, identifier);
   res.send(200, {});
- })
+ });
 
   // Fileupload.create(req.body, function(err, fileupload) {
   //   if(err) { return handleError(res, err); }

@@ -14,7 +14,7 @@ try {
 } catch (e) {}
 
 function cleanIdentifier(identifier) {
-    return identifier.replace(/[^0-9A-Za-z_-]/g, '');
+    return identifier.replace(/[^\.0-9a-zA-Z_-]/img, '');
 };
 
 function getChunkFilename(chunkNumber, identifier) {
@@ -123,6 +123,15 @@ var post = function(req, callback) {
                     if (exists) {
                         currentTestChunk++;
                         if (currentTestChunk > numberOfChunks) {
+                              var stream = fs.createWriteStream('tmp/' + identifier);
+                              write(identifier, stream);
+                              stream.on('data', function(data){
+                                // TODO: Find out what it is
+                              });
+                              stream.on('finish', function(){
+                                // TODO: Find out what it is
+                                clean(identifier);
+                              });
                             callback('done', filename, original_filename, identifier);
                         } else {
                             // Recursion
@@ -157,7 +166,6 @@ var write = function(identifier, writableStream, options) {
 
         var chunkFilename = getChunkFilename(number, identifier);
         fs.exists(chunkFilename, function(exists) {
-
             if (exists) {
                 // If the chunk with the current number exists,
                 // then create a ReadStream from the file

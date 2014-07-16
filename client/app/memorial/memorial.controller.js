@@ -59,7 +59,7 @@ angular.module('doresolApp')
         $scope.getUniqueId = function(file){
           var relativePath = file.relativePath || file.webkitRelativePath || file.fileName || file.name;
           var user_id = Auth.getCurrentUser()._id;
-          return user_id + '-' + Util.getUniqueId() + '-' + relativePath.replace(/[^0-9a-zA-Z_-]/img, '');
+          return user_id + '-' + Util.getUniqueId() + '-' + relativePath.replace(/[^\.0-9a-zA-Z_-]/img, '');
         };
 
         $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
