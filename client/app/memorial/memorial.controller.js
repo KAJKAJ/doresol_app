@@ -63,7 +63,7 @@ angular.module('doresolApp')
         };
 
         $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
-          // console.log('file success');
+          $scope.fileUploading = false;
           $scope.new_memorial_form.last_uploading_file = flowFile.uniqueIdentifier;
         });
 
