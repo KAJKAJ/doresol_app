@@ -1,26 +1,21 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
-<div flow-init="{singleFile: true, target:'/aaaaaaaa',testChunks:false}" ng-controller="MemorialCtrl">
-	<div class="container contents" flow-prevent-drop>	
-		<form role="form">
-			<div class="form-group">
-				
-					<img flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
-					<button class="btn btn-success" flow-btn>Upload</button>
-					
-			</div>
-		  <div class="form-group">
-		    <label for="memorial_name">이름</label>
-		    <input type="text" class="form-control" id="memorial_name" placeholder="이름을 입력하세요" required ng-model="new_memorial.name">
-		  </div>
-		  <div class="form-group">
-		    <label for="exampleInputPassword1">Password</label>
-		    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-		  </div>
-		  <button type="submit" class="btn btn-default" ng-click="create_memorial($flow)">Submit</button>
-		</form>
-	</div>
 
+<div class="container contents" flow-prevent-drop>	
+	<form role="form">
+		<div class="form-group">
+			<div flow-init="{singleFile: true, target:'/aaaaaaaa'}" flow-files-submitted="$flow.upload()">
+				<img flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
+				<button class="btn btn-success" flow-btn>Upload</button>
+			</div>	
+		</div>
+	  <div class="form-group">
+	    <label for="memorial_name">이름</label>
+	    <input type="text" class="form-control" id="memorial_name" placeholder="이름을 입력하세요" required ng-model="new_memorial.name">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputPassword1">Password</label>
+	    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+	  </div>
+	  <button type="submit" class="btn btn-default" ng-click="create_memorial()">Submit</button>
+	</form>
 </div>
-
-
-
