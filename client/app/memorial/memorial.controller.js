@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCtrl', function ($scope,$state) {
+  .controller('MemorialCtrl', function ($scope,$state,Util) {
     if($state.is("memorial")){
       	$scope.dataObject = {
             "timeline": {
