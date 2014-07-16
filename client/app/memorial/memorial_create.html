@@ -3,7 +3,13 @@
 <div class="container contents" flow-prevent-drop>	
 	<form role="form">
 		<div class="form-group">
-			<div flow-init="{singleFile: true, target:'/aaaaaaaa'}" >
+			<div flow-init="{singleFile: true, 
+						target:'/api/fileuploads', 
+						testChunks: true,
+						generateUniqueIdentifier: _generateUniqueId()
+					}"
+				flow-files-submitted="$flow.upload()"
+		     	flow-file-success="$file.msg = $message">
 				<img flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
 				<button class="btn btn-success" flow-btn>Upload</button>
 			</div>	
