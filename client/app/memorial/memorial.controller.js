@@ -50,7 +50,6 @@ angular.module('doresolApp')
         });
       } else if($state.is("memorial_create")){
         $scope.new_memorial_form = {};
-
         $scope.create_memorial = function(){
 
           console.log($scope.new_memorial_form);
