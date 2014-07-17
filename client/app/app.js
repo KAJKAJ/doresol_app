@@ -20,6 +20,7 @@ angular.module('doresolApp', [
   .config(['datepickerConfig', function(datepickerConfig) {
     //datepicker
     datepickerConfig.showWeeks = false;
+    datepickerConfig.maxDate="9999-12-31";
   }])
 
   .config(['datepickerPopupConfig', function(datepickerPopupConfig) {

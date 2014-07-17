@@ -49,10 +49,11 @@ angular.module('doresolApp')
             embed_id:   'timeline-embed'
         });
       } else if($state.is("memorial_create")){
-        $scope.new_memorial_form = {};
+        $scope.new_memorial = {};
         $scope.create_memorial = function(){
 
           console.log($scope.new_memorial_form);
+          console.log($scope.new_memorial);
         };
 
         $scope.getUniqueId = function(file){
@@ -63,7 +64,7 @@ angular.module('doresolApp')
 
         $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
           $scope.fileUploading = false;
-          $scope.new_memorial_form.last_uploading_file = flowFile.uniqueIdentifier;
+          $scope.new_memorial.last_uploading_file = flowFile.uniqueIdentifier;
         });
 
         $scope.open_datepicker = function($event,variable) {
@@ -72,15 +73,6 @@ angular.module('doresolApp')
 
           $scope[variable] = true;
 
-          // switch(variable){
-          //   case 1:
-          //     $scope.date_of_birth_opened = true;
-          //     break;
-          //   case 2:
-          //     $scope.date_of_death_opened = true;
-          //     break;
-          // }
-          // $scope.variable = true;
         };
 
       }
