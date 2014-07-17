@@ -20,12 +20,23 @@
 			</div>
 		  <div class="form-group">
 		    <label for="memorial_name">이름</label>
-		    <input type="text" class="form-control" id="memorial_name" placeholder="이름을 입력하세요" required ng-model="new_memorial_form.name">
+		    <input type="text" class="form-control" id="memorial_name" placeholder="이름을 입력하세요" ng-model="new_memorial_form.name" ng-required="true">
 		  </div>
-		  <div class="form-group">
-		    <label for="exampleInputPassword1">Password</label>
-		    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-		  </div>
+		  	<p class="input-group">
+			    <input type="text" class="form-control" placeholder="태어나신 날을 입력하세요" is-open="date_of_birth_opened" datepicker-popup="yyyy-MM-dd"
+			    ng-required="true" ng-model="new_memorial_form.date_of_birth"/>
+	        <span class="input-group-btn">
+	          <button type="button" class="btn btn-default" ng-click="open_datepicker($event,'date_of_birth_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
+	        </span>
+	      </p>
+
+	      <p class="input-group">
+			    <input type="text" class="form-control" placeholder="돌아가신 날을 입력하세요" is-open="date_of_death_opened" datepicker-popup="yyyy-MM-dd"
+			    ng-required="true" ng-model="new_memorial_form.date_of_death"/>
+	        <span class="input-group-btn">
+	          <button type="button" class="btn btn-default" ng-click="open_datepicker($event,'date_of_death_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
+	        </span>
+	      </p>
 		  <button type="submit" class="btn btn-default" ng-click="create_memorial()" ng-disabled="fileUploading">Submit</button>
 		</form>
 	</div>

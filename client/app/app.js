@@ -16,6 +16,18 @@ angular.module('doresolApp', [
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
   })
+  
+  .config(['datepickerConfig', function(datepickerConfig) {
+    //datepicker
+    datepickerConfig.showWeeks = false;
+  }])
+
+  .config(['datepickerPopupConfig', function(datepickerPopupConfig) {
+    datepickerPopupConfig.currentText = "오늘";
+    datepickerPopupConfig.clearText = "취소";
+    // datepickerPopupConfig.toggleWeeksText = "week?";
+    datepickerPopupConfig.closeText = "닫기";
+  }])
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {

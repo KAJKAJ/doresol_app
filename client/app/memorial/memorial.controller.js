@@ -67,6 +67,23 @@ angular.module('doresolApp')
           $scope.new_memorial_form.last_uploading_file = flowFile.uniqueIdentifier;
         });
 
+        $scope.open_datepicker = function($event,variable) {
+          $event.preventDefault();
+          $event.stopPropagation();
+
+          $scope[variable] = true;
+
+          // switch(variable){
+          //   case 1:
+          //     $scope.date_of_birth_opened = true;
+          //     break;
+          //   case 2:
+          //     $scope.date_of_death_opened = true;
+          //     break;
+          // }
+          // $scope.variable = true;
+        };
+
       }
 
   });

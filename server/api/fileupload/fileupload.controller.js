@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('lodash');
-var Fileupload = require('./fileupload.model');
 
 var  path = require('path');
 var flow = require('./flow.node');
