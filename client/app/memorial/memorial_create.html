@@ -11,7 +11,7 @@
 	<div ng-include="'components/navbar/navbar.html'"></div>
 
 	<div class="container contents" flow-prevent-drop>	
-		<form name="new_memorial_form" ng-submit="create_memorial()" novalidate>
+		<form name="new_memorial_form" ng-submit="create_memorial(new_memorial_form)" novalidate>
 			<div class="form-group">
 					<img flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
 					<button class="btn btn-success" flow-btn flow-attrs="{accept:'image/*'}">파일</button>
@@ -27,7 +27,7 @@
 
 		  	<p class="input-group">
 			    <input type="text" class="form-control" name="date_of_birth" placeholder="태어나신 날을 입력하세요" 
-			    is-open="date_of_birth_opened" datepicker-popup="yyyy-MM-dd" max-date="new_memorial.date_of_death"
+			    is-open="date_of_birth_opened" datepicker-popup="yyyy-MM-dd" max-date="today"
 			    ng-required="true" ng-model="new_memorial.date_of_birth"/>
 	        <span class="input-group-btn">
 	          <button type="button" class="btn btn-default" ng-click="open_datepicker($event,'date_of_birth_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -53,10 +53,6 @@
 		  		 <span ng-show="new_memorial_form.date_of_death.$error.date">정확한 날짜 형식이 아닙니다.</span>
 		  	</div>
 
-		  	<!-- <div class="alert alert-danger" role="alert"
-		  		 ng-show="new_memorial_form.date_of_birth.$valid && new_memorial_form.date_of_birth.$dirty &&  new_memorial_form.date_of_death.$valid && new_memorial_form.date_of_death.$dirty && (typeof new_memorial_form.$error['date-disabled'] === 'object')">		  		 
-		  		 <span>기간 설정이 잘못되었습니다.</span>
-		  	</div> -->
 		  	<div class="alert alert-danger" role="alert"
 		  		 ng-show="new_memorial_form.name.$valid && new_memorial_form.date_of_birth.$valid &&  new_memorial_form.date_of_death.$valid && new_memorial_form.$valid == false">		  		 
 		  		 <span>기간 설정이 잘못되었습니다.</span>

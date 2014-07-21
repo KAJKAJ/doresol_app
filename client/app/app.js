@@ -28,7 +28,8 @@ angular.module('doresolApp', [
     datepickerPopupConfig.clearText = "취소";
     // datepickerPopupConfig.toggleWeeksText = "week?";
     datepickerPopupConfig.closeText = "닫기";
-  }])
+  }]) 
+  
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {

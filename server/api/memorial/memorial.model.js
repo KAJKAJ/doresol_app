@@ -6,7 +6,8 @@ var mongoose = require('mongoose'),
 var MemorialSchema = new Schema({
   admin_id: String,
   name: String,
-  birth_date: Date,
+  date_of_birth: Date,
+  date_of_death: Date,
   active: Boolean
 });
 

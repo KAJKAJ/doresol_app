@@ -22,6 +22,7 @@ exports.show = function(req, res) {
 
 // Creates a new memorial in the DB.
 exports.create = function(req, res) {
+  console.log(req.body);
   Memorial.create(req.body, function(err, memorial) {
     if(err) { return handleError(res, err); }
     return res.json(201, memorial);
