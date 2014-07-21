@@ -4,7 +4,7 @@ angular.module('doresolApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('memorial', {
-        url: '/memorial',
+        url: '/memorial/:id',
         templateUrl: 'app/memorial/memorial.html',
         controller: 'MemorialCtrl',
         authenticate: true

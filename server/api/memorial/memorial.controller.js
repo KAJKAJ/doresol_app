@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var moment = require('moment');
 var Memorial = require('./memorial.model');
 
 // Get list of memorials
@@ -22,7 +23,21 @@ exports.show = function(req, res) {
 
 // Creates a new memorial in the DB.
 exports.create = function(req, res) {
-  console.log(req.body);
+  var param = req.body;
+
+  //file setting
+  if(param.file){
+    var file_name = param.file;
+    param.file = {
+      location: 'local',
+      url: '/tmp/'.file_name,
+      updated_at: moment()
+    }
+  }
+
+  //expires
+  param.expires_at = moment().add('years',1);
+
   Memorial.create(req.body, function(err, memorial) {
     if(err) { return handleError(res, err); }
     return res.json(201, memorial);

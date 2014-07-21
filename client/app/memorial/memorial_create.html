@@ -41,7 +41,7 @@
 
 	      <p class="input-group">
 			    <input type="text" class="form-control" name="date_of_death" placeholder="돌아가신 날을 입력하세요" 
-			    is-open="date_of_death_opened" datepicker-popup="yyyy-MM-dd" min-date="new_memorial.date_of_birth"
+			    is-open="date_of_death_opened" datepicker-popup="yyyy-MM-dd" min-date="new_memorial.date_of_birth" max-date="today"
 			    ng-required="true" ng-model="new_memorial.date_of_death"/>
 	        <span class="input-group-btn">
 	          <button type="button" class="btn btn-default" ng-click="open_datepicker($event,'date_of_death_opened')"><i class="glyphicon glyphicon-calendar"></i></button>

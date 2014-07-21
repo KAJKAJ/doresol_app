@@ -8,6 +8,12 @@ var MemorialSchema = new Schema({
   name: String,
   date_of_birth: Date,
   date_of_death: Date,
+  expires_at: Date,
+  file:{
+  	location: String,
+  	url: String,
+  	updated_at: Date
+  },
   active: Boolean
 });
 
