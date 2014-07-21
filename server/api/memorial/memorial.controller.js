@@ -6,7 +6,10 @@ var Memorial = require('./memorial.model');
 
 // Get list of memorials
 exports.index = function(req, res) {
-  Memorial.find(function (err, memorials) {
+  var params = req.params;
+  var user_id = params.user_id;
+  
+  Memorial.find({admin_id:user_id}).sort({_id: -1}).exec(function(err, memorials) {
     if(err) { return handleError(res, err); }
     return res.json(200, memorials);
   });
@@ -30,7 +33,7 @@ exports.create = function(req, res) {
     var file_name = param.file;
     param.file = {
       location: 'local',
-      url: '/tmp/'.file_name,
+      url: '/tmp/' + file_name,
       updated_at: moment()
     }
   }

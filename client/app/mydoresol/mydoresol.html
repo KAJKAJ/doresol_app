@@ -6,9 +6,9 @@
 		내가 생성한거
 	</div>
 	<div class="col-sm-12">
-		<!-- <div class="row-fluid">
-		    <img src="/assets/images/father/1.png" style="width: 300px; height: 300px" >
-		</div> -->
+		<div ng-repeat="memorial in my_memorials">
+			name : {{memorial.name}}
+		</div>
 	</div>
 	<div class="col-sm-12">
 		<a class="btn btn-success btn_create_new_memorial" ui-sref="memorial_create">새로 만들기</a>

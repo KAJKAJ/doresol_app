@@ -4,6 +4,7 @@ angular.module('doresolApp')
   .controller('MemorialCtrl', function ($scope,$state,$stateParams,Util,Auth,$resource) {
     if($state.is("memorial")){
       console.log($stateParams);
+      var id = $stateParams.id;
       	// $scope.dataObject = {
        //      "timeline": {
        //          "headline":"김학구",
