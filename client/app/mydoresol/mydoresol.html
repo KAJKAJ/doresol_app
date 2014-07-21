@@ -6,8 +6,9 @@
 		내가 생성한거
 	</div>
 	<div class="col-sm-12">
-		<div ng-repeat="memorial in my_memorials">
-			name : {{memorial.name}}
+		<div class="col-sm-2" ng-repeat="memorial in my_memorials">
+			name : {{memorial.name}} 
+		  	<a ng-href="/memorial/{{memorial._id}}"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
 		</div>
 	</div>
 	<div class="col-sm-12">

@@ -11,6 +11,8 @@ exports.index = function(req, res) {
   
   Memorial.find({admin_id:user_id}).sort({_id: -1}).exec(function(err, memorials) {
     if(err) { return handleError(res, err); }
+
+    console.log(memorials);
     return res.json(200, memorials);
   });
 };

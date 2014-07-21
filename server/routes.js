@@ -20,6 +20,13 @@ module.exports = function(app) {
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
    .get(errors[404]);
 
+  // routing for static file
+  app.route('/tmp/*')
+    .get(function(req, res) {
+      var path = req.params[0];
+      res.sendfile(path, {root: "./tmp"});
+  });
+
   // All other routes should redirect to the index.html
   app.route('/*')
     .get(function(req, res) {
