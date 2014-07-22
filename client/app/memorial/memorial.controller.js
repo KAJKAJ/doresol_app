@@ -52,7 +52,8 @@ angular.module('doresolApp')
 
       }else{
         console.log('memorial controller');
-        console.log($stateParams);
+        // console.log($stateParams);
+        console.log($state);
         $scope.memorial_id = $stateParams.id;
         	// $scope.dataObject = {
          //      "timeline": {
