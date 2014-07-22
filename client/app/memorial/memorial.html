@@ -6,13 +6,13 @@
 	  <div class="memorial_profile">
 		  <!-- large screen profile -->
 		  <div class="col-lg-2 visible-lg">
-		  	<img src="assets/images/father/6.png" class="img-responsive"/>
-		  	<h3> 김학구 </h3>  	
+		  	<img src="{{memorial.file.url}}" class="img-responsive"/>
+		  	<h3> {{memorial.name}} </h3>  	
 		  	<!-- memorial nav -->
 		    <ul class="nav nav-pills nav-stacked">
-			  	<li ui-sref-active="active"><a ui-sref="memorial.profile({id:memorial_id})">Profile</a></li>
-			  	<li ui-sref-active="active"><a ui-sref="memorial.timeline({id:memorial_id})">Timeline</a></li>
-			  	<li ui-sref-active="active"><a ui-sref="memorial.storyline({id:memorial_id})">Storyline</a></li>
+			  	<li ui-sref-active="active"><a ui-sref="memorial.profile({id:memorial._id})">Profile</a></li>
+			  	<li ui-sref-active="active"><a ui-sref="memorial.timeline({id:memorial._id})">Timeline</a></li>
+			  	<li ui-sref-active="active"><a ui-sref="memorial.storyline({id:memorial._id})">Storyline</a></li>
 		  	</ul>
 		  </div>
 		  
