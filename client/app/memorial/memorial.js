@@ -34,8 +34,8 @@ angular.module('doresolApp')
       })
 
       .state('memorial_create', {
-        templateUrl: 'app/memorial/memorial_create.html',
-        controller: 'MemorialCtrl',
+        templateUrl: 'app/memorial/create/create.html',
+        // controller: 'MemorialCreateCtrl',
         authenticate: true
       })      
       ;

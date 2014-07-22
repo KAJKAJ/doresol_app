@@ -2,5 +2,5 @@
 
 angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope) {
-  	console.log('TimelineCtrl');
+  	// console.log('TimelineCtrl');
   });
