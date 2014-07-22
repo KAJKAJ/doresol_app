@@ -8,16 +8,24 @@
 		  <div class="col-lg-2 visible-lg">
 		  	<img src="assets/images/father/6.png" class="img-responsive"/>
 		  	<h3> 김학구 </h3>  	
+		  	<!-- memorial nav -->
+		    <ul class="nav nav-pills nav-stacked">
+			  	<li ui-sref-active="active"><a ui-sref="memorial.profile({id:memorial_id})">Profile</a></li>
+			  	<li ui-sref-active="active"><a ui-sref="memorial.timeline({id:memorial_id})">Timeline</a></li>
+			  	<li ui-sref-active="active"><a ui-sref="memorial.storyline({id:memorial_id})">Storyline</a></li>
+		  	</ul>
 		  </div>
+		  
 		  <!-- small size profile -->
-		  <div class="visible-xs visible-sm visible-md">profile 2</div>
+		  <div class="visible-xs visible-sm visible-md">profile for small device</div>
 		  <!-- profile end -->  
 	  </div>
 	  <!-- timeline start -->
-	  <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
-	  	<div id="timeline-embed"></div>
-	  </div> -->
+	  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+	  	<!-- <div id="timeline-embed"></div> -->
+	  	<!-- <div ui-view="menuTip" class="slide"></div> -->
+		<div ui-view=""></div>
+	  </div>
 	  <!-- timeline end -->
 	</div>
 </div>
-

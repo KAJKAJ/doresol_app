@@ -2,5 +2,5 @@
 
 angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope) {
-    $scope.message = 'Hello';
+    console.log('TimelineCtrl');
   });

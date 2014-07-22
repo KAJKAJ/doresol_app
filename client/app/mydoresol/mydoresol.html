@@ -8,7 +8,7 @@
 	<div class="col-sm-12">
 		<div class="col-sm-2" ng-repeat="memorial in my_memorials">
 			name : {{memorial.name}} 
-		  	<a ng-href="/memorial/{{memorial._id}}"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
+		  	<a ui-sref="memorial.timeline({id:memorial._id})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
 		</div>
 	</div>
 	<div class="col-sm-12">
