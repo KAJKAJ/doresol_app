@@ -27,17 +27,20 @@ angular.module('doresolApp')
         controller: 'TimelineCtrl',
         authenticate: true
       })
+      .state('memorial.story_create', {
+        templateUrl: 'app/memorial/timeline/story_create.html',
+        controller: 'TimelineCtrl',
+        authenticate: true
+      })
       .state('memorial.storyline', {
         templateUrl: 'app/memorial/storyline/storyline.html',
         controller: 'StorylineCtrl',
         authenticate: true
       })
-
       .state('memorial_create', {
         templateUrl: 'app/memorial/create/create.html',
         // controller: 'MemorialCreateCtrl',
         authenticate: true
-      })      
-      ;
+      });
   });
 
