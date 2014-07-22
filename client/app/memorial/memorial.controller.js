@@ -71,7 +71,7 @@ angular.module('doresolApp')
             new_memorial.$save(function(item, putResponseHeaders) {
               //item => saved user object
               //putResponseHeaders => $http header getter
-              $state.transitionTo('memorial', {id: item._id});
+              $state.transitionTo('memorial/:id/timeline', {id: item._id});
             }, function(error){
               // console.log(error);
               // console.log('error');
