@@ -27,9 +27,8 @@ angular.module('doresolApp')
         controller: 'TimelineCtrl',
         authenticate: true
       })
-      .state('memorial.story_create', {
-        templateUrl: 'app/memorial/timeline/story_create.html',
-        controller: 'TimelineCtrl',
+      .state('memorial.timeline.create', {
+        templateUrl: 'app/memorial/timeline/timeline_create.html',
         authenticate: true
       })
       .state('memorial.storyline', {
