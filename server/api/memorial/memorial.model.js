@@ -14,6 +14,9 @@ var MemorialSchema = new Schema({
   	url: String,
   	updated_at: Date
   },
+  timeline: {
+    created: Boolean
+  },
   active: Boolean
 });
 

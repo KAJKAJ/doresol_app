@@ -38,6 +38,9 @@ exports.create = function(req, res) {
       url: '/tmp/' + file_name,
       updated_at: moment()
     }
+    param.timeline = {
+      created: false
+    }
   }
 
   //expires
