@@ -1,4 +1,3 @@
-/* flow gallery start */
 .features {
     float: right;
     width: 300px;
@@ -26,13 +25,13 @@
     margin-bottom: 0;
 }
 
-.flow-thumbnail {
+.thumbnail {
     line-height: 20px;
     margin-bottom: 5px;
     overflow: hidden;
     word-break: normal;
 }
-.flow-thumbnail img {
+.thumbnail img {
     max-width: 200px;
     max-height: 150px;
 }
@@ -49,7 +48,7 @@
 .gallery-box .progress {
     margin-bottom: 0;
 }
-.gallery-box .flow-thumbnail {
+.gallery-box .thumbnail {
     height: 188px;
     width: 188px;
 }
@@ -58,4 +57,3 @@
     overflow: hidden;
     display: block;
 }
-/* flow gallery end */

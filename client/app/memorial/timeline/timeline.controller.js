@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope,Util,Auth) {
+  .controller('TimelineCtrl', function ($scope,Util,Auth,$modal) {
     var currentUser = Auth.getCurrentUser()._id;
 
   	// $scope.dataObject = {
@@ -69,4 +69,27 @@ angular.module('doresolApp')
       $scope.stories.splice(index, 1);  
     };
     
+    $scope.openModal = function (story) {
+      var modalInstance = $modal.open({
+        templateUrl: 'app/memorial/story/edit_modal.html',
+        controller: 'ModalCtrl',
+        resolve: { 
+          paramFromDialogName: function(){
+            return 'story';
+          },         
+          paramFromDialogObject: function () {
+            return story;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (paramFromDialogObject) {
+        //click ok
+        // console.log('click ok');
+        // $scope.paramFromDialogObject = paramFromDialogObject;
+        // console.log($scope);
+      }, function () {
+        //canceled
+      });
+    };
   });
