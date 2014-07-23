@@ -28,10 +28,10 @@
 
 		  	<p class="input-group">
 			    <input type="text" class="form-control" name="dateOfBirth" placeholder="태어나신 날을 입력하세요" 
-			    is-open="dateOfBirth_opened" datepicker-popup="yyyy-MM-dd" max-date="today"
+			    is-open="dateOfBirthOpened" datepicker-popup="yyyy-MM-dd" max-date="today"
 			    ng-required="true" ng-model="newMemorial.dateOfBirth"/>
 	        <span class="input-group-btn">
-	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfBirth_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
+	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfBirthOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
 	        </span>
 	      </p>
 	      <div class="alert alert-danger" role="alert"
@@ -42,10 +42,10 @@
 
 	      <p class="input-group">
 			    <input type="text" class="form-control" name="dateOfDeath" placeholder="돌아가신 날을 입력하세요" 
-			    is-open="dateOfDeath_opened" datepicker-popup="yyyy-MM-dd" min-date="newMemorial.dateOfBirth" max-date="today"
+			    is-open="dateOfDeathOpened" datepicker-popup="yyyy-MM-dd" min-date="newMemorial.dateOfBirth" max-date="today"
 			    ng-required="true" ng-model="newMemorial.dateOfDeath"/>
 	        <span class="input-group-btn">
-	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfDeath_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
+	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfDeathOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
 	        </span>
 	      </p>
 	      <div class="alert alert-danger" role="alert"
