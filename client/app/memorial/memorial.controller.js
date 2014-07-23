@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCtrl', function ($scope,$stateParams,$resource) {
+  .controller('MemorialCtrl', function ($scope,$stateParams,$resource,$state) {
+    $scope.$state = $state;
+    
     var memorial_id = $stateParams.id;
     var Memorial = $resource('/api/memorials/info/:id', {id:'@id'});
     
