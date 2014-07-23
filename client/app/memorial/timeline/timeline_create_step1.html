@@ -1,8 +1,9 @@
 
 <div flow-init="{
+			 singleFile: false,
 			 target:'/api/fileuploads', 
 			 testChunks: false,
-			 generateUniqueIdentifier: getUniqueId
+			 generateUniqueIdentifier: getFlowFileUniqueId
 		}"
       flow-prevent-drop
       flow-drag-enter="style={border: '5px solid green'}"

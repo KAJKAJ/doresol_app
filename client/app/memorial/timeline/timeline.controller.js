@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope) {
+  .controller('TimelineCtrl', function ($scope,Util,Auth) {
+    var current_user = Auth.getCurrentUser()._id;
 
-    console.log('timeline controller');
   	$scope.dataObject = {
           "timeline": {
               "headline":"김학구",
@@ -28,6 +28,14 @@ angular.module('doresolApp')
               ]
           }
       };
+
+      $scope.getFlowFileUniqueId = function(file){
+        return current_user + '-' + Util.getFlowFileUniqueId(file,current_user);
+      };
+
+      $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
+        console.log(flowFile.uniqueIdentifier); 
+      });
 
     	// createStoryJS({
      //      type:       'timeline',

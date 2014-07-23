@@ -30,11 +30,10 @@ angular.module('doresolApp')
       }
     };
 
-    $scope.getUniqueId = function(file){
-      var relativePath = file.relativePath || file.webkitRelativePath || file.fileName || file.name;
-      return current_user + '-' + Util.getUniqueId() + '-' + relativePath.replace(/[^\.0-9a-zA-Z_-]/img, '');
+    $scope.getFlowFileUniqueId = function(file){
+      return current_user + '-' + Util.getFlowFileUniqueId(file,current_user);
     };
-
+   
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
       $scope.fileUploading = false;
       $scope.new_memorial.last_uploading_file = flowFile.uniqueIdentifier;
