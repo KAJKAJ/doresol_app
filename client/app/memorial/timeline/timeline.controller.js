@@ -2,7 +2,7 @@
 
 angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope,Util,Auth) {
-    var current_user = Auth.getCurrentUser()._id;
+    var currentUser = Auth.getCurrentUser()._id;
 
   	$scope.dataObject = {
           "timeline": {
@@ -30,13 +30,36 @@ angular.module('doresolApp')
       };
 
       $scope.getFlowFileUniqueId = function(file){
-        return current_user + '-' + Util.getFlowFileUniqueId(file,current_user);
+        return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
       };
 
       $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
         console.log(flowFile.uniqueIdentifier); 
       });
 
+      $scope.createTimeline = function(timelineForm){
+        console.log('timelineForm');
+        console.log($scope.stories);
+      };
+
+      $scope.stories = [];
+      $scope.flowFileAdded = function($file){
+        $scope.stories.push(
+          {
+            new_stroy: true,
+            file: $file  
+          }
+        );
+      };
+
+      $scope.flowFileDeleted = function(story){
+        var index = $scope.stories.indexOf(story);
+
+        // TODO: delete from remote server
+        story.file.cancel();
+        
+        $scope.stories.splice(index, 1);  
+      };
     	// createStoryJS({
      //      type:       'timeline',
      //      width:      '100%',

@@ -4,10 +4,10 @@ angular.module('doresolApp')
   .controller('MemorialCtrl', function ($scope,$stateParams,$resource,$state) {
     $scope.$state = $state;
     
-    var memorial_id = $stateParams.id;
+    var memorialId = $stateParams.id;
     var Memorial = $resource('/api/memorials/info/:id', {id:'@id'});
     
-    $scope.memorial = Memorial.get({id:memorial_id}, function() {
+    $scope.memorial = Memorial.get({id:memorialId}, function() {
       // if(!$scope.memorial.timeline.created){
       //   var sample_data = {
       //     "timeline": {

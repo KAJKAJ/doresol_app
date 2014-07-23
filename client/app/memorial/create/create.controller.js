@@ -3,23 +3,23 @@
 angular.module('doresolApp')
   .controller('MemorialCreateCtrl', function ($scope,Auth,Util,$resource,$state) {
     $scope.today = Date.now();
-    $scope.new_memorial = {};
-    var current_user = Auth.getCurrentUser()._id;
+    $scope.newMemorial = {};
+    var currentUser = Auth.getCurrentUser()._id;
 
-    $scope.create_memorial = function(form){
+    $scope.createMemorial = function(form){
       if(form.$valid){
         var Memorial = $resource('/api/memorials');
 
-        var new_memorial = new Memorial({
-            admin_id: current_user,
-            name: $scope.new_memorial.name,
-            date_of_birth: $scope.new_memorial.date_of_birth,
-            date_of_death: $scope.new_memorial.date_of_death,
-            file: $scope.new_memorial.last_uploading_file
+        var newMemorial = new Memorial({
+            admin_id: currentUser,
+            name: $scope.newMemorial.name,
+            date_of_birth: $scope.newMemorial.dateOfBirth,
+            date_of_death: $scope.newMemorial.dateOfDeath,
+            file: $scope.newMemorial.lastUploadingFile
         });
 
-        // console.log(new_memorial);
-        new_memorial.$save(function(item, putResponseHeaders) {
+        // console.log(newMemorial);
+        newMemorial.$save(function(item, putResponseHeaders) {
           //item => saved user object
           //putResponseHeaders => $http header getter
           $state.transitionTo('memorial.timeline', {id: item._id});
@@ -31,15 +31,15 @@ angular.module('doresolApp')
     };
 
     $scope.getFlowFileUniqueId = function(file){
-      return current_user + '-' + Util.getFlowFileUniqueId(file,current_user);
+      return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
     };
    
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
       $scope.fileUploading = false;
-      $scope.new_memorial.last_uploading_file = flowFile.uniqueIdentifier;
+      $scope.newMemorial.lastUploadingFile = flowFile.uniqueIdentifier;
     });
 
-    $scope.open_datepicker = function($event,variable) {
+    $scope.openDatepicker = function($event,variable) {
       $event.preventDefault();
       $event.stopPropagation();
 

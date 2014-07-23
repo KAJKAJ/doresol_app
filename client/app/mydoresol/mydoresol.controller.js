@@ -12,14 +12,14 @@ angular.module('doresolApp')
     // console.log(user);
   	//임시 로그인처리 끝
 
-    var user_id = Auth.getCurrentUser()._id;
+    var userId = Auth.getCurrentUser()._id;
     var Memorial = $resource('/api/memorials/:user_id');
 
-    var my_memorials = Memorial.query({user_id:user_id},function(item, getResponseHeaders) {
+    var myMemorials = Memorial.query({user_id:userId},function(item, getResponseHeaders) {
       //item => saved user object
       //putResponseHeaders => $http header getter
-      $scope.my_memorials = item;
-      console.log($scope.my_memorials);
+      $scope.myMemorials = item;
+      console.log($scope.myMemorials);
     }, function(error){
       // console.log(error);
       // console.log('error');

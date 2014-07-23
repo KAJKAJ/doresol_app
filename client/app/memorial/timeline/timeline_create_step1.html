@@ -9,7 +9,7 @@
       flow-drag-enter="style={border: '5px solid green'}"
       flow-drag-leave="style={}"
 		
-      flow-file-added="fileUploading=true"
+      flow-file-added="flowFileAdded($file)"
 	  flow-files-submitted="$flow.upload()"
 	  ng-controller="TimelineCtrl"
 
@@ -25,75 +25,33 @@
 	  <br>
 
 	  <div>
-	    <div ng-repeat="file in $flow.files" class="gallery-box ng-scope">
-	      <span class="title ng-binding">{{file.name}}</span>
-	      <div class="thumbnail" ng-show="$flow.files.length">
-	        <!-- <img flow-img="file" src="data:image/png;base64"> -->
-			<img flow-img="file">
-	      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
-	        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (file.progress() * 100) + &#39;%&#39;}" style="width: 100%;">
-	          <span class="sr-only ng-binding">1% Complete</span>
-	        </div>
-	      </div>
-	      <div class="btn-group">
-	        <a class="btn btn-xs btn-danger" ng-click="file.cancel()">
-	          Remove
-	        </a>
-	      </div>
-	    </div><!-- end ngRepeat: file in $flow.files -->
-	    <div class="clear"></div>
-	  </div>
+	  	<form name="timelineForm" ng-submit="createTimeline(timelineForm,$flow)" novalidate>
+		    <div ng-repeat="story in stories" class="gallery-box ng-scope">
+		      <span class="title ng-binding">{{story.file.name}}</span>
+		      <div class="thumbnail" ng-show="stories.length">
+					<img flow-img="story.file">
+			      <div class="progress progress-striped" ng-class="{active: story.file.isUploading()}">
+			        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (story.file.progress() * 100) + &#39;%&#39;}" style="width: 100%;">
+			          <span class="sr-only ng-binding">1% Complete</span>
+			        </div>
+			      </div>
+			      <div class="btn-group">
+			        <!-- <a class="btn btn-xs btn-danger" ng-click="story.file.cancel()"> -->
+			        <a class="btn btn-xs btn-danger" ng-click="flowFileDeleted(story)">
+			          Remove
+			        </a>
+			      </div>
+			    </div><!-- end ngRepeat: file in $flow.files -->
+			    <div class="clear"></div>
+
+
+			    <!-- custom input -->
+			    <input type="text" class="form-control" name="sjang_filename" ng-required="true" ng-model="story.title"/>
+
+			  </div>
+			  <button type="submit" class="btn btn-default" ng-disabled="timelineForm.$invalid">등록</button>
+		</form>
 
 	</div>
 
 </div>
-
-<!-- <div flow-init="{
-		   singleFile: true, 
-			 target:'/api/fileuploads', 
-			 testChunks: false,
-			 generateUniqueIdentifier: getUniqueId
-		 }"
-		 flow-file-added="fileUploading=true"
-		 flow-files-submitted="$flow.upload()"
-		 ng-controller="MemorialCreateCtrl"
-		 >
-
-	<div class="container contents" flow-prevent-drop>	
-		<form name="story_create_form" ng-submit="create_story(story_create_form)" novalidate>
-			<div class="form-group">
-					<img flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
-					<button class="btn btn-success" flow-btn flow-attrs="{accept:'image/*'}">파일</button>
-			</div>
-		  <div class="form-group">
-		    <label for="name">이름</label>
-		    <input type="text" class="form-control" name="name" placeholder="이름을 입력하세요" ng-model="new_memorial.name" ng-required="true">
-		  </div>
-		  <div class="alert alert-danger" role="alert"
-		  		 ng-show="new_memorial_form.name.$dirty && new_memorial_form.name.$invalid">
-		  		 <span ng-show="new_memorial_form.name.$error.required">이름을 입력해 주세요.</span>
-		  </div>
-		  	<p class="input-group">
-			    <input type="text" class="form-control" name="date_of_birth" placeholder="태어나신 날을 입력하세요" 
-			    is-open="date_of_birth_opened" datepicker-popup="yyyy-MM-dd" max-date="today"
-			    ng-required="true" ng-model="new_memorial.date_of_birth"/>
-	        <span class="input-group-btn">
-	          <button type="button" class="btn btn-default" ng-click="open_datepicker($event,'date_of_birth_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
-	        </span>
-	      </p>
-	      <div class="alert alert-danger" role="alert"
-		  		 ng-show="new_memorial_form.date_of_birth.$dirty && new_memorial_form.date_of_birth.$invalid">
-		  		 <span ng-show="!new_memorial_form.date_of_birth.$error.date&&new_memorial_form.date_of_birth.$error.required">태어나신 날을 입력해 주세요.</span>
-		  		 <span ng-show="new_memorial_form.date_of_birth.$error.date">정확한 날짜 형식이 아닙니다.</span>
-		  	</div>
-
-		  	<div class="alert alert-danger" role="alert"
-		  		 ng-show="new_memorial_form.name.$valid && new_memorial_form.date_of_birth.$valid &&  new_memorial_form.date_of_death.$valid && new_memorial_form.$valid == false">		  		 
-		  		 <span>기간 설정이 잘못되었습니다.</span>
-		  	</div>
-		  	<button type="submit" class="btn btn-default" ng-disabled="fileUploading||new_memorial_form.$invalid">등록</button>		  	
-		</form>
-	</div>
-
-</div>	
- -->

@@ -12,53 +12,53 @@
 	<div ng-include="'components/navbar/navbar.html'"></div>
 
 	<div class="container contents" flow-prevent-drop>	
-		<form name="new_memorial_form" ng-submit="create_memorial(new_memorial_form)" novalidate>
+		<form name="newMemorialForm" ng-submit="createMemorial(newMemorialForm)" novalidate>
 			<div class="form-group">
 					<img flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
 					<button class="btn btn-success" flow-btn flow-attrs="{accept:'image/*'}">파일</button>
 			</div>
 		  <div class="form-group">
 		    <label for="name">이름</label>
-		    <input type="text" class="form-control" name="name" placeholder="이름을 입력하세요" ng-model="new_memorial.name" ng-required="true">
+		    <input type="text" class="form-control" name="name" placeholder="이름을 입력하세요" ng-model="newMemorial.name" ng-required="true">
 		  </div>
 		  <div class="alert alert-danger" role="alert"
-		  		 ng-show="new_memorial_form.name.$dirty && new_memorial_form.name.$invalid">
-		  		 <span ng-show="new_memorial_form.name.$error.required">이름을 입력해 주세요.</span>
+		  		 ng-show="newMemorialForm.name.$dirty && newMemorialForm.name.$invalid">
+		  		 <span ng-show="newMemorialForm.name.$error.required">이름을 입력해 주세요.</span>
 		  </div>
 
 		  	<p class="input-group">
-			    <input type="text" class="form-control" name="date_of_birth" placeholder="태어나신 날을 입력하세요" 
-			    is-open="date_of_birth_opened" datepicker-popup="yyyy-MM-dd" max-date="today"
-			    ng-required="true" ng-model="new_memorial.date_of_birth"/>
+			    <input type="text" class="form-control" name="dateOfBirth" placeholder="태어나신 날을 입력하세요" 
+			    is-open="dateOfBirth_opened" datepicker-popup="yyyy-MM-dd" max-date="today"
+			    ng-required="true" ng-model="newMemorial.dateOfBirth"/>
 	        <span class="input-group-btn">
-	          <button type="button" class="btn btn-default" ng-click="open_datepicker($event,'date_of_birth_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
+	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfBirth_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
 	        </span>
 	      </p>
 	      <div class="alert alert-danger" role="alert"
-		  		 ng-show="new_memorial_form.date_of_birth.$dirty && new_memorial_form.date_of_birth.$invalid">
-		  		 <span ng-show="!new_memorial_form.date_of_birth.$error.date&&new_memorial_form.date_of_birth.$error.required">태어나신 날을 입력해 주세요.</span>
-		  		 <span ng-show="new_memorial_form.date_of_birth.$error.date">정확한 날짜 형식이 아닙니다.</span>
+		  		 ng-show="newMemorialForm.dateOfBirth.$dirty && newMemorialForm.dateOfBirth.$invalid">
+		  		 <span ng-show="!newMemorialForm.dateOfBirth.$error.date&&newMemorialForm.dateOfBirth.$error.required">태어나신 날을 입력해 주세요.</span>
+		  		 <span ng-show="newMemorialForm.dateOfBirth.$error.date">정확한 날짜 형식이 아닙니다.</span>
 		  	</div>
 
 	      <p class="input-group">
-			    <input type="text" class="form-control" name="date_of_death" placeholder="돌아가신 날을 입력하세요" 
-			    is-open="date_of_death_opened" datepicker-popup="yyyy-MM-dd" min-date="new_memorial.date_of_birth" max-date="today"
-			    ng-required="true" ng-model="new_memorial.date_of_death"/>
+			    <input type="text" class="form-control" name="dateOfDeath" placeholder="돌아가신 날을 입력하세요" 
+			    is-open="dateOfDeath_opened" datepicker-popup="yyyy-MM-dd" min-date="newMemorial.dateOfBirth" max-date="today"
+			    ng-required="true" ng-model="newMemorial.dateOfDeath"/>
 	        <span class="input-group-btn">
-	          <button type="button" class="btn btn-default" ng-click="open_datepicker($event,'date_of_death_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
+	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfDeath_opened')"><i class="glyphicon glyphicon-calendar"></i></button>
 	        </span>
 	      </p>
 	      <div class="alert alert-danger" role="alert"
-		  		 ng-show="new_memorial_form.date_of_death.$dirty && new_memorial_form.date_of_death.$invalid">
-		  		 <span ng-show="!new_memorial_form.date_of_death.$error.date&&new_memorial_form.date_of_death.$error.required">돌아가신 날을 입력해 주세요.</span>
-		  		 <span ng-show="new_memorial_form.date_of_death.$error.date">정확한 날짜 형식이 아닙니다.</span>
+		  		 ng-show="newMemorialForm.dateOfDeath.$dirty && newMemorialForm.dateOfDeath.$invalid">
+		  		 <span ng-show="!newMemorialForm.dateOfDeath.$error.date&&newMemorialForm.dateOfDeath.$error.required">돌아가신 날을 입력해 주세요.</span>
+		  		 <span ng-show="newMemorialForm.dateOfDeath.$error.date">정확한 날짜 형식이 아닙니다.</span>
 		  	</div>
 
 		  	<div class="alert alert-danger" role="alert"
-		  		 ng-show="new_memorial_form.name.$valid && new_memorial_form.date_of_birth.$valid &&  new_memorial_form.date_of_death.$valid && new_memorial_form.$valid == false">		  		 
+		  		 ng-show="newMemorialForm.name.$valid && newMemorialForm.dateOfBirth.$valid &&  newMemorialForm.dateOfDeath.$valid && newMemorialForm.$valid == false">		  		 
 		  		 <span>기간 설정이 잘못되었습니다.</span>
 		  	</div>
-		  	<button type="submit" class="btn btn-default" ng-disabled="fileUploading||new_memorial_form.$invalid">등록</button>		  	
+		  	<button type="submit" class="btn btn-default" ng-disabled="fileUploading||newMemorialForm.$invalid">등록</button>		  	
 		</form>
 	</div>
 
