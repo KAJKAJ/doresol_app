@@ -1,6 +1,7 @@
 <!-- timeline is not created yet -->
-<div ng-show="!memorial.timeline.created" class="alert alert-info" role="alert">
+<div ng-show="!memorial.timeline.created &&  $state.is('memorial.timeline')" class="alert alert-info" role="alert">
 	<a class="btn btn-success" ui-sref="memorial.timeline.create">새로 만들기</a>
 	타임라인이 아직 생성되지 않았습니다.
 </div>
+
 <div ui-view=""></div>
