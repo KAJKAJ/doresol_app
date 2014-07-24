@@ -27,7 +27,7 @@
 	  <div>
 	  	<form name="timelineForm" ng-submit="createTimeline(timelineForm,$flow)" novalidate>
 		    <div ng-repeat="story in stories" class="gallery-box ng-scope">
-		      <span class="title ng-binding">{{story.file.name}}</span>
+		      <!-- <span class="title ng-binding">{{story.file.name}}</span> -->
 		      <div class="thumbnail" ng-show="stories.length">
 					<img flow-img="story.file">
 			      <div class="progress progress-striped" ng-class="{active: story.file.isUploading()}" >

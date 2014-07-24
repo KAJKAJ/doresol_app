@@ -73,6 +73,7 @@ angular.module('doresolApp')
       var modalInstance = $modal.open({
         templateUrl: 'app/memorial/story/edit_modal.html',
         controller: 'ModalCtrl',
+        size: 'lg',
         resolve: { 
           paramFromDialogName: function(){
             return 'story';
@@ -88,7 +89,7 @@ angular.module('doresolApp')
         //click ok
         // console.log('click ok');
         // $scope.paramFromDialogObject = paramFromDialogObject;
-        // console.log($scope);
+        console.log($scope);
       }, function () {
         //canceled
       });
