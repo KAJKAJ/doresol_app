@@ -27,7 +27,6 @@
 	  <div>
 	  	<form name="timelineForm" ng-submit="createTimeline(timelineForm,$flow)" novalidate>
 		    <div ng-repeat="story in stories" class="gallery-box ng-scope">
-		      <!-- <span class="title ng-binding">{{story.file.name}}</span> -->
 		      <div class="thumbnail" ng-show="stories.length">
 					<img flow-img="story.file">
 			      <div class="progress progress-striped" ng-class="{active: story.file.isUploading()}" >
@@ -36,7 +35,6 @@
 			        </div>
 			      </div>
 			      <div class="btn-group">
-			        <!-- <a class="btn btn-xs btn-danger" ng-click="story.file.cancel()"> -->
 			        <a class="btn btn-xs btn-info" ng-click="openModal(story)">
 			          edit
 			        </a>
@@ -44,14 +42,10 @@
 			          Remove
 			        </a>
 			      </div>
-			    </div><!-- end ngRepeat: file in $flow.files -->
+			    </div>
 			    <div class="clear"></div>
-
-
-			    <!-- custom input -->
 			  </div>
-		</form>
-
-	</div>
+			</form>
+		</div>
 
 </div>
