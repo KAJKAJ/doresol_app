@@ -10,8 +10,8 @@
       flow-drag-leave="style={}"
 		
       flow-file-added="flowFileAdded($file)"
-	  flow-files-submitted="$flow.upload()"
-	  ng-controller="TimelineCtrl"
+		  flow-files-submitted="$flow.upload()"
+		  ng-controller="TimelineCtrl"
 
       ng-style="style">
 
@@ -24,7 +24,8 @@
 
 	  <br>
 
-	  <div>
+
+	<!--   <div>
 	  	<form name="timelineForm" ng-submit="createTimeline(timelineForm,$flow)" novalidate>
 		    <div ng-repeat="story in stories" class="gallery-box ng-scope">
 		      <div class="thumbnail" ng-show="stories.length">
@@ -46,6 +47,38 @@
 			    <div class="clear"></div>
 			  </div>
 			</form>
+		</div> -->
+</div>
+
+<div class="row">
+
+	<!-- SuperBox -->
+	<div class="superbox col-sm-12">
+		<div class="superbox-list">
+			<img src="img/superbox/superbox-thumb-1.jpg" data-img="img/superbox/superbox-full-1.jpg" alt="My first photoshop layer mask on a high end PSD template theme" title="Miller Cine" class="superbox-img">
+		</div><!--
+		--><div class="superbox-list">
+			<img src="img/superbox/superbox-thumb-2.jpg" data-img="img/superbox/superbox-full-2.jpg" alt="My first photoshop layer mask on a high end PSD template theme" title="Bridge of Edgen" class="superbox-img">
+		</div><!--
+		--><div class="superbox-list">
+			<img src="img/superbox/superbox-thumb-3.jpg" data-img="img/superbox/superbox-full-3.jpg" alt="My first photoshop layer mask on a high end PSD template theme" title="Lines of Friendship" class="superbox-img">
+		</div><!--
+		--><div class="superbox-list">
+			<img src="img/superbox/superbox-thumb-4.jpg" data-img="img/superbox/superbox-full-4.jpg" alt="My first photoshop layer mask on a high end PSD template theme" title="My new car!" class="superbox-img">
+		</div><!--
+		--><div class="superbox-list">
+			<img src="img/superbox/superbox-thumb-5.jpg" data-img="img/superbox/superbox-full-5.jpg" alt="My first photoshop layer mask on a high end PSD template theme" title="Study Time" class="superbox-img">
+		</div><!--
+		--><div class="superbox-list">
+			<img src="img/superbox/superbox-thumb-6.jpg" data-img="img/superbox/superbox-full-6.jpg" alt="My first photoshop layer mask on a high end PSD template theme" title="San Francisco Bridge"  class="superbox-img">
+		</div><!--		-
+		--><div class="superbox-list">
+			<img src="img/superbox/superbox-thumb-24.jpg" data-img="img/superbox/superbox-full-24.jpg" alt="My first photoshop layer mask on a high end PSD template theme" title="Traning" class="superbox-img">
 		</div>
+		<div class="superbox-float"></div>
+	</div>
+	<!-- /SuperBox -->
+	
+	<div class="superbox-show" style="height:300px; display: none"></div>
 
 </div>
