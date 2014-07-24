@@ -7,7 +7,8 @@ angular.module('doresolApp', [
   'ui.bootstrap',
   'btford.socket-io',
   'ui.router',
-  'flow'
+  'flow',
+  'xeditable'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -57,7 +58,9 @@ angular.module('doresolApp', [
     };
   })
 
-  .run(function ($rootScope, $location, Auth) {
+  .run(function ($rootScope, $location, Auth, editableOptions) {
+
+    editableOptions.theme = 'bs3';
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, next) {
       if (next.authenticate && !Auth.isLoggedIn()) {

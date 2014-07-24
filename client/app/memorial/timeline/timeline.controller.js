@@ -54,7 +54,7 @@ angular.module('doresolApp')
     $scope.flowFileAdded = function($file){
       $scope.stories.push(
         {
-          new_stroy: true,
+          new_story: true,
           file: $file  
         }
       );
@@ -78,6 +78,7 @@ angular.module('doresolApp')
             return 'story';
           },         
           paramFromDialogObject: function () {
+            console.log(story);
             return story;
           }
         }

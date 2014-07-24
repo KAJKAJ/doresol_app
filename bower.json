@@ -18,7 +18,8 @@
     "angular-ui-router": "~0.2.10",
     "doresol_timeline": "*",
     "ng-flow": "~2",
-    "angular-i18n": "~1.2.20"
+    "angular-i18n": "~1.2.20",
+    "angular-xeditable": "~0.1.8"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

@@ -1,5 +1,20 @@
-<div>
-  하하하하하하하하
+<div flow-init>
+  <!-- story name, image , story description, story start date, location(?) --> 
+
+  <a href="#" editable-text="story.name">
+    {{ story.name || 'empty' }}
+  </a>
+
+  <div ng-show="story.new_story" class="thumbnail-big">
+	<img flow-img="story.file">
+  </div>
+
+  <a href="#" editable-textarea="story.desc" e-rows="7" e-cols="40">
+    <pre>{{ story.desc || '설명이 필요하면 적어주세요' }}</pre>
+  </a>
+
+   <div>Date: <a href="#" editable-date="story.start_date">{{ story.start_date || '날짜를 입력해주세' }}</a></div>  
+
   <div class="modal-footer">
     <button class="btn btn-primary" ng-click="ok()">확인</button>
     <button class="btn btn-warning" ng-click="cancel()">취소</button>
