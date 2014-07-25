@@ -4,23 +4,27 @@ angular.module('doresolApp')
   .directive('superboxList', function () {
     return {
       restrict: 'C',
-      scope:{},
+      scope:{
+        story: '=story'
+      },
       templateUrl: 'app/memorial/timeline/superbox_list.html',
     
       link: function(scope, element, attrs) {
         element.on('click', function() {
-          if(scope.$parent.superboxToggled == scope.$id){
-            scope.$parent.superboxToggled = null;
-            element.removeClass("active");
-            element.next().css('display','none');
+          if(scope.$parent.superboxToggled == scope.story.$$hashKey){
+            scope.$parent.superboxToggled = false;
+            // element.removeClass("active");
+            // element.next().css('display','none');
           }else{
-            scope.$parent.superboxToggled = scope.$id;
-            var others = element.parent().find(".superbox-list");
-            others.removeClass("active");
-            others.next().css('display','none');
-            element.addClass("active");
-            element.next().css('display','block');
+            scope.$parent.superboxToggled = scope.story.$$hashKey;
+            // element.parent().parent().find(".superbox-list").removeClass("active");
+            // element.parent().parent().find(".superbox-show").css('display','none');
+            
+            // element.addClass("active");
+            // element.next().css('display','block');
           }
+
+          console.log(scope.story);
           
           // var $this = element;
           // console.log($this);
