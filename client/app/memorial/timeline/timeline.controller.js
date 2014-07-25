@@ -43,7 +43,7 @@ angular.module('doresolApp')
     };
 
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
-      console.log(flowFile.uniqueIdentifier); 
+      console.log(flowFile); 
     });
 
     $scope.createTimeline = function(timelineForm){
