@@ -86,12 +86,25 @@
 }
 /* SuperBox */
 .superbox-list {
+  /*display: inline-flex;
+  *display: inline;*/
+
   display: inline-block;
   *display: inline;
   zoom: 1;
-  width: 12.5%;
+  /*width: 12.5%;*/
   padding: 5px;
   position: relative;
+
+  /*overflow: hidden;*/
+  height:212px;
+  min-height:212px;
+  max-height:212px;
+  height:212px;
+  width:212px;
+  vertical-align: middle;
+  border: 1px dotted #cfcfcf;
+  margin-bottom: 1px;
 }
 .superbox-list.active:before {
   content: "\f0d8";
@@ -109,6 +122,9 @@
   max-width: 100%;
   width: 100%;
   cursor: pointer;
+
+  max-width: 200px;
+  max-height: 200px;
 }
 .superbox-show {
   text-align: left;
@@ -164,7 +180,7 @@
 .superbox-imageinfo span p:last-child {
   margin-top: 30px;
 }
-@media only screen and (min-width: 320px) {
+/*@media only screen and (min-width: 320px) {
   .superbox-list {
     width: 50%;
   }
@@ -188,4 +204,4 @@
   .superbox-list {
     width: 12.5%;
   }
-}
+}*/

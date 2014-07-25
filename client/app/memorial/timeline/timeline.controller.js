@@ -3,7 +3,8 @@
 angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope,Util,Auth,$modal) {
     var currentUser = Auth.getCurrentUser()._id;
-
+    $scope.stories = [];
+    
   	// $scope.dataObject = {
    //      "timeline": {
    //          "headline":"김학구",
@@ -50,7 +51,6 @@ angular.module('doresolApp')
       console.log($scope.stories);
     };
 
-    $scope.stories = [];
     $scope.flowFileAdded = function($file){
       $scope.stories.push(
         {
