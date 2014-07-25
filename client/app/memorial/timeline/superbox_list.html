@@ -1,2 +1,7 @@
 <!-- <img src="img/superbox/superbox-thumb-1.jpg" data-img="img/superbox/superbox-full-1.jpg" alt="My first photoshop layer mask on a high end PSD template theme" title="Miller Cine" class="superbox-img"> -->
 <img flow-img="story.file" class="superbox-img"/>
+<div class="progress progress-striped" ng-class="{active: story.file.isUploading()}" >
+	<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (story.file.progress() * 100) + &#39;%&#39;}" style="width: 100%;">
+	  <span class="sr-only ng-binding">1% Complete</span>
+	</div>
+</div>

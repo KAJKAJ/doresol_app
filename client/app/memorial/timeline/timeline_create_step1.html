@@ -25,7 +25,7 @@
 	  <br>
 
 
-	<!--   <div>
+	  <!-- <div>
 	  	<form name="timelineForm" ng-submit="createTimeline(timelineForm,$flow)" novalidate>
 		    <div ng-repeat="story in stories" class="gallery-box ng-scope">
 		      <div class="thumbnail" ng-show="stories.length">
@@ -52,9 +52,9 @@
 		<div class="row">
 			<div class="superbox col-sm-12">
 				<span ng-repeat="story in stories">
-					<div class="superbox-list" story="story" ng-class="{active:superboxToggled == story.$$hashKey}"></div>
+					<div class="superbox-list" story="story" ng-class="{active:$root.superboxToggled == story.$$hashKey}"></div>
 					
-					<div class="superbox-show" ng-show="superboxToggled == story.$$hashKey" style="display: block; color:white">
+					<div class="superbox-show" ng-show="$root.superboxToggled == story.$$hashKey" style="display: block; color:white">
 						<div class="row">
 			        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			          <div ng-show="story.new_story">
