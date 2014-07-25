@@ -46,9 +46,84 @@ angular.module('doresolApp')
       console.log(flowFile); 
     });
 
-    $scope.createTimeline = function(timelineForm){
-      console.log('timelineForm');
-      console.log($scope.stories);
+    $scope.createTimeline = function(){
+      var memorial = $scope.$parent.memorial;
+
+      console.log($scope);
+      var timeline_data = {
+        "timeline": {
+           "headline": memorial.name,
+           "type":"default",
+           "startDate":memorial.date_of_birth,
+           // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
+           "asset": {
+                        "media":memorial.file.url,
+                        // "caption":"아버지 .. 아포 중학교 앞에서"
+                    },
+            "date": [{
+                    "startDate":"1938,12,21",
+                    "endDate":"1938,12,25",
+                    "headline":"결혼식 with 서경분",
+                    "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
+                    "asset":
+                    {
+                        "media":"/assets/images/father/1.png",
+                        "thumbnail":"/assets/images/father/1.png",
+                    }
+                },
+            ]
+        }
+      };
+
+      var timeline_dates = [];
+      for(var i=0;i<$scope.stories.length;i++){
+        timeline_dates.push({
+          "startDate":$scope.stories[i].start_date.replace(/\-/g,','),
+          "headline":$scope.stories[i].name,
+          "text":$scope.stories[i].desc,
+          "asset":{
+            "media": '/tmp/' + $scope.stories[i].file.uniqueIdentifier,
+            "thumbnail": '/tmp/' + $scope.stories[i].file.uniqueIdentifier
+          }
+        });
+      }
+
+      timeline_data.timeline.date = timeline_dates;
+
+      console.log(timeline_data);
+    //   $scope.dataObject = {
+    //     "timeline": {
+    //         "headline":"김학구",
+    //         "type":"default",
+    //        "startDate":"1938,1",
+    //        "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
+    //        "asset": {
+    //                     "media":"/assets/images/father/1.png",
+    //                     "caption":"아버지 .. 아포 중학교 앞에서"
+    //                 },
+    //         "date": [{
+    //                 "startDate":"1938,12,21",
+    //                 "endDate":"1938,12,25",
+    //                 "headline":"결혼식 with 서경분",
+    //                 "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
+    //                 "asset":
+    //                 {
+    //                     "media":"/assets/images/father/1.png",
+    //                     "thumbnail":"/assets/images/father/1.png",
+    //                 }
+    //             },
+    //         ]
+    //     }
+    // };
+      createStoryJS({
+           type:       'timeline',
+           width:      '100%',
+           height:     '800',
+           source:     timeline_data,
+           embed_id:   'timeline-embed'
+       });
+
+      $scope.temp_created = true;
     };
 
     $scope.flowFileAdded = function($file){
