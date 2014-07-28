@@ -106,6 +106,15 @@
   border: 1px dotted #cfcfcf;
   margin-bottom: 1px;
 }
+
+/* spinner */
+.superbox-spinner{
+  position: relative;
+  top: 75px;
+  left: 75px;
+  z-index: 1;
+}
+
 .superbox-list.active:before {
   content: "\f0d8";
   font-family: FontAwesome;
@@ -119,12 +128,18 @@
   color: #222222;
 }
 .superbox-img {
+  /*custom edit for spinner start*/
+ /* top: -55px;
+  position: relative;*/
+  /*custom edit for spinner end*/
   max-width: 100%;
   width: 100%;
   cursor: pointer;
 
   max-width: 200px;
   max-height: 200px;
+
+  z-index:100;
 }
 .superbox-show {
   text-align: left;
@@ -145,6 +160,7 @@
 .superbox-img:hover {
   opacity: 0.8;
 }
+
 .superbox-float {
   float: left;
 }
@@ -180,6 +196,11 @@
 .superbox-imageinfo span p:last-child {
   margin-top: 30px;
 }
+/*
+.superbox-spinner{
+  position: relative;
+  margin-top: -20px;
+}*/
 /*@media only screen and (min-width: 320px) {
   .superbox-list {
     width: 50%;

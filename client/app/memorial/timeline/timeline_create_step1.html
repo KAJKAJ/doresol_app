@@ -65,7 +65,7 @@
 				        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				        	<a href="#" editable-text="story.name"> {{ story.name || '제목을 입력하세요' }} </a>
 				        	<hr/>
-				        	<a href="#" editable-date="story.start_date">{{ story.start_date || '날짜를 입력해주세요'}}</a>
+				        	<a href="#" editable-date="story.start_date" ng-model="story.start_date">{{ story.start_date || '날짜를 입력해주세요'}}</a>
 				        	<br/>
 					        <div>
 						        <a href="#" editable-textarea="story.desc" e-rows="7" e-cols="40" class="optional-text">
