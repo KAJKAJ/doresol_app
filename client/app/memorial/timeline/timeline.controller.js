@@ -101,20 +101,37 @@ angular.module('doresolApp')
       $scope.temp_created = true;
     };
 
-    $scope.flowFileAdded = function($file){
-      $file.type = $file.file.type.split("/")[0];
+    $scope.flowFilesAdded = function($files){
+      // console.log($files);
+      angular.forEach($files, function(value, key) {
+        value.type = value.file.type.split("/")[0];
 
-      console.log($file);
-      $scope.stories.push(
-        {
-          name:'제목없음',
-          new_story: true,
-          file: $file,
-          start_date: moment($file.file.lastModifiedDate).format("YYYY-MM-DD")
-          // Mon Sep 10 2012 15:19:56 GMT+0900 (KST)
-        }
-      );
+        $scope.stories.push(
+          {
+            name:'제목없음',
+            new_story: true,
+            file: value,
+            start_date: moment(value.file.lastModifiedDate).format("YYYY-MM-DD")
+            // Mon Sep 10 2012 15:19:56 GMT+0900 (KST)
+          }
+        );
+      });
     };
+
+    // $scope.flowFileAdded = function($file){
+    //   $file.type = $file.file.type.split("/")[0];
+
+    //   console.log($file);
+    //   $scope.stories.push(
+    //     {
+    //       name:'제목없음',
+    //       new_story: true,
+    //       file: $file,
+    //       start_date: moment($file.file.lastModifiedDate).format("YYYY-MM-DD")
+    //       // Mon Sep 10 2012 15:19:56 GMT+0900 (KST)
+    //     }
+    //   );
+    // };
 
     $scope.flowFileDeleted = function(story){
       var index = $scope.stories.indexOf(story);
