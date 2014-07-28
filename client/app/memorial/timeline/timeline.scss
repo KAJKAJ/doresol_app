@@ -97,7 +97,6 @@
   position: relative;
 
   /*overflow: hidden;*/
-  height:212px;
   min-height:212px;
   max-height:212px;
   height:212px;
@@ -111,8 +110,7 @@
 .superbox-spinner{
   position: relative;
   top: 75px;
-  left: 75px;
-  z-index: 1;
+  left: 75px;  
 }
 
 .superbox-list.active:before {
@@ -128,18 +126,11 @@
   color: #222222;
 }
 .superbox-img {
-  /*custom edit for spinner start*/
- /* top: -55px;
-  position: relative;*/
-  /*custom edit for spinner end*/
-  max-width: 100%;
   width: 100%;
   cursor: pointer;
 
-  max-width: 200px;
+  /*max-width: 200px;*/
   max-height: 200px;
-
-  z-index:100;
 }
 .superbox-show {
   text-align: left;
