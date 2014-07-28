@@ -3,15 +3,16 @@
 			 singleFile: false,
 			 target:'/api/fileuploads', 
 			 testChunks: false,
-			 generateUniqueIdentifier: getFlowFileUniqueId
+			 generateUniqueIdentifier: getFlowFileUniqueId,
+			 simultaneousUploads: 1
 		}"
       flow-prevent-drop
       flow-drag-enter="style={border: '5px solid green'}"
       flow-drag-leave="style={}"
 		
       flow-file-added="flowFileAdded($file)"
-		  flow-files-submitted="$flow.upload()"
-		  ng-controller="TimelineCtrl"
+	  flow-files-submitted="$flow.upload()"
+	  ng-controller="TimelineCtrl"
 
       ng-style="style">
 

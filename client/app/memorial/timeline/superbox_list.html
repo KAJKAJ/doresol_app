@@ -1,4 +1,6 @@
-<img flow-img="story.file" class="superbox-img" ng-show="story.file.isComplete()"/> 
+<div ng-hide="story.file.file.type != 'image/jpeg'">
+	<img flow-img="story.file" class="superbox-img" ng-show="story.file.isComplete()"> 
+</div>
 <div class="superbox-spinner" ng-show="!story.file.isComplete()">
 	<i class="fa fa-spinner fa-spin fa-4x text-success"></i> 
 </div>
