@@ -102,6 +102,8 @@ angular.module('doresolApp')
     };
 
     $scope.flowFileAdded = function($file){
+      $file.type = $file.file.type.split("/")[0];
+
       console.log($file);
       $scope.stories.push(
         {
