@@ -42,9 +42,9 @@ angular.module('doresolApp')
       return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
     };
 
-    $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
-      //upload success
-    });
+    // $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
+    //   flowFile.uploaded = true;
+    // });
 
     $scope.createTimeline = function(){
       var memorial = $scope.$parent.memorial;
@@ -105,7 +105,7 @@ angular.module('doresolApp')
       // console.log($files);
       angular.forEach($files, function(value, key) {
         value.type = value.file.type.split("/")[0];
-
+        
         $scope.stories.push(
           {
             name:'제목없음',
