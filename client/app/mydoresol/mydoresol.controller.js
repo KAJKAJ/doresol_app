@@ -19,7 +19,6 @@ angular.module('doresolApp')
       //item => saved user object
       //putResponseHeaders => $http header getter
       $scope.myMemorials = item;
-      console.log($scope.myMemorials);
     }, function(error){
       // console.log(error);
       // console.log('error');

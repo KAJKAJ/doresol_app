@@ -5,46 +5,30 @@ angular.module('doresolApp')
     var currentUser = Auth.getCurrentUser()._id;
     $scope.stories = [];
     
-  	// $scope.dataObject = {
-   //      "timeline": {
-   //          "headline":"김학구",
-   //          "type":"default",
-   //  				"startDate":"1938,1",
-   //  				"text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
-   //  				"asset": {
-   //                      "media":"/assets/images/father/1.png",
-   //                      "caption":"아버지 .. 아포 중학교 앞에서"
-   //                  },
-   //          "date": [{
-   //                  "startDate":"1938,12,21",
-   //                  "endDate":"1938,12,25",
-   //                  "headline":"결혼식 with 서경분",
-   //                  "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
-   //                  "asset":
-   //                  {
-   //                      "media":"/assets/images/father/1.png",
-   //                      "thumbnail":"/assets/images/father/1.png",
-   //                  }
-   //              },
-   //          ]
-   //      }
-   //  };
-
-    // createStoryJS({
-    //      type:       'timeline',
-    //      width:      '100%',
-    //      height:     '800',
-    //      source:     $scope.dataObject,
-    //      embed_id:   'timeline-embed'
-    //  });
+    //temp
+    $scope.$parent.$watch('memorial.timeline.era',function(era){
+      if(era){
+        console.log(era);
+        era.push({
+          // "startDate":"2011,12,10",
+          // "endDate":"2011,12,11",
+          "headline":"test1"
+          }
+        );
+        era.push({
+          // "startDate":"2011,12,10",
+          // "endDate":"2011,12,11",
+          "headline":"test2"
+          }
+        );
+      }
+    });
+   
+     
 
     $scope.getFlowFileUniqueId = function(file){
       return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
     };
-
-    // $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
-    //   flowFile.uploaded = true;
-    // });
 
     $scope.createTimeline = function(){
       var memorial = $scope.$parent.memorial;
