@@ -32,11 +32,18 @@ angular.module('doresolApp')
     return {
       restrict: 'E',
       scope: false,
-      template: "app/memorial/timeline/slot_list.html",
-      link: function(scope, element, attrs) {
-       });
+      templateUrl: "app/memorial/timeline/slot_list.html",
+      // link: function(scope, element, attrs) {
+      //  });
       }
-    };
+  })
+  .directive('slotItem', function () {
+    return {
+      restrict: 'E',
+      scope: false,
+      templateUrl: "app/memorial/timeline/slot_item.html",
+      link: function(scope, element, attrs) {
+      }
+    }
   });
-  ;
-
+  

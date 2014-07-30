@@ -1,25 +1,7 @@
 <div class="row">
-		<ul class="slot-list-wrapper">
-		  <li class="slot-list" ng-repeat='era in $parent.memorial.timeline.era'>
-		  	<slot-item>
-<!-- 		  	<div class="slot">
-			    {{era.headline}}
-			    <span class="badge pull-right">3</span>
-			</div>
-		  </li>
-  		  <li class="slot-list">
-		  	<div class="slot-add" style="text-align:center">
-		  		<i class="fa fa-plus-circle fa-2x"/>
-			</div>
-		  </li>
- -->
-		</ul>
-
- 		<!-- <div class="input-group">
-	      <input type="text" class="form-control">
-	      <span class="input-group-btn">
-	        <button type="submit" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
-	      </span>
-	    </div> -->
-		
+	<div class="col-xs-3">
+		<slot-list></slot-list>
+	</div>
+	<div class="col-xs-9">
+	</div>
 </div>
