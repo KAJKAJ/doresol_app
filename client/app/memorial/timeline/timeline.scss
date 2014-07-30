@@ -220,7 +220,14 @@
 
 /* slot list */
 .slot-list-wrapper{
-  padding:0px;
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  max-width: 600px;
+  list-style: none;
+  font-size: 13px;
+  line-height: 20px;
 }
 
 .slot-list{
@@ -300,7 +307,57 @@
   zoom: 1;
 }
 
+.slot-add {
+  nd-origin: padding-box;
+  background-size: auto;
+  border-bottom-color: rgb(207, 207, 207);
+  border-bottom-style: dashed;
+  border-bottom-width: 1px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(207, 207, 207);
+  border-left-style: dashed;
+  border-left-width: 1px;
+  border-right-color: rgb(207, 207, 207);
+  border-right-style: dashed;
+  border-right-width: 1px;
+  border-top-color: rgb(207, 207, 207);
+  border-top-style: dashed;
+  border-top-width: 1px;
+  box-sizing: border-box;
+  color: rgb(51, 51, 51);
+  direction: ltr;
+  display: block;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  height: 37px;
+  line-height: 20px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-bottom: 5px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 5px;
+  padding-bottom: 7px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 7px;
+  text-align: left;
+  text-decoration: none dashed rgb(51, 51, 51);
+  zoom: 1;
+}
+
 .slot:hover{
+  background: #FDDFB3!important;
+  border: 1px solid #FAA937;
+  color: #333!important;
+}
+
+.slot-add:hover{
   background: #FDDFB3!important;
   border: 1px solid #FAA937;
   color: #333!important;

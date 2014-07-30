@@ -25,4 +25,18 @@ angular.module('doresolApp')
         });
       }
     };
+  })
+
+  // Slot List Directive
+  .directive('slotList', function () {
+    return {
+      restrict: 'E',
+      scope: false,
+      template: "app/memorial/timeline/slot_list.html",
+      link: function(scope, element, attrs) {
+       });
+      }
+    };
   });
+  ;
+
