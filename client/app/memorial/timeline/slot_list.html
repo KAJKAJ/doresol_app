@@ -8,7 +8,7 @@
 
 <ul class="slot-list-wrapper">
   <li class="slot-list" ng-repeat="era in $parent.memorial.timeline.era">
-  	<slot-item era="era"></slot-item>
+  	<slot-item era="era" ng-click="setSelectedEra(era)"></slot-item>
   </li>
   <li>
   	<div class="slot-add" style="text-align:center">

@@ -31,7 +31,7 @@ angular.module('doresolApp')
   .directive('slotList', function () {
     return {
       restrict: 'E',
-      scope:false,
+      scope: false,
       templateUrl: "app/memorial/timeline/slot_list.html",
       // link: function(scope, element, attrs) {
       //  });
@@ -42,11 +42,13 @@ angular.module('doresolApp')
       restrict: 'E',
       scope: {
         era:'=era',
+        setSelectedEra:'&'
       },
       templateUrl: "app/memorial/timeline/slot_item.html",
       link: function(scope, element, attrs) {
         element.on('click',function(){
-          scope.selectedEra = scope.era;
+          // scope.selectedEra = scope.era;
+          // scope.set(scope.era);
         });
       }
     }

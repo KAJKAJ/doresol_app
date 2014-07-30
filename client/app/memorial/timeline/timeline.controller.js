@@ -24,10 +24,14 @@ angular.module('doresolApp')
       }
     });
     
+    $scope.setSelectedEra = function(era){
+      $scope.selectedEra = era;
+    };
+    
     $scope.submitEra = function(){
       console.log($scope);
     };
-    
+
     $scope.openDatepicker = function($event,variable) {
       $event.preventDefault();
       $event.stopPropagation();
