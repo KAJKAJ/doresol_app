@@ -8,7 +8,7 @@ angular.module('doresolApp')
     //temp
     $scope.$parent.$watch('memorial.timeline.era',function(era){
       if(era){
-        console.log(era);
+        // console.log(era);
         era.push({
           // "startDate":"2011,12,10",
           // "endDate":"2011,12,11",
@@ -24,9 +24,13 @@ angular.module('doresolApp')
       }
     });
     
+    $scope.getSelectedEra = function(){
+      console.log('getSelectedEra');
+      return $scope.selectedEra;
+    };
+
     $scope.setSelectedEra = function(era){
       $scope.selectedEra = era;
-      return $scope.selectedEra;
     };
 
     $scope.submitEra = function(){

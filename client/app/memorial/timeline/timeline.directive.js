@@ -37,21 +37,26 @@ angular.module('doresolApp')
       //  });
       }
   })
+
   .directive('slotItem', function () {
     return {
       restrict: 'E',
       scope: {
         era:'=era',
-        setSelectedEra:'&'
+        setSelectedEra:'&',
+        getSelectedEra:'&'
       },
+      replace:true,
       templateUrl: "app/memorial/timeline/slot_item.html",
       link: function(scope, element, attrs) {
-        element.on('click',function(){
-          
+        element.on('click',function(){          
+          // scope.selectedEra = {};
+          // scope.$digest();
         });
       }
     }
   })
+
   .directive('slotAdd', function () {
     return {
       restrict: 'C',
@@ -64,6 +69,7 @@ angular.module('doresolApp')
       }
     }
   })
+
   .directive('storyList', function () {
     return {
       restrict: 'E',
