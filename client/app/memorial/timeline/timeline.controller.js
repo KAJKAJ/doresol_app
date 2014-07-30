@@ -6,24 +6,28 @@ angular.module('doresolApp')
     $scope.stories = [];
     
     //temp
-    // $scope.$parent.$watch('memorial.timeline.era',function(era){
-    //   if(era){
-    //     console.log(era);
-    //     era.push({
-    //       // "startDate":"2011,12,10",
-    //       // "endDate":"2011,12,11",
-    //       "headline":"test1"
-    //       }
-    //     );
-    //     era.push({
-    //       // "startDate":"2011,12,10",
-    //       // "endDate":"2011,12,11",
-    //       "headline":"test2"
-    //       }
-    //     );
-    //   }
-    // });
-   
+    $scope.$parent.$watch('memorial.timeline.era',function(era){
+      if(era){
+        console.log(era);
+        era.push({
+          // "startDate":"2011,12,10",
+          // "endDate":"2011,12,11",
+          "headline":"test1"
+          }
+        );
+        era.push({
+          // "startDate":"2011,12,10",
+          // "endDate":"2011,12,11",
+          "headline":"test2"
+          }
+        );
+      }
+    });
+    
+    $scope.submitEra = function(){
+      console.log($scope);
+    };
+    
     $scope.openDatepicker = function($event,variable) {
       $event.preventDefault();
       $event.stopPropagation();
