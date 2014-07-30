@@ -26,8 +26,9 @@ angular.module('doresolApp')
     
     $scope.setSelectedEra = function(era){
       $scope.selectedEra = era;
+      return $scope.selectedEra;
     };
-    
+
     $scope.submitEra = function(){
       console.log($scope);
     };

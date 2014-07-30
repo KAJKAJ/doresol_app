@@ -41,6 +41,9 @@
 	  		 ng-show="eraForm.name.$valid && eraForm.dateOfStart.$valid &&  eraForm.dateOfEnd.$valid && eraForm.$valid == false">		  		 
 	  		 <span>기간 설정이 잘못되었습니다.</span>
 	  	</div>
-	  	<button type="submit" class="btn btn-success btn-lg btn-block" ng-disabled="eraForm.$invalid">추가</button>		  
+	  	<button type="submit" class="btn btn-success btn-lg btn-block" ng-disabled="eraForm.$invalid">
+	  		<span ng-show="selectedEra.id">변경</span>
+	  		<span ng-show="!selectedEra.id">추가</span>
+	  	</button>		  
   </form>
 </div>

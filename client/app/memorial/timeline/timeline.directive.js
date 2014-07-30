@@ -47,8 +47,7 @@ angular.module('doresolApp')
       templateUrl: "app/memorial/timeline/slot_item.html",
       link: function(scope, element, attrs) {
         element.on('click',function(){
-          // scope.selectedEra = scope.era;
-          // scope.set(scope.era);
+          
         });
       }
     }
