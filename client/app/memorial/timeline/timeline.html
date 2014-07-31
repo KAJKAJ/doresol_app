@@ -1,7 +1,8 @@
 <!-- timeline edit -->
+<div ng-init="memorial.timeline.era = [{'headline': 'test1'}, {'headline': 'test2'}]"></div>
 <div class="row" ng-show="!memorial.timeline.created">
-	<div class="col-xs-3">
-		<slot-list></slot-list>
+	<div class="col-xs-3" >
+	   <slot-list></slot-list>
 	</div>
 	<div class="col-xs-9">
 		<story-list></story-list>

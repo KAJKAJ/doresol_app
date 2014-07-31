@@ -5,7 +5,7 @@ angular.module('doresolApp')
     var currentUser = Auth.getCurrentUser()._id;
     $scope.stories = [];
     
-    //temp
+    // //temp
     $scope.$parent.$watch('memorial.timeline.era',function(era){
       if(era){
         console.log(era);
@@ -23,9 +23,13 @@ angular.module('doresolApp')
         );
       }
     });
-    
+
     $scope.setSelectedEra = function(era){
       $scope.selectedEra = era;
+      return $scope.selectedEra;
+    };
+
+    $scope.getSelectedEra = function() {
       return $scope.selectedEra;
     };
 
