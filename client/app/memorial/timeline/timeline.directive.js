@@ -37,7 +37,6 @@ angular.module('doresolApp')
       //  });
       }
   })
-  
   .directive('storyList', function () {
     return {
       restrict: 'E',
