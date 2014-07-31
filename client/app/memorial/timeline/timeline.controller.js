@@ -6,23 +6,23 @@ angular.module('doresolApp')
     $scope.stories = [];
     
     // //temp
-    $scope.$parent.$watch('memorial.timeline.era',function(era){
-      if(era){
-        // console.log(era);
-        era.push({
-          // "startDate":"2011,12,10",
-          // "endDate":"2011,12,11",
-          "headline":"test1"
-          }
-        );
-        era.push({
-          // "startDate":"2011,12,10",
-          // "endDate":"2011,12,11",
-          "headline":"test2"
-          }
-        );
-      }
-    });
+    // $scope.$parent.$watch('memorial.timeline.era',function(era){
+    //   if(era){
+    //     // console.log(era);
+    //     era.push({
+    //       // "startDate":"2011,12,10",
+    //       // "endDate":"2011,12,11",
+    //       "headline":"test1"
+    //       }
+    //     );
+    //     era.push({
+    //       // "startDate":"2011,12,10",
+    //       // "endDate":"2011,12,11",
+    //       "headline":"test2"
+    //       }
+    //     );
+    //   }
+    // });
     
     $scope.getSelectedEra = function(){
       console.log('getSelectedEra');
@@ -37,8 +37,40 @@ angular.module('doresolApp')
       return $scope.selectedEra;
     };
 
-    $scope.submitEra = function(){
+    $scope.submitEra = function(form){
       console.log($scope);
+      
+      var memorial = $scope.$parent.memorial;
+
+      // if(form.$valid){
+      //   var memorial = $resource('/api/memorials/:meorialId', {meorialId:'@id'});
+      //   var user = User.get({meorialId:memorialId}, function() {
+      //     user.abc = true;
+      //     user.$save();
+      //   });
+
+
+
+      //   var Memorial = $resource('/api/memorials');
+
+      //   var newMemorial = new Memorial({
+      //       admin_id: currentUser,
+      //       name: $scope.newMemorial.name,
+      //       date_of_birth: $scope.newMemorial.dateOfBirth,
+      //       date_of_death: $scope.newMemorial.dateOfDeath,
+      //       file: $scope.newMemorial.lastUploadingFile
+      //   });
+
+      //   // console.log(newMemorial);
+      //   newMemorial.$save(function(item, putResponseHeaders) {
+      //     //item => saved user object
+      //     //putResponseHeaders => $http header getter
+      //     $state.transitionTo('memorial.timeline', {id: item._id});
+      //   }, function(error){
+      //     // console.log(error);
+      //     // console.log('error');
+      //   });
+      // }
     };
 
     $scope.openDatepicker = function($event,variable) {
