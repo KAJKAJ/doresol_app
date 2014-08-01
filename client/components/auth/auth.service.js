@@ -25,11 +25,7 @@ angular.module('doresolApp')
 		.then(function(value){
 
 			userService.child('email:'+user.email).update({id: user.email, password: user.password});
-					console.log(error);
-				}
-			);
-			console.log(result);
-
+			console.log(error);
 		}, function(error) {
 		});
 	return deferred.promise;
