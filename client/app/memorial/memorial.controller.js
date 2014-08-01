@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCtrl', function ($scope,$stateParams,$resource,$state,Memorial) {
+  .controller('MemorialCtrl', function ($scope,$stateParams,$resource,$state,Memorial,ENV) {
     $scope.$state = $state;
     
     var memorialId = $stateParams.id;
-    
+
     Memorial.get({id:memorialId}).$promise.then(function (value) {
       $scope.memorial = value;
       // console.log($scope);

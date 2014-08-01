@@ -8,7 +8,8 @@ angular.module('doresolApp', [
   'btford.socket-io',
   'ui.router',
   'flow',
-  'xeditable'
+  'xeditable',
+  'config'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

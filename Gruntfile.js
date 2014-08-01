@@ -9,7 +9,8 @@ module.exports = function (grunt) {
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
-    injector: 'grunt-asset-injector'
+    injector: 'grunt-asset-injector',
+    ngconstant:'grunt-ng-constant'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -17,6 +18,37 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
+    ngconstant: {
+      // Options for all targets
+      options: {
+        space: '  ',
+        wrap: '"use strict";\n\n {%= __ngModule %}',
+        name: 'config',
+      },
+      // Environment targets
+      development: {
+        options: {
+          dest: 'client/config.js'
+        },
+        constants: {
+          ENV: {
+            name: 'development',
+            firebaseURL: 'https://doresol-dev.firebaseio.com/'
+          }
+        }
+      },
+      production: {
+        options: {
+          dest: 'client/config.js'
+        },
+        constants: {
+          ENV: {
+            name: 'production',
+            firebaseURL: 'https://doresol.firebaseio.com/'
+          }
+        }
+      }
+    },
 
     // Project settings
     yeoman: {
@@ -546,6 +578,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'injector',
       'bowerInstall',
+      'ngconstant:development',
       'autoprefixer',
       'express:dev',
       'wait',
@@ -608,6 +641,7 @@ module.exports = function (grunt) {
     'injector',
     'bowerInstall',
     'useminPrepare',
+    'ngconstant:production',
     'autoprefixer',
     'ngtemplates',
     'concat',
