@@ -29,10 +29,16 @@ angular.module('doresolApp')
               });
     };
 
+    var loginFb = function(user) {
+      return authService.$login('facebook')
+              .then(function(value){
+                currentUser = value;
+              });
+    };
+
     currentUser = getCurrentUser();
 
     
-
     return {
 
       /**
@@ -43,6 +49,8 @@ angular.module('doresolApp')
        * @return {Promise}
        */
       login: login,
+
+      loginFb: loginFb,
 
       /**
        * Delete access token and user info
