@@ -5,7 +5,6 @@ angular.module('doresolApp', [
   'ngResource',
   'ngSanitize',
   'ui.bootstrap',
-  'btford.socket-io',
   'ui.router',
   'flow',
   'xeditable',
