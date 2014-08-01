@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, ENV, $firebaseSimpleLogin) {
+  .factory('Auth', function Auth($location, $firebase, $rootScope, $http, User, $cookieStore, $q, ENV, $firebaseSimpleLogin) {
     var authService = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
+    var userService = new Firebase(ENV.FIREBASE_URI + '/users');
 
     var currentUser = null;
 
@@ -19,7 +20,19 @@ angular.module('doresolApp')
     };
 
     var createUser =  function(user) {
-      return authService.$createUser(user.email,user.password);      
+	var deferred = $q.defer();
+	authService.$createUser(user.email,user.password)
+		.then(function(value){
+
+			userService.child('email:'+user.email).update({id: user.email, password: user.password});
+					console.log(error);
+				}
+			);
+			console.log(result);
+
+		}, function(error) {
+		});
+	return deferred.promise;
     };
 
     var login = function(user){
@@ -34,7 +47,7 @@ angular.module('doresolApp')
         }
       );
 
-      return deferred.promise
+      return deferred.promise;
 
       // return authService.$login('password',{email:user.email, password:user.password})
       //         .then(function(value){
@@ -43,12 +56,13 @@ angular.module('doresolApp')
     };
 
     var loginFb = function(user) {
-      authService.$login('facebook')
-              .then(function(value){
-                currentUser = value;
-              }, function(errror) {
+      authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function() {
+		userService.child(authService.user.id).update({
+			fb_uid: authService.user.uid
+		});
+	}, function(error) {
 		console.log(error);
-		} );
+	});
     };
 
     currentUser = getCurrentUser();
