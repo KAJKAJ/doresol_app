@@ -9,25 +9,34 @@ angular.module('doresolApp')
       $scope.submitted = true;
 
       if(form.$valid) {
-        Auth.createUser({
-          name: $scope.user.name,
-          email: $scope.user.email,
-          password: $scope.user.password
-        })
-        .then( function() {
-          // Account created, redirect to home
-          $location.path('/');
-        })
-        .catch( function(err) {
-          err = err.data;
+        Auth.createUser($scope.user).then(function (value){
+          $location.path('/login');
+        }, function(error){
+          var errorCode = error.code;
           $scope.errors = {};
 
-          // Update validity of form fields that match the mongoose errors
-          angular.forEach(err.errors, function(error, field) {
-            form[field].$setValidity('mongoose', false);
-            $scope.errors[field] = error.message;
-          });
+          switch(errorCode){
+            case "EMAIL_TAKEN":
+              form['email'].$setValidity('firebase',false);
+              $scope.errors['email'] = '이미 등록된 이메일 주소입니다.';
+            break;
+          }
+          // console.log(error);
         });
+        // .then( function() {
+          // Account created, redirect to home
+          // $location.path('/');
+        // })
+        // .catch( function(err) {
+          // err = err.data;
+          // $scope.errors = {};
+
+          // Update validity of form fields that match the mongoose errors
+          // angular.forEach(err.errors, function(error, field) {
+          //   form[field].$setValidity('mongoose', false);
+          //   $scope.errors[field] = error.message;
+          // });
+        // });
       }
     };
   });

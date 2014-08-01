@@ -8,7 +8,8 @@ angular.module('doresolApp', [
   'ui.router',
   'flow',
   'xeditable',
-  'config'
+  'config',
+  'firebase'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

@@ -1,11 +1,37 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
-    var currentUser = {};
-    if($cookieStore.get('token')) {
-      currentUser = User.get();
-    }
+  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, ENV, $firebaseSimpleLogin) {
+    var authService = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
+
+    var currentUser = null;
+
+    var getCurrentUser = function(){
+      if(!currentUser){
+        authService.$getCurrentUser()
+          .then(function (value){
+            currentUser = value;
+          }
+        );
+      }
+
+      return currentUser;
+    };
+
+    var createUser =  function(user) {
+      return authService.$createUser(user.email,user.password);      
+    };
+
+    var login = function(user){
+      return authService.$login('password',{email:user.email, password:user.password})
+              .then(function(value){
+                currentUser = value;
+              });
+    };
+
+    currentUser = getCurrentUser();
+
+    
 
     return {
 
@@ -16,28 +42,7 @@ angular.module('doresolApp')
        * @param  {Function} callback - optional
        * @return {Promise}
        */
-      login: function(user, callback) {
-        var cb = callback || angular.noop;
-        var deferred = $q.defer();
-
-        $http.post('/auth/local', {
-          email: user.email,
-          password: user.password
-        }).
-        success(function(data) {
-          $cookieStore.put('token', data.token);
-          currentUser = User.get();
-          deferred.resolve(data);
-          return cb();
-        }).
-        error(function(err) {
-          this.logout();
-          deferred.reject(err);
-          return cb(err);
-        }.bind(this));
-
-        return deferred.promise;
-      },
+      login: login,
 
       /**
        * Delete access token and user info
@@ -53,23 +58,8 @@ angular.module('doresolApp')
        * Create a new user
        *
        * @param  {Object}   user     - user info
-       * @param  {Function} callback - optional
-       * @return {Promise}
        */
-      createUser: function(user, callback) {
-        var cb = callback || angular.noop;
-
-        return User.save(user,
-          function(data) {
-            $cookieStore.put('token', data.token);
-            currentUser = User.get();
-            return cb(user);
-          },
-          function(err) {
-            this.logout();
-            return cb(err);
-          }.bind(this)).$promise;
-      },
+      createUser: createUser,
 
       /**
        * Change password
@@ -97,9 +87,7 @@ angular.module('doresolApp')
        *
        * @return {Object} user
        */
-      getCurrentUser: function() {
-        return currentUser;
-      },
+      getCurrentUser: getCurrentUser,
 
       /**
        * Check if a user is logged in

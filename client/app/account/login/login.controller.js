@@ -13,13 +13,20 @@ angular.module('doresolApp')
           email: $scope.user.email,
           password: $scope.user.password
         })
-        .then( function() {
-          // Logged in, redirect to home
+        .then( function (value){
+          // console.log(value);
           $location.path('/');
-        })
-        .catch( function(err) {
-          $scope.errors.other = err.message;
-        });
+        } ,function(error){
+          var errorCode = error.code;
+          switch(errorCode){
+            case "INVALID_USER":
+              $scope.errors.other = "등록되어있지 않은 이메일 주소입니다.";
+            break;
+            case "INVALID_PASSWORD":
+              $scope.errors.other = "잘못된 패스워드입니다.";
+            break;
+          }
+        });        
       }
     };
 

@@ -33,7 +33,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'development',
-            firebaseURL: 'https://doresol-dev.firebaseio.com/'
+            FIREBASE_URI: 'https://doresol-dev.firebaseio.com/'
           }
         }
       },
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
-            firebaseURL: 'https://doresol.firebaseio.com/'
+            FIREBASE_URI: 'https://doresol.firebaseio.com/'
           }
         }
       }

@@ -4,7 +4,7 @@
 
 .constant("ENV", {
   "name": "development",
-  "firebaseURL": "https://doresol-dev.firebaseio.com/"
+  "FIREBASE_URI": "https://doresol-dev.firebaseio.com/"
 })
 
 ;
