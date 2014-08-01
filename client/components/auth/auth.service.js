@@ -30,10 +30,12 @@ angular.module('doresolApp')
     };
 
     var loginFb = function(user) {
-      return authService.$login('facebook')
+      authService.$login('facebook')
               .then(function(value){
                 currentUser = value;
-              });
+              }, function(errror) {
+		console.log(error);
+		} );
     };
 
     currentUser = getCurrentUser();
