@@ -31,6 +31,7 @@ angular.module('doresolApp')
     };
 
     $scope.loginOauth = function(provider) {
-      $window.location.href = '/auth/' + provider;
+      Auth.loginFb();
+      // $window.location.href = '/auth/' + provider;
     };
   });
