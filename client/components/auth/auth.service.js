@@ -23,10 +23,23 @@ angular.module('doresolApp')
     };
 
     var login = function(user){
-      return authService.$login('password',{email:user.email, password:user.password})
-              .then(function(value){
-                currentUser = value;
-              });
+      var deferred = $q.defer();
+      authService.$login('password',{email:user.email, password:user.password})
+        .then(function(value){
+          // console.log(value);
+          currentUser = value;
+          deferred.resolve(currentUser);
+        },function(error){
+          deferred.reject(error);
+        }
+      );
+
+      return deferred.promise
+
+      // return authService.$login('password',{email:user.email, password:user.password})
+      //         .then(function(value){
+      //           currentUser = value;
+      //         });
     };
 
     currentUser = getCurrentUser();
