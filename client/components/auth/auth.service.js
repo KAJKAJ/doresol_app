@@ -20,15 +20,22 @@ angular.module('doresolApp')
     };
 
     var createUser =  function(user) {
-	var deferred = $q.defer();
-	authService.$createUser(user.email,user.password)
-		.then(function(value){
-
-			userService.child('email:'+user.email).update({id: user.email, password: user.password});
-			console.log(error);
-		}, function(error) {
-		});
-	return deferred.promise;
+    	var deferred = $q.defer();
+    	authService.$createUser(user.email,user.password)
+    		.then(function(value){
+          // console.log(value);
+          userService.child('email:'+value.uid).update({id: user.email},function(error){
+            if(!error){
+              deferred.resolve(value);
+            }else{
+              deferred.reject(error);
+            }
+          });
+    			// userService.child('email:'+user.email).update({id: user.email, password: user.password});
+    			// console.log(error);
+    		}, function(error) {
+    		});
+    	 return deferred.promise;
     };
 
     var login = function(user){
@@ -53,12 +60,12 @@ angular.module('doresolApp')
 
     var loginFb = function(user) {
       authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function() {
-		userService.child(authService.user.id).update({
-			fb_uid: authService.user.uid
-		});
-	}, function(error) {
-		console.log(error);
-	});
+    		userService.child(authService.user.id).update({
+    			fb_uid: authService.user.uid
+    		});
+    	}, function(error) {
+    		console.log(error);
+    	});
     };
 
     currentUser = getCurrentUser();
