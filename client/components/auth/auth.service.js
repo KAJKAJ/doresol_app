@@ -24,8 +24,7 @@ angular.module('doresolApp')
     	authService.$createUser(user.email,user.password)
     		.then(function(value){
           // console.log(value);
-          $cookieStore.put('token', value.token);
-          userService.child('email:'+value.uid).update({id: user.email},function(error){
+          userService.child(value.uid).update({email: user.email},function(error){
             if(!error){
               deferred.resolve(value);
             }else{
@@ -45,7 +44,6 @@ angular.module('doresolApp')
       authService.$login('password',{email:user.email, password:user.password})
         .then(function(value){
           // console.log(value);
-          $cookieStore.put('token', value.firebaseAuthToken);
           currentUser = value;
           deferred.resolve(currentUser);
         },function(error){
@@ -63,13 +61,19 @@ angular.module('doresolApp')
 
     var loginFb = function(user) {
       authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function() {
-    		userService.child(authService.user.id).update({
-    			fb_uid: authService.user.uid
+        console.log(authService);
+    		userService.child(authService.user.uid).update({
+    			fb_id: authService.user.id
     		});
     	}, function(error) {
     		console.log(error);
     	});
     };
+
+    var isLoggedIn = function() {
+      // return currentUser.hasOwnProperty('role');
+      return currentUser.hasOwnProperty('uid');
+    },
 
     currentUser = getCurrentUser();
 
@@ -137,9 +141,7 @@ angular.module('doresolApp')
        *
        * @return {Boolean}
        */
-      isLoggedIn: function() {
-        return currentUser.hasOwnProperty('role');
-      },
+      isLoggedIn: isLoggedIn,
 
       /**
        * Check if a user is an admin
