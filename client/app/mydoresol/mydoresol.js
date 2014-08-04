@@ -6,6 +6,7 @@ angular.module('doresolApp')
       .state('mydoresol', {
         url: '/mydoresol',
         templateUrl: 'app/mydoresol/mydoresol.html',
-        controller: 'MydoresolCtrl'
+        controller: 'MydoresolCtrl',
+        authenticate: true
       });
   });

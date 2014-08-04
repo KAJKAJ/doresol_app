@@ -3,9 +3,9 @@
 angular.module('doresolApp')
   .factory('Auth', function Auth($location, $firebase, $rootScope, $http, User, $cookieStore, $q, ENV, $firebaseSimpleLogin) {
     var authService = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
-    var userService = new Firebase(ENV.FIREBASE_URI + '/users');
+    var userService = $firebase(new Firebase(ENV.FIREBASE_URI + '/users'));
 
-    var currentUser = null;
+    var currentUser = {};
 
     var getCurrentUser = function(){
       if(!currentUser){
@@ -24,15 +24,13 @@ angular.module('doresolApp')
     	authService.$createUser(user.email,user.password)
     		.then(function(value){
           // console.log(value);
-          userService.child(value.uid).update({id:user.id, email: user.email},function(error){
-            if(!error){
-              deferred.resolve(value);
-            }else{
-              deferred.reject(error);
-            }
+          userService.$set(value.uid, {id:value.id, email: user.email})
+          .then(function(value) {
+            deferred.resolve(value);
+          }, function(error) {
+            deferred.reject(error);
           });
-    			// userService.child('email:'+user.email).update({id: user.email, password: user.password});
-    			// console.log(error);
+          
     		}, function(error) {
           deferred.reject(error);
     		});
@@ -52,18 +50,13 @@ angular.module('doresolApp')
       );
 
       return deferred.promise;
-
-      // return authService.$login('password',{email:user.email, password:user.password})
-      //         .then(function(value){
-      //           currentUser = value;
-      //         });
     };
 
     var loginFb = function(user) {
       var deferred = $q.defer();
       authService.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true} ).then(function(value) {
         currentUser = value;
-        userService.child(value.uid).update({
+        userService.$update(value.uid, {
           id: value.id,
           name:  value.displayName,
           thirdPartyUserData: value.thirdPartyUserData
@@ -93,54 +86,28 @@ angular.module('doresolApp')
           });
         break;
       }
-    }
+    };
 
     var isLoggedIn = function() {
-      // return currentUser.hasOwnProperty('role');
       return currentUser.hasOwnProperty('uid');
-    },
+    };
+
+    var logout = function() {
+      currentUser = {};
+    };
 
     currentUser = getCurrentUser();
-
     
     return {
 
-      /**
-       * Authenticate user and save token
-       *
-       * @param  {Object}   user     - login info
-       * @param  {Function} callback - optional
-       * @return {Promise}
-       */
       login: login,
 
       loginOauth: loginOauth,
 
-      /**
-       * Delete access token and user info
-       *
-       * @param  {Function}
-       */
-      logout: function() {
-        $cookieStore.remove('token');
-        currentUser = {};
-      },
+      logout: logout,
 
-      /**
-       * Create a new user
-       *
-       * @param  {Object}   user     - user info
-       */
       createUser: createUser,
 
-      /**
-       * Change password
-       *
-       * @param  {String}   oldPassword
-       * @param  {String}   newPassword
-       * @param  {Function} callback    - optional
-       * @return {Promise}
-       */
       changePassword: function(oldPassword, newPassword, callback) {
         var cb = callback || angular.noop;
 
@@ -154,34 +121,19 @@ angular.module('doresolApp')
         }).$promise;
       },
 
-      /**
-       * Gets all available info on authenticated user
-       *
-       * @return {Object} user
-       */
       getCurrentUser: getCurrentUser,
 
-      /**
-       * Check if a user is logged in
-       *
-       * @return {Boolean}
-       */
       isLoggedIn: isLoggedIn,
 
-      /**
-       * Check if a user is an admin
-       *
-       * @return {Boolean}
-       */
       isAdmin: function() {
         return currentUser.role === 'admin';
       },
 
-      /**
-       * Get auth token
-       */
-      getToken: function() {
-        return $cookieStore.get('token');
-      }
+      // /**
+      //  * Get auth token
+      //  */
+      // getToken: function() {
+      //   return $cookieStore.get('token');
+      // }
     };
   });
