@@ -15,7 +15,7 @@ angular.module('doresolApp')
         })
         .then( function (value){
           // console.log(value);
-          $location.path('/');
+          $location.path('/mydoresol');
         } ,function(error){
           // console.log(error);
           var errorCode = error.code;

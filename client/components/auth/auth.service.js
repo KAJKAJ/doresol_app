@@ -62,6 +62,7 @@ angular.module('doresolApp')
     var loginFb = function(user) {
       var deferred = $q.defer();
       authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function(value) {
+        currentUser = value;
         userService.child(value.uid).update({
           id: value.id,
           name:  value.displayName,
@@ -82,13 +83,11 @@ angular.module('doresolApp')
     };
 
     var loginOauth = function(provider){
-      console.log('---login oauth');
-      console.log(provider);
       switch(provider){
         case 'facebook':
           loginFb().then( function (value){
             // console.log(value);
-            $location.path('/');
+            $location.path('/mydoresol');
           } ,function(error){
             console.log(error);
           });
