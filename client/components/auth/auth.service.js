@@ -24,6 +24,7 @@ angular.module('doresolApp')
     	authService.$createUser(user.email,user.password)
     		.then(function(value){
           // console.log(value);
+          $cookieStore.put('token', value.token);
           userService.child('email:'+value.uid).update({id: user.email},function(error){
             if(!error){
               deferred.resolve(value);
@@ -34,6 +35,7 @@ angular.module('doresolApp')
     			// userService.child('email:'+user.email).update({id: user.email, password: user.password});
     			// console.log(error);
     		}, function(error) {
+          deferred.reject(error);
     		});
     	 return deferred.promise;
     };
@@ -43,6 +45,7 @@ angular.module('doresolApp')
       authService.$login('password',{email:user.email, password:user.password})
         .then(function(value){
           // console.log(value);
+          $cookieStore.put('token', value.firebaseAuthToken);
           currentUser = value;
           deferred.resolve(currentUser);
         },function(error){

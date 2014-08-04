@@ -17,6 +17,7 @@ angular.module('doresolApp')
           // console.log(value);
           $location.path('/');
         } ,function(error){
+          // console.log(error);
           var errorCode = error.code;
           switch(errorCode){
             case "INVALID_USER":

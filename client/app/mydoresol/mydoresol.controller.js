@@ -4,10 +4,10 @@ angular.module('doresolApp')
   // .controller('MydoresolCtrl', function ($scope) {
   .controller('MydoresolCtrl', function ($scope,Auth,$resource,Memorial) {
     //임시 로그인처리 시작
-    Auth.login({
-      email: 'test@test.com',
-      password: 'test'
-    });
+    // Auth.login({
+    //   email: 'test@test.com',
+    //   password: 'test'
+    // });
     
     // console.log(user);
   	//임시 로그인처리 끝

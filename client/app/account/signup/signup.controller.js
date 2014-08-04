@@ -10,11 +10,12 @@ angular.module('doresolApp')
 
       if(form.$valid) {
         Auth.createUser($scope.user).then(function (value){
+          console.log(value);
           $location.path('/login');
         }, function(error){
           var errorCode = error.code;
           $scope.errors = {};
-
+console.log(error);
           switch(errorCode){
             case "EMAIL_TAKEN":
               form['email'].$setValidity('firebase',false);
