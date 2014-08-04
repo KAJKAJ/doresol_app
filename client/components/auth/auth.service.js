@@ -24,7 +24,7 @@ angular.module('doresolApp')
     	authService.$createUser(user.email,user.password)
     		.then(function(value){
           // console.log(value);
-          userService.child(value.uid).update({email: user.email},function(error){
+          userService.child(value.uid).update({id:user.id, email: user.email},function(error){
             if(!error){
               deferred.resolve(value);
             }else{
@@ -63,7 +63,9 @@ angular.module('doresolApp')
       authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function() {
         console.log(authService);
     		userService.child(authService.user.uid).update({
-    			fb_id: authService.user.id
+    			id: authService.user.id,
+          name:  authService.user.displayName,
+          thirdPartyUserData: authService.user.thirdPartyUserData
     		});
     	}, function(error) {
     		console.log(error);
