@@ -41,7 +41,7 @@ angular.module('doresolApp')
 
     var login = function(user){
       var deferred = $q.defer();
-      authService.$login('password',{email:user.email, password:user.password})
+      authService.$login('password',{email:user.email, password:user.password,rememberMe: true})
         .then(function(value){
           // console.log(value);
           currentUser = value;
@@ -61,7 +61,7 @@ angular.module('doresolApp')
 
     var loginFb = function(user) {
       var deferred = $q.defer();
-      authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function(value) {
+      authService.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true} ).then(function(value) {
         currentUser = value;
         userService.child(value.uid).update({
           id: value.id,
