@@ -32,12 +32,7 @@ angular.module('doresolApp')
     };
 
     $scope.loginOauth = function(provider) {
-      Auth.loginFb().then( function (value){
-          // console.log(value);
-          $location.path('/');
-        } ,function(error){
-          console.log(error);
-        });  ;
-      // $window.location.href = '/auth/' + provider;
+      Auth.loginOauth();
     };
+    
   });

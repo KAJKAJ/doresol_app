@@ -62,13 +62,11 @@ angular.module('doresolApp')
     var loginFb = function(user) {
       var deferred = $q.defer();
       authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function(value) {
-        console.log('-----');
-        console.log(value);
-        userService.child(authService.user.uid).update({
-    			id: authService.user.id,
-          name:  authService.user.displayName,
-          thirdPartyUserData: authService.user.thirdPartyUserData
-    		},function(error){
+        userService.child(value.uid).update({
+          id: value.id,
+          name:  value.displayName,
+          thirdPartyUserData: value.thirdPartyUserData
+        },function(error){
           if(!error){
             deferred.resolve(value);
           }else{
@@ -76,12 +74,25 @@ angular.module('doresolApp')
           }
         });
 
-    	}, function(error) {
-    		deferred.reject(error);
-    	});
+      }, function(error) {
+        deferred.reject(error);
+      });
 
       return deferred.promise;
     };
+
+    var loginOauth = function(provider){
+      switch(provider){
+        case 'facebook':
+          loginFb().then( function (value){
+            // console.log(value);
+            $location.path('/');
+          } ,function(error){
+            console.log(error);
+          });
+        break;
+      }
+    }
 
     var isLoggedIn = function() {
       // return currentUser.hasOwnProperty('role');
@@ -102,7 +113,7 @@ angular.module('doresolApp')
        */
       login: login,
 
-      loginFb: loginFb,
+      logingOauth: loginOauth,
 
       /**
        * Delete access token and user info
