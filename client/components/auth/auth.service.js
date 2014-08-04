@@ -60,16 +60,27 @@ angular.module('doresolApp')
     };
 
     var loginFb = function(user) {
-      authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function() {
-        console.log(authService);
-    		userService.child(authService.user.uid).update({
+      var deferred = $q.defer();
+      authService.$login('facebook', {scope: 'user_photos, email, user_likes'} ).then(function(value) {
+        console.log('-----');
+        console.log(value);
+        userService.child(authService.user.uid).update({
     			id: authService.user.id,
           name:  authService.user.displayName,
           thirdPartyUserData: authService.user.thirdPartyUserData
-    		});
+    		},function(error){
+          if(!error){
+            deferred.resolve(value);
+          }else{
+            deferred.reject(error);
+          }
+        });
+
     	}, function(error) {
-    		console.log(error);
+    		deferred.reject(error);
     	});
+
+      return deferred.promise;
     };
 
     var isLoggedIn = function() {
