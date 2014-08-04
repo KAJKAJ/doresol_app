@@ -32,7 +32,7 @@ angular.module('doresolApp')
     };
 
     $scope.loginOauth = function(provider) {
-      Auth.loginOauth();
+      Auth.loginOauth(provider);
     };
     
   });

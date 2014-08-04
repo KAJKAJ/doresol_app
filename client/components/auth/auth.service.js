@@ -82,6 +82,8 @@ angular.module('doresolApp')
     };
 
     var loginOauth = function(provider){
+      console.log('---login oauth');
+      console.log(provider);
       switch(provider){
         case 'facebook':
           loginFb().then( function (value){
