@@ -113,7 +113,7 @@ angular.module('doresolApp')
        */
       login: login,
 
-      logingOauth: loginOauth,
+      loginOauth: loginOauth,
 
       /**
        * Delete access token and user info
