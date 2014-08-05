@@ -10,16 +10,17 @@ angular.module('doresolApp')
     // });
     
     // console.log(user);
-  	//임시 로그인처리 끝
+  	// 임시 로그인처리 끝
     var uid = $rootScope.currentUser.uid;
-    $scope.user = User.findById(uid);
     $scope.myMemorials = {};
+    $scope.user = User.findById(uid);
+    $scope.user.$loaded().then(function(){
+      angular.forEach($scope.user.memorials.own, function(memorial, key) {
+        var memorial = Memorial.findById(key);
 
-    angular.forEach($scope.user.memorials, function(memorialId) {
-      var memorial = Memorial.findById(memorialId);
-
-      memorial.$on('loaded', function() {
-        $scope.myMemorials[memorialId] = memorial;
+        memorial.$loaded().then(function() {
+          $scope.myMemorials[key] = memorial;
+        });
       });
     });
 

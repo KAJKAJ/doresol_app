@@ -14,7 +14,7 @@ angular.module('doresolApp')
             date_of_death: $scope.newMemorial.dateOfDeath,
             file: {
               location: 'local',
-              // url: '/tmp/' + $scope.newMemorial.lastUploadingFile,
+              url: '/tmp/' + $scope.newMemorial.lastUploadingFile,
               updated_at: moment().toString()
             }
         }).then(function (value) {
@@ -28,6 +28,7 @@ angular.module('doresolApp')
     };
    
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
+      console.log('here');
       $scope.fileUploading = false;
       $scope.newMemorial.lastUploadingFile = flowFile.uniqueIdentifier;
     });

@@ -25,8 +25,8 @@
 	};
 
 	var findById = function(memorialId){
-		var index = memorials.$indexFor(memorialId);
-		return memorials[index];
+		var memorial = ref.child(memorialId);
+		return $firebase(memorial).$asObject();
 	};
 
 	var remove = function(memorialId) {

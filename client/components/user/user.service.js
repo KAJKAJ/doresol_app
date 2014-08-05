@@ -5,7 +5,8 @@ angular.module('doresolApp')
 
   var ref = new Firebase(ENV.FIREBASE_URI + '/users');
   var users = $firebase(ref);
-  
+  var loaded = false;
+
   var create = function(newUser) {
     var user = {
       id: newUser.id,
@@ -20,7 +21,8 @@ angular.module('doresolApp')
   };
 
   var findById = function(user_id) {
-    return users.$ref().child(user_id);
+    var userRef = users.$ref().child(user_id);
+    return $firebase(userRef).$asObject();
   };
 
   // Memorial Related 

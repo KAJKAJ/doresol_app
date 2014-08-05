@@ -1,28 +1,9 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope,Util,Auth,$modal) {
-    var currentUser = Auth.getCurrentUser()._id;
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal) {
+    var currentUser = $rootScope.currentUser;
     $scope.stories = [];
-    
-    // //temp
-    // $scope.$parent.$watch('memorial.timeline.era',function(era){
-    //   if(era){
-    //     // console.log(era);
-    //     era.push({
-    //       // "startDate":"2011,12,10",
-    //       // "endDate":"2011,12,11",
-    //       "headline":"test1"
-    //       }
-    //     );
-    //     era.push({
-    //       // "startDate":"2011,12,10",
-    //       // "endDate":"2011,12,11",
-    //       "headline":"test2"
-    //       }
-    //     );
-    //   }
-    // });
     
     $scope.getSelectedEra = function(){
       console.log('getSelectedEra');
