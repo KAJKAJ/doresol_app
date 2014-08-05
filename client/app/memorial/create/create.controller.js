@@ -1,27 +1,30 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCreateCtrl', function ($scope,$resource,$state,Auth,Util,Memorial) {
+  .controller('MemorialCreateCtrl', function ($scope,$rootScope, $resource,$state,Auth,Util,Memorial,User) {
     $scope.today = Date.now();
     $scope.newMemorial = {};
-    var currentUser = Auth.getCurrentUser()._id;
+    var currentUser = $rootScope.currentUser;
 
     $scope.createMemorial = function(form){
       if(form.$valid){
-        Memorial.save({},{
-            admin_id: currentUser,
+        Memorial.create({
             name: $scope.newMemorial.name,
             date_of_birth: $scope.newMemorial.dateOfBirth,
             date_of_death: $scope.newMemorial.dateOfDeath,
-            file: $scope.newMemorial.lastUploadingFile
-        }).$promise.then(function (value) {
-          $state.transitionTo('memorial.timeline', {id: value._id});
+            file: {
+              location: 'local',
+              // url: '/tmp/' + $scope.newMemorial.lastUploadingFile,
+              updated_at: moment().toString()
+            }
+        }).then(function (value) {
+          $state.transitionTo('memorial.timeline', {id: value.name()});
         });
       }
     };
 
     $scope.getFlowFileUniqueId = function(file){
-      return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
+      return currentUser.id + '-' + Util.getFlowFileUniqueId(file,currentUser);
     };
    
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {

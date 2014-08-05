@@ -1,85 +1,63 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $firebase, $rootScope, $http, User, $cookieStore, $q, ENV, $firebaseSimpleLogin) {
-    var authService = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
-    var userService = $firebase(new Firebase(ENV.FIREBASE_URI + '/users'));
+  .factory('Auth', function Auth($location, $rootScope, $q, User, ENV, $firebaseSimpleLogin) {
+    var auth = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
+    $rootScope.currentUser = {};
 
-    var currentUser = {};
+    var register =  function(user) {
+    	var _register = function() {
+        return auth.$createUser(user.email,user.password).then( function (value){
+          value.email = user.email;
+          return value;
+        });
+      };
 
-    var getCurrentUser = function(){
-      if(!currentUser){
-        authService.$getCurrentUser()
-          .then(function (value){
-            currentUser = value;
-          }
-        );
-      }
-
-      return currentUser;
+      return _register(user).then(User.create);
     };
 
-    var createUser =  function(user) {
-    	var deferred = $q.defer();
-    	authService.$createUser(user.email,user.password)
-    		.then(function(value){
-          // console.log(value);
-          userService.$set(value.uid, {id:value.id, email: user.email})
-          .then(function(value) {
-            deferred.resolve(value);
-          }, function(error) {
-            deferred.reject(error);
-          });
-          
-    		}, function(error) {
-          deferred.reject(error);
-    		});
-    	 return deferred.promise;
+    var getCurrentUser = function() {
+      if(!isLoggedIn()) {
+        auth.$getCurrentUser().then(function(value) {
+          setCurrentUser(value);
+          return $rootScope.currentUser;
+        });
+      }
+      return $rootScope.currentUser;
+    };
+
+    var setCurrentUser = function(authUser) {
+      $rootScope.currentUser = authUser;
     };
 
     var login = function(user){
       var deferred = $q.defer();
-      authService.$login('password',{email:user.email, password:user.password,rememberMe: true})
-        .then(function(value){
-          // console.log(value);
-          currentUser = value;
-          deferred.resolve(currentUser);
-        },function(error){
-          deferred.reject(error);
-        }
-      );
+      auth.$login('password',{email:user.email, password:user.password,rememberMe: true}).then(function(value) {
 
-      return deferred.promise;
-    };
-
-    var loginFb = function(user) {
-      var deferred = $q.defer();
-      authService.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true} ).then(function(value) {
-        currentUser = value;
-        userService.$update(value.uid, {
-          id: value.id,
-          name:  value.displayName,
-          thirdPartyUserData: value.thirdPartyUserData
-        },function(error){
-          if(!error){
-            deferred.resolve(value);
-          }else{
-            deferred.reject(error);
-          }
-        });
+        setCurrentUser(value);
+        deferred.resolve(value);
 
       }, function(error) {
         deferred.reject(error);
       });
+      return deferred.promise;
+    };
 
+    var loginFb = function() {
+      var deferred = $q.defer();
+      auth.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true}).then(function(value) {
+        setCurrentUser(value);
+        deferred.resolve(value);
+      }, function(error) {
+        deferred.reject(error);
+      });
       return deferred.promise;
     };
 
     var loginOauth = function(provider){
       switch(provider){
         case 'facebook':
-          loginFb().then( function (value){
-            // console.log(value);
+          return loginFb().then( function (){
             $location.path('/mydoresol');
           } ,function(error){
             console.log(error);
@@ -89,16 +67,19 @@ angular.module('doresolApp')
     };
 
     var isLoggedIn = function() {
-      return currentUser.hasOwnProperty('uid');
+      return $rootScope.currentUser.hasOwnProperty('uid');
     };
 
     var logout = function() {
-      currentUser = {};
+      auth.$logout();
+      $rootScope.currentUser = {};
     };
 
-    currentUser = getCurrentUser();
-    
+    $rootScope.currentUser = getCurrentUser();
+
     return {
+
+      register: register,
 
       login: login,
 
@@ -106,34 +87,23 @@ angular.module('doresolApp')
 
       logout: logout,
 
-      createUser: createUser,
+      isLoggedIn: isLoggedIn
 
-      changePassword: function(oldPassword, newPassword, callback) {
-        var cb = callback || angular.noop;
+      // isAdmin: function() {
+      //   return currentUser.role === 'admin';
+      // },
 
-        return User.changePassword({ id: currentUser._id }, {
-          oldPassword: oldPassword,
-          newPassword: newPassword
-        }, function(user) {
-          return cb(user);
-        }, function(err) {
-          return cb(err);
-        }).$promise;
-      },
+      // changePassword: function(oldPassword, newPassword, callback) {
+      //   var cb = callback || angular.noop;
 
-      getCurrentUser: getCurrentUser,
-
-      isLoggedIn: isLoggedIn,
-
-      isAdmin: function() {
-        return currentUser.role === 'admin';
-      },
-
-      // /**
-      //  * Get auth token
-      //  */
-      // getToken: function() {
-      //   return $cookieStore.get('token');
+      //   return User.changePassword({ id: currentUser._id }, {
+      //     oldPassword: oldPassword,
+      //     newPassword: newPassword
+      //   }, function(user) {
+      //     return cb(user);
+      //   }, function(err) {
+      //     return cb(err);
+      //   }).$promise;
       // }
     };
   });
