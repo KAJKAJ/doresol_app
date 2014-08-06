@@ -3,11 +3,13 @@
 angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, Memorial, $stateParams) {
     
-    $scope.memorial = Memorial.myMemorials[$stateParams.id];
     
-    if($scope.memorial['timeline']) {
-      $scope.timeline = $scope.memorial['timeline'];
-    };
+    // $scope.memorial = Memorial.myMemorials[$stateParams.id];
+    // console.log($scope.memorial);
+
+    // if($scope.memorial['timeline']) {
+    //   $scope.timeline = $scope.memorial['timeline'];
+    // };
 
     $scope.getSelectedEra = function(){
       console.log('getSelectedEra');

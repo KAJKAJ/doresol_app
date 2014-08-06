@@ -25,6 +25,7 @@ angular.module('doresolApp')
 
           memorial.$loaded().then(function() {
             $scope.myMemorials[key] = memorial;
+            // console.log($scope.myMemorials);
           });
         });
     }

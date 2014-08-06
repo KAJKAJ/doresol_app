@@ -9,10 +9,14 @@ angular.module('doresolApp')
 		// memorial.$loaded().then(function (){
 		// 	$scope.memorial = memorial;
 		// });
-		var memorialId = $stateParams.id;
-		$scope.memorial = Memorial.myMemorials[memorialId];
+		// $scope.memorial = Memorial.myMemorials[$stateParams.id];
 
-		console.log('memorial');
-		console.log($scope.memorial);
+		var obj = Memorial.findById($stateParams.id);
+    obj.$loaded().then(function(){
+      $scope.memorial = obj;
+    });
+
+		// console.log('memorial');
+		// console.log($scope.memorial);
 
   });

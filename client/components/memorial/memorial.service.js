@@ -3,8 +3,6 @@
  angular.module('doresolApp')
   .factory('Memorial', function Memorial($firebase, $q, ENV, User, Auth, File) {
 
-  var currentMemorial = {};
-
 	var ref = new Firebase(ENV.FIREBASE_URI + '/memorials');
 	var memorials = $firebase(ref).$asArray();
 
@@ -41,16 +39,16 @@
 	};
 
 	var remove = function(memorialId) {
-		var memorial = Memorial.find(memorialId);
+		// var memorial = Memorial.find(memorialId);
 
-		memorial.$on('loaded', function() {
-			var user = User.$getCurrentUser();
+		// memorial.$on('loaded', function() {
+		// 	var user = User.$getCurrentUser();
 
-			memorials.$remove(memorialId).then( function() {
-				user.$child('memorials').$child('owns').$remove(memorialId);
-			});
+		// 	memorials.$remove(memorialId).then( function() {
+		// 		user.$child('memorials').$child('owns').$remove(memorialId);
+		// 	});
 
-		});
+		// });
 	};
 
 	return {

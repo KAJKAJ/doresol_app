@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCreateCtrl', function ($scope,$rootScope, $resource,$state,Auth,Util,Memorial,User) {
+  .controller('MemorialCreateCtrl', function ($scope,$rootScope, $resource,$state,Auth,Util,Memorial,User, $firebase) {
     $scope.today = Date.now();
     $scope.newMemorial = {};
     $scope.currentUser = User.getCurrentUser();
@@ -24,6 +24,11 @@ angular.module('doresolApp')
         };
 
         Memorial.create(memorial).then(function (value) {
+          // var obj = Memorial.findById(value.name());
+          // obj.$loaded().then(function(){
+          //   Memorial.myMemorials[value.name()];
+          //   $state.transitionTo('memorial.timeline', {id: value.name()});
+          // })
           $state.transitionTo('memorial.timeline', {id: value.name()});
         });
       }
