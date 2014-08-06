@@ -58,6 +58,15 @@ angular.module('doresolApp')
       var deferred = $q.defer();
       auth.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true}).then(function(value) {
         setCurrentUser(value);
+
+        User.update(value.uid, 
+        {
+         uid: value.uid,
+         id: value.id,         
+         name:  value.displayName,
+         thirdPartyUserData: value.thirdPartyUserData
+        });
+
         deferred.resolve(value);
       }, function(error) {
         deferred.reject(error);
@@ -80,6 +89,7 @@ angular.module('doresolApp')
     var logout = function() {
       auth.$logout();
       currentUser = null;
+      User.setCurrentUser(null);
     };
 
     return {
