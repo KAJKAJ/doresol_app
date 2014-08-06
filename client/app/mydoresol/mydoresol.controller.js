@@ -12,8 +12,10 @@ angular.module('doresolApp')
     // console.log(user);
   	// 임시 로그인처리 끝
     var uid = $rootScope.currentUser.uid;
-    $scope.myMemorials = {};
     $scope.user = User.findById(uid);
+
+    $scope.myMemorials = Memorial.myMemorials;
+
     $scope.user.$loaded().then(function(){
       angular.forEach($scope.user.memorials.own, function(memorial, key) {
         var memorial = Memorial.findById(key);

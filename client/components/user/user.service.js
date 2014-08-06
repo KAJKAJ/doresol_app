@@ -5,8 +5,7 @@ angular.module('doresolApp')
 
   var ref = new Firebase(ENV.FIREBASE_URI + '/users');
   var users = $firebase(ref);
-  var loaded = false;
-
+  
   var create = function(newUser) {
     var user = {
       id: newUser.id,

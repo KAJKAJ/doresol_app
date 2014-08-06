@@ -3,6 +3,8 @@
  angular.module('doresolApp')
   .factory('Memorial', function Memorial($firebase, $q, ENV, User, Auth) {
 
+  var currentMemorial = {};
+
 	var ref = new Firebase(ENV.FIREBASE_URI + '/memorials');
 	var memorials = $firebase(ref).$asArray();
 
@@ -45,7 +47,9 @@
 	return {
 		remove: remove,
 		create: create,
-		findById: findById
+		findById: findById,
+
+		myMemorials: {}
 	};
 	
 });

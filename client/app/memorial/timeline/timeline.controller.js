@@ -21,7 +21,7 @@ angular.module('doresolApp')
     $scope.submitEra = function(form){
       console.log($scope);
       
-      var memorial = $scope.$parent.memorial;
+      // var memorial = $scope.$parent.memorial;
 
       // if(form.$valid){
       //   var memorial = $resource('/api/memorials/:meorialId', {meorialId:'@id'});
@@ -29,8 +29,6 @@ angular.module('doresolApp')
       //     user.abc = true;
       //     user.$save();
       //   });
-
-
 
       //   var Memorial = $resource('/api/memorials');
 
