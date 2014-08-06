@@ -2,12 +2,17 @@
 
 angular.module('doresolApp')
   .factory('File', function File($firebase, $q, ENV) {
-    var fileService = $firebase(new Firebase(ENV.FIREBASE_URI + '/local_files'));
+    var localFilesRef = new Firebase(ENV.FIREBASE_URI + '/local_files');
+		var localFiles = $firebase(localFilesRef).$asArray();
 
-    var createLocalFile = function() {
-    	
+    var createLocalFile = function(params) {
+	  	return localFiles.$add({
+	  		fileParentPath: params.fileParentPath,
+				fileUrl: params.fileParentPath
+	  	}).then( function(ref) {
+      	return params;
+			});
     };
-
 
     return {
     	createLocalFile: createLocalFile

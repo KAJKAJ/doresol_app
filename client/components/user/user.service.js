@@ -63,12 +63,12 @@ angular.module('doresolApp')
   };
 
   // Memorial Related 
-  var createMemorial = function(memorialId) {
+  var createMemorial = function(params) {
     var uid = currentUser.uid;
-    var memorialRef = users.$ref().child(uid + '/memorials/own/' + memorialId);
-    var memorial = $firebase(memorialRef);
+    var ownMemorialRef = users.$ref().child(uid + '/memorials/own/' + params.key);
+    var memorial = $firebase(ownMemorialRef);
 
-    return memorial.$set(memorialId);
+    return memorial.$set(true);
   };
 
   // $rootScope.$on('$firebaseSimpleLogin:login', function (e, authUser) {
