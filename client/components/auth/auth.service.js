@@ -1,9 +1,26 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $rootScope, $q, User, ENV, $firebaseSimpleLogin) {
+  .factory('Auth', function Auth($location, $q, User, ENV, $firebaseSimpleLogin) {
     var auth = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
-    $rootScope.currentUser = {};
+    var currentUser = null;
+    
+    var getCurrentUserFromFirebase = function(){
+      var dfd = $q.defer();
+      if(currentUser == null){
+        auth.$getCurrentUser().then(function(value) {
+          setCurrentUser(value);
+          dfd.resolve(value);
+        },function(error){
+          dfd.reject(error);
+        });
+      }else{
+        dfd.resolve(currentUser);
+      }
+      return dfd.promise;
+    };
+
+    // getCurrentUserFromFirebase();
 
     var register =  function(user) {
     	var _register = function() {
@@ -16,18 +33,12 @@ angular.module('doresolApp')
       return _register(user).then(User.create);
     };
 
-    var getCurrentUser = function() {
-      if(!isLoggedIn()) {
-        auth.$getCurrentUser().then(function(value) {
-          setCurrentUser(value);
-          return $rootScope.currentUser;
-        });
-      }
-      return $rootScope.currentUser;
+    var getCurrentUser = function(){
+      return currentUser;
     };
 
     var setCurrentUser = function(authUser) {
-      $rootScope.currentUser = authUser;
+      currentUser = authUser;
     };
 
     var login = function(user){
@@ -66,16 +77,10 @@ angular.module('doresolApp')
       }
     };
 
-    var isLoggedIn = function() {
-      return $rootScope.currentUser.hasOwnProperty('uid');
-    };
-
     var logout = function() {
       auth.$logout();
-      $rootScope.currentUser = {};
+      currentUser = null;
     };
-
-    $rootScope.currentUser = getCurrentUser();
 
     return {
 
@@ -87,7 +92,9 @@ angular.module('doresolApp')
 
       logout: logout,
 
-      isLoggedIn: isLoggedIn
+      getCurrentUser:getCurrentUser,
+
+      getCurrentUserFromFirebase:getCurrentUserFromFirebase
 
       // isAdmin: function() {
       //   return currentUser.role === 'admin';

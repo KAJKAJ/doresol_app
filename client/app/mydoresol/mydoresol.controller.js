@@ -2,7 +2,7 @@
 
 angular.module('doresolApp')
   // .controller('MydoresolCtrl', function ($scope) {
-  .controller('MydoresolCtrl', function ($scope,$rootScope, Auth,$resource,Memorial,User) {
+  .controller('MydoresolCtrl', function ($scope, $resource, Auth, Memorial, User) {
     //임시 로그인처리 시작
     // Auth.login({
     //   email: 'test@test.com',
@@ -11,19 +11,23 @@ angular.module('doresolApp')
     
     // console.log(user);
   	// 임시 로그인처리 끝
-    var uid = $rootScope.currentUser.uid;
-    $scope.user = User.findById(uid);
+    // var uid = $rootScope.currentUser.uid;
+    var currentUser = Auth.getCurrentUser();
+    
+    $scope.user = User.findById(currentUser.uid);
 
     $scope.myMemorials = Memorial.myMemorials;
 
     $scope.user.$loaded().then(function(){
-      angular.forEach($scope.user.memorials.own, function(memorial, key) {
-        var memorial = Memorial.findById(key);
+      if($scope.user.memorials){
+        angular.forEach($scope.user.memorials.own, function(memorial, key) {
+          var memorial = Memorial.findById(key);
 
-        memorial.$loaded().then(function() {
-          $scope.myMemorials[key] = memorial;
+          memorial.$loaded().then(function() {
+            $scope.myMemorials[key] = memorial;
+          });
         });
-      });
+      }
     });
 
     // Memorial.query({admin_id:userId}).$promise.then(function (value) {
