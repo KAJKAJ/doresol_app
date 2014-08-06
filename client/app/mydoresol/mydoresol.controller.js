@@ -16,21 +16,18 @@ angular.module('doresolApp')
     
     // $scope.user = User.findById(currentUser.uid);
 
-    // $scope.myMemorials = Memorial.myMemorials;
-var user = User.getCurrentUser();
-console.log(user);
+    $scope.myMemorials = Memorial.myMemorials;
+    $scope.user = User.getCurrentUser();
 
-    // $scope.user.$loaded().then(function(){
-    //   if($scope.user.memorials){
-    //     angular.forEach($scope.user.memorials.own, function(memorial, key) {
-    //       var memorial = Memorial.findById(key);
+    if($scope.user.memorials){
+        angular.forEach($scope.user.memorials.own, function(memorial, key) {
+          var memorial = Memorial.findById(key);
 
-    //       memorial.$loaded().then(function() {
-    //         $scope.myMemorials[key] = memorial;
-    //       });
-    //     });
-    //   }
-    // });
+          memorial.$loaded().then(function() {
+            $scope.myMemorials[key] = memorial;
+          });
+        });
+    }
 
     // Memorial.query({admin_id:userId}).$promise.then(function (value) {
     //   $scope.myMemorials = value;

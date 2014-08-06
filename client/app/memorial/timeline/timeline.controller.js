@@ -1,10 +1,14 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal) {
-    var currentUser = $rootScope.currentUser;
-    $scope.stories = [];
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, Memorial, $stateParams) {
     
+    $scope.memorial = Memorial.myMemorials[$stateParams.id];
+    
+    if($scope.memorial['timeline']) {
+      $scope.timeline = $scope.memorial['timeline'];
+    };
+
     $scope.getSelectedEra = function(){
       console.log('getSelectedEra');
       return $scope.selectedEra;
@@ -50,6 +54,7 @@ angular.module('doresolApp')
       //     // console.log('error');
       //   });
       // }
+
     };
 
     $scope.openDatepicker = function($event,variable) {

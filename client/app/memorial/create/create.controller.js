@@ -4,7 +4,7 @@ angular.module('doresolApp')
   .controller('MemorialCreateCtrl', function ($scope,$rootScope, $resource,$state,Auth,Util,Memorial,User) {
     $scope.today = Date.now();
     $scope.newMemorial = {};
-    var currentUser = $rootScope.currentUser;
+    $scope.currentUser = User.getCurrentUser();
 
     $scope.createMemorial = function(form){
       if(form.$valid){
@@ -24,11 +24,10 @@ angular.module('doresolApp')
     };
 
     $scope.getFlowFileUniqueId = function(file){
-      return currentUser.id + '-' + Util.getFlowFileUniqueId(file,currentUser);
+      return $scope.currentUser.uid.replace(/[^\.0-9a-zA-Z_-]/img, '') + '-' + Util.getFlowFileUniqueId(file);
     };
    
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
-      console.log('here');
       $scope.fileUploading = false;
       $scope.newMemorial.lastUploadingFile = flowFile.uniqueIdentifier;
     });

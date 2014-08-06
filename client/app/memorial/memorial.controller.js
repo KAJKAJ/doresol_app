@@ -11,6 +11,8 @@ angular.module('doresolApp')
 		// });
 		var memorialId = $stateParams.id;
 		$scope.memorial = Memorial.myMemorials[memorialId];
-		
-  });
 
+		console.log('memorial');
+		console.log($scope.memorial);
+
+  });
