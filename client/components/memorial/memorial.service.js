@@ -53,12 +53,19 @@
 		return era.$push(eraItem);
 	};
 
+	var updateEra = function(memorialId, eraId, eraItem){
+		var eraRef = ref.child(memorialId + '/timeline/era');
+		var era = $firebase(eraRef);
+		return era.$set(eraId,eraItem);
+	};
+
 	return {
 		remove: remove,
 		create: create,
 		findById: findById,
 
-		createEra:createEra
+		createEra:createEra,
+		updateEra:updateEra
 
 	};
 	

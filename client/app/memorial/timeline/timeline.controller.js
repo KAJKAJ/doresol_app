@@ -3,9 +3,10 @@
 angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, Memorial, $stateParams) {
 
-    $scope.memorial_key = $stateParams.id;
-    $scope.memorial = MyMemorial.getMyMemorial($scope.memorial_key);
-    $scope.selectedEraKey = {};
+    $scope.memorialKey = $stateParams.id;
+    $scope.memorial = MyMemorial.getMyMemorial($scope.memorialKey);
+    // $scope.selectedEraKey = {};
+    $scope.selectedEra = {};
     
     // $scope.memorial = Memorial.myMemorials[$stateParams.id];
     // console.log($scope.memorial);
@@ -13,6 +14,19 @@ angular.module('doresolApp')
     // if($scope.memorial['timeline']) {
     //   $scope.timeline = $scope.memorial['timeline'];
     // };
+    $scope.selectedEraHeadlineChange = function(){
+      var isDuplicated = false;
+      angular.forEach($scope.memorial.timeline.era, function(era, key) {
+        if(key!=$scope.selectedEraKey && era.headline == $scope.selectedEra.headline) {
+          isDuplicated = true;
+        }
+      });
+      if(isDuplicated){
+        $scope.eraForm.name.$setValidity("duplicated",false);
+      }else{
+        $scope.eraForm.name.$setValidity("duplicated",true);
+      }
+    };
 
     $scope.getSelectedEraKey = function(){
       return $scope.selectedEraKey;
@@ -20,7 +34,8 @@ angular.module('doresolApp')
 
     $scope.setSelectedEra = function(key, era){
       $scope.selectedEraKey = key;
-      $scope.selectedEra = era;
+      // $scope.selectedEra = era;
+      angular.copy(era, $scope.selectedEra);
     };
 
     $scope.submitEra = function(form) {
@@ -30,9 +45,9 @@ angular.module('doresolApp')
         $scope.selectedEra.endDate = moment($scope.selectedEra.endDate).format('YYYY-MM-DD');
 
         if($scope.selectedEraKey == 'tempKey') {
-          Memorial.createEra($scope.memorial_key, $scope.selectedEra);
+          Memorial.createEra($scope.memorialKey, $scope.selectedEra);
         } else {
-          Memorial.updateEra($scope.memorial_key, $scope.selectedEraKey, $scope.selectedEra);
+          Memorial.updateEra($scope.memorialKey, $scope.selectedEraKey, $scope.selectedEra);
         }
       }
 
