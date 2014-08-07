@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCtrl', function ($scope,$stateParams,$resource,$state,ENV,Memorial) {
+  .controller('MemorialCtrl', function ($scope,$stateParams,$resource,$state,ENV,MyMemorial) {
     $scope.$state = $state;
     
     // var memorial = Memorial.findById(memorialId);
@@ -10,11 +10,8 @@ angular.module('doresolApp')
 		// 	$scope.memorial = memorial;
 		// });
 		// $scope.memorial = Memorial.myMemorials[$stateParams.id];
-
-		var obj = Memorial.findById($stateParams.id);
-    obj.$loaded().then(function(){
-      $scope.memorial = obj;
-    });
+		$scope.memorialKey = $stateParams.id;
+		$scope.memorial = MyMemorial.getMyMemorial($scope.memorialKey);
 
 		// console.log('memorial');
 		// console.log($scope.memorial);

@@ -17,10 +17,15 @@
   	return myMemorials;
   };
 
+  var getMyMemorial = function(memorialId) {
+    return myMemorials[memorialId];
+  };
+
 	return {
 		addMyMemorial:addMyMemorial,
 		removeMyMemorial:removeMyMemorial,
-		getMyMemorials:getMyMemorials
+		getMyMemorials:getMyMemorials,
+    getMyMemorial:getMyMemorial
 	};
 	
 });

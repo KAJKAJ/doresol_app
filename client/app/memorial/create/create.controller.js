@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCreateCtrl', function ($scope,$rootScope, $resource,$state,Auth,Util,Memorial,User, $firebase) {
+  .controller('MemorialCreateCtrl', function ($scope,$rootScope, $resource,$state,Auth,Util,Memorial,User,$firebase) {
     $scope.today = Date.now();
     $scope.newMemorial = {};
     $scope.currentUser = User.getCurrentUser();
+
     $scope.createMemorial = function(form){
       if(form.$valid){
         var file = null;
