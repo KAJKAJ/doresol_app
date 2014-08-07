@@ -38,9 +38,10 @@ angular.module('doresolApp')
       var myMemorialRef =  ref.child(user.uid+'/memorials/own');
 
       myMemorialRef.on("child_added", function(value) {
-        memorialsRef.child(value.name()).on("value", function(data) {
+        var oneMemorial = $firebase(memorialsRef.child(value.name())).$asObject();
+        oneMemorial.$watch(function() {
           $timeout(function(){
-            MyMemorial.addMyMemorial(data.name(),data.val());
+            MyMemorial.addMyMemorial(oneMemorial.$id,oneMemorial);
           },0);
         });
       });

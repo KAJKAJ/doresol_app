@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, Memorial, $stateParams) {
-    
-    
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, $stateParams) {
+
+    $scope.memorial = MyMemorial.getMyMemorial($stateParams.id);
+    $scope.memorial.timeline ={ era : [{headline: 'test1'}, {headline: 'test2'}]};
+
     // $scope.memorial = Memorial.myMemorials[$stateParams.id];
     // console.log($scope.memorial);
 
@@ -26,7 +28,8 @@ angular.module('doresolApp')
 
     $scope.submitEra = function(form){
       console.log($scope);
-      
+      $scope.memorial.$save();
+
       // var memorial = $scope.$parent.memorial;
 
       // if(form.$valid){
