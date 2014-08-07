@@ -6,8 +6,7 @@
 		 }"
 		 flow-file-added="fileUploading=true"
 		 flow-files-submitted="$flow.upload()"
-		 ng-controller="MemorialCreateCtrl"
-		 >
+		 ng-controller="MemorialCreateCtrl">
 
 	<div ng-include="'components/navbar/navbar.html'"></div>
 
@@ -31,7 +30,7 @@
 			    is-open="dateOfBirthOpened" datepicker-popup="yyyy-MM-dd" max-date="today"
 			    ng-required="true" ng-model="newMemorial.dateOfBirth"/>
 	        <span class="input-group-btn">
-	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfBirthOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfBirthOpened')"><i class="glyphicon glyphicon-calendar text-success"></i></button>
 	        </span>
 	      </p>
 	      <div class="alert alert-danger" role="alert"
@@ -45,7 +44,7 @@
 			    is-open="dateOfDeathOpened" datepicker-popup="yyyy-MM-dd" min-date="newMemorial.dateOfBirth" max-date="today"
 			    ng-required="true" ng-model="newMemorial.dateOfDeath"/>
 	        <span class="input-group-btn">
-	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfDeathOpened')"><i class="glyphicon glyphicon-calendar"></i></button>
+	          <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfDeathOpened')"><i class="glyphicon glyphicon-calendar text-success"></i></button>
 	        </span>
 	      </p>
 	      <div class="alert alert-danger" role="alert"

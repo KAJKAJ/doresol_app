@@ -15,7 +15,8 @@ var MemorialSchema = new Schema({
   	updated_at: Date
   },
   timeline: {
-    created: Boolean
+    created: Boolean,
+    era:[]
   },
   active: Boolean
 });

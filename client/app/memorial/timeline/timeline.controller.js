@@ -1,63 +1,146 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope,Util,Auth,$modal) {
-    var currentUser = Auth.getCurrentUser()._id;
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, Memorial, $stateParams) {
+    
+    
+    // $scope.memorial = Memorial.myMemorials[$stateParams.id];
+    // console.log($scope.memorial);
 
-  	// $scope.dataObject = {
-   //      "timeline": {
-   //          "headline":"김학구",
-   //          "type":"default",
-   //  				"startDate":"1938,1",
-   //  				"text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
-   //  				"asset": {
-   //                      "media":"/assets/images/father/1.png",
-   //                      "caption":"아버지 .. 아포 중학교 앞에서"
-   //                  },
-   //          "date": [{
-   //                  "startDate":"1938,12,21",
-   //                  "endDate":"1938,12,25",
-   //                  "headline":"결혼식 with 서경분",
-   //                  "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
-   //                  "asset":
-   //                  {
-   //                      "media":"/assets/images/father/1.png",
-   //                      "thumbnail":"/assets/images/father/1.png",
-   //                  }
-   //              },
-   //          ]
-   //      }
-   //  };
+    // if($scope.memorial['timeline']) {
+    //   $scope.timeline = $scope.memorial['timeline'];
+    // };
 
-    // createStoryJS({
-    //      type:       'timeline',
-    //      width:      '100%',
-    //      height:     '800',
-    //      source:     $scope.dataObject,
-    //      embed_id:   'timeline-embed'
-    //  });
+    $scope.getSelectedEra = function(){
+      console.log('getSelectedEra');
+      return $scope.selectedEra;
+    };
+
+    $scope.setSelectedEra = function(era){
+      $scope.selectedEra = era;
+    };
+
+    $scope.getSelectedEra = function() {
+      return $scope.selectedEra;
+    };
+
+    $scope.submitEra = function(form){
+      console.log($scope);
+      
+      // var memorial = $scope.$parent.memorial;
+
+      // if(form.$valid){
+      //   var memorial = $resource('/api/memorials/:meorialId', {meorialId:'@id'});
+      //   var user = User.get({meorialId:memorialId}, function() {
+      //     user.abc = true;
+      //     user.$save();
+      //   });
+
+      //   var Memorial = $resource('/api/memorials');
+
+      //   var newMemorial = new Memorial({
+      //       admin_id: currentUser,
+      //       name: $scope.newMemorial.name,
+      //       date_of_birth: $scope.newMemorial.dateOfBirth,
+      //       date_of_death: $scope.newMemorial.dateOfDeath,
+      //       file: $scope.newMemorial.lastUploadingFile
+      //   });
+
+      //   // console.log(newMemorial);
+      //   newMemorial.$save(function(item, putResponseHeaders) {
+      //     //item => saved user object
+      //     //putResponseHeaders => $http header getter
+      //     $state.transitionTo('memorial.timeline', {id: item._id});
+      //   }, function(error){
+      //     // console.log(error);
+      //     // console.log('error');
+      //   });
+      // }
+
+    };
+
+    $scope.openDatepicker = function($event,variable) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope[variable] = true;
+
+    };
 
     $scope.getFlowFileUniqueId = function(file){
       return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
     };
 
-    $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
-      console.log(flowFile.uniqueIdentifier); 
-    });
+    $scope.createTimeline = function(){
+      var memorial = $scope.$parent.memorial;
 
-    $scope.createTimeline = function(timelineForm){
-      console.log('timelineForm');
-      console.log($scope.stories);
+      console.log($scope);
+      var timeline_data = {
+        "timeline": {
+           "headline": memorial.name,
+           "type":"default",
+           "startDate":memorial.date_of_birth,
+           // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
+           "asset": {
+                        "media":memorial.file.url,
+                        // "caption":"아버지 .. 아포 중학교 앞에서"
+                    },
+            "date": [{
+                    "startDate":"1938,12,21",
+                    "endDate":"1938,12,25",
+                    "headline":"결혼식 with 서경분",
+                    "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
+                    "asset":
+                    {
+                        "media":"/assets/images/father/1.png",
+                        "thumbnail":"/assets/images/father/1.png",
+                    }
+                },
+            ]
+        }
+      };
+
+      var timeline_dates = [];
+      for(var i=0;i<$scope.stories.length;i++){
+        timeline_dates.push({
+          "startDate":$scope.stories[i].start_date.replace(/\-/g,','),
+          "headline":$scope.stories[i].name,
+          "text":$scope.stories[i].desc,
+          "asset":{
+            "media": '/tmp/' + $scope.stories[i].file.uniqueIdentifier,
+            "thumbnail": '/tmp/' + $scope.stories[i].file.uniqueIdentifier
+          }
+        });
+      }
+
+      timeline_data.timeline.date = timeline_dates;
+
+      createStoryJS({
+           type:       'timeline',
+           width:      '100%',
+           height:     '800',
+           source:     timeline_data,
+           embed_id:   'timeline-embed'
+       });
+
+      $scope.temp_created = true;
     };
 
-    $scope.stories = [];
-    $scope.flowFileAdded = function($file){
-      $scope.stories.push(
-        {
-          new_story: true,
-          file: $file  
-        }
-      );
+    $scope.flowFilesAdded = function($files){
+      // console.log($files);
+      angular.forEach($files, function(value, key) {
+        value.type = value.file.type.split("/")[0];
+        
+        $scope.stories.push(
+          {
+            name:'제목없음',
+            new_story: true,
+            file: value,
+            start_date: moment(value.file.lastModifiedDate).format("YYYY-MM-DD")
+            // Mon Sep 10 2012 15:19:56 GMT+0900 (KST)
+          }
+        );
+      });
     };
 
     $scope.flowFileDeleted = function(story){
@@ -95,3 +178,44 @@ angular.module('doresolApp')
       });
     };
   });
+
+
+// {
+//     "timeline":
+//     {
+//         "headline":"The Main Timeline Headline Goes here",
+//         "type":"default",
+//         "text":"<p>Intro body text goes here, some HTML is ok</p>",
+//         "asset": {
+//             "media":"http://yourdomain_or_socialmedialink_goes_here.jpg",
+//             "credit":"Credit Name Goes Here",
+//             "caption":"Caption text goes here"
+//         },
+//         "date": [
+//             {
+//                 "startDate":"2011,12,10",
+//                 "endDate":"2011,12,11",
+//                 "headline":"Headline Goes Here",
+//                 "text":"<p>Body text goes here, some HTML is OK</p>",
+//                 "tag":"This is Optional",
+//                 "classname":"optionaluniqueclassnamecanbeaddedhere",
+//                 "asset": {
+//                     "media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
+//                     "thumbnail":"optional-32x32px.jpg",
+//                     "credit":"Credit Name Goes Here",
+//                     "caption":"Caption text goes here"
+//                 }
+//             }
+//         ],
+//         "era": [
+//             {
+//                 "startDate":"2011,12,10",
+//                 "endDate":"2011,12,11",
+//                 "headline":"Headline Goes Here",
+//                 "text":"<p>Body text goes here, some HTML is OK</p>",
+//                 "tag":"This is Optional"
+//             }
+
+//         ]
+//     }
+// }

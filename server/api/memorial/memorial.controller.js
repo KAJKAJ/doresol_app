@@ -6,15 +6,14 @@ var Memorial = require('./memorial.model');
 
 // Get list of memorials
 exports.index = function(req, res) {
-  var params = req.params;
-  var user_id = params.user_id;
+  var params = req.query;
   
-  Memorial.find({admin_id:user_id}).sort({_id: -1}).exec(function(err, memorials) {
-    if(err) { return handleError(res, err); }
-
-    console.log(memorials);
-    return res.json(200, memorials);
-  });
+  if(params.admin_id){
+    Memorial.find({admin_id:params.admin_id}).sort({_id: -1}).exec(function(err, memorials) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, memorials);
+    });
+  }
 };
 
 // Get a single memorial

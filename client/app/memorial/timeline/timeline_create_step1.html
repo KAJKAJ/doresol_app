@@ -3,80 +3,99 @@
 			 singleFile: false,
 			 target:'/api/fileuploads', 
 			 testChunks: false,
-			 generateUniqueIdentifier: getFlowFileUniqueId
+			 generateUniqueIdentifier: getFlowFileUniqueId,
+			 simultaneousUploads: 3
 		}"
       flow-prevent-drop
       flow-drag-enter="style={border: '5px solid green'}"
       flow-drag-leave="style={}"
 		
-      flow-file-added="flowFileAdded($file)"
-		  flow-files-submitted="$flow.upload()"
-		  ng-controller="TimelineCtrl"
+      flow-files-added="flowFilesAdded($files)"
+	  	flow-files-submitted="$flow.upload()"
+	 	  ng-controller="TimelineCtrl"
 
       ng-style="style">
 
 	<!-- <div flow-init="" flow-files-submitted="$flow.upload()" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" class="ng-scope"> -->
-	  <div class="drop" flow-drop="" ng-class="dropClass">
-	    <span class="btn btn-default" flow-btn="">이 버튼을 누르기<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
-	    <b>또는</b>
-	    사진을 마우스로 여기로 옮겨주세요.
-	  </div>
+		<div ng-hide="temp_created">
+		  <div class="drop" flow-drop="" ng-class="dropClass">
+		    <span class="btn btn-default" flow-attrs="{accept:['image/*','video/*']}" flow-btn="" >이 버튼을 누르기<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+		    <b>또는</b>
+		    사진을 마우스로 여기로 옮겨주세요.
+		  </div>
 
-	  <br>
+		  <br>
 
 
-	  <!-- <div>
-	  	<form name="timelineForm" ng-submit="createTimeline(timelineForm,$flow)" novalidate>
-		    <div ng-repeat="story in stories" class="gallery-box ng-scope">
-		      <div class="thumbnail" ng-show="stories.length">
-					<img flow-img="story.file">
-			      <div class="progress progress-striped" ng-class="{active: story.file.isUploading()}" >
-			        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (story.file.progress() * 100) + &#39;%&#39;}" style="width: 100%;">
-			          <span class="sr-only ng-binding">1% Complete</span>
-			        </div>
-			      </div>
-			      <div class="btn-group">
-			        <a class="btn btn-xs btn-info" ng-click="openModal(story)">
-			          edit
-			        </a>
-			        <a class="btn btn-xs btn-danger" ng-click="flowFileDeleted(story)">
-			          Remove
-			        </a>
-			      </div>
-			    </div>
-			    <div class="clear"></div>
-			  </div>
-			</form>
-		</div> -->
-
-		<div class="row">
-			<div class="superbox col-sm-12">
-				<span ng-repeat="story in stories">
-					<div class="superbox-list" story="story" ng-class="{active:$root.superboxToggled == story.$$hashKey}"></div>
-					
-					<div class="superbox-show" ng-show="$root.superboxToggled == story.$$hashKey" style="display: block; color:white">
-						<div class="row">
-			        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-			          <div ng-show="story.new_story">
-			            <img flow-img="story.file" class="img-responsive">
-			          </div>
-			        </div>
-			        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-			        	<a href="#" editable-text="story.name"> {{ story.name || '제목을 입력하세요' }} </a>
-			        	<hr/>
-			        	<a href="#" editable-date="story.start_date">{{ story.start_date || '날짜를 입력해주세요'}}</a>
-			        	<br/>
-				        <div>
-					        <a href="#" editable-textarea="story.desc" e-rows="7" e-cols="40" class="optional-text">
-				          	{{ story.desc || '설명이 필요하면 적어주세요' }}
-				          </a>
+		  <!-- <div>
+		  	<form name="timelineForm" ng-submit="createTimeline(timelineForm,$flow)" novalidate>
+			    <div ng-repeat="story in stories" class="gallery-box ng-scope">
+			      <div class="thumbnail" ng-show="stories.length">
+						<img flow-img="story.file">
+				      <div class="progress progress-striped" ng-class="{active: story.file.isUploading()}" >
+				        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (story.file.progress() * 100) + &#39;%&#39;}" style="width: 100%;">
+				          <span class="sr-only ng-binding">1% Complete</span>
 				        </div>
-			      	</div>
-			    	</div>
-					</div>
-				</span>
-				<div class="superbox-float"></div>
-			</div>	
+				      </div>
+				      <div class="btn-group">
+				        <a class="btn btn-xs btn-info" ng-click="openModal(story)">
+				          edit
+				        </a>
+				        <a class="btn btn-xs btn-danger" ng-click="flowFileDeleted(story)">
+				          Remove
+				        </a>
+				      </div>
+				    </div>
+				    <div class="clear"></div>
+				  </div>
+				</form>
+			</div> -->
+
+			<div class="row">
+				<div class="superbox col-sm-12">
+					<span ng-repeat="story in stories">
+						<div class="superbox-list" story="story" ng-class="{active:$root.superboxToggled == story.$$hashKey}"></div>
+						
+						<!-- show detail when click -->
+						<div class="superbox-show" ng-show="$root.superboxToggled == story.$$hashKey" style="display: block; color:white">
+							<div class="row">
+					        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					          <div ng-show="story.new_story">
+					            <!-- detail info -->
+					            <div ng-show="story.file.type == 'image'">
+												<img flow-image="story.file" class="img-responsive"> 
+											</div>
+											<div ng-show="story.file.type == 'video'">
+												<video flow-video="story.file" controls> 
+											</div>
+					          </div>
+					        </div>
+					        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					        	<a href="#" editable-text="story.name"> {{ story.name || '제목을 입력하세요' }} </a>
+					        	<hr/>
+					        	<a href="#" editable-date="story.start_date" ng-model="story.start_date">{{ story.start_date || '날짜를 입력해주세요'}}</a>
+					        	<br/>
+						        <div>
+							        <a href="#" editable-textarea="story.desc" e-rows="7" e-cols="40" class="optional-text">
+						          	{{ story.desc || '설명이 필요하면 적어주세요' }}
+						          </a>
+						        </div>
+					      	</div>
+				    	</div>
+						</div>
+					</span>
+					<div class="superbox-float"></div>
+				</div>	
+			</div>
+
+			<div><span class="btn btn-info" ng-click="createTimeline()">생성</div>
+
+		</div>
+		
+		<div ng-show="temp_created">
+			<div id="timeline-embed"></div>
 		</div>
 </div>
+
+
 

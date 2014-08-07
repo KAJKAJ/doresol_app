@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
+  .controller('MainCtrl', function ($scope, $http, Auth) {
     // $scope.awesomeThings = [];
 
     // $http.get('/api/things').success(function(awesomeThings) {
@@ -33,5 +33,9 @@ angular.module('doresolApp')
     $scope.unmute = function(){
       $("video")[0].muted=false;
       $scope.muted = false;
+    };
+
+    $scope.loginOauth = function(provider) {
+      Auth.loginOauth(provider);
     };
   });

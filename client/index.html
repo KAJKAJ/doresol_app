@@ -48,7 +48,6 @@
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-    <script src="socket.io/socket.io.js"></script>
     <!-- build:js(client) app/vendor.js -->
       <!-- bower:js -->
       <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -59,16 +58,18 @@
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-      <script src="bower_components/angular-socket-io/socket.js"></script>
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/doresol_timeline/build/js/timeline.js"></script>
       <script src="bower_components/flow.js/dist/flow.js"></script>
       <script src="bower_components/ng-flow/dist/ng-flow.js"></script>
       <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+      <script src="bower_components/moment/moment.js"></script>
+      <script src="bower_components/firebase/firebase.js"></script>
+      <script src="bower_components/firebase-simple-login/firebase-simple-login.js"></script>
+      <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
-
-        <!-- build:js({.tmp,client}) app/app.js -->
+       <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
           <script src="app/account/account.js"></script>
@@ -84,20 +85,26 @@
           <script src="app/memorial/memorial.js"></script>
           <script src="app/memorial/profile/profile.controller.js"></script>
           <script src="app/memorial/storyline/storyline.controller.js"></script>
-          <script src="app/memorial/timeline/superbox.directive.js"></script>
           <script src="app/memorial/timeline/timeline.controller.js"></script>
+          <script src="app/memorial/timeline/timeline.directive.js"></script>
           <script src="app/mydoresol/mydoresol.controller.js"></script>
           <script src="app/mydoresol/mydoresol.js"></script>
           <script src="components/auth/auth.service.js"></script>
-          <script src="components/auth/user.service.js"></script>
+          <script src="components/data/data.service.js"></script>
+          <script src="components/file/file.services.js"></script>
+          <script src="components/firebase-error/firebase-error.directive.js"></script>
+          <script src="components/flow/image.directive.js"></script>
+          <script src="components/flow/video.directive.js"></script>
+          <script src="components/memorial/memorial.service.js"></script>
+          <script src="components/memorial/my.memorial.service.js"></script>
           <script src="components/modal/modal.controller.js"></script>
-          <script src="components/mongoose-error/mongoose-error.directive.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
-          <script src="components/socket/socket.service.js"></script>
+          <script src="components/user/user.service.js"></script>
           <script src="components/util/util.service.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
 
     <script src="bower_components/angular-i18n/angular-locale_ko-kr.js"></script>
+    <script src="config.js" />
 </body>
 </html>

@@ -1,42 +1,51 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCreateCtrl', function ($scope,Auth,Util,$resource,$state) {
+  .controller('MemorialCreateCtrl', function ($scope,$rootScope, $resource,$state,Auth,Util,Memorial,User, $firebase) {
     $scope.today = Date.now();
     $scope.newMemorial = {};
-    var currentUser = Auth.getCurrentUser()._id;
-
+    $scope.currentUser = User.getCurrentUser();
     $scope.createMemorial = function(form){
       if(form.$valid){
-        var Memorial = $resource('/api/memorials');
+        var file = null;
+        if($scope.newMemorial.lastUploadingFile){
+          file = {
+              location: 'local',
+              url: '/tmp/' + $scope.newMemorial.lastUploadingFile,
+              updated_at: moment().toString()
+            }
+        }
 
-        var newMemorial = new Memorial({
-            admin_id: currentUser,
+        var memorial = {
             name: $scope.newMemorial.name,
             date_of_birth: $scope.newMemorial.dateOfBirth,
             date_of_death: $scope.newMemorial.dateOfDeath,
-            file: $scope.newMemorial.lastUploadingFile
-        });
+            file:file
+        };
 
-        // console.log(newMemorial);
-        newMemorial.$save(function(item, putResponseHeaders) {
-          //item => saved user object
-          //putResponseHeaders => $http header getter
-          $state.transitionTo('memorial.timeline', {id: item._id});
-        }, function(error){
-          // console.log(error);
-          // console.log('error');
+        Memorial.create(memorial).then(function (value) {
+          // var obj = Memorial.findById(value.name());
+          // obj.$loaded().then(function(){
+          //   Memorial.myMemorials[value.name()];
+          //   $state.transitionTo('memorial.timeline', {id: value.name()});
+          // })
+          $state.transitionTo('memorial.timeline', {id: value.name()});
         });
       }
     };
 
     $scope.getFlowFileUniqueId = function(file){
-      return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
+
+      return $scope.currentUser.uid.replace(/[^\.0-9a-zA-Z_-]/img, '') + '-' + Util.getFlowFileUniqueId(file);
     };
    
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
       $scope.fileUploading = false;
       $scope.newMemorial.lastUploadingFile = flowFile.uniqueIdentifier;
+    });
+
+    $scope.$on('flow::fileAdded', function (event, $flow, flowFile, message) {
+      $scope.newMemorial.lastUploadingFile = null;
     });
 
     $scope.openDatepicker = function($event,variable) {

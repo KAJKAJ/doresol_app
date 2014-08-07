@@ -1,129 +1,128 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
-    var currentUser = {};
-    if($cookieStore.get('token')) {
-      currentUser = User.get();
-    }
+  .factory('Auth', function Auth($location, $q, User, ENV, $firebaseSimpleLogin) {
+    var auth = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
+    var currentUser = null;
+    
+    var getCurrentUserFromFirebase = function(){
+      var dfd = $q.defer();
+      if(currentUser == null){
+        auth.$getCurrentUser().then(function(value) {
+          setCurrentUser(value);
+          dfd.resolve(value);
+        },function(error){
+          dfd.reject(error);
+        });
+      }else{
+        dfd.resolve(currentUser);
+      }
+      return dfd.promise;
+    };
+
+    // getCurrentUserFromFirebase();
+
+    var register =  function(user) {
+    	var _register = function() {
+        return auth.$createUser(user.email,user.password).then( function (value){
+          value.email = user.email;
+          return value;
+        });
+      };
+
+      return _register(user).then(User.create);
+    };
+
+    var getCurrentUser = function(){
+      return currentUser;
+    };
+
+    var setCurrentUser = function(authUser) {
+      currentUser = authUser;
+    };
+
+    var login = function(user){
+      var deferred = $q.defer();
+      logout();
+      auth.$login('password',{email:user.email, password:user.password,rememberMe: true}).then(function(value) {
+
+        setCurrentUser(value);
+        deferred.resolve(value);
+
+      }, function(error) {
+        deferred.reject(error);
+      });
+      return deferred.promise;
+    };
+
+    var loginFb = function() {
+      var deferred = $q.defer();
+      logout();
+      auth.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true}).then(function(value) {
+        setCurrentUser(value);
+
+        User.update(value.uid, 
+        {
+         uid: value.uid,
+         id: value.id,         
+         name:  value.displayName,
+         thirdPartyUserData: value.thirdPartyUserData
+        });
+
+        deferred.resolve(value);
+      }, function(error) {
+        deferred.reject(error);
+      });
+      return deferred.promise;
+    };
+
+    var loginOauth = function(provider){
+      switch(provider){
+        case 'facebook':
+          return loginFb().then( function (){
+            $location.path('/mydoresol');
+          } ,function(error){
+            console.log(error);
+          });
+        break;
+      }
+    };
+
+    var logout = function() {
+      auth.$logout();
+      currentUser = null;
+      User.setCurrentUser(null);
+    };
 
     return {
 
-      /**
-       * Authenticate user and save token
-       *
-       * @param  {Object}   user     - login info
-       * @param  {Function} callback - optional
-       * @return {Promise}
-       */
-      login: function(user, callback) {
-        var cb = callback || angular.noop;
-        var deferred = $q.defer();
+      register: register,
 
-        $http.post('/auth/local', {
-          email: user.email,
-          password: user.password
-        }).
-        success(function(data) {
-          $cookieStore.put('token', data.token);
-          currentUser = User.get();
-          deferred.resolve(data);
-          return cb();
-        }).
-        error(function(err) {
-          this.logout();
-          deferred.reject(err);
-          return cb(err);
-        }.bind(this));
+      login: login,
 
-        return deferred.promise;
-      },
+      loginOauth: loginOauth,
 
-      /**
-       * Delete access token and user info
-       *
-       * @param  {Function}
-       */
-      logout: function() {
-        $cookieStore.remove('token');
-        currentUser = {};
-      },
+      logout: logout,
 
-      /**
-       * Create a new user
-       *
-       * @param  {Object}   user     - user info
-       * @param  {Function} callback - optional
-       * @return {Promise}
-       */
-      createUser: function(user, callback) {
-        var cb = callback || angular.noop;
+      getCurrentUser:getCurrentUser,
 
-        return User.save(user,
-          function(data) {
-            $cookieStore.put('token', data.token);
-            currentUser = User.get();
-            return cb(user);
-          },
-          function(err) {
-            this.logout();
-            return cb(err);
-          }.bind(this)).$promise;
-      },
+      getCurrentUserFromFirebase:getCurrentUserFromFirebase
 
-      /**
-       * Change password
-       *
-       * @param  {String}   oldPassword
-       * @param  {String}   newPassword
-       * @param  {Function} callback    - optional
-       * @return {Promise}
-       */
-      changePassword: function(oldPassword, newPassword, callback) {
-        var cb = callback || angular.noop;
+      // isAdmin: function() {
+      //   return currentUser.role === 'admin';
+      // },
 
-        return User.changePassword({ id: currentUser._id }, {
-          oldPassword: oldPassword,
-          newPassword: newPassword
-        }, function(user) {
-          return cb(user);
-        }, function(err) {
-          return cb(err);
-        }).$promise;
-      },
+      // changePassword: function(oldPassword, newPassword, callback) {
+      //   var cb = callback || angular.noop;
 
-      /**
-       * Gets all available info on authenticated user
-       *
-       * @return {Object} user
-       */
-      getCurrentUser: function() {
-        return currentUser;
-      },
-
-      /**
-       * Check if a user is logged in
-       *
-       * @return {Boolean}
-       */
-      isLoggedIn: function() {
-        return currentUser.hasOwnProperty('role');
-      },
-
-      /**
-       * Check if a user is an admin
-       *
-       * @return {Boolean}
-       */
-      isAdmin: function() {
-        return currentUser.role === 'admin';
-      },
-
-      /**
-       * Get auth token
-       */
-      getToken: function() {
-        return $cookieStore.get('token');
-      }
+      //   return User.changePassword({ id: currentUser._id }, {
+      //     oldPassword: oldPassword,
+      //     newPassword: newPassword
+      //   }, function(user) {
+      //     return cb(user);
+      //   }, function(err) {
+      //     return cb(err);
+      //   }).$promise;
+      // }
     };
   });
