@@ -5,7 +5,8 @@ angular.module('doresolApp')
 
     $scope.memorial_key = $stateParams.id;
     $scope.memorial = MyMemorial.getMyMemorial($scope.memorial_key);
-
+    $scope.selectedEraKey = {};
+    
     // $scope.memorial = Memorial.myMemorials[$stateParams.id];
     // console.log($scope.memorial);
 
@@ -23,12 +24,17 @@ angular.module('doresolApp')
     };
 
     $scope.submitEra = function(form) {
-      $scope.selectedEra.startDate = moment($scope.selectedEra.startDate).format('YYYY-MM-DD');
-      $scope.selectedEra.endDate = moment($scope.selectedEra.endDate).format('YYYY-MM-DD');
+      if(form.$valid) {
 
-      Memorial.createEra($scope.memorial_key, $scope.selectedEra);
-      
-      console.log($scope);
+        $scope.selectedEra.startDate = moment($scope.selectedEra.startDate).format('YYYY-MM-DD');
+        $scope.selectedEra.endDate = moment($scope.selectedEra.endDate).format('YYYY-MM-DD');
+
+        if($scope.selectedEraKey == 'tempKey') {
+          Memorial.createEra($scope.memorial_key, $scope.selectedEra);
+        } else {
+          Memorial.updateEra($scope.memorial_key, $scope.selectedEraKey, $scope.selectedEra);
+        }
+      }
 
       // var memorial = $scope.$parent.memorial;
 

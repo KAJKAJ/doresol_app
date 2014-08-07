@@ -50,4 +50,26 @@ angular.module('doresolApp')
     }
   })
 
+    // Slot List Directive
+  .directive('uniqueEra', function () {
+    return {
+      restrict: 'C',
+      scope: {
+        memorial: '=memorial',
+        selectedEraKey: '@',
+        selectedEra: '=selectedEra'
+      },
+      link: function(scope, element, attrs, ctrl) {
+        element.bind('blur', function() {
+          angular.forEach(scope.memorial.timeline.era, function(era, key) {
+            if(key!=scope.selectedEraKey && era.headline == element.val()) {
+              console.log(selectedEra);
+              ctrl.$setValidity('duplicate', false);
+            }
+          });
+        });
+      }  
+    };
+  })
+
     ;
