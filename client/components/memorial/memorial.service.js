@@ -6,10 +6,6 @@
 	var ref = new Firebase(ENV.FIREBASE_URI + '/memorials');
 	var memorials = $firebase(ref).$asArray();
 
-	var all = function() {
-		return memorials;
-	};
-
 	var create = function(memorial) {
 		var errorHandler = function(error){
 	    return $q.reject(error);
@@ -51,10 +47,19 @@
 		// });
 	};
 
+	var createEra = function(memorialId, eraItem) {
+		var eraRef = ref.child(memorialId + '/timeline/era');
+		var era = $firebase(eraRef);
+		return era.$push(eraItem);
+	};
+
 	return {
 		remove: remove,
 		create: create,
-		findById: findById
+		findById: findById,
+
+		createEra:createEra
+
 	};
 	
 });

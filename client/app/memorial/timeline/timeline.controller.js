@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, $stateParams) {
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, Memorial, $stateParams) {
 
-    $scope.memorial = MyMemorial.getMyMemorial($stateParams.id);
-    $scope.memorial.timeline ={ era : [{headline: 'test1'}, {headline: 'test2'}]};
+    $scope.memorial_key = $stateParams.id;
+    $scope.memorial = MyMemorial.getMyMemorial($scope.memorial_key);
 
     // $scope.memorial = Memorial.myMemorials[$stateParams.id];
     // console.log($scope.memorial);
@@ -13,22 +13,22 @@ angular.module('doresolApp')
     //   $scope.timeline = $scope.memorial['timeline'];
     // };
 
-    $scope.getSelectedEra = function(){
-      console.log('getSelectedEra');
-      return $scope.selectedEra;
+    $scope.getSelectedEraKey = function(){
+      return $scope.selectedEraKey;
     };
 
-    $scope.setSelectedEra = function(era){
+    $scope.setSelectedEra = function(key, era){
+      $scope.selectedEraKey = key;
       $scope.selectedEra = era;
     };
 
-    $scope.getSelectedEra = function() {
-      return $scope.selectedEra;
-    };
+    $scope.submitEra = function(form) {
+      $scope.selectedEra.startDate = moment($scope.selectedEra.startDate).format('YYYY-MM-DD');
+      $scope.selectedEra.endDate = moment($scope.selectedEra.endDate).format('YYYY-MM-DD');
 
-    $scope.submitEra = function(form){
+      Memorial.createEra($scope.memorial_key, $scope.selectedEra);
+      
       console.log($scope);
-      $scope.memorial.$save();
 
       // var memorial = $scope.$parent.memorial;
 

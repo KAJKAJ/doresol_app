@@ -34,21 +34,40 @@ angular.module('doresolApp')
     if(user){
       currentUser = user;
 
+      // var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+      // var myMemorialRef =  ref.child(user.uid+'/memorials/own');
+
+      // myMemorialRef.on("child_added", function(value) {
+      //   var oneMemorial = $firebase(memorialsRef.child(value.name())).$asObject();
+      //   oneMemorial.$watch(function() {
+      //     $timeout(function(){
+      //       MyMemorial.addMyMemorial(oneMemorial.$id,oneMemorial);
+      //     },0);
+      //   });
+      // });
+      // myMemorialRef.on("child_removed", function(value) {
+      //   $timeout(function(){
+      //     MyMemorial.removeMyMemorial(value.name());
+      //   },0);
+      // });
+
       var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
       var myMemorialRef =  ref.child(user.uid+'/memorials/own');
+      var myMemorials = $firebase(myMemorialRef).$asArray();
 
-      myMemorialRef.on("child_added", function(value) {
-        var oneMemorial = $firebase(memorialsRef.child(value.name())).$asObject();
-        oneMemorial.$watch(function() {
-          $timeout(function(){
-            MyMemorial.addMyMemorial(oneMemorial.$id,oneMemorial);
-          },0);
-        });
-      });
-      myMemorialRef.on("child_removed", function(value) {
-        $timeout(function(){
-          MyMemorial.removeMyMemorial(value.name());
-        },0);
+      myMemorials.$watch(function(event){
+        switch(event.event){
+          case "child_removed":
+            MyMemorial.removeMyMemorial(event.key);
+          break;
+          case "child_added":
+            var childRef = memorialsRef.child(event.key);
+            var child = $firebase(childRef).$asObject();
+            child.$loaded().then(function(value){
+              MyMemorial.addMyMemorial(event.key,value);
+            });
+          break;
+        }
       });
 
     }else{
