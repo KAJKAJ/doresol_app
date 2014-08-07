@@ -6,9 +6,9 @@
 		내가 생성한거
 	</div>
 	<div class="col-sm-12">
-		<div class="col-sm-2" ng-repeat="(key, memorial) in myMemorials">
-			name : {{memorial.name}}
-		  	<a ui-sref="memorial.timeline({id:key})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
+		<div class="col-sm-2" ng-repeat="(key,value) in user.memorials.own">
+			name : {{myMemorials[key].name}}
+		  	<a ui-sref="memorial.timeline({id:key})"><img ng-src="{{myMemorials[key].file.url}}" class="img-responsive"/></a>
 		</div>
 	</div>
 	<div class="col-sm-12">
