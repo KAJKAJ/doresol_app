@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('User', function User($firebase, $rootScope, $q, ENV) {
+  .factory('User', function User($firebase, $rootScope, $q, ENV, MyMemorial) {
 
   var ref = new Firebase(ENV.FIREBASE_URI + '/users');
   var users = $firebase(ref);
@@ -14,26 +14,35 @@ angular.module('doresolApp')
       var user = findById(userId);
 
       user.$loaded().then(function(value) {
-        currentUser = value;
+        setCurrentUser(value);
         dfd.resolve(currentUser);
       },function(error){
         dfd.reject(error);
       });
     }else{
-      dfd.resolve(currentUser);
+      dfd.resolve(getCurrentUser());
     }
     return dfd.promise;
   };
 
   var setCurrentUser = function(user){
     if(user){
-      var user = findById(user.uid);
+      currentUser = user;
 
-      user.$loaded().then(function(value) {
-        currentUser = value;
-      },function(error){
-        currentUser = null;
+      var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+      var myMemorialRef =  ref.child(user.uid+'/memorials/own');
+
+      myMemorialRef.on("child_added", function(value) {
+        memorialsRef.child(value.name()).once("value", function(data) {
+          MyMemorial.addMyMemorial(data.name(),data.val());
+          $rootScope.$apply();
+        });
       });
+      myMemorialRef.on("child_removed", function(value) {
+        MyMemorial.removeMyMemorial(value.name());
+        $rootScope.$apply();
+      });
+
     }else{
       currentUser = null;
     }
