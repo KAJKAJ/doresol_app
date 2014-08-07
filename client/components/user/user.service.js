@@ -33,7 +33,7 @@ angular.module('doresolApp')
       var myMemorialRef =  ref.child(user.uid+'/memorials/own');
 
       myMemorialRef.on("child_added", function(value) {
-        memorialsRef.child(value.name()).once("value", function(data) {
+        memorialsRef.child(value.name()).on("value", function(data) {
           MyMemorial.addMyMemorial(data.name(),data.val());
           $rootScope.$apply();
         });
