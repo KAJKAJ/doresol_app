@@ -43,8 +43,8 @@
 	  		 <span>기간 설정이 잘못되었습니다.</span>
 	  	</div>
 	  	<button type="submit" class="btn btn-success btn-lg btn-block" ng-disabled="eraForm.$invalid">
-	  		<span ng-show="selectedEra.id">변경</span>
-	  		<span ng-show="!selectedEra.id">추가</span>
+	  		<span ng-show="selectedEraKey != 'tempKey'">변경</span>
+	  		<span ng-show="selectedEraKey == 'tempKey'">추가</span>
 	  	</button>		  
   </form>
 </div>

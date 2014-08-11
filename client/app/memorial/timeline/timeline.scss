@@ -351,6 +351,17 @@
   zoom: 1;
 }
 
+.slot-remove{
+  position: relative;
+  top: -53px;
+  float: right;
+  left: 10px;
+  background: white;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
 .slotactive {
   background: #FDDFB3!important;
   border: 1px solid #FAA937;

@@ -1,9 +1,14 @@
 
 <ul class="slot-list-wrapper">
-  <li class="slot" ng-repeat="(key, era) in memorial.timeline.era" ng-class="{slotactive: getSelectedEraKey() == key}" ng-click="setSelectedEra(key, era)">
-      {{era.headline}}
-      <span class="badge pull-right">3</span>
-  </li>
+	<span ng-repeat="(key, era) in memorial.timeline.era">
+		<li class="slot" ng-class="{slotactive: getSelectedEraKey() == key}" ng-click="setSelectedEra(key, era)">
+			{{era.headline}}
+      <span class="pull-right badge">3</span>
+		</li>
+		<div>
+	  	<i class="slot-remove fa fa-times-circle fa-2x text-danger" ng-click="removeSelectedEra(key)"></i>
+	  </div>
+	</span>  
   <li class="slot-add" style="text-align:center" ng-class="{slotactive: getSelectedEraKey() == 'tempKey'}" ng-click="setSelectedEra('tempKey', {})">
       <i class="fa fa-plus-circle fa-2x text-success"/>
   </li>

@@ -59,13 +59,20 @@
 		return era.$set(eraId,eraItem);
 	};
 
+	var removeEra = function(memorialId, eraId){
+		var eraRef = ref.child(memorialId + '/timeline/era');
+		var era = $firebase(eraRef);
+		return  era.$remove(eraId);
+	};
+
 	return {
 		remove: remove,
 		create: create,
 		findById: findById,
 
 		createEra:createEra,
-		updateEra:updateEra
+		updateEra:updateEra,
+		removeEra:removeEra
 
 	};
 	

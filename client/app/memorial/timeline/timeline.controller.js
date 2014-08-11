@@ -34,8 +34,13 @@ angular.module('doresolApp')
 
     $scope.setSelectedEra = function(key, era){
       $scope.selectedEraKey = key;
-      // $scope.selectedEra = era;
       angular.copy(era, $scope.selectedEra);
+    };
+
+    $scope.removeSelectedEra = function(key){
+      $scope.selectedEraKey = null;
+      $scope.selectedEra = {};
+      Memorial.removeEra($scope.memorialKey,key);
     };
 
     $scope.submitEra = function(form) {
@@ -46,6 +51,9 @@ angular.module('doresolApp')
 
         if($scope.selectedEraKey == 'tempKey') {
           Memorial.createEra($scope.memorialKey, $scope.selectedEra);
+          $scope.selectedEra = {}
+          $scope.selectedEraKey = null;
+          console.log($scope);
         } else {
           Memorial.updateEra($scope.memorialKey, $scope.selectedEraKey, $scope.selectedEra);
         }
