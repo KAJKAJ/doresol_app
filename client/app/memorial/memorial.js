@@ -18,16 +18,19 @@ angular.module('doresolApp')
       })
 
       .state('memorial.profile', {
+        url:'/profile',
         templateUrl: 'app/memorial/profile/profile.html',
         controller: 'ProfileCtrl',
         authenticate: true
       })
       .state('memorial.timeline', {
+        url:'/timeline',
         templateUrl: 'app/memorial/timeline/timeline.html',
         controller: 'TimelineCtrl',
         authenticate: true
       })      
       .state('memorial.storyline', {
+        url:'/storyline',
         templateUrl: 'app/memorial/storyline/storyline.html',
         controller: 'StorylineCtrl',
         authenticate: true

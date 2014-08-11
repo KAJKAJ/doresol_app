@@ -59,11 +59,11 @@ angular.module('doresolApp', [
     };
   })
 
-  .run(function ($rootScope, $location, $state, Auth, User, editableOptions) {
+  .run(function ($rootScope, $location, $state, Auth, User, editableOptions, Memorial, MyMemorial) {
 
     editableOptions.theme = 'bs3';
     // Redirect to login if route requires auth and you're not logged in
-    $rootScope.$on('$stateChangeStart', function (event, next) {
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
       var _get_user_auth = function(){
         return Auth.getCurrentUserFromFirebase().then(function(value){
           return value.uid;
@@ -76,13 +76,12 @@ angular.module('doresolApp', [
         });
       };
 
-
-      if (next.authenticate){
+      if (toState.authenticate){
         if(!User.getCurrentUser()){
-          event.preventDefault();
-          
+          // event.preventDefault();
           _get_user_auth().then(_get_user_data).then(function(value){
-            $state.go(next);
+            // $state.go(toState, toParams);
+            $state.go(toState, toParams,{notify:false});
           },function(error){
             $location.path('/login');
           });
