@@ -78,10 +78,10 @@ angular.module('doresolApp', [
 
       if (toState.authenticate){
         if(!User.getCurrentUser()){
-          // event.preventDefault();
+          event.preventDefault();
           _get_user_auth().then(_get_user_data).then(function(value){
-            // $state.go(toState, toParams);
-            $state.go(toState, toParams,{notify:false});
+            $state.go(toState, toParams);
+            // $state.go(toState, toParams,{notify:false});
           },function(error){
             $location.path('/login');
           });
