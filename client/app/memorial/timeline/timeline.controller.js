@@ -53,7 +53,7 @@ angular.module('doresolApp')
           Memorial.createEra($scope.memorialKey, $scope.selectedEra);
           $scope.selectedEra = {}
           $scope.selectedEraKey = null;
-          console.log($scope);
+          $scope.eraForm.$setPristine();
         } else {
           Memorial.updateEra($scope.memorialKey, $scope.selectedEraKey, $scope.selectedEra);
         }
