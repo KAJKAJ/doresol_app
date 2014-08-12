@@ -59,6 +59,9 @@ angular.module('doresolApp')
       $scope.selectedEraKey = key;
       angular.copy(era, $scope.selectedEra);
       $scope.stories = [];
+      if(key == 'tempKey'){
+        $scope.eraForm.$setPristine();
+      }
     };
 
     $scope.removeSelectedEra = function(key){
