@@ -8,13 +8,31 @@ angular.module('doresolApp')
     // $scope.selectedEraKey = {};
     $scope.selectedEra = {};
     $scope.currentUser = User.getCurrentUser();
-    
+
+    $scope.sortableOptions = {
+      // containment: "parent",
+      cursor: "move",
+      tolerance: "pointer",
+
+      start: function(e, ui) {
+        $(e.target).data("ui-sortable").floating = true;
+      },
+      
+      // After sorting is completed
+      stop: function(e, ui) {
+        for (var i=0; i< $scope.stories.length; i++) {
+          console.log($scope.stories[i].name);
+        };
+      }
+    };
+
     // $scope.memorial = Memorial.myMemorials[$stateParams.id];
     // console.log($scope.memorial);
 
     // if($scope.memorial['timeline']) {
     //   $scope.timeline = $scope.memorial['timeline'];
     // };
+
     $scope.selectedEraHeadlineChange = function(){
       var isDuplicated = false;
 
@@ -171,7 +189,7 @@ angular.module('doresolApp')
         
         $scope.stories.push(
           {
-            name:'제목없음',
+            name:'제목없음'+key,
             new_story: true,
             file: value,
             start_date: moment(value.file.lastModifiedDate).format("YYYY-MM-DD")

@@ -9,7 +9,8 @@ angular.module('doresolApp', [
   'flow',
   'xeditable',
   'config',
-  'firebase'
+  'firebase',
+  'ui.sortable'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
