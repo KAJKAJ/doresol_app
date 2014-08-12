@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, $stateParams,User) {
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial,Memorial,$stateParams,User) {
 
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = MyMemorial.getCurrentMemorial();
@@ -17,11 +17,15 @@ angular.module('doresolApp')
     // };
     $scope.selectedEraHeadlineChange = function(){
       var isDuplicated = false;
-      angular.forEach($scope.memorial.timeline.era, function(era, key) {
-        if(key!=$scope.selectedEraKey && era.headline == $scope.selectedEra.headline) {
-          isDuplicated = true;
-        }
-      });
+
+      if($scope.memorial.timeline) {
+        angular.forEach($scope.memorial.timeline.era, function(era, key) {
+          if(key!=$scope.selectedEraKey && era.headline == $scope.selectedEra.headline) {
+            isDuplicated = true;
+          }
+        });
+      }
+
       if(isDuplicated){
         $scope.eraForm.name.$setValidity("duplicated",false);
       }else{
