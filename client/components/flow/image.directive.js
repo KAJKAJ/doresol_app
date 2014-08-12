@@ -42,7 +42,6 @@ angular.module('doresolApp')
           }
 
           if(!attrs.src){
-            console.log('loading');
             var fileReader = new FileReader();
             fileReader.readAsDataURL(file.file);
             fileReader.onload = function (event) {

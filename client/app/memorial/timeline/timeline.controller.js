@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, $stateParams) {
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, $stateParams,User) {
 
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = MyMemorial.getCurrentMemorial();
     // $scope.selectedEraKey = {};
     $scope.selectedEra = {};
+    $scope.currentUser = User.getCurrentUser();
     
     // $scope.memorial = Memorial.myMemorials[$stateParams.id];
     // console.log($scope.memorial);
@@ -35,6 +36,7 @@ angular.module('doresolApp')
     $scope.setSelectedEra = function(key, era){
       $scope.selectedEraKey = key;
       angular.copy(era, $scope.selectedEra);
+      $scope.stories = [];
     };
 
     $scope.removeSelectedEra = function(key){
@@ -100,7 +102,7 @@ angular.module('doresolApp')
     };
 
     $scope.getFlowFileUniqueId = function(file){
-      return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
+      return $scope.currentUser + '-' + Util.getFlowFileUniqueId(file,$scope.currentUser);
     };
 
     $scope.createTimeline = function(){

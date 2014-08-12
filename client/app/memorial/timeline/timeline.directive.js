@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .directive('superboxList', function () {
+  .directive('superboxList', function ($timeout) {
     return {
       restrict: 'C',
       scope:{
@@ -12,12 +12,16 @@ angular.module('doresolApp')
       link: function(scope, element, attrs) {
         element.on('click', function() {
           if(scope.$root.superboxToggled == scope.story.$$hashKey){
-            scope.$root.superboxToggled = false;
+            $timeout(function(){
+              scope.$root.superboxToggled = false;
+            });
           }else{
-            scope.$root.superboxToggled = scope.story.$$hashKey;            
+            $timeout(function(){
+              scope.$root.superboxToggled = scope.story.$$hashKey;    
+            });     
           }
 
-          scope.$digest();
+          // scope.$apply();
           
           // $('html, body').animate({
           //   scrollTop:superbox.position().top - currentimg.width()
