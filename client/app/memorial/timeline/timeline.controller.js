@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, Memorial, $stateParams) {
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial, $stateParams) {
 
     $scope.memorialKey = $stateParams.id;
-    $scope.memorial = MyMemorial.getMyMemorial($scope.memorialKey);
+    $scope.memorial = MyMemorial.getCurrentMemorial();
     // $scope.selectedEraKey = {};
     $scope.selectedEra = {};
     

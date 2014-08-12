@@ -1,32 +1,19 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('Memorial', function Memorial($firebase, $q, ENV, User, File) {
+  .factory('Memorial', function Memorial($firebase, $q, ENV) {
 
 	var ref = new Firebase(ENV.FIREBASE_URI + '/memorials');
 	var memorials = $firebase(ref).$asArray();
 
 	var create = function(memorial) {
-		var errorHandler = function(error){
-	    return $q.reject(error);
-	  };
-
-		var _create_memorial = function(memorial) {
-      return memorials.$add(memorial).then( function(ref) {
-      	return {
-					key: ref.name(),
-					fileParentPath: memorial.file?ref.toString():null,
-					fileUrl:  memorial.file?memorial.file.url:null
-				}
-			});
-  	};
-
-  	if(memorial.file){
-  		return _create_memorial(memorial).then(File.createLocalFile).then(User.createMemorial, errorHandler);
-  	}else{
-  		return _create_memorial(memorial).then(User.createMemorial, errorHandler);
-  	}
-  	
+		return memorials.$add(memorial).then( function(ref) {
+    	return {
+				key: ref.name(),
+				fileParentPath: memorial.file?ref.toString():null,
+				fileUrl:  memorial.file?memorial.file.url:null
+			}
+		});  	
   };
 
 	var findById = function(memorialId){
