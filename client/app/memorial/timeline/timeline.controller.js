@@ -147,7 +147,14 @@ angular.module('doresolApp')
           index++;
 
           if(story.newStory){
-            //create story
+            // create story
+            // create story in timeline of memorial
+
+            MyMemorial.createStory(story.data).then(null, function(error){
+              console.log(error);
+
+            });
+
           }else if(story.startDate != story.orgStartDate){
             //update story
             story.orgStartDate = story.startDate;
@@ -171,6 +178,7 @@ angular.module('doresolApp')
       //  });      
     };
 
+
     $scope.flowFilesAdded = function($files){
       // console.log($files);
       angular.forEach($files, function(value, key) {
@@ -183,18 +191,25 @@ angular.module('doresolApp')
         var startDate = moment(value.file.lastModifieldDate).format("YYYY-MM-DD");
         $scope.stories[$scope.selectedEraKey].push(
           {
+            // file: {
+      //       //   location: 'local',
+      //       //   url: '/tmp/' + value.uniqueIdentifier,
+      //       //   updated_at: startDate
+      //       // },
             file: value,
-            newStroy: true,
+            newStory: true,
 
-            ref_memorial: $scope.memorialKey,
-            ref_era: $scope.selectedEraKey,
+            data: {
+              ref_memorial: $scope.memorialKey,
+              ref_era: $scope.selectedEraKey,
 
-            startDate: startDate,
-            orgStartDate: null,
-            headline: '제목없음',
-            asset: {
-              "media": '/tmp/' + value.uniqueIdentifier,
-              "thumbnail:": '/tmp/' + value.uniqueIdentifier,
+              startDate: startDate,
+              orgStartDate: null,
+              headline: '제목없음',
+              asset: {
+                "media": '/tmp/' + value.uniqueIdentifier,
+                "thumbnail:": '/tmp/' + value.uniqueIdentifier,
+              }
             }
           }
         );

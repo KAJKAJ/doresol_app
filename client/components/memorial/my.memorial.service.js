@@ -1,7 +1,7 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('MyMemorial', function Memorial($q,Memorial,File,User,ENV,$firebase) {
+  .factory('MyMemorial', function Memorial($q,Memorial,File,User,ENV,$firebase,Story) {
 
   var myMemorials = {};
   var currentMemorial = null;
@@ -49,6 +49,7 @@
     }
   };
 
+
   var setCurrentMemorial = function(memorialId){
     currentMemorial = Memorial.findById(memorialId);
   };
@@ -73,7 +74,23 @@
     return myMemorials[memorialId];
   };
 
-  
+  var createStory = function(memorialId, newStory) {
+    var errorHandler = function(error){
+      return $q.reject(error);
+    };
+
+    // save memorial -> (memorial_key) -> timeline -> stories 
+    var _create_story = function(savedStory) {
+      var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+      var timelineStoriesRef = memorialsRef.child(memorialId + '/timeline');
+
+      console.log(savedStory);
+
+      return $firebase(timelineStoriesRef).$push(savedStory);
+    };
+    
+    return Story.create(newStory).then(_create_story, errorHandler);
+  };
 
   return {
 		addMyMemorial:addMyMemorial,
@@ -83,7 +100,10 @@
     setCurrentMemorial:setCurrentMemorial,
     getCurrentMemorial:getCurrentMemorial,
     createMemorial:createMemorial,
-    setMyMemorials:setMyMemorials
+    setMyMemorials:setMyMemorials,
+
+    // story 
+    createStory:createStory
 	};
 	
 });
