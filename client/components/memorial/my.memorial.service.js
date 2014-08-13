@@ -73,7 +73,9 @@
     return myMemorials[memorialId];
   };
 
-	return {
+  
+
+  return {
 		addMyMemorial:addMyMemorial,
 		removeMyMemorial:removeMyMemorial,
 		getMyMemorials:getMyMemorials,

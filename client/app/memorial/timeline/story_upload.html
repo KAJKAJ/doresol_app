@@ -5,7 +5,8 @@
 			 testChunks: false,
 			 generateUniqueIdentifier: getFlowFileUniqueId,
 			 simultaneousUploads: 3
-		}"
+			}"
+
       flow-prevent-drop
       flow-drag-enter="style={border: '5px solid green'}"
       flow-drag-leave="style={}"
@@ -13,7 +14,6 @@
       flow-files-added="flowFilesAdded($files)"
 	  	flow-files-submitted="$flow.upload()"
 	 	  
-
       ng-style="style">
 
 	<!-- <div flow-init="" flow-files-submitted="$flow.upload()" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" class="ng-scope"> -->
@@ -28,8 +28,8 @@
 		  <div class="row">
 			  <!-- <div ui-sortable="sortableOptions" class="superbox col-sm-12" ng-model="stories"> -->
 			  <div ui-sortable="sortableOptions" class="superbox col-sm-12" ng-model="stories">
-				  	<div ng-repeat="story in stories" class="superbox-list" story="story" ng-class="{active:$root.superboxToggled == story.$$hashKey}"></div>
-	    	</div> <!-- sortable -->
+				  	<div ng-repeat="story in stories[selectedEraKey]" class="superbox-list" story="story" ng-class="{active:$root.superboxToggled == story.$$hashKey}"></div>
+	    	</div><!-- sortable -->
 
     	</div> <!-- row -->
 
