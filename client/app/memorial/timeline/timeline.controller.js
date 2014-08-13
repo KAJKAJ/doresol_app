@@ -9,7 +9,7 @@ angular.module('doresolApp')
     $scope.selectedEra = {};
     $scope.currentUser = User.getCurrentUser();
 
-    $scope.stories = [];
+    $scope.stories = {};
 
     $scope.sortableOptions = {
       // containment: "parent",
@@ -23,7 +23,7 @@ angular.module('doresolApp')
       // After sorting is completed
       stop: function(e, ui) {
         for (var i=0; i< $scope.stories[$scope.selectedEraKey].length; i++) {
-          console.log($scope.stories[i].name);
+          console.log($scope.stories[i].headline);
         };
       }
     };
@@ -92,37 +92,6 @@ angular.module('doresolApp')
           Memorial.updateEra($scope.memorialKey, $scope.selectedEraKey, $scope.selectedEra);
         }
       }
-
-      // var memorial = $scope.$parent.memorial;
-
-      // if(form.$valid){
-      //   var memorial = $resource('/api/memorials/:meorialId', {meorialId:'@id'});
-      //   var user = User.get({meorialId:memorialId}, function() {
-      //     user.abc = true;
-      //     user.$save();
-      //   });
-
-      //   var Memorial = $resource('/api/memorials');
-
-      //   var newMemorial = new Memorial({
-      //       admin_id: currentUser,
-      //       name: $scope.newMemorial.name,
-      //       date_of_birth: $scope.newMemorial.dateOfBirth,
-      //       date_of_death: $scope.newMemorial.dateOfDeath,
-      //       file: $scope.newMemorial.lastUploadingFile
-      //   });
-
-      //   // console.log(newMemorial);
-      //   newMemorial.$save(function(item, putResponseHeaders) {
-      //     //item => saved user object
-      //     //putResponseHeaders => $http header getter
-      //     $state.transitionTo('memorial.timeline', {id: item._id});
-      //   }, function(error){
-      //     // console.log(error);
-      //     // console.log('error');
-      //   });
-      // }
-
     };
 
     $scope.openDatepicker = function($event,variable) {
@@ -138,89 +107,91 @@ angular.module('doresolApp')
     };
 
     $scope.createTimeline = function(){
+      // var timeline_data = {
+      //   "timeline": {
+      //      "headline": $scope.memorial.name,
+      //      "type":"default",
+      //      "startDate": $scope.memorial.date_of_birth,
+      //      // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
+      //      "asset": {
+      //                   "media": $scope.memorial.file.url,
+      //                   // "caption":"아버지 .. 아포 중학교 앞에서"
+      //               },
+      //       "date": [{
+      //               "startDate":"1938,12,21",
+      //               "endDate":"1938,12,25",
+      //               "headline":"결혼식 with 서경분",
+      //               "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
+      //               "asset":
+      //               {
+      //                   "media":"/assets/images/father/1.png",
+      //                   "thumbnail":"/assets/images/father/1.png",
+      //               }
+      //           },
+      //       ]
+      //   }
+      // };
 
-      var timeline_data = {
-        "timeline": {
-           "headline": $scope.memorial.name,
-           "type":"default",
-           "startDate": $scope.memorial.date_of_birth,
-           // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
-           "asset": {
-                        "media": $scope.memorial.file.url,
-                        // "caption":"아버지 .. 아포 중학교 앞에서"
-                    },
-            "date": [{
-                    "startDate":"1938,12,21",
-                    "endDate":"1938,12,25",
-                    "headline":"결혼식 with 서경분",
-                    "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
-                    "asset":
-                    {
-                        "media":"/assets/images/father/1.png",
-                        "thumbnail":"/assets/images/father/1.png",
-                    }
-                },
-            ]
-        }
-      };
-
-      var timeline_dates = [];
-      var timeline_eras = [];
-
+      // var timeline_dates = [];
+      // var timeline_eras = [];
+     
       angular.forEach($scope.stories, function(stories, eraKey) {
-        timeline.eras.push($scope.memorial.timeline.era.eraKey);
+        var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
+        var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
+        var cntStories = stories.length;
+        var timeStep = (eraEnd - eraStart)/cntStories;
+        var index = 0;
 
         angular.forEach(stories, function(story, key) {
-          timeline_dates.push(story);
-          Story.create(story);
+          story.startDate = moment(eraStart + timeStep*index);
+          index++;
+
+          if(story.newStory){
+            //create story
+          }else if(story.startDate != story.orgStartDate){
+            //update story
+            story.orgStartDate = story.startDate;
+          }
+          // timeline_dates.push(story);
+          // Story.create(story);
+          console.log(story);
         });
 
       });
 
-      timeline_data.timeline.date = timeline_dates;
-      timeline_data.timeline.era = timeline_eras;
+      // timeline_data.timeline.date = timeline_dates;
+      // timeline_data.timeline.era = timeline_eras;
 
-      createStoryJS({
-           type:       'timeline',
-           width:      '100%',
-           height:     '800',
-           source:     timeline_data,
-           embed_id:   'timeline-embed'
-       });
-
-      $scope.temp_created = true;
+      // createStoryJS({
+      //      type:       'timeline',
+      //      width:      '100%',
+      //      height:     '800',
+      //      source:     timeline_data,
+      //      embed_id:   'timeline-embed'
+      //  });      
     };
 
     $scope.flowFilesAdded = function($files){
       // console.log($files);
       angular.forEach($files, function(value, key) {
         value.type = value.file.type.split("/")[0];
-        
-        // $scope.stories.push(
-        //   {
-        //     name:'제목없음'+key,
-        //     new_story: true,
-        //     file: value,
-        //     start_date: moment(value.file.lastModifiedDate).format("YYYY-MM-DD")
-        //     // Mon Sep 10 2012 15:19:56 GMT+0900 (KST)
-        //   }
-        // );
-
+      
         if($scope.stories[$scope.selectedEraKey] === undefined) {
           $scope.stories[$scope.selectedEraKey] = [];
         };
 
+        var startDate = moment(value.file.lastModifieldDate).format("YYYY-MM-DD");
         $scope.stories[$scope.selectedEraKey].push(
           {
-            name: '제목없음' + key,
             file: value,
-            new_story: true,
+            newStroy: true,
 
             ref_memorial: $scope.memorialKey,
             ref_era: $scope.selectedEraKey,
 
-            startDate: moment(value.file.lastModifieldDate).format("YYYY-MM-DD"),
-            headline: '제목없음'+key,
+            startDate: startDate,
+            orgStartDate: null,
+            headline: '제목없음',
             asset: {
               "media": '/tmp/' + value.uniqueIdentifier,
               "thumbnail:": '/tmp/' + value.uniqueIdentifier,

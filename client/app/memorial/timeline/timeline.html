@@ -1,13 +1,14 @@
 <!-- timeline edit -->
 <div class="row" ng-show="!memorial.timeline.created">
 	<div class="col-xs-3" >
-	   <slot-list></slot-list>
+	  <slot-list></slot-list>
 	</div>
-	<button type="button" class="btn btn-default" ng-click="createTimeline()">일대기 보기</button>
 	<br/>
 	<br/>
 	<div class="col-xs-9">
 		<story-list></story-list>
 	</div>
-  
+  <button class="btn btn-info btn-lg btn-block">
+		<div ng-click="createTimeline()">일대기 보기</div>
+	</button>	
 </div>

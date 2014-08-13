@@ -12,7 +12,7 @@
 
     <p class="input-group">
 	    <input type="text" class="form-control" name="eraStartDate" placeholder="기간 시작" 
-	    is-open="dateOfEraStart" datepicker-popup="yyyy-MM-dd" max-date="today"
+	    is-open="dateOfEraStart" datepicker-popup="yyyy-MM-dd" max-date="selectedEra.endDate"
 	    ng-required="true" ng-model="selectedEra.startDate"/>
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfEraStart')"><i class="glyphicon glyphicon-calendar text-success"></i></button>
@@ -26,7 +26,7 @@
 
     <p class="input-group">
 	    <input type="text" class="form-control" name="eraEndDate" placeholder="기간 종료" 
-	    is-open="dateOfEraEnd" datepicker-popup="yyyy-MM-dd" max-date="today"
+	    is-open="dateOfEraEnd" datepicker-popup="yyyy-MM-dd" max-date="today" min-date="selectedEra.startDate"
 	    ng-required="true" ng-model="selectedEra.endDate"/>
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfEraEnd')"><i class="glyphicon glyphicon-calendar text-success"></i></button>
