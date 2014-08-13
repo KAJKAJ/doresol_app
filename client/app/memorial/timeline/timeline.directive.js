@@ -18,18 +18,17 @@ angular.module('doresolApp')
             });
           } else{
             $timeout(function(){
+              var htmlElement = {};
               scope.$root.superboxToggled = scope.story.$$hashKey;
 
               var htmlElement = {};
-              $http({method: 'GET', url: 'app/memorial/timeline/superbox_show.html'}).
-                  success(function(data, status, headers, config) {
-                    element.after(data);
-                    $compile(element.next().contents())(scope);
-                  }).
-                  error(function(data, status, headers, config) {
-                  });
-            });     
-          }
+               $http.get('app/memorial/timeline/superbox_show.html').success( function(data, status, headers, config) {
+                  element.after(data);
+                  $compile(element.next().contents())(scope);
+               });
+               
+            }); // timeout
+          } // else 
 
         });
       }
