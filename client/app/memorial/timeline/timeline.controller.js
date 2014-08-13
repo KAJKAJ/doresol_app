@@ -143,20 +143,21 @@ angular.module('doresolApp')
         var index = 0;
 
         angular.forEach(stories, function(story, key) {
-          story.startDate = moment(eraStart + timeStep*index);
+          var oldStartDate = story.startDate;
+          story.startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
           index++;
 
           if(story.newStory){
+            delete story.newStory;
             //create story
-          }else if(story.startDate != story.orgStartDate){
+          }else if(story.dirty || oldStartDate != story.startDate){
+            if(story.dirty) delete story.dirty;
             //update story
-            story.orgStartDate = story.startDate;
           }
           // timeline_dates.push(story);
           // Story.create(story);
-          console.log(story);
+          // console.log(story);
         });
-
       });
 
       // timeline_data.timeline.date = timeline_dates;
@@ -184,13 +185,13 @@ angular.module('doresolApp')
         $scope.stories[$scope.selectedEraKey].push(
           {
             file: value,
-            newStroy: true,
+            newStory: true,
 
             ref_memorial: $scope.memorialKey,
             ref_era: $scope.selectedEraKey,
 
             startDate: startDate,
-            orgStartDate: null,
+            text: null,
             headline: '제목없음',
             asset: {
               "media": '/tmp/' + value.uniqueIdentifier,
@@ -198,6 +199,12 @@ angular.module('doresolApp')
             }
           }
         );
+
+        $scope.$watchCollection("stories['"+$scope.selectedEraKey+"']["+($scope.stories[$scope.selectedEraKey].length - 1)+"]",function(newValue,oldValue){
+          if(newValue.headline != oldValue.headline || newValue.text != oldValue.text){
+            newValue.dirty = true;
+          }
+        });
       });
     };
 
