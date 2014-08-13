@@ -44,6 +44,7 @@ angular.module('doresolApp')
           if(!attrs.src){
             var fileReader = new FileReader();
             fileReader.readAsDataURL(file.file);
+            // fileReader.readAsDataURL(file.flowObj.files[0]);
             fileReader.onload = function (event) {
               scope.$apply(function () {
                 attrs.$set('src', event.target.result);

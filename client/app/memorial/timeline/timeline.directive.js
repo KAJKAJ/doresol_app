@@ -18,15 +18,13 @@ angular.module('doresolApp')
             });
           } else{
             $timeout(function(){
-              var htmlElement = {};
+              
               scope.$root.superboxToggled = scope.story.$$hashKey;
 
-              var htmlElement = {};
-               $http.get('app/memorial/timeline/superbox_show.html').success( function(data, status, headers, config) {
-                  element.after(data);
-                  $compile(element.next().contents())(scope);
-               });
-               
+              var htmlElement = angular.element("<superbox-show></superbox-show>");
+              element.after(htmlElement);
+              $compile(element.next()[0])(scope);
+              
             }); // timeout
           } // else 
 
@@ -35,6 +33,16 @@ angular.module('doresolApp')
     };
   })
 
+  .directive('superboxShow', function () {
+    return {
+      restrict: 'E',
+      scope: false,
+      replace: true,
+      templateUrl: "app/memorial/timeline/superbox_show.html",
+      // link: function(scope, element, attrs) {
+      //  });
+      }
+  })
   // Slot List Directive
   .directive('slotList', function () {
     return {
