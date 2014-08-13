@@ -79,17 +79,19 @@
       return $q.reject(error);
     };
 
-    // save memorial -> (memorial_key) -> timeline -> stories 
-    var _create_story = function(savedStory) {
+    // save story -> localfile -> memorial 
+    var _create_story = function(params) {
       var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
-      var timelineStoriesRef = memorialsRef.child(memorialId + '/timeline');
+      var timelineStoriesRef = memorialsRef.child(memorialId + '/timeline/stories');
 
-      console.log(savedStory);
-
-      return $firebase(timelineStoriesRef).$push(savedStory);
+      return $firebase(timelineStoriesRef).$set(params.key,true);
     };
     
-    return Story.create(newStory).then(_create_story, errorHandler);
+    if(newStory.file){
+      return Story.create(newStory).then(File.createLocalFile).then(_create_story, errorHandler);
+    }else{
+      return Story.create(newStory).then(_create_story, errorHandler);
+    }
   };
 
   return {

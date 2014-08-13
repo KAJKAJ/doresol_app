@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial,Memorial,$stateParams,User,Story) {
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial,Memorial,$stateParams,User,Story,$state, ENV, $firebase) {
 
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = MyMemorial.getCurrentMemorial();
+
     // $scope.selectedEraKey = {};
     $scope.selectedEra = {};
     $scope.currentUser = User.getCurrentUser();
@@ -28,6 +29,31 @@ angular.module('doresolApp')
       }
     };
 
+    //load timeline stories
+    $scope.timelineStories = {};
+
+    var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
+    var currentTimelineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/timeline/stories');
+    var _timelineStories = $firebase(currentTimelineStoriesRef).$asArray();
+
+    _timelineStories.$watch(function(event){
+      switch(event.event){
+        case "child_removed":
+          // removeMyMemorial(event.key);
+        break;
+        case "child_added":
+          var childRef = storiesRef.child(event.key);
+          var child = $firebase(childRef).$asObject();
+          child.$loaded().then(function(value){
+            $scope.timelineStories[event.key] = value;
+            // 3 way binding
+            // value.$bindTo($scope, "timelineStories["+event.key+"]").then(function() {
+            //    // console.log($scope.data); // {foo: "bar"}
+            // });
+          });
+        break;
+      }
+    });
     // $scope.memorial = Memorial.myMemorials[$stateParams.id];
     // console.log($scope.memorial);
 
@@ -63,6 +89,14 @@ angular.module('doresolApp')
       // $scope.stories = [];
       if(key == 'tempKey'){
         $scope.eraForm.$setPristine();
+      }else{
+        $scope.stories[$scope.selectedEraKey] = [];
+        
+        angular.forEach($scope.timelineStories,function(value,key){
+          if(value.ref_era == $scope.selectedEraKey){
+            $scope.stories[$scope.selectedEraKey].push(value);
+          }
+        });
       }
     };
 
@@ -134,7 +168,6 @@ angular.module('doresolApp')
 
       // var timeline_dates = [];
       // var timeline_eras = [];
-     
       angular.forEach($scope.stories, function(stories, eraKey) {
         var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
         var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
@@ -150,18 +183,39 @@ angular.module('doresolApp')
           if(story.newStory){
             // create story
             // create story in timeline of memorial
-            MyMemorial.createStory(story.data).then(null, function(error){
+            var copyStory = {};
+            angular.copy(story,copyStory);
+
+            var file = {
+              type: copyStory.file.type,
+              location: 'local',
+              url: '/tmp/' + copyStory.file.uniqueIdentifier,
+              updated_at: moment().toString()
+            }
+            copyStory.file = file;
+            
+            delete copyStory.$$hashKey;
+            delete copyStory.newStory;
+
+            MyMemorial.createStory($scope.memorialKey,copyStory).then(function(value){
+              $state.transitionTo($state.current, $stateParams, {
+                  reload: true,
+                  inherit: false,
+                  notify: true
+              });
+            }, function(error){
               console.log(error);
 
             });
 
-          }else if(story.startDate != story.orgStartDate){
-            delete story.newStory;
-            //create story
-          }else if(story.dirty || oldStartDate != story.startDate){
-            if(story.dirty) delete story.dirty;
-            //update story
           }
+          // else if(story.startDate != story.orgStartDate){
+          //   delete story.newStory;
+          //   //create story
+          // }else if(story.dirty || oldStartDate != story.startDate){
+          //   if(story.dirty) delete story.dirty;
+          //   //update story
+          // }
           // timeline_dates.push(story);
           // Story.create(story);
           // console.log(story);
@@ -186,41 +240,30 @@ angular.module('doresolApp')
       angular.forEach($files, function(value, key) {
         value.type = value.file.type.split("/")[0];
       
-        if($scope.stories[$scope.selectedEraKey] === undefined) {
-          $scope.stories[$scope.selectedEraKey] = [];
-        };
-
         var startDate = moment(value.file.lastModifieldDate).format("YYYY-MM-DD");
         $scope.stories[$scope.selectedEraKey].push(
           {
-            // file: {
-      //       //   location: 'local',
-      //       //   url: '/tmp/' + value.uniqueIdentifier,
-      //       //   updated_at: startDate
-      //       // },
             file: value,
             newStory: true,
 
-            data: {
-              ref_memorial: $scope.memorialKey,
-              ref_era: $scope.selectedEraKey,
+            ref_memorial: $scope.memorialKey,
+            ref_era: $scope.selectedEraKey,
 
-              startDate: startDate,
-              orgStartDate: null,
-              headline: '제목없음',
-              asset: {
-                "media": '/tmp/' + value.uniqueIdentifier,
-                "thumbnail:": '/tmp/' + value.uniqueIdentifier,
-              }
+            startDate: startDate,
+            text: null,
+            headline: '제목없음',
+            asset: {
+              "media": '/tmp/' + value.uniqueIdentifier,
+              "thumbnail:": '/tmp/' + value.uniqueIdentifier,
             }
           }
         );
 
-        $scope.$watchCollection("stories['"+$scope.selectedEraKey+"']["+($scope.stories[$scope.selectedEraKey].length - 1)+"]",function(newValue,oldValue){
-          if(newValue.headline != oldValue.headline || newValue.text != oldValue.text){
-            newValue.dirty = true;
-          }
-        });
+        // $scope.$watchCollection("stories['"+$scope.selectedEraKey+"']["+($scope.stories[$scope.selectedEraKey].length - 1)+"]",function(newValue,oldValue){
+        //   if(newValue.headline != oldValue.headline || newValue.text != oldValue.text){
+        //     newValue.dirty = true;
+        //   }
+        // });
       });
     };
 

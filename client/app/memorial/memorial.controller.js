@@ -7,6 +7,7 @@ angular.module('doresolApp')
   	$scope.memorialKey = $stateParams.id;
 		MyMemorial.setCurrentMemorial($scope.memorialKey);
 		$scope.memorial = MyMemorial.getCurrentMemorial();
+		
 		// if(!$scope.memorial){
 		// 	$timeout(function(){
 		// 		$scope.memorial = MyMemorial.getMyMemorial($scope.memorialKey);

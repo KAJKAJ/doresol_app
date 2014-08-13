@@ -105,7 +105,9 @@
   border: 1px dotted #cfcfcf;
   margin-bottom: 1px;
 }
-
+.superbox-list.new {
+  border: 1px solid red;
+}
 /* spinner */
 .superbox-spinner{
   position: relative;

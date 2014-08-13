@@ -7,7 +7,13 @@ angular.module('doresolApp')
   var stories = $firebase(ref);
   
   var create = function(newStory) {
-    return stories.$push(newStory);
+    return stories.$push(newStory).then(function(value){
+      return {
+        key: value.name(),
+        fileParentPath: newStory.file?value.toString():null,
+        fileUrl:  newStory.file?newStory.file.url:null
+      }
+    });
   };
 
   var update = function(storyKey, story) {

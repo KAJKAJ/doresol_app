@@ -28,7 +28,7 @@
 		  <div class="row">
 			  <!-- <div ui-sortable="sortableOptions" class="superbox col-sm-12" ng-model="stories"> -->
 			  <div ui-sortable="sortableOptions" class="superbox col-sm-12" ng-model="stories">
-				  	<div ng-repeat="story in stories[selectedEraKey]" class="superbox-list" story="story" ng-class="{active:$root.superboxToggled == story.$$hashKey}"></div>
+				  	<div ng-repeat="story in stories[selectedEraKey]" class="superbox-list" story="story" ng-class="{active:$root.superboxToggled == story.$$hashKey,new:story.newStory}"></div>
 	    	</div><!-- sortable -->
 
     	</div> <!-- row -->
