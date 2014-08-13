@@ -24,7 +24,7 @@ angular.module('doresolApp')
       // After sorting is completed
       stop: function(e, ui) {
         for (var i=0; i< $scope.stories[$scope.selectedEraKey].length; i++) {
-          console.log($scope.stories[i].headline);
+          
         };
       }
     };

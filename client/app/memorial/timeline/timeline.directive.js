@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .directive('superboxList', function ($timeout,$compile) {
+  .directive('superboxList', function ($timeout,$compile,$http) {
     return {
       restrict: 'C',
       scope:{
@@ -18,10 +18,16 @@ angular.module('doresolApp')
             });
           } else{
             $timeout(function(){
-              scope.$root.superboxToggled = scope.story.$$hashKey;    
-              var htmlElement = '<div class="superbox-show" style="display: block; color:white">            <div class="row">                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"> <div ng-show="story.newStory"> <!-- detail info --> <div ng-show="story.file.type == \'image\'"> <img flow-image="story.file" class="img-responsive"> </div> <div ng-show="story.file.type == \'video\'"> <video flow-video="story.file" controls>                       </div>                    </div>                  </div>                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">                    <a href="#" editable-text="story.data.headline"> {{ story.data.headline || "제목을 입력하세요" }} </a>                    <hr/>                      <div>                      <a href="#" editable-textarea="story.data.text" e-rows="7" e-cols="40" class="optional-text">                        {{ story.data.text || "설명이 필요하면 적어주세요" }}                      </a>                    </div>                  </div>              </div>            </div>';
-              element.after(htmlElement);
-              $compile(element.next().contents())(scope);
+              scope.$root.superboxToggled = scope.story.$$hashKey;
+
+              var htmlElement = {};
+              $http({method: 'GET', url: 'app/memorial/timeline/superbox_show.html'}).
+                  success(function(data, status, headers, config) {
+                    element.after(data);
+                    $compile(element.next().contents())(scope);
+                  }).
+                  error(function(data, status, headers, config) {
+                  });
             });     
           }
 
