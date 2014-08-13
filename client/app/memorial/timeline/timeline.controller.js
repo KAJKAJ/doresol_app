@@ -48,7 +48,7 @@ angular.module('doresolApp')
             $scope.timelineStories[event.key] = value;
             // 3 way binding
             // value.$bindTo($scope, "timelineStories["+event.key+"]").then(function() {
-            //    // console.log($scope.data); // {foo: "bar"}
+            //   console.log($scope.data); // {foo: "bar"}
             // });
           });
         break;
@@ -209,6 +209,7 @@ angular.module('doresolApp')
             });
 
           }
+
           // else if(story.startDate != story.orgStartDate){
           //   delete story.newStory;
           //   //create story

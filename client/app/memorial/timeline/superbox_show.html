@@ -1,15 +1,22 @@
 <div class="superbox-show" style="display: block; color:white">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-      <div ng-show="story.newStory">
-
+      
+      <div ng-if="story.newStory">
         <div ng-show="story.file.type === 'image'">
           <img flow-image="story.file" class="img-responsive">
         </div>
         <div ng-show="story.file.type == 'video'">
           <video flow-video="story.file" controls>
         </div>
-      </div>                
+      </div>
+
+      <div ng-if="!story.newStory">
+        <div ng-show="story.file.type == 'image'">
+          <img ng-src="{{story.file.url}}" class="superbox-img"> 
+        </div>  
+      </div>    
+
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
