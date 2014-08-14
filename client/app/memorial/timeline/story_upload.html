@@ -29,7 +29,7 @@
 		  <div class="row">
 			  <!-- <div ui-sortable="sortableOptions" class="superbox col-sm-12" ng-model="stories"> -->
 			  <div ui-sortable="sortableOptions" class="superbox col-sm-12" ng-model="storiesArray[selectedEraKey]">
-				  	<div ng-repeat="storyKey in storiesArray[selectedEraKey]" class="superbox-list" story="storiesObject[selectedEraKey][storyKey]" story-key="storyKey" ng-class="{active:$root.superboxToggled == storyKey,new:storiesObject[selectedEraKey][storyKey].newStory}"></div>
+				  	<div ng-repeat="storyKey in storiesArray[selectedEraKey]" class="superbox-list" story="storiesObject[selectedEraKey][storyKey]" story-key="storyKey" ng-class="{active:$root.superboxToggled == storyKey,new:storiesObject[selectedEraKey][storyKey].newStory}" remove-selected-story="removeSelectedStory(storyKey)"></div>
 				  	<!-- <div ng-repeat="storyKey in storiesArray[selectedEraKey]">{{storyKey}}</div> -->
 	    	</div><!-- sortable -->
 

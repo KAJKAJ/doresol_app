@@ -6,28 +6,38 @@ angular.module('doresolApp')
       restrict: 'C',
       scope:{
         story: '=story',
-        storyKey: '=storyKey'
+        storyKey: '=storyKey',
+        removeSelectedStory: '&'
       },
       templateUrl: 'app/memorial/timeline/superbox_list.html',
       link: function(scope, element, attrs) {
         element.on('click', function() {
-          angular.element('.superbox-show').remove();
+          if(!scope.isRemoveClicked){
+            angular.element('.superbox-show').remove();
 
-          if(scope.$root.superboxToggled == scope.storyKey){
-            $timeout(function(){
-              scope.$root.superboxToggled = false;
-            });
-          } else{
-            $timeout(function(){
-              scope.$root.superboxToggled = scope.storyKey;
-              var htmlElement = angular.element("<superbox-show></superbox-show>");
-              element.after(htmlElement);
-              $compile(element.next()[0])(scope);
-              
-            }); // timeout
-          } // else 
-
+            if(scope.$root.superboxToggled == scope.storyKey){
+              $timeout(function(){
+                scope.$root.superboxToggled = false;
+              });
+            } else{
+              $timeout(function(){
+                scope.$root.superboxToggled = scope.storyKey;
+                var htmlElement = angular.element("<superbox-show></superbox-show>");
+                element.after(htmlElement);
+                $compile(element.next()[0])(scope);
+                
+              }); // timeout
+            } // else 
+          }else{
+            scope.isRemoveClicked = false;
+          }
         });
+      },
+      controller: function($scope){
+        $scope.removeStory = function(){
+          $scope.isRemoveClicked = true;
+          $scope.removeSelectedStory();
+        }
       }
     };
   })

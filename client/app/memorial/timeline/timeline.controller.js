@@ -157,7 +157,13 @@ angular.module('doresolApp')
     };
     
     $scope.removeSelectedStory = function(storyId) {
-      console.log(storyId);
+      // delete $scope.storiesObject[$scope.selectedEraKey][storyId];
+      var index = $scope.storiesArray[$scope.selectedEraKey].indexOf(storyId);
+      $scope.storiesArray[$scope.selectedEraKey].splice(index, 1);  
+
+      if(!$scope.storiesObject[$scope.selectedEraKey][storyId].newStory){
+        MyMemorial.removeStoryFromTimeline($scope.memorialKey,storyId);
+      }
     };
 
 
@@ -216,7 +222,9 @@ angular.module('doresolApp')
             delete copyStory.newStory;
 
             MyMemorial.createStory($scope.memorialKey,copyStory).then(function(value){
-              
+              delete $scope.storiesObject[eraKey][storyKey];
+              var index = $scope.storiesArray[eraKey].indexOf(storyKey);
+              $scope.storiesArray[eraKey].splice(index, 1);  
             }, function(error){
               console.log(error);
 
@@ -278,14 +286,14 @@ angular.module('doresolApp')
       });
     };
 
-    $scope.flowFileDeleted = function(story){
-      var index = $scope.stories.indexOf(story);
+    // $scope.flowFileDeleted = function(story){
+    //   var index = $scope.stories.indexOf(story);
 
-      // TODO: delete from remote server
-      story.file.cancel();
+    //   // TODO: delete from remote server
+    //   story.file.cancel();
 
-      $scope.stories.splice(index, 1);  
-    };
+    //   $scope.stories.splice(index, 1);  
+    // };
     
     $scope.openModal = function (story) {
       var modalInstance = $modal.open({

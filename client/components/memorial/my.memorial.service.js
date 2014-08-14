@@ -33,6 +33,11 @@
     return dfd.promise;
   };
 
+  var removeStoryFromTimeline = function(memorialId,storyId){
+    var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+memorialId+'/timeline/stories');
+    $firebase(memorialRef).$remove(storyId);
+  };
+
   var createMemorial = function(memorial) {
     var errorHandler = function(error){
       return $q.reject(error);
@@ -105,7 +110,8 @@
     setMyMemorials:setMyMemorials,
 
     // story 
-    createStory:createStory
+    createStory:createStory,
+    removeStoryFromTimeline:removeStoryFromTimeline
 	};
 	
 });
