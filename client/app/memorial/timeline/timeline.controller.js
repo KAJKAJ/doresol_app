@@ -10,7 +10,7 @@ angular.module('doresolApp')
     $scope.selectedEra = {};
     $scope.currentUser = User.getCurrentUser();
 
-    $scope.storiesArray = [];
+    $scope.storiesArray = {};
     $scope.storiesObject = {};
 
     $scope.sortableOptions = {
@@ -49,6 +49,22 @@ angular.module('doresolApp')
               $scope.storiesObject[value.ref_era] = {};
             };
             $scope.storiesArray[value.ref_era].push(event.key);
+
+            $scope.storiesArray.sort(function(aKey,bKey){
+              var aValue = $scope.storiesObject[$scope.selectedEraKey][aKey];
+              var bValue = $scope.storiesObject[$scope.selectedEraKey][bKey];
+              var aStartDate = moment(aValue.startDate).unix();
+              var bStartDate = moment(bValue.startDate).unix();
+              return aStartDate >= bStartdate ? 1 : -1;
+            });
+            // $scope.sortByStartDate = function() {
+    //   return function(storyKey) {
+    //     console.log(storyKey);
+    //       return moment($scope.storiesObject[$scope.selectedEraKey][storyKey].startDate).unix();
+    //   }
+    // };
+
+
             $scope.storiesObject[value.ref_era][event.key] = value;
             // $scope.stories[value.ref_era][event.key] = true;
 
@@ -181,16 +197,17 @@ angular.module('doresolApp')
 
       // var timeline_dates = [];
       // var timeline_eras = [];
-      angular.forEach($scope.storiesObject, function(stories, eraKey) {
+      angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
         var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
         var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
-        var cntStories = stories.length;
+        var cntStories = storiesKey.length;
         var timeStep = (eraEnd - eraStart)/cntStories;
         var index = 0;
 
-        angular.forEach(stories, function(story, key) {
+        angular.forEach(storiesKey, function(storyKey, key) {
+          var story = $scope.storiesObject[eraKey][storyKey];
           var oldStartDate = story.startDate;
-          story.startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
+          $scope.storiesObject[eraKey][storyKey].startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
           index++;
 
           if(story.newStory){
@@ -210,11 +227,7 @@ angular.module('doresolApp')
             delete copyStory.newStory;
 
             MyMemorial.createStory($scope.memorialKey,copyStory).then(function(value){
-              $state.transitionTo($state.current, $stateParams, {
-                  reload: true,
-                  inherit: false,
-                  notify: true
-              });
+              
             }, function(error){
               console.log(error);
 
@@ -234,7 +247,12 @@ angular.module('doresolApp')
           // console.log(story);
         });
       });
-
+      
+      $state.transitionTo($state.current, $stateParams, {
+          reload: true,
+          inherit: false,
+          notify: true
+      });
       // timeline_data.timeline.date = timeline_dates;
       // timeline_data.timeline.era = timeline_eras;
 
@@ -247,6 +265,12 @@ angular.module('doresolApp')
       //  });      
     };
 
+    // $scope.sortByStartDate = function() {
+    //   return function(storyKey) {
+    //     console.log(storyKey);
+    //       return moment($scope.storiesObject[$scope.selectedEraKey][storyKey].startDate).unix();
+    //   }
+    // };
 
     $scope.flowFilesAdded = function($files){
       // console.log($files);
