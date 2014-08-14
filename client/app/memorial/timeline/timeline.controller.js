@@ -155,6 +155,11 @@ angular.module('doresolApp')
     $scope.getFlowFileUniqueId = function(file){
       return $scope.currentUser.uid.replace(/[^\.0-9a-zA-Z_-]/img, '') + '-' + Util.getFlowFileUniqueId(file,$scope.currentUser);
     };
+    
+    $scope.removeSelectedStory = function(storyId) {
+      console.log(storyId);
+    };
+
 
     $scope.createTimeline = function(){
       // var timeline_data = {

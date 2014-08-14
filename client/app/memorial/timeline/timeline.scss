@@ -150,6 +150,7 @@
   padding-right: 25px;
   padding-bottom: 13px;
 }
+
 .superbox-img:hover {
   opacity: 0.8;
 }
@@ -354,10 +355,31 @@
 }
 
 .slot-remove{
+  display:none;
+}
+
+.slot:hover .slot-remove{
+  display:block;
   position: relative;
   top: -53px;
   float: right;
   left: 10px;
+  background: white;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+.story-remove{
+ display: none;
+}
+
+.superbox-list:hover .story-remove{
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 190px;
+  z-index: 100;
   background: white;
   border-radius: 20px;
   -moz-border-radius: 20px;
@@ -375,6 +397,8 @@
   border: 1px solid #FAA937;
   color: #333!important;
 }
+
+
 .slot.active{
   background: #FDDFB3!important;
   border: 1px solid #FAA937;
