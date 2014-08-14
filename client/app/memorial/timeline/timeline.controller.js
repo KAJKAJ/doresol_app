@@ -241,7 +241,7 @@ angular.module('doresolApp')
     // };
 
     $scope.flowFilesAdded = function($files){
-      // console.log($files);
+      console.log($files);
       angular.forEach($files, function(value, key) {
         value.type = value.file.type.split("/")[0];
       
