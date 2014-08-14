@@ -52,8 +52,8 @@ angular.module('doresolApp')
             $scope.stories[value.ref_era][event.key] = value;
             // $scope.stories[value.ref_era][event.key] = true;
 
-            value.$bindTo($scope, "stories["+value.ref_era+"]["+event.key+"]").then(function(){
-              console.log($scope.stories);
+            value.$bindTo($scope, "stories['"+value.ref_era+"']['"+event.key+"']").then(function(){
+              // console.log($scope.stories);
             });
             
             // console.log($scope.timelineStories[event.key]);
