@@ -202,12 +202,15 @@ angular.module('doresolApp')
       timeline_data.timeline.date = timeline_dates;
       timeline_data.timeline.era = timeline_eras;
 
+      var timeline_temp_data = angular.toJson(timeline_data);
+
       createStoryJS({
            type:       'timeline',
            width:      '100%',
            height:     '800',
-           source:     JSON.stringify(timeline_data),
-           embed_id:   'timeline-embed'
+           source:     timeline_data,
+           embed_id:   'timeline-embed',
+           debug: true
        });      
     };
 
