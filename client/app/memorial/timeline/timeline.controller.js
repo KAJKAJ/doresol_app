@@ -10,7 +10,8 @@ angular.module('doresolApp')
     $scope.selectedEra = {};
     $scope.currentUser = User.getCurrentUser();
 
-    $scope.stories = {};
+    $scope.storiesArray = [];
+    $scope.storiesObject = {};
 
     $scope.sortableOptions = {
       // containment: "parent",
@@ -23,14 +24,11 @@ angular.module('doresolApp')
       
       // After sorting is completed
       stop: function(e, ui) {
-        for (var i=0; i< $scope.stories[$scope.selectedEraKey].length; i++) {
+        // for (var i=0; i< $scope.storiesArray[$scope.selectedEraKey].length; i++) {
           
-        };
+        // };
       }
     };
-
-    //load timeline stories
-    $scope.timelineStories = {};
 
     var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
     var currentTimelineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/timeline/stories');
@@ -46,13 +44,15 @@ angular.module('doresolApp')
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
             // $scope.timelineStories[event.key] = value;
-            if($scope.stories[value.ref_era] == undefined) {
-              $scope.stories[value.ref_era] = [];
+            if($scope.storiesArray[value.ref_era] == undefined) {
+              $scope.storiesArray[value.ref_era] = [];
+              $scope.storiesObject[value.ref_era] = {};
             };
-            $scope.stories[value.ref_era].push(value);
+            $scope.storiesArray[value.ref_era].push(event.key);
+            $scope.storiesObject[value.ref_era][event.key] = value;
             // $scope.stories[value.ref_era][event.key] = true;
 
-            value.$bindTo($scope, "stories['"+value.ref_era+"']["+($scope.stories[value.ref_era].length-1)+"]").then(function(){
+            value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
               // console.log($scope.stories);
             });
             
@@ -181,7 +181,7 @@ angular.module('doresolApp')
 
       // var timeline_dates = [];
       // var timeline_eras = [];
-      angular.forEach($scope.stories, function(stories, eraKey) {
+      angular.forEach($scope.storiesObject, function(stories, eraKey) {
         var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
         var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
         var cntStories = stories.length;
@@ -207,7 +207,6 @@ angular.module('doresolApp')
             }
             copyStory.file = file;
             
-            delete copyStory.$$hashKey;
             delete copyStory.newStory;
 
             MyMemorial.createStory($scope.memorialKey,copyStory).then(function(value){
@@ -257,11 +256,13 @@ angular.module('doresolApp')
         var startDate = moment(value.file.lastModifieldDate).format("YYYY-MM-DD");
         console.log(key);
 
-        if($scope.stories[$scope.selectedEraKey] == undefined){
-          $scope.stories[$scope.selectedEraKey] = [];
+        if($scope.storiesArray[$scope.selectedEraKey] == undefined) {
+          $scope.storiesArray[$scope.selectedEraKey] = [];
+          $scope.storiesObject[$scope.selectedEraKey] = {};
         };
 
-        $scope.stories[$scope.selectedEraKey].push( 
+        $scope.storiesArray[$scope.selectedEraKey].push(value.uniqueIdentifier);
+        $scope.storiesObject[$scope.selectedEraKey][value.uniqueIdentifier] = 
           {
             file: value,
             newStory: true,
@@ -276,7 +277,7 @@ angular.module('doresolApp')
               "media": '/tmp/' + value.uniqueIdentifier,
               "thumbnail:": '/tmp/' + value.uniqueIdentifier,
             }
-          });
+          };
       });
     };
 

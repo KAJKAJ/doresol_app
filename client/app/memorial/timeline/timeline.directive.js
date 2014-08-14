@@ -6,19 +6,20 @@ angular.module('doresolApp')
       restrict: 'C',
       scope:{
         story: '=story',
+        storyKey: '=storyKey'
       },
       templateUrl: 'app/memorial/timeline/superbox_list.html',
       link: function(scope, element, attrs) {
         element.on('click', function() {
           angular.element('.superbox-show').remove();
 
-          if(scope.$root.superboxToggled == scope.story.$$hashKey){
+          if(scope.$root.superboxToggled == scope.storyKey){
             $timeout(function(){
               scope.$root.superboxToggled = false;
             });
           } else{
             $timeout(function(){
-              scope.$root.superboxToggled = scope.story.$$hashKey;
+              scope.$root.superboxToggled = scope.storyKey;
               var htmlElement = angular.element("<superbox-show></superbox-show>");
               element.after(htmlElement);
               $compile(element.next()[0])(scope);
