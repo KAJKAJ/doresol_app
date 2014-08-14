@@ -1,7 +1,7 @@
 
 <ul class="slot-list-wrapper">
-	<span ng-repeat="(key, era) in memorial.timeline.era">
-		<li class="slot" ng-class="{slotactive: getSelectedEraKey() == key}" ng-click="setSelectedEra(key, era)">
+	<span ng-repeat="(key, era) in memorial.timeline.era" class="slot" ng-class="{slotactive: getSelectedEraKey() == key}" ng-click="setSelectedEra(key, era)">
+		<li >
 			{{era.headline}}
       <span class="pull-right badge">{{storiesArray[key].length}}</span>
 		</li>

@@ -19,11 +19,11 @@ angular.module('doresolApp')
 
         var memorial = {
             name: $scope.newMemorial.name,
-            date_of_birth: $scope.newMemorial.dateOfBirth,
-            date_of_death: $scope.newMemorial.dateOfDeath,
+            dateOfBirth: moment($scope.newMemorial.dateOfBirth).format("YYYY-MM-DD"),
+            dateOfDeath: moment($scope.newMemorial.dateOfDeath).format("YYYY-MM-DD"),
             file:file
         };
-
+        
         MyMemorial.createMemorial(memorial).then(function (value) {
           // var obj = Memorial.findById(value.name());
           // obj.$loaded().then(function(){

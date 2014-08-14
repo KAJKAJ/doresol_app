@@ -1,10 +1,18 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial,Memorial,$stateParams,User,Story,$state, ENV, $firebase) {
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
 
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = MyMemorial.getCurrentMemorial();
+
+    $scope.memorial.$loaded().then(function(value){
+      console.log(value);
+      $timeout(function(){$scope.createTimeline()},1000);
+      if(!value.timeline || !value.timeline.stories){
+        $scope.editMode = true;
+      }
+    });
 
     // $scope.selectedEraKey = {};
     $scope.selectedEra = {};
@@ -87,9 +95,9 @@ angular.module('doresolApp')
       }
 
       if(isDuplicated){
-        $scope.eraForm.name.$setValidity("duplicated",false);
+        $scope.eraForm.headline.$setValidity("duplicated",false);
       }else{
-        $scope.eraForm.name.$setValidity("duplicated",true);
+        $scope.eraForm.headline.$setValidity("duplicated",true);
       }
     };
 
@@ -121,7 +129,6 @@ angular.module('doresolApp')
       $scope.selectedEra = {};
 
       Memorial.removeEra($scope.memorialKey,key);
-
       // todo : should delete stories referenced
       //
     };
@@ -166,35 +173,45 @@ angular.module('doresolApp')
       }
     };
 
-
     $scope.createTimeline = function(){
-      // var timeline_data = {
-      //   "timeline": {
-      //      "headline": $scope.memorial.name,
-      //      "type":"default",
-      //      "startDate": $scope.memorial.date_of_birth,
-      //      // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
-      //      "asset": {
-      //                   "media": $scope.memorial.file.url,
-      //                   // "caption":"아버지 .. 아포 중학교 앞에서"
-      //               },
-      //       "date": [{
-      //               "startDate":"1938,12,21",
-      //               "endDate":"1938,12,25",
-      //               "headline":"결혼식 with 서경분",
-      //               "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
-      //               "asset":
-      //               {
-      //                   "media":"/assets/images/father/1.png",
-      //                   "thumbnail":"/assets/images/father/1.png",
-      //               }
-      //           },
-      //       ]
-      //   }
-      // };
+      var timeline_data = {
+        "timeline": {
+           "headline": $scope.memorial.name,
+           "type":"default",
+           "startDate": $scope.memorial.dateOfBirth,
+           // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
+           "asset": {
+                        "media": $scope.memorial.file.url,
+                        // "caption":"아버지 .. 아포 중학교 앞에서"
+                    }            
+        }
+      };
 
-      // var timeline_dates = [];
-      // var timeline_eras = [];
+      var timeline_dates = [];
+      angular.forEach($scope.storiesObject,function(stories,key){
+        angular.forEach(stories,function(story,key){
+          timeline_dates.push(story);
+        });
+      });
+
+      var timeline_eras = [];
+      angular.forEach($scope.memorial.timeline.era,function(era,key){
+        timeline_eras.push(era);
+      });
+
+      timeline_data.timeline.date = timeline_dates;
+      timeline_data.timeline.era = timeline_eras;
+
+      createStoryJS({
+           type:       'timeline',
+           width:      '100%',
+           height:     '800',
+           source:     JSON.stringify(timeline_data),
+           embed_id:   'timeline-embed'
+       });      
+    };
+
+   $scope.uploadTimelineStory = function(){
       angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
         var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
         var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
@@ -234,25 +251,10 @@ angular.module('doresolApp')
         });
       });
       
-      // timeline_data.timeline.date = timeline_dates;
-      // timeline_data.timeline.era = timeline_eras;
-
-      // createStoryJS({
-      //      type:       'timeline',
-      //      width:      '100%',
-      //      height:     '800',
-      //      source:     timeline_data,
-      //      embed_id:   'timeline-embed'
-      //  });      
+      $scope.toggleEditMode();
+      $scope.createTimeline();
     };
-
-    // $scope.sortByStartDate = function() {
-    //   return function(storyKey) {
-    //     console.log(storyKey);
-    //       return moment($scope.storiesObject[$scope.selectedEraKey][storyKey].startDate).unix();
-    //   }
-    // };
-
+    
     $scope.flowFilesAdded = function($files){
       console.log($files);
       angular.forEach($files, function(value, key) {
@@ -294,6 +296,10 @@ angular.module('doresolApp')
 
     //   $scope.stories.splice(index, 1);  
     // };
+
+    $scope.toggleEditMode = function(){
+      $scope.editMode = !$scope.editMode;
+    };
     
     $scope.openModal = function (story) {
       var modalInstance = $modal.open({

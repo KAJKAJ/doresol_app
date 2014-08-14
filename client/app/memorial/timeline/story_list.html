@@ -2,12 +2,12 @@
 	<!-- era form -->
 	<form name="eraForm" ng-submit="submitEra(eraForm)" novalidate>
     <div class="form-group">
-        <input type="text" class="unique-era form-control" name="name" placeholder="유년시절,학창시절,신혼생활 등" ng-required="true" ng-model="selectedEra.headline" ng-change="selectedEraHeadlineChange()">
+        <input type="text" class="unique-era form-control" name="headline" placeholder="유년시절,학창시절,신혼생활 등" ng-required="true" ng-model="selectedEra.headline" ng-change="selectedEraHeadlineChange()">
     </div>
     <div class="alert alert-danger" role="alert"
-	  		 ng-show="eraForm.name.$dirty && eraForm.name.$invalid">
-	  		 <span ng-show="eraForm.name.$error.required">추억의 시절 이름을 입력해 주세요.</span>
-         <span ng-show="eraForm.name.$error.duplicated">중복된 이름입니다.</span>
+	  		 ng-show="eraForm.headline.$dirty && eraForm.headline.$invalid">
+	  		 <span ng-show="eraForm.headline.$error.required">추억의 시절 이름을 입력해 주세요.</span>
+         <span ng-show="eraForm.headline.$error.duplicated">중복된 이름입니다.</span>
 	  </div>
 
     <p class="input-group">
@@ -39,7 +39,7 @@
   	</div>
 
   	<div class="alert alert-danger" role="alert"
-	  		 ng-show="eraForm.name.$valid && eraForm.dateOfStart.$valid &&  eraForm.dateOfEnd.$valid && eraForm.$valid == false">		  		 
+	  		 ng-show="eraForm.headline.$valid && eraForm.dateOfStart.$valid &&  eraForm.dateOfEnd.$valid && eraForm.$valid == false">		  		 
 	  		 <span>기간 설정이 잘못되었습니다.</span>
 	  	</div>
 	  	<button type="submit" class="btn btn-success btn-lg btn-block" ng-disabled="eraForm.$invalid">

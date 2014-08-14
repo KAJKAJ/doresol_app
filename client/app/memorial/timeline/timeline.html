@@ -1,5 +1,5 @@
 <!-- timeline edit -->
-<div class="row" ng-show="!memorial.timeline.created">
+<div class="row" ng-show="editMode">
 	<div class="col-xs-3" >
 	  <slot-list></slot-list>
 	</div>
@@ -9,6 +9,13 @@
 		<story-list></story-list>
 	</div>
   <button class="btn btn-info btn-lg btn-block">
-		<div ng-click="createTimeline()">일대기 보기</div>
+		<div ng-click="uploadTimelineStory()">일대기 보기</div>
 	</button>	
+</div>
+
+<div class="row" ng-show="!editMode">
+	<button class="btn btn-info btn-lg btn-block">
+		<div ng-disabled="!memorial.timeline.stories" ng-click="toggleEditMode()" >설정 모드</div>
+	</button>	
+	<div id="timeline-embed"></div>
 </div>
