@@ -18,9 +18,7 @@ angular.module('doresolApp')
             });
           } else{
             $timeout(function(){
-              
               scope.$root.superboxToggled = scope.story.$$hashKey;
-
               var htmlElement = angular.element("<superbox-show></superbox-show>");
               element.after(htmlElement);
               $compile(element.next()[0])(scope);

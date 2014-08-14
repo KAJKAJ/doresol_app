@@ -40,19 +40,19 @@ angular.module('doresolApp')
       switch(event.event){
         case "child_removed":
           // removeMyMemorial(event.key);
-        break;
+          break;
         case "child_added":
           var childRef = storiesRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
             // $scope.timelineStories[event.key] = value;
             if($scope.stories[value.ref_era] == undefined) {
-              $scope.stories[value.ref_era] = {};
+              $scope.stories[value.ref_era] = [];
             };
-            $scope.stories[value.ref_era][event.key] = value;
+            $scope.stories[value.ref_era].push(value);
             // $scope.stories[value.ref_era][event.key] = true;
 
-            value.$bindTo($scope, "stories['"+value.ref_era+"']['"+event.key+"']").then(function(){
+            value.$bindTo($scope, "stories['"+value.ref_era+"']["+($scope.stories[value.ref_era].length-1)+"]").then(function(){
               // console.log($scope.stories);
             });
             
@@ -255,7 +255,13 @@ angular.module('doresolApp')
         value.type = value.file.type.split("/")[0];
       
         var startDate = moment(value.file.lastModifieldDate).format("YYYY-MM-DD");
-        $scope.stories[$scope.selectedEraKey].push(
+        console.log(key);
+
+        if($scope.stories[$scope.selectedEraKey] == undefined){
+          $scope.stories[$scope.selectedEraKey] = [];
+        };
+
+        $scope.stories[$scope.selectedEraKey].push( 
           {
             file: value,
             newStory: true,
@@ -270,14 +276,7 @@ angular.module('doresolApp')
               "media": '/tmp/' + value.uniqueIdentifier,
               "thumbnail:": '/tmp/' + value.uniqueIdentifier,
             }
-          }
-        );
-
-        // $scope.$watchCollection("stories['"+$scope.selectedEraKey+"']["+($scope.stories[$scope.selectedEraKey].length - 1)+"]",function(newValue,oldValue){
-        //   if(newValue.headline != oldValue.headline || newValue.text != oldValue.text){
-        //     newValue.dirty = true;
-        //   }
-        // });
+          });
       });
     };
 
