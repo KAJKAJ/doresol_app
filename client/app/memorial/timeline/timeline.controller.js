@@ -45,7 +45,18 @@ angular.module('doresolApp')
           var childRef = storiesRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
-            $scope.timelineStories[event.key] = value;
+            // $scope.timelineStories[event.key] = value;
+            if($scope.stories[value.ref_era] == undefined) {
+              $scope.stories[value.ref_era] = {};
+            };
+            $scope.stories[value.ref_era][event.key] = value;
+            // $scope.stories[value.ref_era][event.key] = true;
+
+            value.$bindTo($scope, "stories["+value.ref_era+"]["+event.key+"]").then(function(){
+              console.log($scope.stories);
+            });
+            
+            // console.log($scope.timelineStories[event.key]);
             // 3 way binding
             // value.$bindTo($scope, "timelineStories["+event.key+"]").then(function() {
             //   console.log($scope.data); // {foo: "bar"}
@@ -90,6 +101,7 @@ angular.module('doresolApp')
       if(key == 'tempKey'){
         $scope.eraForm.$setPristine();
       }else{
+        /*
         $scope.stories[$scope.selectedEraKey] = [];
         
         angular.forEach($scope.timelineStories,function(value,key){
@@ -97,6 +109,7 @@ angular.module('doresolApp')
             $scope.stories[$scope.selectedEraKey].push(value);
           }
         });
+        */
       }
     };
 
