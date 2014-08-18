@@ -70,7 +70,7 @@ angular.module('doresolApp')
             // $scope.stories[value.ref_era][event.key] = true;
 
             value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
-              console.log($scope.storiesObject[value.ref_era][event.key]);
+              // console.log($scope.storiesObject[value.ref_era][event.key]);
             });            
           });
         break;
@@ -178,11 +178,12 @@ angular.module('doresolApp')
         "timeline": {
            "headline": $scope.memorial.name,
            "type":"default",
+           "text": "아버지의 일대기",
            "startDate": $scope.memorial.dateOfBirth,
            // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
            "asset": {
                         "media": $scope.memorial.file.url,
-                        // "caption":"아버지 .. 아포 중학교 앞에서"
+                        "caption":"아버지 .. 아포 중학교 앞에서"
                     }            
         }
       };
@@ -202,16 +203,19 @@ angular.module('doresolApp')
       timeline_data.timeline.date = timeline_dates;
       timeline_data.timeline.era = timeline_eras;
 
-      var timeline_temp_data = angular.toJson(timeline_data);
+      console.log(timeline_data);
+
+      var timelineEmbed = angular.element('<div id="timeline-embed"></div>');
+      timelineEmbed.insertAfter('#timeline-embed');
+      angular.element('#timeline-embed').remove();
 
       createStoryJS({
            type:       'timeline',
            width:      '100%',
            height:     '800',
            source:     timeline_data,
-           embed_id:   'timeline-embed',
-           debug: true
-       });      
+           embed_id:   'timeline-embed'
+       });
     };
 
    $scope.uploadTimelineStory = function(){
@@ -285,7 +289,7 @@ angular.module('doresolApp')
             headline: '제목없음',
             asset: {
               "media": '/tmp/' + value.uniqueIdentifier,
-              "thumbnail:": '/tmp/' + value.uniqueIdentifier,
+              "thumbnail": '/tmp/' + value.uniqueIdentifier,
             }
           };
       });
