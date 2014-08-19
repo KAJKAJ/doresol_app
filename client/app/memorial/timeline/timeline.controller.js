@@ -205,16 +205,15 @@ angular.module('doresolApp')
 
       console.log(timeline_data);
 
-      angular.element('#timeline-embed').remove();
-      var timelineEmbed = angular.element('<div id="timeline-embed"></div>');
-      timelineEmbed.insertAfter('#timeline-view');
+      angular.element('#timeline-embed').empty();
 
       createStoryJS({
            type:       'timeline',
            width:      '100%',
            height:     '800',
            source:     timeline_data,
-           embed_id:   'timeline-embed'
+           embed_id:   'timeline-embed',
+           debug: true
        });
     };
 
@@ -307,6 +306,10 @@ angular.module('doresolApp')
     $scope.toggleEditMode = function(){
       $scope.editMode = !$scope.editMode;
     };
+
+    $scope.testMessage = function(text) {
+      console.log(text);
+    }
     
     $scope.openModal = function (story) {
       var modalInstance = $modal.open({
