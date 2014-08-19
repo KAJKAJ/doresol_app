@@ -205,9 +205,9 @@ angular.module('doresolApp')
 
       console.log(timeline_data);
 
-      var timelineEmbed = angular.element('<div id="timeline-embed"></div>');
-      timelineEmbed.insertAfter('#timeline-embed');
       angular.element('#timeline-embed').remove();
+      var timelineEmbed = angular.element('<div id="timeline-embed"></div>');
+      timelineEmbed.insertAfter('#timeline-view');
 
       createStoryJS({
            type:       'timeline',
