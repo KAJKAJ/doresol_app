@@ -7,14 +7,9 @@
 		{{story.desc}}
 	</p>
 	<!-- text -->
-	<form name="commentForm" ng-submit="add(comment)" novalidate ng-init="comment.storyKey=story.$id">
+	<form name="commentForm" ng-submit="add(comment)" novalidate ng-init="comment.storyId=story.$id">
 		<img src="assets/images/user_32.png"/> 
 		<input type="text" placeholder="댓글을 입력하세요.." ng-model="comment.body">
-		<input type="hidden" placeholder="댓글을 입력하세요.." ng-model="comment.storyKey">
   </form>
-	
 
-	<div id="comments" class="hi">
-		
-	</div>
 </div>

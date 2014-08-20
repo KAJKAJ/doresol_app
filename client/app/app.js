@@ -60,7 +60,7 @@ angular.module('doresolApp', [
     };
   })
 
-  .run(function ($rootScope, $location, $state, Auth, User, editableOptions, MyMemorial) {
+  .run(function ($rootScope, $location, $state, Auth, User, editableOptions, Composite) {
 
     editableOptions.theme = 'bs3';
     // Redirect to login if route requires auth and you're not logged in
@@ -77,16 +77,10 @@ angular.module('doresolApp', [
         });
       };
 
-      // var _setMyMemorials = function(userId){
-      //   return MyMemorial.setMyMemorials(userId).then(function(value){
-      //     return value;
-      //   });
-      // };
-
       if (toState.authenticate){
         if(!User.getCurrentUser()){
           event.preventDefault();
-          _getUserAuth().then(_getUserData).then(MyMemorial.setMyMemorials).then(function(value){
+          _getUserAuth().then(_getUserData).then(Composite.setMyMemorials).then(function(value){
             $state.go(toState, toParams);
             // $state.go(toState, toParams,{notify:false});
           },function(error){
