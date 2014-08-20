@@ -1,10 +1,18 @@
 <div>
-	<form name="commentForm" ng-submit="addComment(commentForm)" novalidate>
+	<!-- headline -->
+	<div>
+		{{story.headline}}
+
+
+	</div>
+	<!-- text -->
+	<form name="commentForm" ng-click="addComment({comment:comment})" novalidate>
 		<textarea ng-model="comment.body"></textarea>
 		<input type="submit" value="Submit"/>
 	</form>
+	
+
 	<div id="comments" class="hi">
-		Timeline JS에서 directive가 먹는지 확인하는 부분.
-		{{storyKey}}
+		
 	</div>
 </div>

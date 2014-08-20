@@ -67,11 +67,14 @@ angular.module('doresolApp')
     return {
       restrict: 'E',
       scope: {
-        storyKey: '@',
+        story:'=',
         addComment: '&'
       },
-      replace: true,
-      templateUrl: "app/memorial/timeline/story_detail.html",
+      // replace: true,
+      templateUrl: "app/memorial/timeline/story_detail.html"
+      // controller:function($scope){
+      //   console.log($scope.story);
+      // }
     }
   })
 
