@@ -48,6 +48,10 @@ angular.module('doresolApp')
       scope: false,
       replace: true,
       templateUrl: "app/memorial/timeline/superbox_show.html",
+      controller: function($scope){
+        $scope.updateStory = function(storyId){
+        }
+      }
       // link: function(scope, element, attrs) {
       //  });
       }

@@ -194,9 +194,9 @@ angular.module('doresolApp')
       };
 
       var timeline_dates = [];
-      angular.forEach($scope.storiesObject,function(stories,key){
-        angular.forEach(stories,function(story,key){
-          timeline_dates.push(story);
+      angular.forEach($scope.storiesArray,function(storiesKey,eraKey){
+        angular.forEach(storiesKey,function(storyKey){
+          timeline_dates.push($scope.storiesObject[eraKey][storyKey]);
         });
       });
 
@@ -286,7 +286,7 @@ angular.module('doresolApp')
             ref_era: $scope.selectedEraKey,
 
             startDate: startDate,
-            text: null,
+            text: '내용없음',
             headline: '제목없음',
             asset: {
               "media": '/tmp/' + value.uniqueIdentifier,

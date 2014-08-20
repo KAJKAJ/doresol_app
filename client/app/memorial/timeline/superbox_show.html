@@ -16,16 +16,12 @@
           <img ng-src="{{story.file.url}}" class="superbox-img"> 
         </div>  
       </div>    
-
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-      <a href="#" editable-text="story.headline"> {{ story.headline || "제목을 입력하세요" }}
-      </a>
+      <input type="text" ng-model="story.headline" placeholder="story.headline || \"제목을 입력하세요\" "/> 
       <hr/>
-      <div>
-        <a href="#" editable-textarea="story.text" e-rows="7" e-cols="40" class="optional-text">{{ story.text || "설명이 필요하면 적어주세요" }} </a>
-      </div> 
+      <input type="textarea" ng-model="story.text" placeholder="{{story.text || \"설명이 필요하면 적어주세요\"}}" />
     </div>
   </div>
 </div>

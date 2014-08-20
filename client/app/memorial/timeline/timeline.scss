@@ -144,6 +144,39 @@
   display: none;
   margin: 5px 0;
 }
+
+.superbox-show input[type=text],.superbox-show input[type=textarea] {
+    border: 1px solid #222222;
+    width: 100%;
+    resize: none;
+    background-color: #222222;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.superbox-show input[type=text]:hover,.superbox-show input[type=textarea]:hover,
+.superbox-show input[type=text]:focus,.superbox-show input[type=textarea]:focus {
+    border: 2px solid #d7cebf;
+    outline: none
+}
+
+.story-show input[type=text],.story-show input[type=textarea] {
+    border: 1px solid #ffffff;
+    width: 100%;
+    resize: none;
+    background-color: #ffffff;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.story-show input[type=text]:hover,.story-show input[type=textarea]:hover,
+.story-show input[type=text]:focus,.story-show input[type=textarea]:focus {
+    border: 2px solid #d7cebf;
+    outline: none
+}
+
 .superbox-current-img {
   max-width: 100%;
   float: left;
