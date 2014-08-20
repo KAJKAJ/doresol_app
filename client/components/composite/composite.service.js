@@ -3,6 +3,8 @@
  angular.module('doresolApp')
   .factory('Composite', function Memorial($q,Memorial,File,User,ENV,$firebase,Story,Comment) {
 
+  var user = User.getCurrentUser();
+
   var setMyMemorials = function(userId){
     var dfd = $q.defer();
 
@@ -74,12 +76,13 @@
     };
 
     var _create_comment = function(commentKey) {
+      console.log(storyId);
       var storyRef = new Firebase(ENV.FIREBASE_URI + '/stories/' + storyId + '/comments');
 
-      return $firebase(storyRef).$set(key, true);
+      return $firebase(storyRef).$set(commentKey, true);
     };
 
-    return Comment.create(newComment).then(_create_comment, errorHandler);
+    return Comment.create(storyId,newComment).then(_create_comment, errorHandler);
   };
 
   
@@ -88,7 +91,9 @@
     setMyMemorials:setMyMemorials,
 
     // story 
-    createStory:createStory
+    createStory:createStory,
+
+    createComment:createComment
 	};
 	
 });

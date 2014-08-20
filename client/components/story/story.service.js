@@ -21,7 +21,7 @@ angular.module('doresolApp')
   };
 
   var findById = function(storyKey) {
-    var storyRef = ref.child(userId);
+    var storyRef = ref.child(storyKey);
     return $firebase(storyRef).$asObject();
   };
 

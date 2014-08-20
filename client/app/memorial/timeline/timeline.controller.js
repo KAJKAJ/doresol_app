@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, Composite,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
+  .controller('TimelineCtrl', function ($scope, $q, Util, Composite,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
 
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
@@ -217,57 +217,77 @@ angular.module('doresolApp')
     };
 
    $scope.uploadTimelineStory = function(){
-      angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
-        var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
-        var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
-        var cntStories = storiesKey.length;
-        var timeStep = (eraEnd - eraStart)/cntStories;
-        var index = 0;
-
-        angular.forEach(storiesKey, function(storyKey, key) {
-          $scope.storiesObject[eraKey][storyKey].startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
-          index++;
-
-          if($scope.storiesObject[eraKey][storyKey].newStory){
-            // create story
-            var copyStory = {};
-            angular.copy($scope.storiesObject[eraKey][storyKey],copyStory);
-
-            var file = {
-              type: copyStory.file.type,
-              location: 'local',
-              url: '/tmp/' + copyStory.file.uniqueIdentifier,
-              updated_at: moment().toString()
+      var _uploadTimelineStory = function(){
+        var dfd = $q.defer();
+        var totalNewStoryCnt = 0;
+        angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
+          angular.forEach(storiesKey, function(storyKey, key) {
+            if($scope.storiesObject[eraKey][storyKey].newStory){
+              totalNewStoryCnt++;
             }
-            copyStory.file = file;
-            
-            delete copyStory.newStory;
-
-            Composite.createStory($scope.memorialKey,copyStory).then(function(value){
-              delete $scope.storiesObject[eraKey][storyKey];
-              var index = $scope.storiesArray[eraKey].indexOf(storyKey);
-              $scope.storiesArray[eraKey].splice(index, 1);  
-            }, function(error){
-              console.log(error);
-
-            });
-
-          }
+          });
         });
-      });
+
+        var newStoryCnt = 0;
+
+        angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
+          var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
+          var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
+          var cntStories = storiesKey.length;
+          var timeStep = (eraEnd - eraStart)/cntStories;
+          var index = 0;
+
+          angular.forEach(storiesKey, function(storyKey, key) {
+            $scope.storiesObject[eraKey][storyKey].startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
+            index++;
+
+            if($scope.storiesObject[eraKey][storyKey].newStory){
+              // create story
+              var copyStory = {};
+              angular.copy($scope.storiesObject[eraKey][storyKey],copyStory);
+
+              var file = {
+                type: copyStory.file.type,
+                location: 'local',
+                url: '/tmp/' + copyStory.file.uniqueIdentifier,
+                updated_at: moment().toString()
+              }
+              copyStory.file = file;
+              
+              delete copyStory.newStory;
+
+              Composite.createStory($scope.memorialKey,copyStory).then(function(value){
+                delete $scope.storiesObject[eraKey][storyKey];
+                var index = $scope.storiesArray[eraKey].indexOf(storyKey);
+                $scope.storiesArray[eraKey].splice(index, 1);  
+                newStoryCnt++;
+                if(totalNewStoryCnt == newStoryCnt){
+                  dfd.resolve('completed');
+                }
+              }, function(error){
+                console.log(error);
+                dfd.reject(error);
+              });
+
+            }
+          });
+        });
+
+        return dfd.promise;
+      }
       
-      $scope.toggleEditMode();
-      $scope.createTimeline();
+      _uploadTimelineStory().then(function(){
+        $scope.toggleEditMode();
+        $scope.createTimeline();
+      });
     };
     
     $scope.flowFilesAdded = function($files){
-      console.log($files);
       angular.forEach($files, function(value, key) {
         value.type = value.file.type.split("/")[0];
       
         var startDate = moment(value.file.lastModifieldDate).format("YYYY-MM-DD");
-        console.log(key);
-
+        
         if($scope.storiesArray[$scope.selectedEraKey] == undefined) {
           $scope.storiesArray[$scope.selectedEraKey] = [];
           $scope.storiesObject[$scope.selectedEraKey] = {};
