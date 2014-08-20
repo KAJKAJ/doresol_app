@@ -1,10 +1,7 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('MyMemorial', function Memorial($q,Memorial,File,User,ENV,$firebase,Story,Comment) {
-
-  var myMemorials = {};
-  var currentMemorial = null;
+  .factory('Composite', function Memorial($q,Memorial,File,User,ENV,$firebase,Story,Comment) {
 
   var setMyMemorials = function(userId){
     var dfd = $q.defer();
@@ -17,13 +14,13 @@
     _myMemorials.$watch(function(event){
       switch(event.event){
         case "child_removed":
-          removeMyMemorial(event.key);
+          Memorial.removeMyMemorial(event.key);
         break;
         case "child_added":
           var childRef = memorialsRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
-            addMyMemorial(event.key,value);
+            Memorial.addMyMemorial(event.key,value);
           });
         break;
       }
@@ -31,11 +28,6 @@
 
     dfd.resolve(true);
     return dfd.promise;
-  };
-
-  var removeStoryFromTimeline = function(memorialId,storyId){
-    var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+memorialId+'/timeline/stories');
-    $firebase(memorialRef).$remove(storyId);
   };
 
   var createMemorial = function(memorial) {
@@ -52,31 +44,6 @@
     }else{
       return _create_memorial(memorial).then(User.createMemorial, errorHandler);
     }
-  };
-
-
-  var setCurrentMemorial = function(memorialId){
-    currentMemorial = Memorial.findById(memorialId);
-  };
-
-  var getCurrentMemorial = function(){
-    return currentMemorial;
-  };
-
-  var addMyMemorial = function(key,value){
-  	myMemorials[key] = value;
-  };
-
-  var removeMyMemorial = function(key){
-  	delete myMemorials[key];
-  };
-
-  var getMyMemorials = function(){
-  	return myMemorials;
-  };
-
-  var getMyMemorial = function(memorialId) {
-    return myMemorials[memorialId];
   };
 
   var createStory = function(memorialId, newStory) {
@@ -117,18 +84,11 @@
 
   
   return {
-		addMyMemorial:addMyMemorial,
-		removeMyMemorial:removeMyMemorial,
-		getMyMemorials:getMyMemorials,
-    getMyMemorial:getMyMemorial,
-    setCurrentMemorial:setCurrentMemorial,
-    getCurrentMemorial:getCurrentMemorial,
-    createMemorial:createMemorial,
+		createMemorial:createMemorial,
     setMyMemorials:setMyMemorials,
 
     // story 
-    createStory:createStory,
-    removeStoryFromTimeline:removeStoryFromTimeline
+    createStory:createStory
 	};
 	
 });

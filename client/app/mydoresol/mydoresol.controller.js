@@ -2,7 +2,7 @@
 
 angular.module('doresolApp')
   // .controller('MydoresolCtrl', function ($scope) {
-  .controller('MydoresolCtrl', function ($scope, $resource, Auth, MyMemorial, User) {
-    $scope.myMemorials = MyMemorial.getMyMemorials();
+  .controller('MydoresolCtrl', function ($scope, $resource, Auth, Memorial, User) {
+    $scope.myMemorials = Memorial.getMyMemorials();
     $scope.user = User.getCurrentUser();
   });

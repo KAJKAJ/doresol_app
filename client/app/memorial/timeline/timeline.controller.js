@@ -1,14 +1,15 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, MyMemorial,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
+  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, Composite,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
 
     $scope.memorialKey = $stateParams.id;
-    $scope.memorial = MyMemorial.getCurrentMemorial();
+    $scope.memorial = Memorial.getCurrentMemorial();
 
     $scope.memorial.$loaded().then(function(value){
       console.log(value);
-      $timeout(function(){$scope.createTimeline()},1000);
+      //temp
+      $timeout(function(){$scope.createTimeline()},500);
       if(!value.timeline || !value.timeline.stories){
         $scope.editMode = true;
       }
@@ -76,12 +77,6 @@ angular.module('doresolApp')
         break;
       }
     });
-    // $scope.memorial = Memorial.myMemorials[$stateParams.id];
-    // console.log($scope.memorial);
-
-    // if($scope.memorial['timeline']) {
-    //   $scope.timeline = $scope.memorial['timeline'];
-    // };
 
     $scope.selectedEraHeadlineChange = function(){
       var isDuplicated = false;
@@ -174,7 +169,7 @@ angular.module('doresolApp')
       $scope.storiesArray[$scope.selectedEraKey].splice(index, 1);  
 
       if(!$scope.storiesObject[$scope.selectedEraKey][storyId].newStory){
-        MyMemorial.removeStoryFromTimeline($scope.memorialKey,storyId);
+        Story.removeStoryFromTimeline($scope.memorialKey,storyId);
       }
     };
 
@@ -201,9 +196,11 @@ angular.module('doresolApp')
       });
 
       var timeline_eras = [];
-      angular.forEach($scope.memorial.timeline.era,function(era,key){
-        timeline_eras.push(era);
-      });
+      if($scope.memorial.timeline){
+        angular.forEach($scope.memorial.timeline.era,function(era,key){
+          timeline_eras.push(era);
+        });
+      }
 
       timeline_data.timeline.date = timeline_dates;
       timeline_data.timeline.era = timeline_eras;
@@ -246,7 +243,7 @@ angular.module('doresolApp')
             
             delete copyStory.newStory;
 
-            MyMemorial.createStory($scope.memorialKey,copyStory).then(function(value){
+            Composite.createStory($scope.memorialKey,copyStory).then(function(value){
               delete $scope.storiesObject[eraKey][storyKey];
               var index = $scope.storiesArray[eraKey].indexOf(storyKey);
               $scope.storiesArray[eraKey].splice(index, 1);  

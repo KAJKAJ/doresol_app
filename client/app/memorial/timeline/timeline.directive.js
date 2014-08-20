@@ -75,10 +75,13 @@ angular.module('doresolApp')
         addComment: '&'
       },
       // replace: true,
-      templateUrl: "app/memorial/timeline/story_detail.html"
-      // controller:function($scope){
-      //   console.log($scope.story);
-      // }
+      templateUrl: "app/memorial/timeline/story_detail.html",
+      controller:function($scope){
+        $scope.add = function(comment){
+          $scope.addComment({comment:comment});
+          $scope.comment = null;
+        }
+      }
     }
   })
 

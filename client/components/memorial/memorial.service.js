@@ -2,7 +2,34 @@
 
  angular.module('doresolApp')
   .factory('Memorial', function Memorial($firebase, $q, ENV) {
+  
+  var myMemorials = {};
+  var currentMemorial = null;
 
+  var setCurrentMemorial = function(memorialId){
+    currentMemorial = findById(memorialId);
+  };
+
+  var getCurrentMemorial = function(){
+    return currentMemorial;
+  };
+
+  var addMyMemorial = function(key,value){
+  	myMemorials[key] = value;
+  };
+
+  var removeMyMemorial = function(key){
+  	delete myMemorials[key];
+  };
+
+  var getMyMemorials = function(){
+  	return myMemorials;
+  };
+
+  var getMyMemorial = function(memorialId) {
+    return myMemorials[memorialId];
+  };
+  	
 	var ref = new Firebase(ENV.FIREBASE_URI + '/memorials');
 	var memorials = $firebase(ref).$asArray();
 
@@ -56,6 +83,13 @@
 		remove: remove,
 		create: create,
 		findById: findById,
+
+		addMyMemorial:addMyMemorial,
+		removeMyMemorial:removeMyMemorial,
+		getMyMemorials:getMyMemorials,
+    getMyMemorial:getMyMemorial,
+    setCurrentMemorial:setCurrentMemorial,
+    getCurrentMemorial:getCurrentMemorial,
 
 		createEra:createEra,
 		updateEra:updateEra,
