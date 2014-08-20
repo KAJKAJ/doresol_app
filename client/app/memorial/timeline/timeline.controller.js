@@ -3,16 +3,30 @@
 angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope, $q, Util, Composite,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
 
+    $scope.editMode = true;
+    var waitStoryLoaded = function(){
+      if($scope.totalStoryCnt == $scope.storyCnt){
+        if($scope.totalStoryCnt > 0){
+          console.log('hey');
+          $scope.toggleEditMode();
+          $scope.createTimeline();
+        }
+      }else{
+        $timeout(waitStoryLoaded, 100);
+      }
+    };
+
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
 
     $scope.memorial.$loaded().then(function(value){
-      console.log(value);
-      //temp
-      $timeout(function(){$scope.createTimeline()},500);
-      if(!value.timeline || !value.timeline.stories){
-        $scope.editMode = true;
-      }
+      // console.log(value);
+      // //temp
+      // $timeout(function(){$scope.createTimeline()},500);
+      // if(!value.timeline || !value.timeline.stories){
+      //   $scope.editMode = true;
+      // }
+      waitStoryLoaded();
     });
 
     // $scope.selectedEraKey = {};
@@ -43,9 +57,16 @@ angular.module('doresolApp')
     var currentTimelineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/timeline/stories');
     var _timelineStories = $firebase(currentTimelineStoriesRef).$asArray();
 
+    $scope.storyCnt = 0;
+    _timelineStories.$loaded().then(function(value){
+      $scope.totalStoryCnt = _timelineStories.length;
+      console.log('totalStoryCnt:' + $scope.totalStoryCnt);
+    });
+
     _timelineStories.$watch(function(event){
       switch(event.event){
         case "child_removed":
+          $scope.storyCnt--;
           // removeMyMemorial(event.key);
           break;
         case "child_added":
@@ -71,6 +92,8 @@ angular.module('doresolApp')
             // $scope.stories[value.ref_era][event.key] = true;
 
             value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
+              $scope.storyCnt++;
+              console.log('storyCnt :'+$scope.storyCnt);
               // console.log($scope.storiesObject[value.ref_era][event.key]);
             });            
           });
@@ -164,6 +187,7 @@ angular.module('doresolApp')
     };
     
     $scope.removeSelectedStory = function(storyId) {
+      $scope.totalStoryCnt--;
       // delete $scope.storiesObject[$scope.selectedEraKey][storyId];
       var index = $scope.storiesArray[$scope.selectedEraKey].indexOf(storyId);
       $scope.storiesArray[$scope.selectedEraKey].splice(index, 1);  
@@ -217,69 +241,47 @@ angular.module('doresolApp')
     };
 
    $scope.uploadTimelineStory = function(){
-      var _uploadTimelineStory = function(){
-        var dfd = $q.defer();
-        var totalNewStoryCnt = 0;
-        angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
-          angular.forEach(storiesKey, function(storyKey, key) {
-            if($scope.storiesObject[eraKey][storyKey].newStory){
-              totalNewStoryCnt++;
+      angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
+        var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
+        var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
+        var cntStories = storiesKey.length;
+        var timeStep = (eraEnd - eraStart)/cntStories;
+        var index = 0;
+
+        angular.forEach(storiesKey, function(storyKey, key) {
+          $scope.storiesObject[eraKey][storyKey].startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
+          index++;
+
+          if($scope.storiesObject[eraKey][storyKey].newStory){
+            $scope.totalStoryCnt++;     
+            console.log('total :'+$scope.totalStoryCnt);      
+            // create story
+            var copyStory = {};
+            angular.copy($scope.storiesObject[eraKey][storyKey],copyStory);
+
+            var file = {
+              type: copyStory.file.type,
+              location: 'local',
+              url: '/tmp/' + copyStory.file.uniqueIdentifier,
+              updated_at: moment().toString()
             }
-          });
+            copyStory.file = file;
+            
+            delete copyStory.newStory;
+
+            Composite.createStory($scope.memorialKey,copyStory).then(function(value){
+              delete $scope.storiesObject[eraKey][storyKey];
+              var index = $scope.storiesArray[eraKey].indexOf(storyKey);
+              $scope.storiesArray[eraKey].splice(index, 1);  
+            }, function(error){
+              console.log(error);
+            });
+
+          }
         });
-
-        var newStoryCnt = 0;
-
-        angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
-          var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
-          var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
-          var cntStories = storiesKey.length;
-          var timeStep = (eraEnd - eraStart)/cntStories;
-          var index = 0;
-
-          angular.forEach(storiesKey, function(storyKey, key) {
-            $scope.storiesObject[eraKey][storyKey].startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
-            index++;
-
-            if($scope.storiesObject[eraKey][storyKey].newStory){
-              // create story
-              var copyStory = {};
-              angular.copy($scope.storiesObject[eraKey][storyKey],copyStory);
-
-              var file = {
-                type: copyStory.file.type,
-                location: 'local',
-                url: '/tmp/' + copyStory.file.uniqueIdentifier,
-                updated_at: moment().toString()
-              }
-              copyStory.file = file;
-              
-              delete copyStory.newStory;
-
-              Composite.createStory($scope.memorialKey,copyStory).then(function(value){
-                delete $scope.storiesObject[eraKey][storyKey];
-                var index = $scope.storiesArray[eraKey].indexOf(storyKey);
-                $scope.storiesArray[eraKey].splice(index, 1);  
-                newStoryCnt++;
-                if(totalNewStoryCnt == newStoryCnt){
-                  dfd.resolve('completed');
-                }
-              }, function(error){
-                console.log(error);
-                dfd.reject(error);
-              });
-
-            }
-          });
-        });
-
-        return dfd.promise;
-      }
-      
-      _uploadTimelineStory().then(function(){
-        $scope.toggleEditMode();
-        $scope.createTimeline();
       });
+      
+      waitStoryLoaded();
     };
     
     $scope.flowFilesAdded = function($files){
