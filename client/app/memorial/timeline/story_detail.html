@@ -1,15 +1,17 @@
 <div>
 	<!-- headline -->
-	<div>
+	<h3>
 		{{story.headline}}
-
-
-	</div>
+	</h3>
+	<p>
+		{{story.desc}}
+	</p>
 	<!-- text -->
-	<form name="commentForm" ng-click="addComment({comment:comment})" novalidate>
-		<textarea ng-model="comment.body"></textarea>
-		<input type="submit" value="Submit"/>
-	</form>
+	<form name="commentForm" ng-submit="add(comment)" novalidate ng-init="comment.storyKey=story.$id">
+		<img src="assets/images/user_32.png"/> 
+		<input type="text" placeholder="댓글을 입력하세요.." ng-model="comment.body">
+		<input type="hidden" placeholder="댓글을 입력하세요.." ng-model="comment.storyKey">
+  </form>
 	
 
 	<div id="comments" class="hi">
