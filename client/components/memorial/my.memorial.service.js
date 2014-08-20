@@ -1,7 +1,7 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('MyMemorial', function Memorial($q,Memorial,File,User,ENV,$firebase,Story) {
+  .factory('MyMemorial', function Memorial($q,Memorial,File,User,ENV,$firebase,Story,Comment) {
 
   var myMemorials = {};
   var currentMemorial = null;
@@ -99,6 +99,23 @@
     }
   };
 
+
+  // Comment Related 
+  var createComment = function(storyId, newComment) {
+    var errorHandler = function(error) {
+      return $q.reject(error);
+    };
+
+    var _create_comment = function(commentKey) {
+      var storyRef = new Firebase(ENV.FIREBASE_URI + '/stories/' + storyId + '/comments');
+
+      return $firebase(storyRef).$set(key, true);
+    };
+
+    return Comment.create(newComment).then(_create_comment, errorHandler);
+  };
+
+  
   return {
 		addMyMemorial:addMyMemorial,
 		removeMyMemorial:removeMyMemorial,
