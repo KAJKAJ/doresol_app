@@ -63,14 +63,15 @@ angular.module('doresolApp')
       }
   })
 
-  .directive('storyComments', function () {
+  .directive('storyDetail', function () {
     return {
       restrict: 'E',
       scope: {
-        storyKey: '@'
+        storyKey: '@',
+        addComment: '&'
       },
       replace: true,
-      templateUrl: "app/memorial/timeline/story_comments.html",
+      templateUrl: "app/memorial/timeline/story_detail.html",
     }
   })
 

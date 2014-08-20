@@ -187,8 +187,8 @@ angular.module('doresolApp')
            "startDate": $scope.memorial.dateOfBirth,
            // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
            "asset": {
-                        "media": $scope.memorial.file.url,
-                        "caption":"아버지 .. 아포 중학교 앞에서"
+                        "media": $scope.memorial.file.url
+                        // "caption":"아버지 .. 아포 중학교 앞에서"
                     }            
         }
       };
@@ -207,8 +207,6 @@ angular.module('doresolApp')
 
       timeline_data.timeline.date = timeline_dates;
       timeline_data.timeline.era = timeline_eras;
-
-      console.log(timeline_data);
 
       angular.element('#timeline-embed').empty();
 

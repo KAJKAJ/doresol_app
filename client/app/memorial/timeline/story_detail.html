@@ -1,5 +1,5 @@
 <div>
-	<form name="commentForm" ng-submit="addComment(comment)">
+	<form name="commentForm" ng-submit="addComment(commentForm)" novalidate>
 		<textarea ng-model="comment.body"></textarea>
 		<input type="submit" value="Submit"/>
 	</form>
