@@ -217,8 +217,7 @@ angular.module('doresolApp')
            width:      '100%',
            height:     '800',
            source:     timeline_data,
-           embed_id:   'timeline-embed',
-           debug: true
+           embed_id:   'timeline-embed'
        });
     };
 
