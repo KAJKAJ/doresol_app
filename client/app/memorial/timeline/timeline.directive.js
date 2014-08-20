@@ -63,16 +63,6 @@ angular.module('doresolApp')
       }
   })
 
-  .directive('timelineEmbed', function() {
-    return {
-      restrict: 'A',
-      scope: false,
-      link: function(scope, element, attrs) {
-        $compile(element.contents())(scope);
-      }
-    };
-  })
-
   .directive('storyComments', function () {
     return {
       restrict: 'C',
