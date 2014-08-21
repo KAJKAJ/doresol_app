@@ -201,10 +201,8 @@ angular.module('doresolApp')
            "type":"default",
            "text": "아버지의 일대기",
            "startDate": $scope.memorial.dateOfBirth,
-           // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
            "asset": {
                         "media": $scope.memorial.file.url
-                        // "caption":"아버지 .. 아포 중학교 앞에서"
                     }            
         }
       };
@@ -231,7 +229,7 @@ angular.module('doresolApp')
       createStoryJS({
            type:       'timeline',
            width:      '100%',
-           height:     '800',
+           height:     '600',
            source:     timeline_data,
            embed_id:   'timeline-embed'
        });
