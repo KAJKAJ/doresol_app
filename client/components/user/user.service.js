@@ -79,20 +79,25 @@ angular.module('doresolApp')
   var setUsersObject = function(userId){
     var user = findById(userId);
     user.$loaded().then(function(value){
-      value.profile = {};
-      if(value.uid.indexOf("facebook") > -1){
-        value.profile.name = value.name;
-        value.profile.image = value.thirdPartyUserData.picture.data.url;
-      }else if(value.uid.indexOf("simplelogin") > -1){
-        value.profile.name = value.email;
-        value.profile.image = 'assets/images/user_32.png';
-      }
+      value.profile = getUserProfile(value);      
       usersObject[value.uid] = value;
     });
   }
 
   var getUsersObject = function(){
     return usersObject;
+  }
+
+  var getUserProfile = function(user){
+    var profile = {};
+    if(user.uid.indexOf("facebook") > -1){
+      profile.name = user.name;
+      profile.image = user.thirdPartyUserData.picture.data.url;
+    }else if(user.uid.indexOf("simplelogin") > -1){
+      profile.name = user.email;
+      profile.image = 'assets/images/user_32.png';
+    }
+    return profile;
   }
 
   // $rootScope.$on('$firebaseSimpleLogin:login', function (e, authUser) {
@@ -116,7 +121,8 @@ angular.module('doresolApp')
     getCurrentUserFromFirebase:getCurrentUserFromFirebase,
     update:update,
     setUsersObject:setUsersObject,
-    getUsersObject:getUsersObject
+    getUsersObject:getUsersObject,
+    getUserProfile:getUserProfile
 
   }
 

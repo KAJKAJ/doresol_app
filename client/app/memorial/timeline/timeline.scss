@@ -460,6 +460,33 @@
   color: #333!important;
 }
 
+/* comment */
 .text-left{
   text-align:left;
+}
+
+.comment{
+  clear:both;
+}
+
+.comment-avatar{
+  float:left;
+  padding-right:10px;  
+}
+
+.comment-body{
+  padding-left:42px;
+  text-align:left;
+  .comment-user-id{
+    font-weight:600;
+    color:#1bbae1;
+  }
+}
+
+.text-muted{
+  color:#999999;
+}
+
+.text-small{
+  font-size:80%;
 }

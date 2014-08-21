@@ -17,21 +17,35 @@
 	<!-- text -->
 
 	<!-- comment -->
-	<div ng-repeat="(commentKey, comment) in commentsObject" class="story-comment text-left">
-		<div ng-if="comment.ref_user">
-			<img ng-src="{{users[comment.ref_user].profile.image}}"/>
-			{{users[comment.ref_user].profile.name}}
-		</div>
-		<div ng-if="comment.ref_user == currentUser.uid">
-			<i class="fa fa-times-circle text-danger" ng-click="deleteComment(story.$id, commentKey)" />
-			<input type="textarea" ng-model="comment.body"/>
-		</div>
-		<div ng-if="comment.ref_user != currentUser.uid">
-			{{comment.body}}
-		</div>
-	</div>
-	<form name="commentForm" ng-submit="addComment(comment)" novalidate>
-		<img src="assets/images/user_32.png"/> 
-		<input type="text" placeholder="댓글을 입력하세요.." ng-model="comment.body">
-  </form>
+	<ul class="comment-list">
+    <li class="comment" ng-repeat="comment in commentsObject" >
+    		<div class="comment-avatar">
+          <!-- <a href="#">
+              <img ng-src="{{users[comment.ref_user].profile.image}}" style="width:32px;height:32px;"/>
+          </a> -->
+          <img ng-src="{{users[comment.ref_user].profile.image}}" style="width:32px;height:32px;"/>
+        </div>
+        <div class="comment-body">
+            <!-- <a href="#"><strong class="comment-user-id">{{users[comment.ref_user].profile.name}}</strong></a> -->
+            <strong class="comment-user-id">{{users[comment.ref_user].profile.name}}</strong>
+            <span class="text-muted text-small"><em>{{comment.fromNow}}</em></span>
+            <p>{{comment.body}}</p>
+        </div>
+    </li>  
+
+    <!-- new comment -->
+    <hr/>
+    <li class="comment">
+    		<div class="comment-avatar">
+          <img ng-src="{{currentUser.profile.image}}" style="width:32px;height:32px;"/>
+        </div>
+        <div class="comment-body">
+            <strong class="comment-user-id">{{currentUser.profile.name}}</strong>
+            <form name="commentForm" ng-submit="addComment(comment)" novalidate>
+							<textarea rows="2" placeholder="댓글을 입력하세요.." style="margin: 1px 0px; width: 200px; height: 50px;" ng-model="comment.body"></textarea>
+              <button type="submit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i>댓글 저장</button>
+					  </form>            
+        </div>
+    </li>        
+  </ul>
 </div>
