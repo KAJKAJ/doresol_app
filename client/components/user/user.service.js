@@ -8,6 +8,8 @@ angular.module('doresolApp')
   
   var currentUser = null;
 
+  var usersObject = {};
+
   var getCurrentUserFromFirebase = function(userId){
     var dfd = $q.defer();
     if(currentUser == null){
@@ -28,7 +30,7 @@ angular.module('doresolApp')
       dfd.resolve(getCurrentUser());
     }
     return dfd.promise;
-  };
+  }
 
   var setCurrentUser = function(user){
     if(user){
@@ -36,30 +38,30 @@ angular.module('doresolApp')
     }else{
       currentUser = null;
     }
-  };
+  }
 
   var create = function(newUser) {
     var user = {
       uid: newUser.uid,
       id: newUser.id,
       email: newUser.email
-    };
+    }
 
     return users.$set(newUser.uid, user);
-  };
+  }
 
   var update = function(userId, data) {
     return users.$update(userId, data);
-  };
+  }
 
   var findById = function(userId) {
     var userRef = users.$ref().child(userId);
     return $firebase(userRef).$asObject();
-  };
+  }
 
   var getCurrentUser = function(){
     return currentUser;
-  };
+  }
 
   // Memorial Related 
   var createMemorial = function(params) {
@@ -68,7 +70,22 @@ angular.module('doresolApp')
     var memorial = $firebase(ownMemorialRef);
 
     return memorial.$set(true);
-  };
+  }
+
+  var getUserName = function (user){
+    return user.uid;
+  }
+
+  var setUsersObject = function(userId){
+    var user = findById(userId);
+    user.$loaded().then(function(value){
+      usersObject[value.uid] = value;
+    });
+  }
+
+  var getUsersObject = function(){
+    return usersObject;
+  }
 
   // $rootScope.$on('$firebaseSimpleLogin:login', function (e, authUser) {
   //   var query = $firebase(ref.startAt(authUser.uid).endAt(authUser.uid));
@@ -89,7 +106,10 @@ angular.module('doresolApp')
     getCurrentUser:getCurrentUser,
     setCurrentUser:setCurrentUser,
     getCurrentUserFromFirebase:getCurrentUserFromFirebase,
-    update:update
-  };
+    update:update,
+    setUsersObject:setUsersObject,
+    getUsersObject:getUsersObject
+
+  }
 
 });

@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StoryCtrl', function ($scope,$stateParams,$state,Story,Composite,ENV,$firebase) {
+  .controller('StoryCtrl', function ($scope,$stateParams,$state,Story,Composite,ENV,$firebase, User) {
   	$scope.story = Story.findById($scope.storyKey);
   	$scope.commentsObject = {};
-  	
+
   	$scope.story.$loaded().then(function(value){
   		var storyCommentsRef = new Firebase(ENV.FIREBASE_URI + '/stories/'+value.$id + '/comments/');
   		var _comments = $firebase(storyCommentsRef).$asArray();
@@ -21,6 +21,8 @@ angular.module('doresolApp')
 	          var child = $firebase(childRef).$asObject();
 	          child.$loaded().then(function(value){
 	            $scope.commentsObject[event.key] = value;
+	            User.setUsersObject(value.ref_user);
+	            $scope.users = User.getUsersObject();
 	          });
 	        break;
 	      }

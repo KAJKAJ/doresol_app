@@ -8,6 +8,7 @@
 
 	<!-- comment -->
 	<div ng-repeat="comment in commentsObject">
+		{{users[comment.ref_user].uid}}
 		{{comment.body}}
 	</div>
 	<form name="commentForm" ng-submit="addComment(comment)" novalidate>
