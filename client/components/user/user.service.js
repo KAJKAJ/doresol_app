@@ -79,6 +79,14 @@ angular.module('doresolApp')
   var setUsersObject = function(userId){
     var user = findById(userId);
     user.$loaded().then(function(value){
+      value.profile = {};
+      if(value.uid.indexOf("facebook") > -1){
+        value.profile.name = value.name;
+        value.profile.image = value.thirdPartyUserData.picture.data.url;
+      }else if(value.uid.indexOf("simplelogin") > -1){
+        value.profile.name = value.email;
+        value.profile.image = 'assets/images/user_32.png';
+      }
       usersObject[value.uid] = value;
     });
   }

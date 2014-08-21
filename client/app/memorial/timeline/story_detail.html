@@ -1,4 +1,4 @@
-<div>
+<div scroll="auto" style="overflow-x:hidden;height:500px">
 	<!-- headline -->
 	<div class="story-show">
 		<h2><input type="text" ng-model="story.headline" placeholder="제목을 입력하세요.." /></h2>
@@ -7,8 +7,9 @@
 	<!-- text -->
 
 	<!-- comment -->
-	<div ng-repeat="comment in commentsObject">
-		{{users[comment.ref_user].uid}}
+	<div ng-repeat="comment in commentsObject" class="text-left">
+		<img ng-src="{{users[comment.ref_user].profile.image}}"/>
+		{{users[comment.ref_user].profile.name}}
 		{{comment.body}}
 	</div>
 	<form name="commentForm" ng-submit="addComment(comment)" novalidate>
