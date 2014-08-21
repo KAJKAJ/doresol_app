@@ -2,6 +2,9 @@
 
 angular.module('doresolApp')
   .controller('StoryCtrl', function ($scope,$stateParams,$state,Story,Composite,ENV,$firebase, User) {
+  	$scope.currentUser = User.getCurrentUser();
+  	$scope.currentUser.profile = User.getUserProfile($scope.currentUser);
+  	
   	$scope.story = Story.findById($scope.storyKey);
   	$scope.commentsObject = {};
 
@@ -20,7 +23,8 @@ angular.module('doresolApp')
 	          var childRef = commentsRef.child(event.key);
 	          var child = $firebase(childRef).$asObject();
 	          child.$loaded().then(function(value){
-	            $scope.commentsObject[event.key] = value;
+	          	value.fromNow = moment(value.created_at).fromNow();
+	          	$scope.commentsObject[event.key] = value;
 	            User.setUsersObject(value.ref_user);
 	            $scope.users = User.getUsersObject();
 	          });
