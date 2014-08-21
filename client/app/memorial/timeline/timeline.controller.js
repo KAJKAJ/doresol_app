@@ -298,7 +298,8 @@ angular.module('doresolApp')
 
             ref_memorial: $scope.memorialKey,
             ref_era: $scope.selectedEraKey,
-
+            ref_user: $scope.currentUser.uid,
+            
             startDate: startDate,
             text: '내용없음',
             headline: '제목없음',
