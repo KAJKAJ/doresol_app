@@ -25,10 +25,10 @@
         <div class="comment-body story-comment">
             <strong class="comment-user-id">{{users[comment.ref_user].profile.name}}</strong>
             <span class="text-muted text-small"><em>{{comment.fromNow}}</em></span>
-            <div ng-if="comment.ref_user == currentUser.uid">
-	           	<i class="fa fa-times-circle text-danger" ng-click="deleteComment(story.$id, commentKey)"></i> <input type="text" ng-model="comment.body"/>
-	          </div>
-            <p ng-if="comment.ref_user != currentUser.uid">{{comment.body}}</p>
+            <span ng-if="comment.ref_user == currentUser.uid">
+	           	<i class="fa fa-times-circle text-danger" ng-click="deleteComment(story.$id, commentKey)"></i><p><input type="text" ng-model="comment.body"/></p>
+	          </span>
+           	<p ng-if="comment.ref_user != currentUser.uid">{{comment.body}}</p>
         </div>
     </li>
 
