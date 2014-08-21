@@ -7,7 +7,6 @@ angular.module('doresolApp')
     var waitStoryLoaded = function(){
       if($scope.totalStoryCnt == $scope.storyCnt){
         if($scope.totalStoryCnt > 0){
-          console.log('hey');
           $scope.toggleEditMode();
           $scope.createTimeline();
         }
@@ -60,7 +59,6 @@ angular.module('doresolApp')
     $scope.storyCnt = 0;
     _timelineStories.$loaded().then(function(value){
       $scope.totalStoryCnt = _timelineStories.length;
-      console.log('totalStoryCnt:' + $scope.totalStoryCnt);
     });
 
     _timelineStories.$watch(function(event){
@@ -93,7 +91,6 @@ angular.module('doresolApp')
 
             value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
               $scope.storyCnt++;
-              console.log('storyCnt :'+$scope.storyCnt);
               // console.log($scope.storiesObject[value.ref_era][event.key]);
             });            
           });
