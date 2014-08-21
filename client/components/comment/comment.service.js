@@ -25,18 +25,24 @@ angular.module('doresolApp')
 
   var findById = function(commentKey) {
     var commentRef = ref.child(commentKey);
-    return $firebase(storyRef).$asObject();
+    return $firebase(commentRef).$asObject();
   };
 
   var remove = function(commentKey) {
-    return users.$remove(storyKey);
+    return comments.$remove(commentKey);
   };
+
+  var removeCommentFromStory = function(storyId, commentId) {
+    var storyCommentsRef = new Firebase(ENV.FIREBASE_URI + '/stories/'+storyId+'/comments');
+    $firebase(storyCommentsRef).$remove(commentId);
+  }
 
   return {
     create: create,
     update: update,
     findById: findById,
-    remove: remove
+    remove: remove,
+    removeCommentFromStory:removeCommentFromStory
   };
 
 });
