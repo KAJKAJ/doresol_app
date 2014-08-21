@@ -7,10 +7,18 @@
 	<!-- text -->
 
 	<!-- comment -->
-	<div ng-repeat="comment in commentsObject" class="text-left">
-		<img ng-src="{{users[comment.ref_user].profile.image}}"/>
-		{{users[comment.ref_user].profile.name}}
-		{{comment.body}}
+	<div ng-repeat="(commentKey, comment) in commentsObject" class="story-comment text-left">
+		<div ng-if="comment.ref_user">
+			<img ng-src="{{users[comment.ref_user].profile.image}}"/>
+			{{users[comment.ref_user].profile.name}}
+		</div>
+		<div ng-if="comment.ref_user == currentUser.uid">
+			<i class="fa fa-times-circle text-danger" ng-click="deleteComment(story.$id, commentKey)" />
+			<input type="textarea" ng-model="comment.body"/>
+		</div>
+		<div ng-if="comment.ref_user != currentUser.uid">
+			{{comment.body}}
+		</div>
 	</div>
 	<form name="commentForm" ng-submit="addComment(comment)" novalidate>
 		<img src="assets/images/user_32.png"/> 

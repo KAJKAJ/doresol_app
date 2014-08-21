@@ -28,7 +28,7 @@ angular.module('doresolApp')
   var remove = function(storyKey) {
     return users.$remove(storyKey);
   };
-
+  
   var removeStoryFromTimeline = function(memorialId,storyId){
     var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+memorialId+'/timeline/stories');
     $firebase(memorialRef).$remove(storyId);

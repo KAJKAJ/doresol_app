@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StoryCtrl', function ($scope,$stateParams,$state,Story,Composite,ENV,$firebase, User) {
+  .controller('StoryCtrl', function ($scope,$stateParams,$state,Story,Composite,ENV,$firebase, User,Comment) {
   	$scope.story = Story.findById($scope.storyKey);
   	$scope.commentsObject = {};
+    $scope.currentUser = User.getCurrentUser();
 
   	$scope.story.$loaded().then(function(value){
   		var storyCommentsRef = new Firebase(ENV.FIREBASE_URI + '/stories/'+value.$id + '/comments/');
@@ -23,6 +24,9 @@ angular.module('doresolApp')
 	            $scope.commentsObject[event.key] = value;
 	            User.setUsersObject(value.ref_user);
 	            $scope.users = User.getUsersObject();
+
+              value.$bindTo($scope, "commentsObject['"+event.key+"']").then(function(){
+              });   
 	          });
 	        break;
 	      }
@@ -35,6 +39,11 @@ angular.module('doresolApp')
       	Composite.createComment($scope.storyKey, comment);
       	$scope.comment = null;	
       }
+    };
+
+    $scope.deleteComment = function(storyKey, commentKey) {
+      delete $scope.commentsObject[commentKey];
+      Comment.removeCommentFromStory(storyKey, commentKey);
     };
 
   });
