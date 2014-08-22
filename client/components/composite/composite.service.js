@@ -1,7 +1,7 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('Composite', function Memorial($q,Memorial,File,User,ENV,$firebase,Story,Comment) {
+  .factory('Composite', function Memorial($q,Memorial,File,User,ENV,$firebase,Story,Comment,Util) {
 
   var user = User.getCurrentUser();
 
@@ -67,11 +67,12 @@
     }
 
     var _create_storyline_story = function(params){
-      var storylineStoriesRef = memorialsRef.child(memorialId + '/storyline/stories/'+params.key);
-      return $firebase(storylineStoriesRef).$set(params.key,true);
+      var storylineStoriesRef = memorialsRef.child(memorialId + '/storyline/stories/'+ params.key);
+      // return $firebase(storylineStoriesRef).$set(params.key,true);
 
-      // var forever = moment("99991231235959999", "YYYYMMDDHHmmssSSS").unix();
-      // var now = Firebase.ServerValue.TIMESTAMP;
+      var forever = moment("99991231235959999", "YYYYMMDDHHmmssSSS").unix();
+      var now = moment().unix();
+      storylineStoriesRef.setWithPriority(true,forever - now + Util.getSequence());
       // return storylineStoriesRef.setWithPriority(true,forever - now);
       // return $firebase(storylineStoriesRef).$set(forever - now,params.key);
     }

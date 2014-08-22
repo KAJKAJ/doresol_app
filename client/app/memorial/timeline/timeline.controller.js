@@ -273,7 +273,6 @@ angular.module('doresolApp')
             copyStory.file = file;
             
             // delete copyStory.newStory;
-
             Composite.createStory($scope.memorialKey,copyStory).then(function(value){
             }, function(error){
               console.log(error);
