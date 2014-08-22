@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StoryCtrl', function ($scope,$stateParams,$state,Story,Composite,ENV,$firebase, User,Comment) {
+  .controller('StoryDetailCtrl', function ($scope,$stateParams,$state,Story,Composite,ENV,$firebase, User,Comment) {
   	$scope.story = Story.findById($scope.storyKey);
   	$scope.commentsObject = {};
     $scope.currentUser = User.getCurrentUser();
