@@ -67,8 +67,13 @@
     }
 
     var _create_storyline_story = function(params){
-      var storylineStoriesRef = memorialsRef.child(memorialId + '/storyline/stories');
+      var storylineStoriesRef = memorialsRef.child(memorialId + '/storyline/stories/'+params.key);
       return $firebase(storylineStoriesRef).$set(params.key,true);
+
+      // var forever = moment("99991231235959999", "YYYYMMDDHHmmssSSS").unix();
+      // var now = Firebase.ServerValue.TIMESTAMP;
+      // return storylineStoriesRef.setWithPriority(true,forever - now);
+      // return $firebase(storylineStoriesRef).$set(forever - now,params.key);
     }
     
     if(newStory.file){

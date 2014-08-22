@@ -41,6 +41,12 @@ angular.module('doresolApp')
 	        break;
 	      }
 	    });
+			// var currentStorylineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/stories/');
+			// var _storylineStories = currentStorylineStoriesRef.endAt(null,"-JUwybynluYrfuMHHfBi").limit(2);
+			// _storylineStories.on('child_added', function(value) { 
+			// 	console.log(value.name());
+			// 	console.log(value);
+			// });
 
     });
   });
