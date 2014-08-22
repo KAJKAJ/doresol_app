@@ -33,7 +33,9 @@ angular.module('doresolApp')
 
 	            value.$bindTo($scope, "storiesObject['"+event.key+"']").then(function(){
 	            });            
-	            console.log(value);
+	            
+	             
+
 	          });
 	          
 	        break;
