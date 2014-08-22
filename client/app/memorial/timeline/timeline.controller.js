@@ -4,6 +4,8 @@ angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope, $q, Util, Composite,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
 
     $scope.editMode = true;
+    $scope.newStoryCnt = 0;
+
     var waitStoryLoaded = function(){
       if($scope.totalStoryCnt == $scope.storyCnt){
         if($scope.totalStoryCnt > 0){
@@ -77,8 +79,15 @@ angular.module('doresolApp')
               $scope.storiesObject[value.ref_era] = {};
             };
             $scope.storiesArray[value.ref_era].push(event.key);
-            $scope.storiesObject[value.ref_era][event.key] = value;
-
+            $scope.storiesObject[value.ref_era][event.key] = value;  
+            
+            // new object case delete it
+            if(value.newStory) {
+              delete $scope.storiesObject[value.ref_era][value.tempKey];
+              var index = $scope.storiesArray[value.ref_era].indexOf(value.tempKey);
+              $scope.storiesArray[value.ref_era].splice(index, 1);
+            }
+            
             $scope.storiesArray[value.ref_era].sort(function(aKey,bKey){
               var aValue = $scope.storiesObject[value.ref_era][aKey];
               var bValue = $scope.storiesObject[value.ref_era][bKey];
@@ -86,10 +95,11 @@ angular.module('doresolApp')
               var bStartDate = moment(bValue.startDate).unix();
               return aStartDate > bStartDate ? 1 : -1;
             });
-            
+
             // $scope.stories[value.ref_era][event.key] = true;
 
             value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
+              $scope.storiesObject[value.ref_era][event.key].newStory = false;
               $scope.storyCnt++;
               // console.log($scope.storiesObject[value.ref_era][event.key]);
             });            
@@ -262,12 +272,9 @@ angular.module('doresolApp')
             }
             copyStory.file = file;
             
-            delete copyStory.newStory;
+            // delete copyStory.newStory;
 
             Composite.createStory($scope.memorialKey,copyStory).then(function(value){
-              delete $scope.storiesObject[eraKey][storyKey];
-              var index = $scope.storiesArray[eraKey].indexOf(storyKey);
-              $scope.storiesArray[eraKey].splice(index, 1);  
             }, function(error){
               console.log(error);
             });
@@ -283,18 +290,20 @@ angular.module('doresolApp')
       angular.forEach($files, function(value, key) {
         value.type = value.file.type.split("/")[0];
       
-        var startDate = moment(value.file.lastModifieldDate).format("YYYY-MM-DD");
+        var startDate = moment(value.file.lastModifiedDate).format("YYYY-MM-DD");
         
         if($scope.storiesArray[$scope.selectedEraKey] == undefined) {
           $scope.storiesArray[$scope.selectedEraKey] = [];
           $scope.storiesObject[$scope.selectedEraKey] = {};
         };
 
-        $scope.storiesArray[$scope.selectedEraKey].push(value.uniqueIdentifier);
-        $scope.storiesObject[$scope.selectedEraKey][value.uniqueIdentifier] = 
+        var tempKey = Util.getUniqueId();
+        $scope.storiesArray[$scope.selectedEraKey].push(tempKey);
+        $scope.storiesObject[$scope.selectedEraKey][tempKey] = 
           {
             file: value,
             newStory: true,
+            tempKey: tempKey,
 
             ref_memorial: $scope.memorialKey,
             ref_era: $scope.selectedEraKey,
