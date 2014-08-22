@@ -10,6 +10,9 @@ angular.module('doresolApp')
     $scope.users = User.getUsersObject();
 
   	$scope.story.$loaded().then(function(value){
+      value.$bindTo($scope, "story").then(function(){
+      });
+
   		var storyCommentsRef = new Firebase(ENV.FIREBASE_URI + '/stories/'+value.$id + '/comments/');
   		var _comments = $firebase(storyCommentsRef).$asArray();
   		
@@ -23,12 +26,12 @@ angular.module('doresolApp')
 	        case "child_added":
 	          var childRef = commentsRef.child(event.key);
 	          var child = $firebase(childRef).$asObject();
-	          child.$loaded().then(function(value){
-	          	value.fromNow = moment(value.created_at).fromNow();
-	          	$scope.commentsObject[event.key] = value;
-	            User.setUsersObject(value.ref_user);
+	          child.$loaded().then(function(valueComment){
+	          	valueComment.fromNow = moment(valueComment.created_at).fromNow();
+	          	$scope.commentsObject[event.key] = valueComment;
+	            User.setUsersObject(valueComment.ref_user);
 	            
-              value.$bindTo($scope, "commentsObject['"+event.key+"']").then(function(){
+              valueComment.$bindTo($scope, "commentsObject['"+event.key+"']").then(function(){
               });   
 	          });
 	        break;
