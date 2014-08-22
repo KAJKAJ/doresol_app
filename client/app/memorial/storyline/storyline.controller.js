@@ -1,11 +1,15 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorylineCtrl', function ($scope,$stateParams,Memorial,ENV,$firebase) {
+  .controller('StorylineCtrl', function ($scope,$stateParams,Memorial,ENV,$firebase,User) {
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
     
+    $scope.currentUser = User.getCurrentUser();
+    $scope.currentUser.profile = User.getUserProfile($scope.currentUser);
+
     $scope.storiesObject = {};
+    $scope.users = User.getUsersObject();
 
     $scope.memorial.$loaded().then(function(value){
       console.log(value);
@@ -24,10 +28,11 @@ angular.module('doresolApp')
 	          var child = $firebase(childRef).$asObject();
 	          child.$loaded().then(function(value){
 	            $scope.storiesObject[event.key] = value;
-
+	            User.setUsersObject(value.ref_user);
+	            
 	            value.$bindTo($scope, "storiesObject['"+event.key+"']").then(function(){
 	            });            
-	            console.log($scope.storiesObject);
+	            console.log(value);
 	          });
 	          
 	        break;

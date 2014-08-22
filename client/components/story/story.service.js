@@ -7,6 +7,9 @@ angular.module('doresolApp')
   var stories = $firebase(ref);
   
   var create = function(newStory) {
+    newStory.created_at = moment().toString();
+    newStory.updated_at = newStory.created_at;
+
     return stories.$push(newStory).then(function(value){
       return {
         key: value.name(),
@@ -17,6 +20,7 @@ angular.module('doresolApp')
   };
 
   var update = function(storyKey, story) {
+    // newStory.updated_at = moment().toString();
     return users.$update(storyKey, story);
   };
 

@@ -6,6 +6,8 @@ angular.module('doresolApp')
   	$scope.commentsObject = {};
     $scope.currentUser = User.getCurrentUser();
     $scope.currentUser.profile = User.getUserProfile($scope.currentUser);
+    
+    $scope.users = User.getUsersObject();
 
   	$scope.story.$loaded().then(function(value){
   		var storyCommentsRef = new Firebase(ENV.FIREBASE_URI + '/stories/'+value.$id + '/comments/');
@@ -25,8 +27,7 @@ angular.module('doresolApp')
 	          	value.fromNow = moment(value.created_at).fromNow();
 	          	$scope.commentsObject[event.key] = value;
 	            User.setUsersObject(value.ref_user);
-	            $scope.users = User.getUsersObject();
-
+	            
               value.$bindTo($scope, "commentsObject['"+event.key+"']").then(function(){
               });   
 	          });

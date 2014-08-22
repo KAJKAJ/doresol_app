@@ -1,1 +1,49 @@
-hehe
+<div class="col-sm-8">
+	<ul class="storyline media-list">
+	  <li class="storyline-story media" ng-repeat="story in storiesObject">
+	      <div class="story-avatar">
+          <img ng-src="{{users[story.ref_user].profile.image}}" style="width:64px;height:64px;"/>
+        </div>
+
+	      <div class="media-body">
+	          <p>
+	              <span class="text-muted pull-right">
+	                  <small>45 min now</small>
+	                  <span class="text-danger"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
+	              </span>
+	              <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
+	          </p>
+	          <h5><a href="page_ready_article.html"><strong>The Mountain Trip</strong> • Once in a lifetime experience</a></h5>
+	          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus. Mauris tincidunt tincidunt turpis in porta. Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque? Proin rhoncus dui at ligula vestibulum ut facilisis ante sodales! Suspendisse potenti..</p>
+	          <p>
+	              <a href="javascript:void(0)" class="btn btn-xs btn-success"><i class="fa fa-thumbs-up"></i> You Like it</a>
+	              <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-share-square-o"></i> Share</a>
+	          </p>
+	          <!-- comments -->
+	          <ul class="media-list push">
+              <li class="media">
+                  <a href="page_ready_user_profile.html" class="pull-left">
+                      <img src="img/placeholders/avatars/avatar15.jpg" alt="Avatar" class="img-circle">
+                  </a>
+                  <div class="media-body">
+                      <a href="page_ready_user_profile.html"><strong>User</strong></a>
+                      <span class="text-muted"><small><em>1 hour ago</em></small></span>
+                      <p>Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum.</p>
+                  </div>
+              </li>
+              <li class="media">
+                  <a href="page_ready_user_profile.html" class="pull-left">
+                      <img src="img/placeholders/avatars/avatar.jpg" alt="Avatar" class="img-circle">
+                  </a>
+                  <div class="media-body">
+                      <form action="page_ready_user_profile.html" method="post" onsubmit="return false;">
+                          <textarea id="profile-newsfeed-comment" name="profile-newsfeed-comment" class="form-control" rows="2" placeholder="Your comment.."></textarea>
+                          <button type="submit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> Post Comment</button>
+                      </form>
+                  </div>
+              </li>
+          </ul>
+	      </div>
+	  </li>
+	</ul>
+</div>

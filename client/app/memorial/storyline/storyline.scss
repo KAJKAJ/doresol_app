@@ -1,0 +1,28 @@
+.storyline{
+	margin-bottom:0px;
+	padding-left:0px;
+
+	.storyline-story{
+		margin-top: 0;
+		padding: 20px 20px 0;
+		border-top: 1px dotted #dbe1e8;
+
+		.story-user-id{
+			color:#1bbae1;;
+		}
+
+		.story-avatar{
+			float:left;
+	  	padding-right:10px;  
+		}
+	}
+
+	.storyline-story:hover{
+		background-color: #f9f9f9;
+	}
+
+}
+
+.text-danger{
+	color:#e74c3c;
+}
