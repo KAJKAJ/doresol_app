@@ -145,7 +145,7 @@
   margin: 5px 0;
 }
 
-.superbox-show input[type=text],.superbox-show input[type=textarea] {
+.superbox-show input[type=text],.superbox-show textarea {
     border: 1px solid #222222;
     width: 100%;
     resize: none;
@@ -153,15 +153,18 @@
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+    color:white;
 }
 
-.superbox-show input[type=text]:hover,.superbox-show input[type=textarea]:hover,
-.superbox-show input[type=text]:focus,.superbox-show input[type=textarea]:focus {
+.superbox-show input[type=text]:hover,.superbox-show textarea:hover,
+.superbox-show input[type=text]:focus,.superbox-show textarea:focus {
     border: 2px solid #d7cebf;
-    outline: none
+    outline: none;
+    background-color: #ffffff;
+    color:black;
 }
 
-.story-show input[type=text],.story-show input[type=textarea] {
+.story-show input[type=text],.story-show textarea {
     border: 1px solid #ffffff;
     width: 100%;
     resize: none;
@@ -171,13 +174,13 @@
     box-shadow: none;
 }
 
-.story-show input[type=text]:hover,.story-show input[type=textarea]:hover,
-.story-show input[type=text]:focus,.story-show input[type=textarea]:focus {
+.story-show input[type=text]:hover,.story-show textarea:hover,
+.story-show input[type=text]:focus,.story-show textarea:focus {
     border: 2px solid #d7cebf;
     outline: none
 }
 
-.story-comment input[type=text],.story-comment input[type=textarea] {
+.story-comment input[type=text],.story-comment textarea {
     border: 1px solid #ffffff;
     width: 200px;
     resize: none;
@@ -187,8 +190,8 @@
     box-shadow: none;
 }
 
-.story-comment input[type=text]:hover,.story-comment input[type=textarea]:hover,
-.story-comment input[type=text]:focus,.story-comment input[type=textarea]:focus {
+.story-comment input[type=text]:hover,.story-comment textarea:hover,
+.story-comment input[type=text]:focus,.story-comment textarea:focus {
     border: 2px solid #d7cebf;
     outline: none
 }

@@ -19,9 +19,9 @@
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-      <input type="text" ng-model="story.headline" placeholder="story.headline || \"제목을 입력하세요\" "/> 
+      <input type="text" ng-model="story.headline" placeholder="제목을 입력하세요"/> 
       <hr/>
-      <input type="textarea" ng-model="story.text" placeholder="{{story.text || \"설명이 필요하면 적어주세요\"}}" />
+      <textarea class="form-control" ng-model="story.text" placeholder="설명이 필요하면 적어주세요"  rows="5" style="resize: vertical;"/>
     </div>
   </div>
 </div>

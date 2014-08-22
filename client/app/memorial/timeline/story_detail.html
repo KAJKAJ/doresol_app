@@ -1,12 +1,12 @@
 <div scroll="auto" style="overflow-x:hidden;height:300px">
 	<!-- headline -->
-	<div class="story-show">
+	<div class="story-show" style="padding-right:30px;">
 		<div ng-if="story.ref_user == currentUser.uid">
 			<h2>
 				<input type="text" ng-model="story.headline" placeholder="제목을 입력하세요.." />
 			</h2>
 			<p>
-				<input type="textarea" ng-model="story.text" placeholder="설명을 입력하세요.." />
+        <textarea class="form-control" ng-model="story.text" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/>
 			</p>
 		</div>
 		<div ng-if="story.ref_user != currentUser.uid">
