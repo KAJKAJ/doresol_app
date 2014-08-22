@@ -49,22 +49,32 @@
   };
 
   var createStory = function(memorialId, newStory) {
+    var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+
     var errorHandler = function(error){
       return $q.reject(error);
-    };
+    }
 
     // save story -> localfile -> memorial 
-    var _create_story = function(params) {
-      var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+    var _create_timeline_story = function(params) {
       var timelineStoriesRef = memorialsRef.child(memorialId + '/timeline/stories');
 
-      return $firebase(timelineStoriesRef).$set(params.key,true);
-    };
+      return $firebase(timelineStoriesRef).$set(params.key,true).then(function(value){
+        return{
+          key: value.name()
+        }
+      });
+    }
+
+    var _create_storyline_story = function(params){
+      var storylineStoriesRef = memorialsRef.child(memorialId + '/storyline/stories');
+      return $firebase(storylineStoriesRef).$set(params.key,true);
+    }
     
     if(newStory.file){
-      return Story.create(newStory).then(File.createLocalFile).then(_create_story, errorHandler);
+      return Story.create(newStory).then(File.createLocalFile).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
     }else{
-      return Story.create(newStory).then(_create_story, errorHandler);
+      return Story.create(newStory).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
     }
   };
 
