@@ -4,6 +4,7 @@
 
 	.storyline-story{
 		margin-top: 0;
+		margin-bottom:10px;
 		padding: 20px 20px 0;
 		border-top: 1px dotted #dbe1e8;
 
@@ -15,6 +16,30 @@
 			float:left;
 	  	padding-right:10px;  
 		}
+
+		.storyline-img{
+			width: 100%;
+		  /*cursor: pointer;*/
+
+		  /*max-width: 200px;*/
+		  max-height: 500px;
+		}
+
+		.story-show input[type=text],.story-show textarea{
+		    border: 1px solid #ffffff;
+		    width: 100%;
+		    resize: none;
+		    background-color: #ffffff;
+		    -webkit-box-shadow: none;
+		    -moz-box-shadow: none;
+		    box-shadow: none;
+		}
+
+		.story-show input[type=text]:hover,.story-show textarea:hover,
+		.story-show input[type=text]:focus,.story-show textarea:focus {
+		    border: 2px solid #d7cebf;
+		    outline: none
+		}		
 	}
 
 	.storyline-story:hover{

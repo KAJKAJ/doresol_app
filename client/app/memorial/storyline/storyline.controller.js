@@ -27,9 +27,10 @@ angular.module('doresolApp')
 	          var childRef = storiesRef.child(event.key);
 	          var child = $firebase(childRef).$asObject();
 	          child.$loaded().then(function(value){
+	          	value.fromNow = moment(value.created_at).fromNow();
 	            $scope.storiesObject[event.key] = value;
 	            User.setUsersObject(value.ref_user);
-	            
+
 	            value.$bindTo($scope, "storiesObject['"+event.key+"']").then(function(){
 	            });            
 	            console.log(value);

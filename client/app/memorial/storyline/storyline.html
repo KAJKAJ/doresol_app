@@ -6,19 +6,35 @@
         </div>
 
 	      <div class="media-body">
+	      		<!-- author -->
 	          <p>
-	              <span class="text-muted pull-right">
-	                  <small>45 min now</small>
-	                  <span class="text-danger"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
-	              </span>
-	              <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
+              <span class="text-muted pull-right">
+                <small>{{story.fromNow}}</small>
+                <span class="text-danger"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
+              </span>
+              <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
 	          </p>
-	          <h5><a href="page_ready_article.html"><strong>The Mountain Trip</strong> • Once in a lifetime experience</a></h5>
-	          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus. Mauris tincidunt tincidunt turpis in porta. Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque? Proin rhoncus dui at ligula vestibulum ut facilisis ante sodales! Suspendisse potenti..</p>
+	          
+	          <!-- headline, text -->
+	          <div class="story-show">
+							<div ng-if="story.ref_user == currentUser.uid">
+								<h3><strong><input type="text" ng-model="story.headline" placeholder="제목을 입력하세요.." /></strong></h3>
+		          	<p><textarea class="form-control" ng-model="story.text" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/></p>
+							</div>
+						</div>
+						<div ng-if="story.ref_user != currentUser.uid">
+							<h3><strong>{{story.headline}}</strong></h3>
+	          	<p>{{story.text}}</p>
+						</div>
+
+						<!-- file display -->
 	          <p>
-	              <a href="javascript:void(0)" class="btn btn-xs btn-success"><i class="fa fa-thumbs-up"></i> You Like it</a>
-	              <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-share-square-o"></i> Share</a>
-	          </p>
+	          	<div ng-show="story.file.type == 'image'">
+          			<img ng-src="{{story.file.url}}" class="storyline-img"> 
+        			</div>
+        			<!-- TODO: VIDEO -->
+        		</p>
+
 	          <!-- comments -->
 	          <ul class="media-list push">
               <li class="media">

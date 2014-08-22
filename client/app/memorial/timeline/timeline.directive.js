@@ -76,7 +76,7 @@ angular.module('doresolApp')
       },
       // replace: true,
       templateUrl: "app/memorial/timeline/story_detail.html",
-      controller:'StoryCtrl'
+      controller:'StoryDetailCtrl'
     }
   })
 
