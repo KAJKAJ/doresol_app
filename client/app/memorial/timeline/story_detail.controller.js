@@ -11,7 +11,6 @@ angular.module('doresolApp')
     $scope.newComment = {};
 
   	$scope.story.$loaded().then(function(value){
-      console.log($scope.story);
       value.$bindTo($scope, "story").then(function(){
         if(!$scope.commentsObject[$scope.story.$id]){
           $scope.commentsObject[$scope.story.$id] = {};

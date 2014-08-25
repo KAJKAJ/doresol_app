@@ -101,11 +101,33 @@ angular.module('doresolApp')
         var startDate = moment(value.file.lastModifiedDate).format("YYYY-MM-DD");
         $scope.newStory.file = value;
       });
-
-      console.log($scope.newStory);
-    }
+		}
 
     $scope.removeFlowFile = function(){
     	$scope.newStory.file = null;
+    }
+
+    $scope.createNewStory = function(form){
+    	if(form.$valid){
+    		if($scope.newStory.file){
+		    	var file = {
+	          type: $scope.newStory.file.type,
+	          location: 'local',
+	          url: '/tmp/' + $scope.newStory.file.uniqueIdentifier,
+	          updated_at: moment().toString()
+	        }
+	        $scope.newStory.file = file;
+        }
+
+        $scope.newStory.ref_memorial = $scope.memorialKey;
+        $scope.newStory.ref_user = $scope.currentUser.uid;
+
+        Composite.createStorylineStory($scope.memorialKey,$scope.newStory).then(function(value){
+        	$scope.newStory = {};
+        	$scope.newStoryForm.$setPristine();
+        }, function(error){
+          console.log(error);
+        });
+	    }
     }
   });

@@ -254,7 +254,6 @@ angular.module('doresolApp')
 
           if($scope.storiesObject[eraKey][storyKey].newStory){
             $scope.totalStoryCnt++;     
-            console.log('total :'+$scope.totalStoryCnt);      
             // create story
             var copyStory = {};
             angular.copy($scope.storiesObject[eraKey][storyKey],copyStory);
@@ -268,7 +267,7 @@ angular.module('doresolApp')
             copyStory.file = file;
             
             // delete copyStory.newStory;
-            Composite.createStory($scope.memorialKey,copyStory).then(function(value){
+            Composite.createTimelineStory($scope.memorialKey,copyStory).then(function(value){
             }, function(error){
               console.log(error);
             });

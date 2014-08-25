@@ -48,49 +48,53 @@
     }
   };
 
-  var createStory = function(memorialId, newStory) {
+  var errorHandler = function(error){
+    return $q.reject(error);
+  }
+
+  var _create_timeline_story = function(params) {
     var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+    var timelineStoriesRef = memorialsRef.child(params.memorialId + '/timeline/stories');
 
-    var errorHandler = function(error){
-      return $q.reject(error);
-    }
+    return $firebase(timelineStoriesRef).$set(params.key,true).then(function(value){
+      return{
+        key: value.name(),
+        memorialId:params.memorialId
+      }
+    });
+  }
 
-    // save story -> localfile -> memorial 
-    var _create_timeline_story = function(params) {
-      var timelineStoriesRef = memorialsRef.child(memorialId + '/timeline/stories');
+  var _create_storyline_story = function(params){
+    var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+    var storylineStoriesRef = memorialsRef.child(params.memorialId + '/storyline/stories/'+ params.key);
+    // return $firebase(storylineStoriesRef).$set(params.key,true);
 
-      return $firebase(timelineStoriesRef).$set(params.key,true).then(function(value){
-        return{
-          key: value.name()
-        }
-      });
-    }
+    var forever = moment("99991231235959999", "YYYYMMDDHHmmssSSS").unix();
+    var now = moment().unix();
+    storylineStoriesRef.setWithPriority(true,forever - now + Util.getSequence());
+    // return storylineStoriesRef.setWithPriority(true,forever - now);
+    // return $firebase(storylineStoriesRef).$set(forever - now,params.key);
+  }
 
-    var _create_storyline_story = function(params){
-      var storylineStoriesRef = memorialsRef.child(memorialId + '/storyline/stories/'+ params.key);
-      // return $firebase(storylineStoriesRef).$set(params.key,true);
-
-      var forever = moment("99991231235959999", "YYYYMMDDHHmmssSSS").unix();
-      var now = moment().unix();
-      storylineStoriesRef.setWithPriority(true,forever - now + Util.getSequence());
-      // return storylineStoriesRef.setWithPriority(true,forever - now);
-      // return $firebase(storylineStoriesRef).$set(forever - now,params.key);
-    }
-    
+  var createTimelineStory = function(memorialId, newStory) {
     if(newStory.file){
       return Story.create(newStory).then(File.createLocalFile).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
     }else{
       return Story.create(newStory).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
     }
-  };
+  }
 
+  var createStorylineStory = function(memorialId, newStory) {
+    if(newStory.file){
+      return Story.create(newStory).then(File.createLocalFile).then(_create_storyline_story, errorHandler);
+    }else{
+      console.log(newStory);
+      return Story.create(newStory).then(_create_storyline_story, errorHandler);
+    }
+  }
 
   // Comment Related 
   var createComment = function(storyId, newComment) {
-    var errorHandler = function(error) {
-      return $q.reject(error);
-    };
-
     var _create_comment = function(commentKey) {
       var storyRef = new Firebase(ENV.FIREBASE_URI + '/stories/' + storyId + '/comments');
 
@@ -106,7 +110,8 @@
     setMyMemorials:setMyMemorials,
 
     // story 
-    createStory:createStory,
+    createTimelineStory:createTimelineStory,
+    createStorylineStory:createStorylineStory,
 
     createComment:createComment
 	};
