@@ -3,11 +3,10 @@
 	<span ng-repeat="(key, era) in memorial.timeline.era" class="slot" ng-class="{slotactive: getSelectedEraKey() == key}" ng-click="setSelectedEra(key, era)">
 		<li >
 			{{era.headline}}
-      <span class="pull-right badge">{{storiesArray[key].length}}</span>
+      <i class="slot-remove fa fa-times-circle fa-2x text-danger pull-right" ng-click="removeSelectedEra(key)"></i>
+      <span class="badge">{{storiesArray[key].length}}</span>
+
 		</li>
-		<div>
-	  	<i class="slot-remove fa fa-times-circle fa-2x text-danger" ng-click="removeSelectedEra(key)"></i>
-	  </div>
 	</span>  
   <li class="slot-add" style="text-align:center" ng-class="{slotactive: getSelectedEraKey() == 'tempKey'}" ng-click="setSelectedEra('tempKey', {})">
       <i class="fa fa-plus-circle fa-2x text-success"/>
