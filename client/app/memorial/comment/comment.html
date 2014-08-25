@@ -21,11 +21,11 @@
         <img ng-src="{{currentUser.profile.image}}" style="width:32px;height:32px;"/>
       </div>
       <div class="comment-body">
-          <strong class="comment-user-id">{{currentUser.profile.name}}</strong>
-          <form name="commentForm" ng-submit="addComment(comment)" novalidate style="padding-right:30px;">
-						<textarea class="form-control" ng-model="comment.body" placeholder="댓글을 입력하세요.." rows="2" style="resize: vertical;"/>
-            <button type="submit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i>댓글 저장</button>
-				  </form>            
+        <strong class="comment-user-id">{{currentUser.profile.name}}</strong>
+        <form name="commentForm" ng-submit="addComment(newComment)" novalidate style="padding-right:30px;">
+					<textarea class="form-control" ng-model="newComment.body" placeholder="댓글을 입력하세요.." rows="2" style="resize: vertical;"/>
+          <button type="submit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i>댓글 저장</button>
+			  </form>            
       </div>
   </li>        
 </ul>

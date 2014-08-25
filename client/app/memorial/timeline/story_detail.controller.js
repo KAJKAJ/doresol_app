@@ -8,7 +8,8 @@ angular.module('doresolApp')
     $scope.currentUser.profile = User.getUserProfile($scope.currentUser);
     
     $scope.users = User.getUsersObject();
-
+    $scope.newComment = {};
+    
   	$scope.story.$loaded().then(function(value){
       value.$bindTo($scope, "story").then(function(){
       });
@@ -43,7 +44,7 @@ angular.module('doresolApp')
     $scope.addComment = function(comment){
       if(comment.body){
       	Composite.createComment($scope.storyKey, comment);
-      	$scope.comment = null;	
+      	$scope.newComment = {};	
       }
     };
 

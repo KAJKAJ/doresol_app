@@ -7,7 +7,6 @@ angular.module('doresolApp')
   var comments = $firebase(ref);
   
   var create = function(storyId, newComment) {
-    console.log(storyId);
     newComment.created_at = moment().toString();
     newComment.updated_at = newComment.created_at;
     newComment.ref_user = User.getCurrentUser().uid;

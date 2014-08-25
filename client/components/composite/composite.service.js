@@ -92,7 +92,6 @@
     };
 
     var _create_comment = function(commentKey) {
-      console.log(storyId);
       var storyRef = new Firebase(ENV.FIREBASE_URI + '/stories/' + storyId + '/comments');
 
       return $firebase(storyRef).$set(commentKey, true);

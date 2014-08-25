@@ -13,37 +13,7 @@ angular.module('doresolApp')
     $scope.priority = moment().unix();
 
     $scope.memorial.$loaded().then(function(value){
-      console.log(value);
-      
-     //  var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
-	    // var currentStorylineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/stories/');
-	    // var _storylineStories = $firebase(currentStorylineStoriesRef).$asArray();
-
-	    // _storylineStories.$watch(function(event){
-	    //   switch(event.event){
-	    //     case "child_removed":
-	    //       // removeMyMemorial(event.key);
-	    //       break;
-	    //     case "child_added":
-	    //       var childRef = storiesRef.child(event.key);
-	    //       var child = $firebase(childRef).$asObject();
-	    //       child.$loaded().then(function(value){
-	    //       	value.fromNow = moment(value.created_at).fromNow();
-	    //         $scope.storiesObject[event.key] = value;
-	    //         User.setUsersObject(value.ref_user);
-
-	    //         value.$bindTo($scope, "storiesObject['"+event.key+"']").then(function(){
-	    //         });            
-	            
-	             fetchStories($scope.priority);
-
-	    //       });
-	          
-	    //     break;
-	    //   }
-	    // });
-			
-
+    	fetchStories($scope.priority);
     });
 
 		var fetchStories = function(priority){
@@ -66,6 +36,42 @@ angular.module('doresolApp')
           User.setUsersObject(storyValue.ref_user);
 
           storyValue.$bindTo($scope, "storiesObject['"+storyValue.$id+"']").then(function(){
+          	console.log(storyValue);
+          	// var commentsRef = new Firebase(ENV.FIREBASE_URI + '/comments');
+          	// var childRef = storiesRef.child(event.key);
+	          // var child = $firebase(childRef).$asObject();
+	          // child.$loaded().then(function(value){
+	          //   // $scope.timelineStories[event.key] = value;
+	          //   if($scope.storiesArray[value.ref_era] == undefined) {
+	          //     $scope.storiesArray[value.ref_era] = [];
+	          //     $scope.storiesObject[value.ref_era] = {};
+	          //   };
+	          //   $scope.storiesArray[value.ref_era].push(event.key);
+	          //   $scope.storiesObject[value.ref_era][event.key] = value;  
+	            
+	          //   // new object case delete it
+	          //   if(value.newStory) {
+	          //     delete $scope.storiesObject[value.ref_era][value.tempKey];
+	          //     var index = $scope.storiesArray[value.ref_era].indexOf(value.tempKey);
+	          //     $scope.storiesArray[value.ref_era].splice(index, 1);
+	          //   }
+	            
+	          //   $scope.storiesArray[value.ref_era].sort(function(aKey,bKey){
+	          //     var aValue = $scope.storiesObject[value.ref_era][aKey];
+	          //     var bValue = $scope.storiesObject[value.ref_era][bKey];
+	          //     var aStartDate = moment(aValue.startDate).unix();
+	          //     var bStartDate = moment(bValue.startDate).unix();
+	          //     return aStartDate > bStartDate ? 1 : -1;
+	          //   });
+
+	          //   // $scope.stories[value.ref_era][event.key] = true;
+
+	          //   value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
+	          //     $scope.storiesObject[value.ref_era][event.key].newStory = false;
+	          //     $scope.storyCnt++;
+	          //     // console.log($scope.storiesObject[value.ref_era][event.key]);
+	          //   });            
+	          // });
           });            
 				});
 			});
