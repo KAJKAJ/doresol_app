@@ -8,7 +8,7 @@ angular.module('doresolApp')
     $scope.currentUser = User.getCurrentUser();
     $scope.currentUser.profile = User.getUserProfile($scope.currentUser);
 
-    $scope.storiesObject = {};
+    $scope.storiesObject = [];
     $scope.users = User.getUsersObject();
     $scope.priority = moment().unix();
 
@@ -19,11 +19,15 @@ angular.module('doresolApp')
     	fetchStories($scope.priority);
     });
 
+    $scope.fetchMoreStories = function(){
+    	fetchStories($scope.priority);
+    }
+
 		var fetchStories = function(priority){
 			var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
 
 			var currentStorylineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/stories/');
-			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(10);
+			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(1);
 
 			_storylineStories.on('child_added', function(value) { 
 				var priority = value.getPriority();
@@ -39,10 +43,11 @@ angular.module('doresolApp')
 	          $scope.commentsObject[storyValue.$id] = {};
 	        }
         	storyValue.fromNow = moment(storyValue.created_at).fromNow();
-          $scope.storiesObject[storyValue.$id] = storyValue;
+          $scope.storiesObject.push(storyValue);
+          var storyCnt = $scope.storiesObject.length;
           User.setUsersObject(storyValue.ref_user);
 
-          storyValue.$bindTo($scope, "storiesObject['"+storyValue.$id+"']").then(function(){
+          storyValue.$bindTo($scope, "storiesObject["+(storyCnt-1)+"]").then(function(){
           	var currentStoryCommentsRef =  new Firebase(ENV.FIREBASE_URI + '/stories/'+storyValue.$id+'/comments/');
           	var _comments = $firebase(currentStoryCommentsRef).$asArray();
           	_comments.$watch(function(event){
