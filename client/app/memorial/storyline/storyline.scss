@@ -51,3 +51,32 @@
 .text-danger{
 	color:#e74c3c;
 }
+
+.flow-thumbnail{
+	width:200px;
+	img {
+		cursor: pointer;
+	}
+}
+
+.flow-thumbnail:hover{
+	opacity: 0.8;
+}
+
+.flow-thumbnail:hover .flow-thumbnail-remove{
+	position: relative;
+	top: -210px;
+	left: 190px;
+	display: block;
+  z-index: 100;
+  background: white;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+.flow-thumbnail-remove{
+	display:none;
+}
+
+

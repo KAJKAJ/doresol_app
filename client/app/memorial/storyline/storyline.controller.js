@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorylineCtrl', function ($scope,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment) {
+  .controller('StorylineCtrl', function ($scope,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util) {
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
     
@@ -14,6 +14,8 @@ angular.module('doresolApp')
 
     $scope.commentsObject = {};
     $scope.newComment = {};
+    $scope.newStory = {};
+    $scope.newStory.public = true;
 
     $scope.memorial.$loaded().then(function(value){
     	fetchStories($scope.priority);
@@ -86,5 +88,24 @@ angular.module('doresolApp')
     $scope.deleteComment = function(storyKey, commentKey) {
       delete $scope.commentsObject[storyKey][commentKey];
       Comment.removeCommentFromStory(storyKey, commentKey);
+    }
+
+    $scope.getFlowFileUniqueId = function(file){
+      return $scope.currentUser.uid.replace(/[^\.0-9a-zA-Z_-]/img, '') + '-' + Util.getFlowFileUniqueId(file,$scope.currentUser);
+    }
+
+    $scope.flowFilesAdded = function($files){
+    	angular.forEach($files, function(value, key) {
+        value.type = value.file.type.split("/")[0];
+      
+        var startDate = moment(value.file.lastModifiedDate).format("YYYY-MM-DD");
+        $scope.newStory.file = value;
+      });
+
+      console.log($scope.newStory);
+    }
+
+    $scope.removeFlowFile = function(){
+    	$scope.newStory.file = null;
     }
   });
