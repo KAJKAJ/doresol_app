@@ -176,11 +176,6 @@ angular.module('doresolApp')
       }
     };
 
-    $scope.addComment = function(comment) {
-      console.log(comment);
-      
-    };
-
     $scope.openDatepicker = function($event,variable) {
       $event.preventDefault();
       $event.stopPropagation();
