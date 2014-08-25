@@ -26,6 +26,15 @@ angular.module('doresolApp', [
     datepickerConfig.maxDate="9999-12-31";
   }])
 
+  .config(function($provide) {
+    $provide.decorator('$state', function($delegate) {
+      $delegate.reinit = function() {
+        this.transitionTo(this.current, this.$current.params, { reload: true, inherit: true, notify: true });
+      };
+      return $delegate;
+    });
+  })
+  
   .config(['datepickerPopupConfig', function(datepickerPopupConfig) {
     datepickerPopupConfig.currentText = "오늘";
     datepickerPopupConfig.clearText = "취소";

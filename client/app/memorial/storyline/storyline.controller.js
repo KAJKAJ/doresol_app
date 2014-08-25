@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorylineCtrl', function ($scope,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util) {
+  .controller('StorylineCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util) {
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
     
@@ -124,8 +124,10 @@ angular.module('doresolApp')
 
         Composite.createStorylineStory($scope.memorialKey,$scope.newStory).then(function(value){
         	$scope.newStory = {};
-        	$scope.newStoryForm.$setPristine();
-        	console.log(value);
+        	$scope.newStoryForm.$setPristine({reload: true,notify: true});
+        	// console.log(value);
+       	  // $state.reinit();
+        	location.reload();
         }, function(error){
           console.log(error);
         });

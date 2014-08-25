@@ -88,7 +88,6 @@
     if(newStory.file){
       return Story.create(newStory).then(File.createLocalFile).then(_create_storyline_story, errorHandler);
     }else{
-      console.log(newStory);
       return Story.create(newStory).then(_create_storyline_story, errorHandler);
     }
   }
