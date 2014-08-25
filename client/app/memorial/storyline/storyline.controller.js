@@ -125,6 +125,7 @@ angular.module('doresolApp')
         Composite.createStorylineStory($scope.memorialKey,$scope.newStory).then(function(value){
         	$scope.newStory = {};
         	$scope.newStoryForm.$setPristine();
+        	console.log(value);
         }, function(error){
           console.log(error);
         });

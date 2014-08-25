@@ -72,8 +72,8 @@
     var forever = moment("99991231235959999", "YYYYMMDDHHmmssSSS").unix();
     var now = moment().unix();
     storylineStoriesRef.setWithPriority(true,forever - now + Util.getSequence());
-    // return storylineStoriesRef.setWithPriority(true,forever - now);
-    // return $firebase(storylineStoriesRef).$set(forever - now,params.key);
+
+    return params;
   }
 
   var createTimelineStory = function(memorialId, newStory) {
