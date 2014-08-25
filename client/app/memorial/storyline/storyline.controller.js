@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorylineCtrl', function ($scope,$stateParams,Memorial,ENV,$firebase,User) {
+  .controller('StorylineCtrl', function ($scope,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment) {
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
     
@@ -11,6 +11,9 @@ angular.module('doresolApp')
     $scope.storiesObject = {};
     $scope.users = User.getUsersObject();
     $scope.priority = moment().unix();
+
+    $scope.commentsObject = {};
+    $scope.newComment = {};
 
     $scope.memorial.$loaded().then(function(value){
     	fetchStories($scope.priority);
@@ -32,30 +35,34 @@ angular.module('doresolApp')
 				var childRef = storiesRef.child(value.name());
         var child = $firebase(childRef).$asObject();
         child.$loaded().then(function(storyValue){
+        	if(!$scope.commentsObject[storyValue.$id]){
+	          $scope.commentsObject[storyValue.$id] = {};
+	        }
         	storyValue.fromNow = moment(storyValue.created_at).fromNow();
           $scope.storiesObject[storyValue.$id] = storyValue;
           User.setUsersObject(storyValue.ref_user);
 
           storyValue.$bindTo($scope, "storiesObject['"+storyValue.$id+"']").then(function(){
-          	console.log(storyValue);
-          	var currentStoryCommentsRef =  new Firebase(ENV.FIREBASE_URI + '/stories/'+storyValue.$id+'comments/');
+          	var currentStoryCommentsRef =  new Firebase(ENV.FIREBASE_URI + '/stories/'+storyValue.$id+'/comments/');
           	var _comments = $firebase(currentStoryCommentsRef).$asArray();
           	_comments.$watch(function(event){
 				      switch(event.event){
 				        case "child_removed":
-				          // $scope.storyCnt--;
+				          if($scope.commentsObject[storyValue.$id][event.key]){
+				            delete $scope.commentsObject[storyValue.$id][event.key];
+				        	}
 				          break;
 				        case "child_added":
-					        var commentRef = new Firebase(ENV.FIREBASE_URI + '/comments/'+event.key);
+				          var commentRef = new Firebase(ENV.FIREBASE_URI + '/comments/'+event.key);
 				          var comment = $firebase(commentRef).$asObject();
 				          comment.$loaded().then(function(commentValue){
-				           // commentValue.fromNow = moment(commentValue.created_at).fromNow();
-				          	// $scope.commentsObject[event.key] = commentValue;
-				           //  User.setUsersObject(commentValue.ref_user);
+				            commentValue.fromNow = moment(commentValue.created_at).fromNow();
+				          	$scope.commentsObject[storyValue.$id][event.key] = commentValue;
+				            User.setUsersObject(commentValue.ref_user);
 				            
-			            //   commentValue.$bindTo($scope, "commentsObject['"+event.key+"']").then(function(){
-			            //   });  
-				          });
+			              commentValue.$bindTo($scope, "commentsObject['"+storyValue.$id+"']['"+event.key+"']").then(function(){
+			              });  
+			            });
 				          break;
 				        }
 				    });
@@ -63,4 +70,16 @@ angular.module('doresolApp')
 				});
 			});
 		}
+
+		$scope.addComment = function(storyKey,comment){
+      if(comment.body){
+      	Composite.createComment(storyKey, comment);
+      	$scope.newComment = {};	
+      }
+    }
+
+    $scope.deleteComment = function(storyKey, commentKey) {
+      delete $scope.commentsObject[storyKey][commentKey];
+      Comment.removeCommentFromStory(storyKey, commentKey);
+    }
   });

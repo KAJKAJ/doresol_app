@@ -9,9 +9,13 @@ angular.module('doresolApp')
     
     $scope.users = User.getUsersObject();
     $scope.newComment = {};
-    
+
   	$scope.story.$loaded().then(function(value){
+      console.log($scope.story);
       value.$bindTo($scope, "story").then(function(){
+        if(!$scope.commentsObject[$scope.story.$id]){
+          $scope.commentsObject[$scope.story.$id] = {};
+        }
       });
 
   		var storyCommentsRef = new Firebase(ENV.FIREBASE_URI + '/stories/'+value.$id + '/comments/');
@@ -22,17 +26,17 @@ angular.module('doresolApp')
   		_comments.$watch(function(event){
 	      switch(event.event){
 	        case "child_removed":
-	          // Memorial.removeMyMemorial(event.key);
+	          delete $scope.commentsObject[$scope.story.$id][event.key];
 	        break;
 	        case "child_added":
 	          var childRef = commentsRef.child(event.key);
 	          var child = $firebase(childRef).$asObject();
 	          child.$loaded().then(function(valueComment){
 	          	valueComment.fromNow = moment(valueComment.created_at).fromNow();
-	          	$scope.commentsObject[event.key] = valueComment;
+	          	$scope.commentsObject[$scope.story.$id][event.key] = valueComment;
 	            User.setUsersObject(valueComment.ref_user);
 	            
-              valueComment.$bindTo($scope, "commentsObject['"+event.key+"']").then(function(){
+              valueComment.$bindTo($scope, "commentsObject['"+$scope.story.$id+"']['"+event.key+"']").then(function(){
               });   
 	          });
 	        break;
@@ -41,16 +45,16 @@ angular.module('doresolApp')
 
   	});
 
-    $scope.addComment = function(comment){
+    $scope.addComment = function(storyKey,comment){
       if(comment.body){
-      	Composite.createComment($scope.storyKey, comment);
-      	$scope.newComment = {};	
+        Composite.createComment(storyKey, comment);
+        $scope.newComment = {}; 
       }
-    };
+    }
 
     $scope.deleteComment = function(storyKey, commentKey) {
-      delete $scope.commentsObject[commentKey];
+      delete $scope.commentsObject[storyKey][commentKey];
       Comment.removeCommentFromStory(storyKey, commentKey);
-    };
+    }
 
   });
