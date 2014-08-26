@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorylineCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,$timeout) {
+  .controller('StorylineCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,$timeout,Story) {
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
     
@@ -92,6 +92,21 @@ angular.module('doresolApp')
 			_storylineStories.on('child_added', function(value) { 
 				fetchStory(value);
 			});
+
+			_storylineStories.on('child_removed',function(value){
+				var storyKey = value.name();
+				var tempStory = $scope.storiesObject[value.name()];
+				var index = -1;
+
+				for(var i=0;i<$scope.storiesArray.length;i++){
+					if(storyKey == $scope.storiesArray[i].$id){
+						index = i;
+						break;
+					}
+				}
+	      $scope.storiesArray.splice(index, 1);
+	      delete $scope.storiesObject[storyKey];
+			});
     }
 
 		var fetchStories = function(priority){
@@ -152,6 +167,13 @@ angular.module('doresolApp')
 	    }
     }
 
+    $scope.removeStory = function(story){
+    	// delete $scope.storiesObject[story.$id];
+    	// var index = $scope.storiesArray.indexOf(story);
+     //  $scope.storiesArray.splice(index, 1);		
+    	Story.removeStory(story);
+    }
+
     $scope.storyContentChanged = function(story){
     	$scope.storiesObject[story.$id] = story;
     }
@@ -165,9 +187,8 @@ angular.module('doresolApp')
 	    });
 
 	    _storylineStories.$watch(function(event){
-	      switch(event.event){
+	    	switch(event.event){
 	        case "child_removed":
-	          // removeMyMemorial(event.key);
 	          break;
 	        case "child_added":
 	          var childRef = storiesRef.child(event.key);

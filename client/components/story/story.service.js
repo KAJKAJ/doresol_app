@@ -18,33 +18,50 @@ angular.module('doresolApp')
         fileUrl:  newStory.file?newStory.file.url:null
       }
     });
-  };
+  }
 
   var update = function(storyKey, story) {
     // newStory.updated_at = moment().toString();
-    return users.$update(storyKey, story);
-  };
+    return stories.$update(storyKey, story);
+  }
 
   var findById = function(storyKey) {
     var storyRef = ref.child(storyKey);
     return $firebase(storyRef).$asObject();
-  };
+  }
 
   var remove = function(storyKey) {
-    return users.$remove(storyKey);
-  };
+    return stories.$remove(storyKey);
+  }
   
   var removeStoryFromTimeline = function(memorialId,storyId){
     var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+memorialId+'/timeline/stories');
-    $firebase(memorialRef).$remove(storyId);
-  };
+    return $firebase(memorialRef).$remove(storyId);
+  }
+
+  var removeStoryFromStoryline = function(memorialId,storyId){
+    var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+memorialId+'/storyline/stories');
+    return $firebase(memorialRef).$remove(storyId);
+  }
+
+  var removeStory = function(story){
+    //TODO: delete related files??
+    
+    return removeStoryFromTimeline(story.ref_memorial,story.$id).then(function(){
+      removeStoryFromStoryline(story.ref_memorial,story.$id).then(function(){
+        remove(story.$id);
+      });
+    });
+  }
 
   return {
     create: create,
     update: update,
     findById: findById,
     remove: remove,
-    removeStoryFromTimeline:removeStoryFromTimeline
+    removeStoryFromTimeline:removeStoryFromTimeline,
+    removeStoryFromStoryline:removeStoryFromStoryline,
+    removeStory:removeStory
   };
 
 });

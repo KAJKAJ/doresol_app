@@ -33,7 +33,9 @@ angular.module('doresolApp')
 
   var removeCommentFromStory = function(storyId, commentId) {
     var storyCommentsRef = new Firebase(ENV.FIREBASE_URI + '/stories/'+storyId+'/comments');
-    $firebase(storyCommentsRef).$remove(commentId);
+    $firebase(storyCommentsRef).$remove(commentId).then(function(){
+      remove(commentId);
+    });
   }
 
   return {

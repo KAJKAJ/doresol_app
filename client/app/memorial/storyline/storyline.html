@@ -58,16 +58,19 @@
   <!-- story list -->                    
 	<ul class="storyline media-list">
 	  <li class="storyline-story media" ng-repeat="story in storiesArray">
-	      <div class="story-avatar">
+        <div class="story-avatar">
           <img ng-src="{{users[story.ref_user].profile.image}}" style="width:64px;height:64px;"/>
         </div>
-
+        
 	      <div class="media-body">
 	      		<!-- author -->
 	          <p>
               <span class="text-muted pull-right">
                 <small>{{story.fromNow}}</small>
-                <span class="text-danger"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
+                <span class="text-success"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
+                <span class="text-danger" ng-if="story.ref_user == currentUser.uid" >
+                  <i class="fa fa-times-circle" popover="Delete" popover-trigger="mouseenter" popover-placement="right" ng-click="removeStory(story)"></i>
+                </span>
               </span>
               <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
 	          </p>
