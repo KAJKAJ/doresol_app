@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorylineCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util) {
+  .controller('StorylineCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,$timeout) {
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
     
@@ -25,8 +25,8 @@ angular.module('doresolApp')
     	fetchStories($scope.priority);
     }
 
-		var fetchStories = function(priority){
-			var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
+    var fetchWithFireBase = function(priority){
+    	var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
 
 			var currentStorylineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/stories/');
 			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(10);
@@ -76,7 +76,68 @@ angular.module('doresolApp')
           });            
 				});
 			});
-		}
+    }
+
+    var fetchWithAngularFire = function(){
+    	var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
+	    var currentStorylineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/stories/');
+	    var _storylineStories = $firebase(currentStorylineStoriesRef).$asArray();
+
+	    _storylineStories.$loaded().then(function(value){
+	    });
+
+	    _storylineStories.$watch(function(event){
+	      switch(event.event){
+	        case "child_removed":
+	          // removeMyMemorial(event.key);
+	          break;
+	        case "child_added":
+	          var childRef = storiesRef.child(event.key);
+		        var child = $firebase(childRef).$asObject();
+		        child.$loaded().then(function(storyValue){
+		        	if(!$scope.commentsObject[storyValue.$id]){
+			          $scope.commentsObject[storyValue.$id] = {};
+			        }
+		        	storyValue.fromNow = moment(storyValue.created_at).fromNow();
+		          $scope.storiesObject.push(storyValue);
+		          var storyCnt = $scope.storiesObject.length;
+		          User.setUsersObject(storyValue.ref_user);
+
+		          storyValue.$bindTo($scope, "storiesObject["+(storyCnt-1)+"]").then(function(){
+		          	var currentStoryCommentsRef =  new Firebase(ENV.FIREBASE_URI + '/stories/'+storyValue.$id+'/comments/');
+		          	var _comments = $firebase(currentStoryCommentsRef).$asArray();
+		          	_comments.$watch(function(event){
+						      switch(event.event){
+						        case "child_removed":
+						          if($scope.commentsObject[storyValue.$id][event.key]){
+						            delete $scope.commentsObject[storyValue.$id][event.key];
+						        	}
+						          break;
+						        case "child_added":
+						          var commentRef = new Firebase(ENV.FIREBASE_URI + '/comments/'+event.key);
+						          var comment = $firebase(commentRef).$asObject();
+						          comment.$loaded().then(function(commentValue){
+						            commentValue.fromNow = moment(commentValue.created_at).fromNow();
+						          	$scope.commentsObject[storyValue.$id][event.key] = commentValue;
+						            User.setUsersObject(commentValue.ref_user);
+						            
+					              commentValue.$bindTo($scope, "commentsObject['"+storyValue.$id+"']['"+event.key+"']").then(function(){
+					              });  
+					            });
+						          break;
+					        }
+						    });
+		          }); 
+		        });           
+	        	break;
+	       }
+	    });
+    }
+
+		var fetchStories = function(priority){
+			fetchWithFireBase(priority);
+			// fetchWithAngularFire();
+	 	}
 
 		$scope.addComment = function(storyKey,comment){
       if(comment.body){
@@ -127,7 +188,7 @@ angular.module('doresolApp')
         	$scope.newStoryForm.$setPristine({reload: true,notify: true});
         	// console.log(value);
        	  // $state.reinit();
-        	location.reload();
+        	// location.reload();
         }, function(error){
           console.log(error);
         });
