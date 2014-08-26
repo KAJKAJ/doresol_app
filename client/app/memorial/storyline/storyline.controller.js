@@ -8,7 +8,8 @@ angular.module('doresolApp')
     $scope.currentUser = User.getCurrentUser();
     $scope.currentUser.profile = User.getUserProfile($scope.currentUser);
 
-    $scope.storiesObject = [];
+    $scope.storiesObject = {};
+    $scope.storiesArray = [];
     $scope.users = User.getUsersObject();
     $scope.priority = moment().unix();
 
@@ -45,11 +46,12 @@ angular.module('doresolApp')
 	          $scope.commentsObject[storyValue.$id] = {};
 	        }
         	storyValue.fromNow = moment(storyValue.created_at).fromNow();
-          $scope.storiesObject.push(storyValue);
-          var storyCnt = $scope.storiesObject.length;
+          $scope.storiesObject[storyValue.$id] = storyValue;
+          $scope.storiesArray.push(storyValue);
+          var storyCnt = $scope.storiesArray.length;
           User.setUsersObject(storyValue.ref_user);
 
-          storyValue.$bindTo($scope, "storiesObject["+(storyCnt-1)+"]").then(function(){
+          storyValue.$bindTo($scope, "storiesObject['"+storyValue.$id+"']").then(function(){
           	var currentStoryCommentsRef =  new Firebase(ENV.FIREBASE_URI + '/stories/'+storyValue.$id+'/comments/');
           	var _comments = $firebase(currentStoryCommentsRef).$asArray();
           	_comments.$watch(function(event){
@@ -188,10 +190,14 @@ angular.module('doresolApp')
         	$scope.newStoryForm.$setPristine({reload: true,notify: true});
         	// console.log(value);
        	  // $state.reinit();
-        	location.reload();
+        	// location.reload();
         }, function(error){
           console.log(error);
         });
 	    }
+    }
+
+    $scope.storyContentChanged = function(story){
+    	$scope.storiesObject[story.$id] = story;
     }
   });

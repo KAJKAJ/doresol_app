@@ -57,7 +57,7 @@
 
   <!-- story list -->                    
 	<ul class="storyline media-list">
-	  <li class="storyline-story media" ng-repeat="story in storiesObject">
+	  <li class="storyline-story media" ng-repeat="story in storiesArray">
 	      <div class="story-avatar">
           <img ng-src="{{users[story.ref_user].profile.image}}" style="width:64px;height:64px;"/>
         </div>
@@ -75,8 +75,10 @@
 	          <!-- headline, text -->
 	          <div class="story-show">
 							<div ng-if="story.ref_user == currentUser.uid">
-								<h3><strong><input type="text" ng-model="story.headline" placeholder="제목을 입력하세요.." /></strong></h3>
-		          	<p><textarea class="form-control" ng-model="story.text" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/></p>
+								<h3><strong><input type="text" ng-model="story.headline" ng-blur="storyContentChanged(story)" placeholder="제목을 입력하세요.." /></strong></h3>
+		          	<p><textarea class="form-control" ng-model="story.text" ng-blur="storyContentChanged(story)" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/></p>
+                <!-- <h3><strong><input type="text" ng-change="textChange()" ng-model="text" placeholder="제목을 입력하세요.." /></strong></h3>
+                <p><textarea class="form-control" ng-model="story.text" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/></p> -->
 							</div>
 						</div>
 						<div ng-if="story.ref_user != currentUser.uid">
@@ -96,8 +98,8 @@
             <div ng-include="'app/memorial/comment/comment.html'"></div>
 	      </div>
 	  </li>
-   <!--  <li class="storyline-story media text-center">
+    <li class="storyline-story media text-center">
       <button class="btn btn-xs btn-default push" ng-click="fetchMoreStories()">MORE</button>
-    </li> -->
+    </li>
 	</ul>
 </div>
