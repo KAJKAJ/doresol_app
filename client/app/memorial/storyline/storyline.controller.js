@@ -188,7 +188,7 @@ angular.module('doresolApp')
         	$scope.newStoryForm.$setPristine({reload: true,notify: true});
         	// console.log(value);
        	  // $state.reinit();
-        	// location.reload();
+        	location.reload();
         }, function(error){
           console.log(error);
         });
