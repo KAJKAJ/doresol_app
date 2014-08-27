@@ -66,40 +66,40 @@
                 <i class="fa fa-times"></i>
               </span>
             </div>
-            <div class="story-show">
-              <div ng-if="story.ref_user == currentUser.uid">
-                <h2><strong><input type="text" ng-model="story.headline" ng-blur="storyContentChanged(story)" placeholder="제목을 입력하세요.." /></strong></h2>
+
+            <div class="storyline-story-title">
+              <div class="story-avatar">
+                <img ng-src="{{users[story.ref_user].profile.image}}" style="width:32px;height:32px;"/>
               </div>
-              <div ng-if="story.ref_user != currentUser.uid">
-                <h2><strong>{{story.headline}}</strong></h2>
+              <div class="story-author">
+                <div class="story-show">
+                  <div ng-if="story.ref_user == currentUser.uid">
+                    <strong><input type="text" ng-model="story.headline" ng-blur="storyContentChanged(story)" placeholder="제목을 입력하세요.." /></strong>
+                  </div>
+                  <div ng-if="story.ref_user != currentUser.uid">
+                    <strong>{{story.headline}}</strong>
+                  </div>
+                </div>
+                <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
+                <span class="text-muted">
+                  <small>{{story.fromNow}}</small>
+                  <span class="text-success"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
+                </span>
               </div>
             </div>
         </div>
         <!-- END Block with Options Title -->
 
         <!-- Block with Options Content -->
-        <div class="story-avatar">
-          <img ng-src="{{users[story.ref_user].profile.image}}" style="width:64px;height:64px;"/>
-        </div>
         
         <div class="media-body">
-            <!-- author -->
-            <p>
-              <span class="text-muted pull-right">
-                <small>{{story.fromNow}}</small>
-                <span class="text-success"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
-              </span>
-              <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
-            </p>
-            
-            <!-- headline, text -->
+            <!-- headline -->
             <div class="story-show">
               <div ng-if="story.ref_user == currentUser.uid">
                 <p><textarea class="form-control" ng-model="story.text" ng-blur="storyContentChanged(story)" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/></p>
               </div>
             </div>
             <div ng-if="story.ref_user != currentUser.uid">
-              <h3><strong>{{story.headline}}</strong></h3>
               <p>{{story.text}}</p>
             </div>
 

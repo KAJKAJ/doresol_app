@@ -12,9 +12,17 @@
 			color:#1bbae1;;
 		}
 
+		.storyline-story-title{
+			padding: 10px 40px 10px 10px;
+		}
+
 		.story-avatar{
 			float:left;
 	  	padding-right:10px;  
+		}
+
+		.story-author{
+			padding-left:42px;
 		}
 
 		.storyline-img{
@@ -25,9 +33,9 @@
 		  max-height: 500px;
 		}
 
-		.story-show input[type=text],.story-show textarea{
+		.story-show input[type=text]{
 		    border: 1px solid #f9fafc;
-		    width: 100%;
+		    width: 80%;
 		    resize: none;
 		    background-color: #f9fafc;
 		    -webkit-box-shadow: none;
