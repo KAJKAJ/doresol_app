@@ -91,9 +91,15 @@
 
 						<!-- file display -->
 	          <p>
-	          	<div ng-show="story.file.type == 'image'">
+	          	<div ng-if="story.file.type == 'image'">
           			<img ng-src="{{story.file.url}}" class="storyline-img"> 
         			</div>
+              <div ng-if="story.file.type == 'video'">
+                <video controls class="storyline-img">
+                  <source src="{{story.file.url}}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
         			<!-- TODO: VIDEO -->
         		</p>
 

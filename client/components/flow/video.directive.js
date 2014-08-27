@@ -25,6 +25,7 @@ angular.module('doresolApp')
           fileReader.onload = function (event) {
             scope.$apply(function () {
               attrs.$set('src', event.target.result);
+              scope.loaded = true;
             });
           };
         });

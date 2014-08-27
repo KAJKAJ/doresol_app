@@ -73,6 +73,7 @@ angular.module('doresolApp')
           var childRef = storiesRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
+            console.log(value);
             // $scope.timelineStories[event.key] = value;
             if($scope.storiesArray[value.ref_era] == undefined) {
               $scope.storiesArray[value.ref_era] = [];
@@ -204,7 +205,7 @@ angular.module('doresolApp')
         "timeline": {
            "headline": $scope.memorial.name,
            "type":"default",
-           "text": "아버지의 일대기",
+           "text": $scope.memorial.name + "님의 일대기",
            "startDate": $scope.memorial.dateOfBirth,
            "asset": {
                         "media": $scope.memorial.file.url
