@@ -54,60 +54,74 @@
         </div>
       </form>
   </div>
-
+<hr/>
   <!-- story list -->                    
 	<ul class="storyline media-list">
 	  <li class="storyline-story media" ng-repeat="story in storiesArray">
-      
+      <div class="block">
+        <!-- Block with Options Title -->
+        <div class="block-title">
+            <div class="block-options pull-right">
+              <span class="btn btn-alt btn-sm btn-default" ng-if="story.ref_user == currentUser.uid" ng-click="removeStory(story)" popover="Delete" popover-trigger="mouseenter" popover-placement="right" >
+                <i class="fa fa-times"></i>
+              </span>
+            </div>
+            <div class="story-show">
+              <div ng-if="story.ref_user == currentUser.uid">
+                <h2><strong><input type="text" ng-model="story.headline" ng-blur="storyContentChanged(story)" placeholder="제목을 입력하세요.." /></strong></h2>
+              </div>
+              <div ng-if="story.ref_user != currentUser.uid">
+                <h2><strong>{{story.headline}}</strong></h2>
+              </div>
+            </div>
+        </div>
+        <!-- END Block with Options Title -->
 
+        <!-- Block with Options Content -->
         <div class="story-avatar">
           <img ng-src="{{users[story.ref_user].profile.image}}" style="width:64px;height:64px;"/>
         </div>
         
-	      <div class="media-body">
-	      		<!-- author -->
-	          <p>
+        <div class="media-body">
+            <!-- author -->
+            <p>
               <span class="text-muted pull-right">
                 <small>{{story.fromNow}}</small>
                 <span class="text-success"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
-                <span class="text-danger" ng-if="story.ref_user == currentUser.uid" >
-                  <i class="fa fa-times-circle" popover="Delete" popover-trigger="mouseenter" popover-placement="right" ng-click="removeStory(story)"></i>
-                </span>
               </span>
               <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
-	          </p>
-	          
-	          <!-- headline, text -->
-	          <div class="story-show">
-							<div ng-if="story.ref_user == currentUser.uid">
-								<h3><strong><input type="text" ng-model="story.headline" ng-blur="storyContentChanged(story)" placeholder="제목을 입력하세요.." /></strong></h3>
-		          	<p><textarea class="form-control" ng-model="story.text" ng-blur="storyContentChanged(story)" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/></p>
-                <!-- <h3><strong><input type="text" ng-change="textChange()" ng-model="text" placeholder="제목을 입력하세요.." /></strong></h3>
-                <p><textarea class="form-control" ng-model="story.text" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/></p> -->
-							</div>
-						</div>
-						<div ng-if="story.ref_user != currentUser.uid">
-							<h3><strong>{{story.headline}}</strong></h3>
-	          	<p>{{story.text}}</p>
-						</div>
+            </p>
+            
+            <!-- headline, text -->
+            <div class="story-show">
+              <div ng-if="story.ref_user == currentUser.uid">
+                <p><textarea class="form-control" ng-model="story.text" ng-blur="storyContentChanged(story)" placeholder="설명을 입력하세요.." rows="5" style="resize: vertical;"/></p>
+              </div>
+            </div>
+            <div ng-if="story.ref_user != currentUser.uid">
+              <h3><strong>{{story.headline}}</strong></h3>
+              <p>{{story.text}}</p>
+            </div>
 
-						<!-- file display -->
-	          <p>
-	          	<div ng-if="story.file.type == 'image'">
-          			<img ng-src="{{story.file.url}}" class="storyline-img"> 
-        			</div>
+            <!-- file display -->
+            <p>
+              <div ng-if="story.file.type == 'image'">
+                <img ng-src="{{story.file.url}}" class="storyline-img"> 
+              </div>
               <div ng-if="story.file.type == 'video'">
                 <video controls class="storyline-img">
                   <source src="{{story.file.url}}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
               </div>
-        			<!-- TODO: VIDEO -->
-        		</p>
+              <!-- TODO: VIDEO -->
+            </p>
 
-	          <!-- comments -->
+            <!-- comments -->
             <div ng-include="'app/memorial/comment/comment.html'"></div>
-	      </div>
+        </div>
+        <!-- END Block with Options Content -->
+      </div>
 	  </li>
     <li class="storyline-story media text-center">
       <button class="btn btn-xs btn-default push" ng-click="fetchMoreStories()">MORE</button>

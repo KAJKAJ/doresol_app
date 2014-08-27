@@ -5,8 +5,8 @@
 	.storyline-story{
 		margin-top: 0;
 		margin-bottom:10px;
-		padding: 20px 20px 0;
-		border-top: 1px dotted #dbe1e8;
+		/*padding: 20px 20px 0;*/
+		/*border-top: 1px dotted #dbe1e8;*/
 
 		.story-user-id{
 			color:#1bbae1;;
@@ -26,6 +26,16 @@
 		}
 
 		.story-show input[type=text],.story-show textarea{
+		    border: 1px solid #f9fafc;
+		    width: 100%;
+		    resize: none;
+		    background-color: #f9fafc;
+		    -webkit-box-shadow: none;
+		    -moz-box-shadow: none;
+		    box-shadow: none;
+		}
+
+		.story-show textarea{
 		    border: 1px solid #ffffff;
 		    width: 100%;
 		    resize: none;
