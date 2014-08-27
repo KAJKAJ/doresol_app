@@ -308,7 +308,7 @@ angular.module('doresolApp')
             headline: '제목없음',
             asset: {
               "media": '/tmp/' + value.uniqueIdentifier,
-              "thumbnail": '/tmp/' + value.uniqueIdentifier,
+              "thumbnail": (value.type=='image') ? '/tmp/' + value.uniqueIdentifier : 'assets/images/video_24.png',
             }
           };
       });

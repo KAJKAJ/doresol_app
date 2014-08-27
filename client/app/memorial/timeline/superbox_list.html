@@ -1,13 +1,13 @@
 <span ng-if="story.newStory">
 	<div ng-if="story.file.type == 'image'">
-		<img flow-image="story.file" class="superbox-img" ng-show="loaded"> 
+		<img flow-image="story.file" class="superbox-img" ng-show="story.file.isComplete()"> 
 		<!-- <img flow-image="story.file" class="superbox-img"> -->
 	</div>
 	<div ng-if="story.file.type == 'video'">
 		<!-- <video flow-video="story.file" class="superbox-img" ng-show="story.file.isComplete()" controls>  -->
 		<video flow-video="story.file" class="superbox-img" ng-show="story.file.isComplete()" controls> 
 	</div>
-	<div class="superbox-spinner" ng-show="!loaded">
+	<div class="superbox-spinner" ng-show="!story.file.isComplete()">
 		<i class="fa fa-spinner fa-spin fa-4x text-success"></i> 
 	</div>
 	<div class="story-remove fa fa-times-circle fa-2x text-danger" ng-click="removeStory()">
