@@ -1,0 +1,89 @@
+{
+    "storymap": {
+        "slides": [{
+            "type": "overview",
+            "date": "1790-2010",
+            "text": {
+                "headline": "US Manifest Destiny <small>Mean center of United States population</small>",
+                "text": "<p>The mean center of U.S. population is determined by the United States Census Bureau from the results of each census. Defined as the point at which an imaginary, flat, weightless, and rigid map of the United States would balance perfectly if weights of identical value were placed on it so that each weight represented the location of one person on the date of the census.</p> <span class='vco-note'>This is an overview or title slide to show all the points in your story routed on your map.</span>"
+            },
+            "media": {
+                    "url":              "http://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/US_Mean_Center_of_Population_1790-2010.PNG/800px-US_Mean_Center_of_Population_1790-2010.PNG",
+                    "credit":               "wikipedia",
+                    "caption":          "Mean US_Mean_Center_of_Population_1790-2010"
+                }
+        }, {
+            "date": "1900",
+            "text": {
+                "headline": "1900: Hear some music from the time",
+                "text": "<p>The mean population is now 6 miles southeast of Columbus. Listen to 'In the sweet bye and bye' by Harry MacDonough. Original recording by Roger Harding released in 1898. Popular music from 1900-1910.</p> <span class='vco-note'>Embed soundclips from Soundcloud.</span>"
+            },
+            "location": {
+                "name": "Bartholomew County, Indiana",
+                "lat": 39.16000,
+                "lon": -85.81500,
+                "zoom": 10,
+                "line": true
+            },
+            "media": {
+                    "url":              "https://soundcloud.com/mister-click/harry-macdonough-in-the-sweet",
+                    "credit":               "Soundcloud",
+                    "caption":          "In the sweet bye and bye"
+                }
+        },  {
+            "date": "1990",
+            "text": {
+                "headline": "1990: Hubble",
+                "text": "<p>The US mean moved west to Crawford County, Missouri, but the US again makes a leap into space, launching the Hubble telescope.</p> <span class='vco-note'>YouTube video featuring images taken by Hubble space telescope.</span>"
+            },
+            "location": {
+                "name": "Crawford County, Missouri",
+                "lat": 37.87222,
+                "lon": -91.21528,
+                "zoom": 10,
+                "line": true
+            },
+            "media": {
+                    "url":              "https://www.youtube.com/watch?v=z_ISPDTpJrk",
+                    "credit":               "Coconut Science Lab",
+                    "caption":          "Best of Hubble"
+                }
+        }, {
+            "date": "2000",
+            "text": {
+                "headline": "2000: A new millenium",
+                "text": "<p>Phelps County, Missouri is the new center of US population. Here's a good laugh and some good perspective, remember Y2K?</p> <span class='vco-note'>YouTube video</span>"
+            },
+            "location": {
+                "name": "Phelps County, Missouri",
+                "lat": 37.696987,
+                "lon": -91.809567,
+                "zoom": 10,
+                "line": true
+            },
+            "media": {
+                    "url":              "https://www.youtube.com/watch?v=X_KoNZkf-2k",
+                    "credit":               "KGBT",
+                    "caption":          "Valley Residents Prepare for Y2K"
+                }
+        }, {
+            "date": "2010",
+            "text": {
+                "headline": "2010: And Twitter happened",
+                "text": "<p>The new center is Texas County, Missouri, which has nothing to do with Texas. In the past decade many things happened but a big one is the founding of Twitter in 2006. Here is the #1 most retweeted tweet from 2010.</p> <span class='vco-note'>Another example of an embedded tweet.</span>"
+            },
+            "location": {
+                "name": "Texas County, Missouri",
+                "lat": 37.517534,
+                "lon": -92.173096,
+                "zoom": 10,
+                "line": true
+            },
+            "media": {
+                    "url":              "https://twitter.com/StephenAtHome/status/16360461594",
+                    "credit":               "Twitter",
+                    "caption":          "Stephen Colbert"
+                }
+        }]
+    }
+}

@@ -20,6 +20,7 @@
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
       <!-- injector:css -->
+      <link rel="stylesheet" href="app/memorial/storymap/storymap.css">
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
@@ -87,6 +88,7 @@
           <script src="app/memorial/memorial.js"></script>
           <script src="app/memorial/profile/profile.controller.js"></script>
           <script src="app/memorial/storyline/storyline.controller.js"></script>
+          <script src="app/memorial/storymap/storymap.controller.js"></script>
           <script src="app/memorial/timeline/story_detail.controller.js"></script>
           <script src="app/memorial/timeline/timeline.controller.js"></script>
           <script src="app/memorial/timeline/timeline.directive.js"></script>
@@ -109,6 +111,10 @@
         <!-- endbuild -->
 
     <script src="bower_components/angular-i18n/angular-locale_ko-kr.js"></script>
+    <!-- Your script tags should be placed before the closing body tag. -->
+<script type="text/javascript" src="http://cdn.knightlab.com/libs/storymapjs/latest/js/storymap-min.js"></script>
+
+
     <script src="config.js" />
 </body>
 </html>
