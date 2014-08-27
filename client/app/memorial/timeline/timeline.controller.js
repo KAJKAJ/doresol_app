@@ -73,7 +73,6 @@ angular.module('doresolApp')
           var childRef = storiesRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
-            console.log(value);
             // $scope.timelineStories[event.key] = value;
             if($scope.storiesArray[value.ref_era] == undefined) {
               $scope.storiesArray[value.ref_era] = [];
