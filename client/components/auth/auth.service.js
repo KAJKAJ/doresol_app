@@ -89,7 +89,6 @@ angular.module('doresolApp')
     };
 
     var logout = function() {
-      auth.$logout();
       currentUser = null;
       User.setCurrentUser(null);
     };

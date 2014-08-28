@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('User', function User($firebase, $rootScope, $q, ENV, MyMemorial) {
+  .factory('User', function User($firebase, $rootScope, $q, $timeout, ENV) {
 
   var ref = new Firebase(ENV.FIREBASE_URI + '/users');
   var users = $firebase(ref);
   
   var currentUser = null;
+
+  var usersObject = {};
 
   var getCurrentUserFromFirebase = function(userId){
     var dfd = $q.defer();
@@ -14,8 +16,13 @@ angular.module('doresolApp')
       var user = findById(userId);
 
       user.$loaded().then(function(value) {
-        setCurrentUser(value);
-        dfd.resolve(currentUser);
+
+        if(user.hasOwnProperty('uid')) {
+          setCurrentUser(value);
+          dfd.resolve(currentUser);
+        } else {
+          dfd.reject('user is deleted');  
+        }
       },function(error){
         dfd.reject(error);
       });
@@ -23,53 +30,38 @@ angular.module('doresolApp')
       dfd.resolve(getCurrentUser());
     }
     return dfd.promise;
-  };
+  }
 
   var setCurrentUser = function(user){
     if(user){
       currentUser = user;
-
-      var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
-      var myMemorialRef =  ref.child(user.uid+'/memorials/own');
-
-      myMemorialRef.on("child_added", function(value) {
-        memorialsRef.child(value.name()).once("value", function(data) {
-          MyMemorial.addMyMemorial(data.name(),data.val());
-          $rootScope.$apply();
-        });
-      });
-      myMemorialRef.on("child_removed", function(value) {
-        MyMemorial.removeMyMemorial(value.name());
-        $rootScope.$apply();
-      });
-
     }else{
       currentUser = null;
     }
-  };
+  }
 
   var create = function(newUser) {
     var user = {
       uid: newUser.uid,
       id: newUser.id,
       email: newUser.email
-    };
+    }
 
     return users.$set(newUser.uid, user);
-  };
+  }
 
   var update = function(userId, data) {
     return users.$update(userId, data);
-  };
+  }
 
   var findById = function(userId) {
     var userRef = users.$ref().child(userId);
     return $firebase(userRef).$asObject();
-  };
+  }
 
   var getCurrentUser = function(){
     return currentUser;
-  };
+  }
 
   // Memorial Related 
   var createMemorial = function(params) {
@@ -78,7 +70,35 @@ angular.module('doresolApp')
     var memorial = $firebase(ownMemorialRef);
 
     return memorial.$set(true);
-  };
+  }
+
+  var getUserName = function (user){
+    return user.uid;
+  }
+
+  var setUsersObject = function(userId){
+    var user = findById(userId);
+    user.$loaded().then(function(value){
+      value.profile = getUserProfile(value);      
+      usersObject[value.uid] = value;
+    });
+  }
+
+  var getUsersObject = function(){
+    return usersObject;
+  }
+
+  var getUserProfile = function(user){
+    var profile = {};
+    if(user.uid.indexOf("facebook") > -1){
+      profile.name = user.name;
+      profile.image = user.thirdPartyUserData.picture.data.url;
+    }else if(user.uid.indexOf("simplelogin") > -1){
+      profile.name = user.email;
+      profile.image = 'assets/images/user_32.png';
+    }
+    return profile;
+  }
 
   // $rootScope.$on('$firebaseSimpleLogin:login', function (e, authUser) {
   //   var query = $firebase(ref.startAt(authUser.uid).endAt(authUser.uid));
@@ -99,7 +119,11 @@ angular.module('doresolApp')
     getCurrentUser:getCurrentUser,
     setCurrentUser:setCurrentUser,
     getCurrentUserFromFirebase:getCurrentUserFromFirebase,
-    update:update
-  };
+    update:update,
+    setUsersObject:setUsersObject,
+    getUsersObject:getUsersObject,
+    getUserProfile:getUserProfile
+
+  }
 
 });

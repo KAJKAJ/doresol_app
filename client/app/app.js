@@ -9,7 +9,8 @@ angular.module('doresolApp', [
   'flow',
   'xeditable',
   'config',
-  'firebase'
+  'firebase',
+  'ui.sortable'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -25,6 +26,15 @@ angular.module('doresolApp', [
     datepickerConfig.maxDate="9999-12-31";
   }])
 
+  .config(function($provide) {
+    $provide.decorator('$state', function($delegate) {
+      $delegate.reinit = function() {
+        this.transitionTo(this.current, this.$current.params, { reload: true, inherit: true, notify: true });
+      };
+      return $delegate;
+    });
+  })
+  
   .config(['datepickerPopupConfig', function(datepickerPopupConfig) {
     datepickerPopupConfig.currentText = "오늘";
     datepickerPopupConfig.clearText = "취소";
@@ -59,30 +69,29 @@ angular.module('doresolApp', [
     };
   })
 
-  .run(function ($rootScope, $location, $state, Auth, User, editableOptions) {
+  .run(function ($rootScope, $location, $state, Auth, User, editableOptions, Composite) {
 
     editableOptions.theme = 'bs3';
     // Redirect to login if route requires auth and you're not logged in
-    $rootScope.$on('$stateChangeStart', function (event, next) {
-      var _get_user_auth = function(){
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      var _getUserAuth = function(){
         return Auth.getCurrentUserFromFirebase().then(function(value){
           return value.uid;
         });
       };
 
-      var _get_user_data = function(userId){
+      var _getUserData = function(userId){
         return User.getCurrentUserFromFirebase(userId).then(function(value){
-          return value;
+          return value.uid;
         });
       };
 
-
-      if (next.authenticate){
+      if (toState.authenticate){
         if(!User.getCurrentUser()){
           event.preventDefault();
-          
-          _get_user_auth().then(_get_user_data).then(function(value){
-            $state.go(next);
+          _getUserAuth().then(_getUserData).then(Composite.setMyMemorials).then(function(value){
+            $state.go(toState, toParams);
+            // $state.go(toState, toParams,{notify:false});
           },function(error){
             $location.path('/login');
           });

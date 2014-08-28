@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCreateCtrl', function ($scope,$rootScope, $resource,$state,Auth,Util,Memorial,User, $firebase) {
+  .controller('MemorialCreateCtrl', function ($scope,$rootScope, $state,Util,Composite,User) {
     $scope.today = Date.now();
     $scope.newMemorial = {};
     $scope.currentUser = User.getCurrentUser();
+
     $scope.createMemorial = function(form){
       if(form.$valid){
         var file = null;
@@ -18,17 +19,12 @@ angular.module('doresolApp')
 
         var memorial = {
             name: $scope.newMemorial.name,
-            date_of_birth: $scope.newMemorial.dateOfBirth,
-            date_of_death: $scope.newMemorial.dateOfDeath,
+            dateOfBirth: moment($scope.newMemorial.dateOfBirth).format("YYYY-MM-DD"),
+            dateOfDeath: moment($scope.newMemorial.dateOfDeath).format("YYYY-MM-DD"),
             file:file
         };
-
-        Memorial.create(memorial).then(function (value) {
-          // var obj = Memorial.findById(value.name());
-          // obj.$loaded().then(function(){
-          //   Memorial.myMemorials[value.name()];
-          //   $state.transitionTo('memorial.timeline', {id: value.name()});
-          // })
+        
+        Composite.createMemorial(memorial).then(function (value) {
           $state.transitionTo('memorial.timeline', {id: value.name()});
         });
       }

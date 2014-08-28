@@ -1,17 +1,18 @@
-<div class="well" ng-show="selectedEra">
+<div class="well" ng-show="selectedEraKey">
 	<!-- era form -->
 	<form name="eraForm" ng-submit="submitEra(eraForm)" novalidate>
-		<div class="form-group">
-        <input type="text" class="form-control" name="name" placeholder="유년시절,학창시절,신혼생활 등" ng-required="true" ng-model="selectedEra.headline" >
+    <div class="form-group">
+        <input type="text" class="unique-era form-control" name="headline" placeholder="유년시절,학창시절,신혼생활 등" ng-required="true" ng-model="selectedEra.headline" ng-change="selectedEraHeadlineChange()">
     </div>
     <div class="alert alert-danger" role="alert"
-	  		 ng-show="eraForm.name.$dirty && eraForm.name.$invalid">
-	  		 <span ng-show="eraForm.name.$error.required">추억의 시절 이름을 입력해 주세요.</span>
+	  		 ng-show="eraForm.headline.$dirty && eraForm.headline.$invalid">
+	  		 <span ng-show="eraForm.headline.$error.required">추억의 시절 이름을 입력해 주세요.</span>
+         <span ng-show="eraForm.headline.$error.duplicated">중복된 이름입니다.</span>
 	  </div>
 
     <p class="input-group">
 	    <input type="text" class="form-control" name="eraStartDate" placeholder="기간 시작" 
-	    is-open="dateOfEraStart" datepicker-popup="yyyy-MM-dd" max-date="today"
+	    is-open="dateOfEraStart" datepicker-popup="yyyy-MM-dd" max-date="selectedEra.endDate"
 	    ng-required="true" ng-model="selectedEra.startDate"/>
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfEraStart')"><i class="glyphicon glyphicon-calendar text-success"></i></button>
@@ -25,7 +26,7 @@
 
     <p class="input-group">
 	    <input type="text" class="form-control" name="eraEndDate" placeholder="기간 종료" 
-	    is-open="dateOfEraEnd" datepicker-popup="yyyy-MM-dd" max-date="today"
+	    is-open="dateOfEraEnd" datepicker-popup="yyyy-MM-dd" max-date="today" min-date="selectedEra.startDate"
 	    ng-required="true" ng-model="selectedEra.endDate"/>
       <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="openDatepicker($event,'dateOfEraEnd')"><i class="glyphicon glyphicon-calendar text-success"></i></button>
@@ -38,12 +39,14 @@
   	</div>
 
   	<div class="alert alert-danger" role="alert"
-	  		 ng-show="eraForm.name.$valid && eraForm.dateOfStart.$valid &&  eraForm.dateOfEnd.$valid && eraForm.$valid == false">		  		 
+	  		 ng-show="eraForm.headline.$valid && eraForm.dateOfStart.$valid &&  eraForm.dateOfEnd.$valid && eraForm.$valid == false">		  		 
 	  		 <span>기간 설정이 잘못되었습니다.</span>
 	  	</div>
 	  	<button type="submit" class="btn btn-success btn-lg btn-block" ng-disabled="eraForm.$invalid">
-	  		<span ng-show="selectedEra.id">변경</span>
-	  		<span ng-show="!selectedEra.id">추가</span>
+	  		<span ng-show="selectedEraKey != 'tempKey'">변경</span>
+	  		<span ng-show="selectedEraKey == 'tempKey'">추가</span>
 	  	</button>		  
   </form>
+
+  <div ng-include="'app/memorial/timeline/story_upload.html'" ng-show="getSelectedEraKey() != 'tempKey'"></div>
 </div>

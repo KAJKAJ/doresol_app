@@ -1,62 +1,179 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('TimelineCtrl', function ($scope, $rootScope,Util,Auth,$modal, Memorial, $stateParams) {
-    
-    
-    // $scope.memorial = Memorial.myMemorials[$stateParams.id];
-    // console.log($scope.memorial);
+  .controller('TimelineCtrl', function ($scope, $q, Util, Composite,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
 
-    // if($scope.memorial['timeline']) {
-    //   $scope.timeline = $scope.memorial['timeline'];
-    // };
+    $scope.editMode = true;
+    $scope.newStoryCnt = 0;
 
-    $scope.getSelectedEra = function(){
-      console.log('getSelectedEra');
-      return $scope.selectedEra;
+    var waitStoryLoaded = function(){
+      if($scope.totalStoryCnt == $scope.storyCnt){
+        if($scope.totalStoryCnt > 0){
+          $scope.toggleEditMode();
+          $scope.createTimeline();
+        }
+      }else{
+        $timeout(waitStoryLoaded, 100);
+      }
     };
 
-    $scope.setSelectedEra = function(era){
-      $scope.selectedEra = era;
-    };
+    $scope.memorialKey = $stateParams.id;
+    $scope.memorial = Memorial.getCurrentMemorial();
 
-    $scope.getSelectedEra = function() {
-      return $scope.selectedEra;
-    };
-
-    $scope.submitEra = function(form){
-      console.log($scope);
-      
-      // var memorial = $scope.$parent.memorial;
-
-      // if(form.$valid){
-      //   var memorial = $resource('/api/memorials/:meorialId', {meorialId:'@id'});
-      //   var user = User.get({meorialId:memorialId}, function() {
-      //     user.abc = true;
-      //     user.$save();
-      //   });
-
-      //   var Memorial = $resource('/api/memorials');
-
-      //   var newMemorial = new Memorial({
-      //       admin_id: currentUser,
-      //       name: $scope.newMemorial.name,
-      //       date_of_birth: $scope.newMemorial.dateOfBirth,
-      //       date_of_death: $scope.newMemorial.dateOfDeath,
-      //       file: $scope.newMemorial.lastUploadingFile
-      //   });
-
-      //   // console.log(newMemorial);
-      //   newMemorial.$save(function(item, putResponseHeaders) {
-      //     //item => saved user object
-      //     //putResponseHeaders => $http header getter
-      //     $state.transitionTo('memorial.timeline', {id: item._id});
-      //   }, function(error){
-      //     // console.log(error);
-      //     // console.log('error');
-      //   });
+    $scope.memorial.$loaded().then(function(value){
+      // console.log(value);
+      // //temp
+      // $timeout(function(){$scope.createTimeline()},500);
+      // if(!value.timeline || !value.timeline.stories){
+      //   $scope.editMode = true;
       // }
+      waitStoryLoaded();
+    });
 
+    // $scope.selectedEraKey = {};
+    $scope.selectedEra = {};
+    $scope.currentUser = User.getCurrentUser();
+
+    $scope.storiesArray = {};
+    $scope.storiesObject = {};
+
+    $scope.sortableOptions = {
+      // containment: "parent",
+      cursor: "move",
+      tolerance: "pointer",
+
+      start: function(e, ui) {
+        $(e.target).data("ui-sortable").floating = true;
+      },
+      
+      // After sorting is completed
+      stop: function(e, ui) {
+        // for (var i=0; i< $scope.storiesArray[$scope.selectedEraKey].length; i++) {
+          
+        // };
+      }
+    };
+
+    var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
+    var currentTimelineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/timeline/stories');
+    var _timelineStories = $firebase(currentTimelineStoriesRef).$asArray();
+
+    $scope.storyCnt = 0;
+    _timelineStories.$loaded().then(function(value){
+      $scope.totalStoryCnt = _timelineStories.length;
+    });
+
+    _timelineStories.$watch(function(event){
+      switch(event.event){
+        case "child_removed":
+          $scope.storyCnt--;
+          // removeMyMemorial(event.key);
+          break;
+        case "child_added":
+          var childRef = storiesRef.child(event.key);
+          var child = $firebase(childRef).$asObject();
+          child.$loaded().then(function(value){
+            // $scope.timelineStories[event.key] = value;
+            if($scope.storiesArray[value.ref_era] == undefined) {
+              $scope.storiesArray[value.ref_era] = [];
+              $scope.storiesObject[value.ref_era] = {};
+            };
+            $scope.storiesArray[value.ref_era].push(event.key);
+            $scope.storiesObject[value.ref_era][event.key] = value;  
+            
+            // new object case delete it
+            if(value.newStory) {
+              delete $scope.storiesObject[value.ref_era][value.tempKey];
+              var index = $scope.storiesArray[value.ref_era].indexOf(value.tempKey);
+              $scope.storiesArray[value.ref_era].splice(index, 1);
+            }
+            
+            $scope.storiesArray[value.ref_era].sort(function(aKey,bKey){
+              var aValue = $scope.storiesObject[value.ref_era][aKey];
+              var bValue = $scope.storiesObject[value.ref_era][bKey];
+              var aStartDate = moment(aValue.startDate).unix();
+              var bStartDate = moment(bValue.startDate).unix();
+              return aStartDate > bStartDate ? 1 : -1;
+            });
+
+            // $scope.stories[value.ref_era][event.key] = true;
+
+            value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
+              $scope.storiesObject[value.ref_era][event.key].newStory = false;
+              $scope.storyCnt++;
+              // console.log($scope.storiesObject[value.ref_era][event.key]);
+            });            
+          });
+        break;
+      }
+    });
+
+    $scope.selectedEraHeadlineChange = function(){
+      var isDuplicated = false;
+
+      if($scope.memorial.timeline) {
+        angular.forEach($scope.memorial.timeline.era, function(era, key) {
+          if(key!=$scope.selectedEraKey && era.headline == $scope.selectedEra.headline) {
+            isDuplicated = true;
+          }
+        });
+      }
+
+      if(isDuplicated){
+        $scope.eraForm.headline.$setValidity("duplicated",false);
+      }else{
+        $scope.eraForm.headline.$setValidity("duplicated",true);
+      }
+    };
+
+    $scope.getSelectedEraKey = function(){
+      return $scope.selectedEraKey;
+    };
+
+    $scope.setSelectedEra = function(key, era){
+      $scope.selectedEraKey = key;
+      angular.copy(era, $scope.selectedEra);
+      // $scope.stories = [];
+      if(key == 'tempKey'){
+        $scope.eraForm.$setPristine();
+      }else{
+        /*
+        $scope.stories[$scope.selectedEraKey] = [];
+        
+        angular.forEach($scope.timelineStories,function(value,key){
+          if(value.ref_era == $scope.selectedEraKey){
+            $scope.stories[$scope.selectedEraKey].push(value);
+          }
+        });
+        */
+      }
+    };
+
+    $scope.removeSelectedEra = function(key){
+      $scope.selectedEraKey = null;
+      $scope.selectedEra = {};
+
+      Memorial.removeEra($scope.memorialKey,key);
+      // todo : should delete stories referenced
+      //
+    };
+
+    $scope.submitEra = function(form) {
+      if(form.$valid) {
+
+        $scope.selectedEra.startDate = moment($scope.selectedEra.startDate).format('YYYY-MM-DD');
+        $scope.selectedEra.endDate = moment($scope.selectedEra.endDate).format('YYYY-MM-DD');
+
+        if($scope.selectedEraKey == 'tempKey') {
+          Memorial.createEra($scope.memorialKey, $scope.selectedEra);
+          $scope.selectedEra = {}
+          $scope.selectedEraKey = null;
+          $scope.eraForm.$setPristine();
+
+        } else {
+          Memorial.updateEra($scope.memorialKey, $scope.selectedEraKey, $scope.selectedEra);
+        }
+      }
     };
 
     $scope.openDatepicker = function($event,variable) {
@@ -68,89 +185,150 @@ angular.module('doresolApp')
     };
 
     $scope.getFlowFileUniqueId = function(file){
-      return currentUser + '-' + Util.getFlowFileUniqueId(file,currentUser);
+      return $scope.currentUser.uid.replace(/[^\.0-9a-zA-Z_-]/img, '') + '-' + Util.getFlowFileUniqueId(file,$scope.currentUser);
+    };
+    
+    $scope.removeSelectedStory = function(storyId) {
+      $scope.totalStoryCnt--;
+      // delete $scope.storiesObject[$scope.selectedEraKey][storyId];
+      var index = $scope.storiesArray[$scope.selectedEraKey].indexOf(storyId);
+      $scope.storiesArray[$scope.selectedEraKey].splice(index, 1);  
+
+      if(!$scope.storiesObject[$scope.selectedEraKey][storyId].newStory){
+        Story.removeStoryFromTimeline($scope.memorialKey,storyId);
+      }
     };
 
     $scope.createTimeline = function(){
-      var memorial = $scope.$parent.memorial;
-
-      console.log($scope);
       var timeline_data = {
         "timeline": {
-           "headline": memorial.name,
+           "headline": $scope.memorial.name,
            "type":"default",
-           "startDate":memorial.date_of_birth,
-           // "text":"<i><span class='c1'></span> & <span class='c2'></span></i>",
+           "text": $scope.memorial.name + "님의 일대기",
+           "startDate": $scope.memorial.dateOfBirth,
            "asset": {
-                        "media":memorial.file.url,
-                        // "caption":"아버지 .. 아포 중학교 앞에서"
-                    },
-            "date": [{
-                    "startDate":"1938,12,21",
-                    "endDate":"1938,12,25",
-                    "headline":"결혼식 with 서경분",
-                    "text":"장소는 어디어디에서 결혼하게 되었음. 그리고 이렇게 되고 어쩌구 저쩌구 했었던 걸로 기억한다. 누구와 같이 갔는지는 정확히 잘 모르겠다. 어쩌구 저쩌구.. ",
-                    "asset":
-                    {
-                        "media":"/assets/images/father/1.png",
-                        "thumbnail":"/assets/images/father/1.png",
-                    }
-                },
-            ]
+                        "media": $scope.memorial.file.url
+                    }            
         }
       };
 
       var timeline_dates = [];
-      for(var i=0;i<$scope.stories.length;i++){
-        timeline_dates.push({
-          "startDate":$scope.stories[i].start_date.replace(/\-/g,','),
-          "headline":$scope.stories[i].name,
-          "text":$scope.stories[i].desc,
-          "asset":{
-            "media": '/tmp/' + $scope.stories[i].file.uniqueIdentifier,
-            "thumbnail": '/tmp/' + $scope.stories[i].file.uniqueIdentifier
-          }
+      angular.forEach($scope.storiesArray,function(storiesKey,eraKey){
+        angular.forEach(storiesKey,function(storyKey){
+          timeline_dates.push($scope.storiesObject[eraKey][storyKey]);
+        });
+      });
+
+      var timeline_eras = [];
+      if($scope.memorial.timeline){
+        angular.forEach($scope.memorial.timeline.era,function(era,key){
+          timeline_eras.push(era);
         });
       }
 
       timeline_data.timeline.date = timeline_dates;
+      timeline_data.timeline.era = timeline_eras;
+
+      angular.element('#timeline-embed').empty();
 
       createStoryJS({
            type:       'timeline',
            width:      '100%',
-           height:     '800',
+           height:     '600',
            source:     timeline_data,
            embed_id:   'timeline-embed'
        });
-
-      $scope.temp_created = true;
     };
 
+   $scope.uploadTimelineStory = function(){
+      angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
+        var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
+        var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
+        var cntStories = storiesKey.length;
+        var timeStep = (eraEnd - eraStart)/cntStories;
+        var index = 0;
+
+        angular.forEach(storiesKey, function(storyKey, key) {
+          $scope.storiesObject[eraKey][storyKey].startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
+          index++;
+
+          if($scope.storiesObject[eraKey][storyKey].newStory){
+            $scope.totalStoryCnt++;     
+            // create story
+            var copyStory = {};
+            angular.copy($scope.storiesObject[eraKey][storyKey],copyStory);
+
+            var file = {
+              type: copyStory.file.type,
+              location: 'local',
+              url: '/tmp/' + copyStory.file.uniqueIdentifier,
+              updated_at: moment().toString()
+            }
+            copyStory.file = file;
+            
+            // delete copyStory.newStory;
+            Composite.createTimelineStory($scope.memorialKey,copyStory).then(function(value){
+            }, function(error){
+              console.log(error);
+            });
+
+          }
+        });
+      });
+      
+      waitStoryLoaded();
+    };
+    
     $scope.flowFilesAdded = function($files){
-      // console.log($files);
       angular.forEach($files, function(value, key) {
         value.type = value.file.type.split("/")[0];
+      
+        var startDate = moment(value.file.lastModifiedDate).format("YYYY-MM-DD");
         
-        $scope.stories.push(
+        if($scope.storiesArray[$scope.selectedEraKey] == undefined) {
+          $scope.storiesArray[$scope.selectedEraKey] = [];
+          $scope.storiesObject[$scope.selectedEraKey] = {};
+        };
+
+        var tempKey = Util.getUniqueId();
+        $scope.storiesArray[$scope.selectedEraKey].push(tempKey);
+        $scope.storiesObject[$scope.selectedEraKey][tempKey] = 
           {
-            name:'제목없음',
-            new_story: true,
             file: value,
-            start_date: moment(value.file.lastModifiedDate).format("YYYY-MM-DD")
-            // Mon Sep 10 2012 15:19:56 GMT+0900 (KST)
-          }
-        );
+            newStory: true,
+            tempKey: tempKey,
+
+            ref_memorial: $scope.memorialKey,
+            ref_era: $scope.selectedEraKey,
+            ref_user: $scope.currentUser.uid,
+            
+            startDate: startDate,
+            text: '내용없음',
+            headline: '제목없음',
+            asset: {
+              "media": '/tmp/' + value.uniqueIdentifier,
+              "thumbnail": (value.type=='image') ? '/tmp/' + value.uniqueIdentifier : 'assets/images/video_24.png',
+            }
+          };
       });
     };
 
-    $scope.flowFileDeleted = function(story){
-      var index = $scope.stories.indexOf(story);
+    // $scope.flowFileDeleted = function(story){
+    //   var index = $scope.stories.indexOf(story);
 
-      // TODO: delete from remote server
-      story.file.cancel();
+    //   // TODO: delete from remote server
+    //   story.file.cancel();
 
-      $scope.stories.splice(index, 1);  
+    //   $scope.stories.splice(index, 1);  
+    // };
+
+    $scope.toggleEditMode = function(){
+      $scope.editMode = !$scope.editMode;
     };
+
+    $scope.testMessage = function(text) {
+      console.log(text);
+    }
     
     $scope.openModal = function (story) {
       var modalInstance = $modal.open({
@@ -178,7 +356,6 @@ angular.module('doresolApp')
       });
     };
   });
-
 
 // {
 //     "timeline":

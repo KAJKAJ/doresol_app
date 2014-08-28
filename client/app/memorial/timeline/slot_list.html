@@ -1,26 +1,14 @@
-<!-- <ul class="slot-list-wrapper">
-  <li class="slot-list" ng-repeat="era in $parent.memorial.timeline.era">
-<<<<<<< HEAD
-  	<slot-item era="era" getSelectedEra="getSelectedEra()" ng-click="setSelectedEra(era)"></slot-item>
-=======
-  	<slot-item era="era" ng-click="setSelectedEra(era)" ng-class="{active:getSelectedEra()==era}"></slot-item>
->>>>>>> a3d3f7682b32973821f4fda8cfd5474fd3aa34f0
-  </li>
-  <li>
-  	<div class="slot-add" style="text-align:center">
-			<i class="fa fa-plus-circle fa-2x text-success"/>
-		</div>
-  </li>
-</ul>
--->
 
 <ul class="slot-list-wrapper">
-  <li class="slot" ng-repeat="era in memorial.timeline.era" ng-class="{slotactive: getSelectedEra().id == era.id}" ng-click="setSelectedEra(era)">
-      {{era.headline}}
-      <span class="badge pull-right">3</span>
-  </li>
-  <li class="slot-add" style="text-align:center" ng-class="{slotactive: getSelectedEra().id == 'temp_id' }" ng-click="setSelectedEra({id:'temp_id'})">
+	<span ng-repeat="(key, era) in memorial.timeline.era" class="slot" ng-class="{slotactive: getSelectedEraKey() == key}" ng-click="setSelectedEra(key, era)">
+		<li >
+			{{era.headline}}
+      <i class="slot-remove fa fa-times-circle fa-2x text-danger pull-right" ng-click="removeSelectedEra(key)"></i>
+      <span class="badge">{{storiesArray[key].length}}</span>
+
+		</li>
+	</span>  
+  <li class="slot-add" style="text-align:center" ng-class="{slotactive: getSelectedEraKey() == 'tempKey'}" ng-click="setSelectedEra('tempKey', {})">
       <i class="fa fa-plus-circle fa-2x text-success"/>
   </li>
 </ul>
-

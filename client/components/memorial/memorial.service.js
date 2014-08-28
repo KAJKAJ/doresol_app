@@ -1,36 +1,46 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('Memorial', function Memorial($firebase, $q, ENV, User, File) {
+  .factory('Memorial', function Memorial($firebase, $q, ENV) {
+  
+  var myMemorials = {};
+  var currentMemorial = null;
 
+  var setCurrentMemorial = function(memorialId){
+    currentMemorial = findById(memorialId);
+  };
+
+  var getCurrentMemorial = function(){
+    return currentMemorial;
+  };
+
+  var addMyMemorial = function(key,value){
+  	myMemorials[key] = value;
+  };
+
+  var removeMyMemorial = function(key){
+  	delete myMemorials[key];
+  };
+
+  var getMyMemorials = function(){
+  	return myMemorials;
+  };
+
+  var getMyMemorial = function(memorialId) {
+    return myMemorials[memorialId];
+  };
+  	
 	var ref = new Firebase(ENV.FIREBASE_URI + '/memorials');
 	var memorials = $firebase(ref).$asArray();
 
-	var all = function() {
-		return memorials;
-	};
-
 	var create = function(memorial) {
-		var errorHandler = function(error){
-	    return $q.reject(error);
-	  };
-
-		var _create_memorial = function(memorial) {
-      return memorials.$add(memorial).then( function(ref) {
-      	return {
-					key: ref.name(),
-					fileParentPath: memorial.file?ref.toString():null,
-					fileUrl:  memorial.file?memorial.file.url:null
-				}
-			});
-  	};
-
-  	if(memorial.file){
-  		return _create_memorial(memorial).then(File.createLocalFile).then(User.createMemorial, errorHandler);
-  	}else{
-  		return _create_memorial(memorial).then(User.createMemorial, errorHandler);
-  	}
-  	
+		return memorials.$add(memorial).then( function(ref) {
+    	return {
+				key: ref.name(),
+				fileParentPath: memorial.file?ref.toString():null,
+				fileUrl:  memorial.file?memorial.file.url:null
+			}
+		});  	
   };
 
 	var findById = function(memorialId){
@@ -51,10 +61,40 @@
 		// });
 	};
 
+	var createEra = function(memorialId, eraItem) {
+		var eraRef = ref.child(memorialId + '/timeline/era');
+		var era = $firebase(eraRef);
+		return era.$push(eraItem);
+	};
+
+	var updateEra = function(memorialId, eraId, eraItem){
+		var eraRef = ref.child(memorialId + '/timeline/era');
+		var era = $firebase(eraRef);
+		return era.$set(eraId,eraItem);
+	};
+
+	var removeEra = function(memorialId, eraId){
+		var eraRef = ref.child(memorialId + '/timeline/era');
+		var era = $firebase(eraRef);
+		return  era.$remove(eraId);
+	};
+
 	return {
 		remove: remove,
 		create: create,
-		findById: findById
+		findById: findById,
+
+		addMyMemorial:addMyMemorial,
+		removeMyMemorial:removeMyMemorial,
+		getMyMemorials:getMyMemorials,
+    getMyMemorial:getMyMemorial,
+    setCurrentMemorial:setCurrentMemorial,
+    getCurrentMemorial:getCurrentMemorial,
+
+		createEra:createEra,
+		updateEra:updateEra,
+		removeEra:removeEra
+
 	};
 	
 });

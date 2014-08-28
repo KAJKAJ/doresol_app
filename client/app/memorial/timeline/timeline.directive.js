@@ -1,32 +1,61 @@
 'use strict';
 
 angular.module('doresolApp')
-  .directive('superboxList', function () {
+  .directive('superboxList', function ($timeout,$compile,$http) {
     return {
       restrict: 'C',
       scope:{
         story: '=story',
+        storyKey: '=storyKey',
+        removeSelectedStory: '&'
       },
       templateUrl: 'app/memorial/timeline/superbox_list.html',
-    
       link: function(scope, element, attrs) {
         element.on('click', function() {
-          if(scope.$root.superboxToggled == scope.story.$$hashKey){
-            scope.$root.superboxToggled = false;
-          }else{
-            scope.$root.superboxToggled = scope.story.$$hashKey;            
-          }
+          if(!scope.isRemoveClicked){
+            angular.element('.superbox-show').remove();
 
-          scope.$digest();
-          
-          // $('html, body').animate({
-          //   scrollTop:superbox.position().top - currentimg.width()
-          // }, 'medium');
+            if(scope.$root.superboxToggled == scope.storyKey){
+              $timeout(function(){
+                scope.$root.superboxToggled = false;
+              });
+            } else{
+              $timeout(function(){
+                scope.$root.superboxToggled = scope.storyKey;
+                var htmlElement = angular.element("<superbox-show></superbox-show>");
+                element.after(htmlElement);
+                $compile(element.next()[0])(scope);
+                
+              }); // timeout
+            } // else 
+          }else{
+            scope.isRemoveClicked = false;
+          }
         });
+      },
+      controller: function($scope){
+        $scope.removeStory = function(){
+          $scope.isRemoveClicked = true;
+          $scope.removeSelectedStory();
+        }
       }
     };
   })
 
+  .directive('superboxShow', function () {
+    return {
+      restrict: 'E',
+      scope: false,
+      replace: true,
+      templateUrl: "app/memorial/timeline/superbox_show.html",
+      controller: function($scope){
+        $scope.updateStory = function(storyId){
+        }
+      }
+      // link: function(scope, element, attrs) {
+      //  });
+      }
+  })
   // Slot List Directive
   .directive('slotList', function () {
     return {
@@ -37,6 +66,20 @@ angular.module('doresolApp')
       //  });
       }
   })
+
+  .directive('storyDetail', function () {
+    return {
+      restrict: 'E',
+      scope: {
+        storyKey:'@',
+        addComment: '&'
+      },
+      // replace: true,
+      templateUrl: "app/memorial/timeline/story_detail.html",
+      controller:'StoryDetailCtrl'
+    }
+  })
+
   .directive('storyList', function () {
     return {
       restrict: 'E',
@@ -48,6 +91,5 @@ angular.module('doresolApp')
       //   });
       // }
     }
-  })
+  });
 
-    ;
