@@ -14,6 +14,7 @@ angular.module('doresolApp')
           password: $scope.user.password
         })
         .then( function (value){
+          console.log(value);
 
           $location.path('/mydoresol');
           

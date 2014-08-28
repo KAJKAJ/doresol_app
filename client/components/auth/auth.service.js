@@ -46,7 +46,7 @@ angular.module('doresolApp')
       logout();
       auth.$login('password',{email:user.email, password:user.password,rememberMe: true}).then(function(value) {
 
-        setCurrentUser(value);
+        User.setCurrentUser(value);
         deferred.resolve(value);
 
       }, function(error) {
@@ -59,7 +59,7 @@ angular.module('doresolApp')
       var deferred = $q.defer();
       logout();
       auth.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true}).then(function(value) {
-        setCurrentUser(value);
+        User.setCurrentUser(value);
 
         User.update(value.uid, 
         {
