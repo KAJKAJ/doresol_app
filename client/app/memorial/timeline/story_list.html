@@ -1,4 +1,5 @@
-<div class="well" ng-show="selectedEraKey">
+<br/>
+<div ng-show="selectedEraKey">
 	<!-- era form -->
 	<form name="eraForm" ng-submit="submitEra(eraForm)" novalidate>
     <div class="form-group">
@@ -42,10 +43,17 @@
 	  		 ng-show="eraForm.headline.$valid && eraForm.dateOfStart.$valid &&  eraForm.dateOfEnd.$valid && eraForm.$valid == false">		  		 
 	  		 <span>기간 설정이 잘못되었습니다.</span>
 	  	</div>
-	  	<button type="submit" class="btn btn-success btn-lg btn-block" ng-disabled="eraForm.$invalid">
-	  		<span ng-show="selectedEraKey != 'tempKey'">변경</span>
-	  		<span ng-show="selectedEraKey == 'tempKey'">추가</span>
-	  	</button>		  
+	  
+      <span ng-show="selectedEraKey != 'tempKey'">
+        <button type="submit" class="btn btn-alt btn-success" ng-disabled="eraForm.$invalid">변경</button>
+        <button type="button" class="btn btn-alt btn-danger" ng-click="removeSelectedEra(selectedEraKey)">삭제</button>
+      </span>
+      <span ng-show="selectedEraKey == 'tempKey'">
+        <button type="submit" class="btn btn-alt btn-success" ng-disabled="eraForm.$invalid">추가</button>
+      </span>
+      <br/>
+      <br/>
+      
   </form>
 
   <div ng-include="'app/memorial/timeline/story_upload.html'" ng-show="getSelectedEraKey() != 'tempKey'"></div>
