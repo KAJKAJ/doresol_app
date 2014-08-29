@@ -157,7 +157,7 @@ angular.module('doresolApp')
       $scope.selectedEraKey = key;
       angular.copy(era, $scope.selectedEra);
       // $scope.stories = [];
-      if(key == 'tempKey'){
+      if(key == 'tempKey' && $scope.eraForm){
         $scope.eraForm.$setPristine();
       }else{
         /*
