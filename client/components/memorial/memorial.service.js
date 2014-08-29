@@ -8,28 +8,32 @@
 
   var setCurrentMemorial = function(memorialId){
     currentMemorial = findById(memorialId);
-  };
+  }
 
   var getCurrentMemorial = function(){
     return currentMemorial;
-  };
+  }
 
   var addMyMemorial = function(key,value){
   	myMemorials[key] = value;
-  };
+  }
 
   var removeMyMemorial = function(key){
   	delete myMemorials[key];
-  };
+  }
 
   var getMyMemorials = function(){
   	return myMemorials;
-  };
+  }
 
   var getMyMemorial = function(memorialId) {
     return myMemorials[memorialId];
-  };
+  }
   	
+  var clearMyMemorial = function(){
+  	myMemorials = {};
+  }
+
 	var ref = new Firebase(ENV.FIREBASE_URI + '/memorials');
 	var memorials = $firebase(ref).$asArray();
 
@@ -41,12 +45,12 @@
 				fileUrl:  memorial.file?memorial.file.url:null
 			}
 		});  	
-  };
+  }
 
 	var findById = function(memorialId){
 		var memorial = ref.child(memorialId);
 		return $firebase(memorial).$asObject();
-	};
+	}
 
 	var remove = function(memorialId) {
 		// var memorial = Memorial.find(memorialId);
@@ -59,25 +63,25 @@
 		// 	});
 
 		// });
-	};
+	}
 
 	var createEra = function(memorialId, eraItem) {
 		var eraRef = ref.child(memorialId + '/timeline/era');
 		var era = $firebase(eraRef);
 		return era.$push(eraItem);
-	};
+	}
 
 	var updateEra = function(memorialId, eraId, eraItem){
 		var eraRef = ref.child(memorialId + '/timeline/era');
 		var era = $firebase(eraRef);
 		return era.$set(eraId,eraItem);
-	};
+	}
 
 	var removeEra = function(memorialId, eraId){
 		var eraRef = ref.child(memorialId + '/timeline/era');
 		var era = $firebase(eraRef);
 		return  era.$remove(eraId);
-	};
+	}
 
 	var addMember = function(memorialId, userId){
 		var membersRef = ref.child(memorialId + '/members');
@@ -100,6 +104,7 @@
 		removeMyMemorial:removeMyMemorial,
 		getMyMemorials:getMyMemorials,
     getMyMemorial:getMyMemorial,
+    clearMyMemorial:clearMyMemorial,
     setCurrentMemorial:setCurrentMemorial,
     getCurrentMemorial:getCurrentMemorial,
 

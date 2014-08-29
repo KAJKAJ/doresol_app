@@ -18,7 +18,7 @@ angular.module('doresolApp')
         dfd.resolve(currentUser);
       }
       return dfd.promise;
-    };
+    }
 
     // getCurrentUserFromFirebase();
 
@@ -31,15 +31,15 @@ angular.module('doresolApp')
       };
 
       return _register(user).then(User.create);
-    };
+    }
 
     var getCurrentUser = function(){
       return currentUser;
-    };
+    }
 
     var setCurrentUser = function(authUser) {
       currentUser = authUser;
-    };
+    }
 
     var login = function(user){
       var deferred = $q.defer();
@@ -53,7 +53,7 @@ angular.module('doresolApp')
         deferred.reject(error);
       });
       return deferred.promise;
-    };
+    }
 
     var loginFb = function() {
       var deferred = $q.defer();
@@ -74,29 +74,20 @@ angular.module('doresolApp')
         deferred.reject(error);
       });
       return deferred.promise;
-    };
+    }
 
     var loginOauth = function(provider){
       switch(provider){
         case 'facebook':
-          return loginFb().then( function (){
-            // $location.path('/mydoresol');
-            Composite.addMember($stateParams).then(function(){
-              console.log('member added');
-            });            
-            $state.go('mydoresol');
-
-          } ,function(error){
-            console.log(error);
-          });
+          return loginFb();
         break;
       }
-    };
+    }
 
     var logout = function() {
       currentUser = null;
       User.setCurrentUser(null);
-    };
+    }
 
     return {
 

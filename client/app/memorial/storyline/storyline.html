@@ -49,7 +49,7 @@
                 </div>
                 <div class="flow-thumbnail-remove"><i class="fa fa-times-circle fa-2x text-danger" ng-click="removeFlowFile()"></i></div>
               </div>
-              <span class="btn btn-link btn-icon" flow-attrs="{accept:['image/*','video/*']}" flow-btn="" popover="Add Photo/Video" popover-trigger="mouseenter" popover-placement="left"><i class="fa fa-camera"></i><input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+              <span class="btn btn-link btn-icon" flow-attrs="{accept:['image/*','video/*']}" flow-btn="" tooltip-placement="bottom" tooltip="사진첨부"><i class="fa fa-camera"></i><input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
             </div>
         </div>
       </form>
@@ -62,7 +62,7 @@
         <!-- Block with Options Title -->
         <div class="block-title">
             <div class="block-options pull-right">
-              <span class="btn btn-alt btn-sm btn-default" ng-if="story.ref_user == currentUser.uid" ng-click="removeStory(story)" popover="Delete" popover-trigger="mouseenter" popover-placement="right" >
+              <span class="btn btn-alt btn-sm btn-default" ng-if="story.ref_user == currentUser.uid" ng-click="removeStory(story)" tooltip-placement="top" tooltip="삭제" >
                 <i class="fa fa-times"></i>
               </span>
             </div>
@@ -83,7 +83,7 @@
                 <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
                 <span class="text-muted">
                   <small>{{story.fromNow}}</small>
-                  <span class="text-success"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
+                  <span class="text-success"><i class="fa fa-globe" tooltip-placement="right" tooltip="웹" ></i></span>
                 </span>
               </div>
             </div>
