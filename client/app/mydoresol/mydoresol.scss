@@ -12,8 +12,12 @@
 		box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .1);
 	}
 
-	.img{
+	img{
 		cursor: pointer;
+	}
+
+	img:hover{
+		opacity: 0.8;
 	}
 
 	.mymemorial-plus-btn{
