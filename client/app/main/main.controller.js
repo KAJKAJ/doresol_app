@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MainCtrl', function ($scope, $http, Auth) {
+  .controller('MainCtrl', function ($scope, $http, Auth,Memorial,Composite,$state) {
     // $scope.awesomeThings = [];
 
     // $http.get('/api/things').success(function(awesomeThings) {
@@ -36,6 +36,11 @@ angular.module('doresolApp')
     };
 
     $scope.loginOauth = function(provider) {
-      Auth.loginOauth(provider);
+      Auth.loginOauth(provider).then(function(value){
+        Memorial.clearMyMemorial();
+        Composite.setMyMemorials(value.uid).then(function(){
+          $state.go('mydoresol');
+        });
+      });
     };
   });

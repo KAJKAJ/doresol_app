@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('LoginCtrl', function ($scope, Auth, User, $location, $window) {
+  .controller('LoginCtrl', function ($scope, Auth, User, $location, $window,$state,Memorial,Composite) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -14,10 +14,10 @@ angular.module('doresolApp')
           password: $scope.user.password
         })
         .then( function (value){
-          console.log(value);
-
-          $location.path('/mydoresol');
-          
+          Memorial.clearMyMemorial();
+          Composite.setMyMemorials(value.uid).then(function(){
+            $state.go('mydoresol');
+          });
         } ,function(error){
           // console.log(error);
           var errorCode = error.code;
@@ -34,7 +34,12 @@ angular.module('doresolApp')
     };
 
     $scope.loginOauth = function(provider) {
-      Auth.loginOauth(provider);
+      Auth.loginOauth(provider).then(function(value){
+        Memorial.clearMyMemorial();
+        Composite.setMyMemorials(value.uid).then(function(){
+          $state.go('mydoresol');
+        });
+      });
     };
     
   });
