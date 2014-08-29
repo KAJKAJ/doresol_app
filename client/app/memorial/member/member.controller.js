@@ -8,12 +8,12 @@ angular.module('doresolApp')
     $scope.currentUser = User.getCurrentUser();
 
 		var longUrl = {
-    	longUrl : $location.host() + "/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
-    }
+    	"longUrl" : "http://localhost:9876/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
+    };
 
-    $http.post(ENV.GOOGLE_API_URI, longUrl).success(function (data) {
-    	console.log(data);
+    $http.post(ENV.GOOGLE_API_URI, angular.toJson(longUrl)).success(function (data) {
+    	$scope.inviteUrl = data.id;
     });
-    
+
   });
 

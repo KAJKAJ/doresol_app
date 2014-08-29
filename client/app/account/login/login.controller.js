@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('LoginCtrl', function ($scope, Auth, User, $location, $window) {
+  .controller('LoginCtrl', function ($scope, Auth, User, $location, $window, $stateParams) {
     $scope.user = {};
     $scope.errors = {};
+
+    console.log($stateParams);
 
     $scope.login = function(form) {
       $scope.submitted = true;
@@ -14,9 +16,10 @@ angular.module('doresolApp')
           password: $scope.user.password
         })
         .then( function (value){
+          // $location.path('/mydoresol');
 
-          $location.path('/mydoresol');
-          
+          $state.go("mydoresol");
+
         } ,function(error){
           // console.log(error);
           var errorCode = error.code;
