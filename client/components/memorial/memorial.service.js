@@ -79,6 +79,18 @@
 		return  era.$remove(eraId);
 	};
 
+	var addMember = function(memorialId, userId){
+		var membersRef = ref.child(memorialId + '/members');
+		var member = $firebase(membersRef);
+
+		return member.$set(userId, true).then(function(value){
+			return {
+				memorialId: memorialId,
+				userId: userId
+			};
+		});
+	};
+
 	return {
 		remove: remove,
 		create: create,
@@ -93,7 +105,10 @@
 
 		createEra:createEra,
 		updateEra:updateEra,
-		removeEra:removeEra
+		removeEra:removeEra,
+
+		//member 
+		addMember: addMember
 
 	};
 	

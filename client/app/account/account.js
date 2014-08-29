@@ -10,13 +10,14 @@ angular.module('doresolApp')
       })
       .state('login.invites', {
         url: '/:memorialId/:userId',
-        templateUrl: 'app/account/login/login.html',
-        controller: 'LoginCtrl'
       })
       .state('signup', {
         url: '/signup',
         templateUrl: 'app/account/signup/signup.html',
         controller: 'SignupCtrl'
+      })
+      .state('signup.invites', {
+        url: '/:memorialId/:userId',
       })
       .state('settings', {
         url: '/settings',

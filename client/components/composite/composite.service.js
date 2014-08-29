@@ -1,7 +1,7 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('Composite', function Memorial($q,Memorial,File,User,ENV,$firebase,Story,Comment,Util) {
+  .factory('Composite', function Composite($q,Memorial,File,User,ENV,$firebase,Story,Comment,Util) {
 
   var user = User.getCurrentUser();
 
@@ -98,11 +98,20 @@
       var storyRef = new Firebase(ENV.FIREBASE_URI + '/stories/' + storyId + '/comments');
 
       return $firebase(storyRef).$set(commentKey, true);
-    };
+    }
 
     return Comment.create(storyId,newComment).then(_create_comment, errorHandler);
-  };
+  }
 
+  var addMember = function(object) {
+
+    var _add_member = function(object){
+      var memberRef = new Firebase(ENV.FIREBASE_URI + '/users/' + object.userId + '/memorials/members');
+      return $firebase(memberRef).$set(object.memorialId, true);
+    }
+
+    return Memorial.addMember(object.memorialId, object.userId).then(_add_member, errorHandler);
+  }
   
   return {
 		createMemorial:createMemorial,
@@ -112,7 +121,10 @@
     createTimelineStory:createTimelineStory,
     createStorylineStory:createStorylineStory,
 
-    createComment:createComment
+    createComment:createComment,
+
+    // member 
+    addMember: addMember
 	};
 	
 });

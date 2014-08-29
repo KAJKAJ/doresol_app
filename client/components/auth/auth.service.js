@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $q, User, ENV, $firebaseSimpleLogin) {
+  .factory('Auth', function Auth($location, $q, User, ENV, $firebaseSimpleLogin, Composite) {
     var auth = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
     var currentUser = null;
     
@@ -80,7 +80,12 @@ angular.module('doresolApp')
       switch(provider){
         case 'facebook':
           return loginFb().then( function (){
-            $location.path('/mydoresol');
+            // $location.path('/mydoresol');
+            Composite.addMember($stateParams).then(function(){
+              console.log('member added');
+            });            
+            $state.go('mydoresol');
+
           } ,function(error){
             console.log(error);
           });
