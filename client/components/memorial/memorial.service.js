@@ -15,6 +15,19 @@
   }
 
   var addMyMemorial = function(key,value){
+  	// console.log(value);
+  	value.count_member = 1;
+  	if(value.timeline && value.timeline.stories){
+  		value.count_timeline = Object.keys(value.timeline.stories).length;
+  	}else{
+  		value.count_timeline = 0;
+  	}
+
+  	if(value.storyline && value.storyline.stories){
+  		value.count_storyline = Object.keys(value.storyline.stories).length;
+  	}else{
+  		value.count_storyline = 0;
+  	}
   	myMemorials[key] = value;
   }
 

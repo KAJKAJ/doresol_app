@@ -3,3 +3,16 @@
 	height:150px;
 	font-size:30px;
 }
+
+.brick-mymemorial{
+	/*box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .1);*/
+	/*border-radius: 8px;*/
+
+	.well{
+		box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .1);
+	}
+
+	.img{
+		cursor: pointer;
+	}
+}
