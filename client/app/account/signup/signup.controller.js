@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('SignupCtrl', function ($scope, Auth, User, $stateParams, $state) {
+  .controller('SignupCtrl', function ($scope, Auth, User, $stateParams, $state, Composite) {
     $scope.user = {};
     $scope.errors = {};
 

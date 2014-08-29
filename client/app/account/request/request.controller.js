@@ -1,26 +1,26 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('InvitesCtrl', function ($scope, Util, $stateParams, Memorial, User,$state) {
+  .controller('RequestCtrl', function RequestCtrl($scope, Util, $stateParams, Memorial, User,$state) {
 
-    console.log($stateParams);
     $scope.memorial = Memorial.findById($stateParams.memorialId);
-
-    $scope.memorial.$loaded().then(function (value) {
-    });
-    
-    $scope.inviterId = $stateParams.inviterId;
-
     $scope.users = User.getUsersObject();
 
-    User.setUsersObject($scope.inviterId);
+    console.log($scope.memorial);
 
+    $scope.memorial.$loaded().then(function() {
+        User.setUsersObject($scope.memorial.ref_user);    
+    })
+    
     $scope.cancel = function() {
-      $state.go('login');
+      $state.go('mydoresol');
     }
 
     $scope.accept = function() {
-      $state.go('login.invites', {memorialId: $stateParams.memorialId, inviterId: $stateParams.userId});
+        console.log($state.params);
+        Memorial.addWaiting($state.params.memorialId, $state.params.requesterId).then(function(value){
+            $state.go('mydoresol');
+        });
     }
 
     // $scope.openModal = function (story) {

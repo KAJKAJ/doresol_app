@@ -10,10 +10,31 @@
 
     var userRef = new Firebase(ENV.FIREBASE_URI + '/users');
     var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+    
+    // my own memorials
     var myMemorialRef =  userRef.child(userId+'/memorials/own');
     var _myMemorials = $firebase(myMemorialRef).$asArray();
 
     _myMemorials.$watch(function(event){
+      switch(event.event){
+        case "child_removed":
+          Memorial.removeMyMemorial(event.key);
+        break;
+        case "child_added":
+          var childRef = memorialsRef.child(event.key);
+          var child = $firebase(childRef).$asObject();
+          child.$loaded().then(function(value){
+            Memorial.addMyMemorial(event.key,value);
+          });
+        break;
+      }
+    });
+
+    // my member memorials
+    var myMemberMemorialRef =  userRef.child(userId+'/memorials/members');
+    var _myMemberMemorials = $firebase(myMemberMemorialRef).$asArray();
+
+    _myMemberMemorials.$watch(function(event){
       switch(event.event){
         case "child_removed":
           Memorial.removeMyMemorial(event.key);
@@ -106,11 +127,11 @@
   var addMember = function(object) {
 
     var _add_member = function(object){
-      var memberRef = new Firebase(ENV.FIREBASE_URI + '/users/' + object.userId + '/memorials/members');
+      var memberRef = new Firebase(ENV.FIREBASE_URI + '/users/' + object.inviteeId + '/memorials/members');
       return $firebase(memberRef).$set(object.memorialId, true);
     }
 
-    return Memorial.addMember(object.memorialId, object.userId).then(_add_member, errorHandler);
+    return Memorial.addMember(object.memorialId, object.inviteeId).then(_add_member, errorHandler);
   }
   
   return {

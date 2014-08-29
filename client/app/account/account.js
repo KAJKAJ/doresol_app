@@ -9,7 +9,7 @@ angular.module('doresolApp')
         controller: 'LoginCtrl'
       })
       .state('login.invites', {
-        url: '/:memorialId/:userId',
+        url: '/:memorialId/:inviterId',
       })
       .state('signup', {
         url: '/signup',
@@ -17,7 +17,12 @@ angular.module('doresolApp')
         controller: 'SignupCtrl'
       })
       .state('signup.invites', {
-        url: '/:memorialId/:userId',
+        url: '/:memorialId/:inviterId',
+      })
+      .state('request', {
+        url: '/request/:memorialId/:requesterId',
+        templateUrl: 'app/account/request/request.html',
+        controller: 'RequestCtrl'
       })
       .state('settings', {
         url: '/settings',
@@ -25,7 +30,7 @@ angular.module('doresolApp')
         controller: 'SettingsCtrl'
       })
       .state('invites', {
-        url: '/invites/:memorialId/:userId',
+        url: '/invites/:memorialId/:inviterId',
         templateUrl: 'app/account/invites/invites.html',
         controller: 'InvitesCtrl'
       });

@@ -5,8 +5,6 @@ angular.module('doresolApp')
     $scope.user = {};
     $scope.errors = {};
 
-    console.log($state.params);
-
     $scope.login = function(form) {
       $scope.submitted = true;
 
@@ -20,7 +18,7 @@ angular.module('doresolApp')
           Composite.setMyMemorials(value.uid).then(function(){
               // $location.path('/mydoresol');
             if ($state.params.memorialId !== undefined) {
-              
+              $state.params.inviteeId = value.uid;
               Composite.addMember($state.params).then(function(){
                 $state.go("mydoresol");
               });
@@ -46,7 +44,7 @@ angular.module('doresolApp')
 
     $scope.toRegister = function() {
       if($state.params.memorialId !== undefined) {
-        $state.go('signup.invites', {memorialId: $state.params.memorialId, userId: $state.params.userId});
+        $state.go('signup.invites', {memorialId: $state.params.memorialId, inviterId: $state.params.inviterId});
       } else {
         $state.go('signup');
       }
@@ -58,6 +56,7 @@ angular.module('doresolApp')
         Composite.setMyMemorials(value.uid).then(function(){
 
           if ($state.params.memorialId !== undefined) {
+            $state.params.inviteeId = value.uid;
             Composite.addMember($state.params).then(function(){
               $state.go("mydoresol");
             });

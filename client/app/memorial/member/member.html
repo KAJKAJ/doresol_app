@@ -1,19 +1,43 @@
 <div>
 	<!-- invite url -->
-	<i class="fa fa-2x fa-envelope-o"></i>
-	<div class="fa fa-2x">초대하기 URL</div>
-	<input type="text" ng-model="inviteUrl" />
+  <div> 초대하기
+  	<i class="fa fa-2x fa-envelope-o"></i>
+  	<div class="fa fa-2x">초대하기 URL</div>
+  	<input type="text" ng-model="inviteUrl" />
+  </div>
+   <hr/>
+ 
+
+  <div> 
+    <div class="col-sm-2">
+      메모리얼 리더 => id : {{leader.uid}}
+      <div class="story-avatar">
+        <img ng-src="{{users[leader.uid].profile.image}}" style="width:64px;height:64px;"/>
+      </div>
+    </div>
+  </div>
+  <hr/>
 
 	<!-- member list -->
-  <ul>
-  	<li>
-  	</li>
-  </ul>
+  <div> 
+    <div class="col-sm-2" ng-repeat="(uid, member) in members"> 멤버
+      id : {{member.uid}}
+      <div class="story-avatar">
+        <img ng-src="{{users[uid].profile.image}}" style="width:64px;height:64px;"/>
+      </div>
+    </div>
+  </div>
 
-  <!-- request list -->
-  <ul>
-  	<li>
-  	</li>
-  </ul>
+ <hr/>
+ 
+  <!-- member list -->
+  <div> 요청하고 있는 사람
+    <div class="col-sm-2" ng-repeat="(uid, waiting) in waitings">
+      id : {{waiting.uid}}
+      <div class="story-avatar">
+        <img ng-src="{{users[uid].profile.image}}" style="width:64px;height:64px;"/>
+      </div>
+    </div>
+  </div>
 
 </div>

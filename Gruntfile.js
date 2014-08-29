@@ -33,7 +33,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'development',
-            FIREBASE_URI: 'https://doresol-dev.firebaseio.com/'
+            FIREBASE_URI: 'https://doresol-dev.firebaseio.com/',
+            GOOGLE_API_URI: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyAR3-1YSkP2LM-HuJshMivhOZuai9L5htM'
           }
         }
       },
@@ -44,7 +45,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
-            FIREBASE_URI: 'https://doresol.firebaseio.com/'
+            FIREBASE_URI: 'https://doresol.firebaseio.com/',
+            GOOGLE_API_URI: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyAR3-1YSkP2LM-HuJshMivhOZuai9L5htM'
           }
         }
       }

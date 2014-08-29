@@ -3,23 +3,25 @@
 <div class="container contents">	
 	<!-- start my own doresol -->
 	<div class="col-sm-12">
-		내가 생성한거
+		나의 도래솔
 	</div>
 	<div class="col-sm-12">
 		<div class="col-sm-2" ng-repeat="(key, memorial) in myMemorials">
 			name : {{memorial.name}}
 		  	<a ui-sref="memorial.timeline({id:key})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
+		  	<div ng-if="memorial.ref_user == user.uid">
+			  	<div class="memorial-own fa fa-bookmark fa-2x text-danger"></div>
+			  </div>
+		  	<div ng-if="memorial.ref_user !== user.uid">
+			  	<div class="memorial-own fa fa-bookmark-o fa-2x text-danger"></div>
+			  </div>
+
 		</div>
+
 	</div>
 	<div class="col-sm-12">
 		<a class="btn btn-success btn_create_new_memorial" ui-sref="memorial_create">새로 만들기</a>
 	</div>
 	<!-- end my own doresol -->
-
-	<!-- favorite start -->
-	<div class="col-sm-12">
-		즐겨찾기
-	</div>
-	<!-- favorite end -->	
 </div>
 

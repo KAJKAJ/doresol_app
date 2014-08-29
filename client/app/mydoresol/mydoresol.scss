@@ -3,3 +3,15 @@
 	height:150px;
 	font-size:30px;
 }
+
+.memorial-own{
+  display: block;
+  position: absolute;
+  top: 17px;
+  left: 170px;
+  z-index: 100;
+  background: white;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
