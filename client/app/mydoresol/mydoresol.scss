@@ -3,7 +3,17 @@
 	height:150px;
 	font-size:30px;
 }
-
+.memorial-own{
+  display: block;
+  position: absolute;
+  top: 17px;
+  left: 170px;
+  z-index: 100;
+  background: white;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
 .brick-mymemorial{
 	/*box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .1);*/
 	/*border-radius: 8px;*/

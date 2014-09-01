@@ -1,23 +1,5 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<!-- <div class="container contents">	
-	<div class="col-sm-12">
-		내가 생성한거
-	</div>
-	<div class="col-sm-12">
-		<div class="col-sm-2" ng-repeat="(key, memorial) in myMemorials">
-			name : {{memorial.name}}
-		  	<a ui-sref="memorial.timeline({id:key})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
-		</div>
-	</div>
-	<div class="col-sm-12">
-		<a class="btn btn-success btn_create_new_memorial" ui-sref="memorial_create">새로 만들기</a>
-	</div>
-	<div class="col-sm-12">
-		즐겨찾기
-	</div>
-</div> -->
-
 <div class="container contents">	
 	<div masonry item-selector=".brick-mymemorial">
 		<div class="brick-mymemorial col-sm-3">
@@ -58,7 +40,5 @@
 		  </div>
 	  </div>
 	</div>
-
 	<br/>
-	
 </div>

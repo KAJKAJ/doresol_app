@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $q, User, ENV, $firebaseSimpleLogin) {
+  .factory('Auth', function Auth($location, $q, User, ENV, $firebaseSimpleLogin, Composite) {
     var auth = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
     var currentUser = null;
     

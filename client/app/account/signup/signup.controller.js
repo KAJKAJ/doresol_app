@@ -1,16 +1,26 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('SignupCtrl', function ($scope, Auth, User, $location) {
+  .controller('SignupCtrl', function ($scope, Auth, User, $stateParams, $state, Composite) {
     $scope.user = {};
     $scope.errors = {};
+
+    console.log($state.params);
 
     $scope.register = function(form) {
       $scope.submitted = true;
 
       if(form.$valid) {
         Auth.register($scope.user).then(function (value){
-          $location.path('/login');
+
+          if($state.params.memorialId !== undefined) {
+            Composite.addMember($state.params).then(function(){
+              $state.go("mydoresol");
+            });
+          } else {
+            $state.go('mydoresol');
+          }
+
 
         }, function(error){
           var errorCode = error.code;
@@ -26,4 +36,12 @@ angular.module('doresolApp')
         });
       }
     };
+
+    $scope.toLogin = function() {
+      if($state.params.memorialId !== undefined) {
+        $state.go('login.invites', {memorialId: $state.params.memorialId, inviterId: $state.params.inviterId});
+      } else {
+        $state.go('login');
+      }
+    }
   });

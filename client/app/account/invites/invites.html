@@ -1,0 +1,25 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container contents">  
+  <div class="row-fluid">
+    <!-- profile start-->
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4 memorial_profile">
+      <div>
+        <h3> 초대 받은 메모리얼:  {{memorial.name}} </h3>
+        <a ui-sref="memorial.profile({id:memorialKey})"><img ng-src="{{memorial.file.url}}" class="img-responsive" style="width:250px;height:250px;"/></a>
+      </div>
+      <div>
+        <h3> 초대한 사람:</h3>
+        <div class="story-avatar">
+          <img ng-src="{{users[inviterId].profile.image}}" style="width:64px;height:64px;"/>
+        </div>
+      </div>
+      <div>
+        <button ng-click="cancel()">거절</button>
+        <button ng-click="accept()">수락</button>
+      </div>
+    <div class="col-xs-4">
+  </div>
+</div>

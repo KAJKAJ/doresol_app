@@ -6,7 +6,7 @@
 	  <div class="memorial_profile">
 		  <!-- large screen profile -->
 		  <div class="col-lg-2 visible-lg">
-		  	<img ng-src="{{memorial.file.url}}" class="img-responsive"/>
+				<a ui-sref="memorial.profile({id:memorialKey})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
 		  	<h3> {{memorial.name}} </h3>  	
 		  	<!-- memorial nav -->
 		    <!-- <ul class="nav nav-pills nav-stacked">
@@ -16,9 +16,10 @@
 		  	</ul> -->
 		  	
 	      <ul class="nav nav-pills nav-stacked" role="tablist" >
-					<li ng-class="{active: $state.includes('memorial.profile')}"><a ui-sref="memorial.profile({id:memorialKey})"><i class="fa fa-user"></i> Profile</a></li>
-			  	<li ng-class="{active: $state.includes('memorial.timeline')}"><a ui-sref="memorial.timeline({id:memorialKey})"><i class="fa fa-road"></i> Timeline</a></li>
 			  	<li ng-class="{active: $state.includes('memorial.storyline')}"><a ui-sref="memorial.storyline({id:memorialKey})"><i class="fa fa-comment"></i> Storyline</a></li>
+			  	<li ng-class="{active: $state.includes('memorial.timeline')}"><a ui-sref="memorial.timeline({id:memorialKey})"><i class="fa fa-road"></i> Timeline</a></li>
+			  	<li ng-class="{active: $state.includes('memorial.storymap')}"><a ui-sref="memorial.storymap({id:memorialKey})"><i class="fa fa-map-marker"></i> StoryMap</a></li>
+					<li ng-class="{active: $state.includes('memorial.member')}"><a ui-sref="memorial.member({id:memorialKey})"><i class="fa fa-users"></i> Member</a></li>
 				</ul>
 		  </div>
 		  

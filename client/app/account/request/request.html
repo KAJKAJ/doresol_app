@@ -1,0 +1,27 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container contents">  
+  <div class="row-fluid">
+    선택하신 메모리얼을 확인하기 위해서는 승인이 필요합니다.
+    아래 요청을 누르시면 관리자에게 승인 요청이 가며, 향후 승인 시에 연락을 받으실 수 있습니다.
+    <!-- profile start-->
+    <div class="col-xs-4">
+    </div>
+    <div class="col-xs-4 memorial_profile">
+      <div>
+        <h3> 요청하는 메모리얼:  {{memorial.name}} </h3>
+        <a ui-sref="memorial.profile({id:memorialKey})"><img ng-src="{{memorial.file.url}}" class="img-responsive" style="width:250px;height:250px;"/></a>
+      </div>
+      <div>
+        <h3> 메모리얼 관리자:</h3>
+        <div class="story-avatar">
+          <img ng-src="{{users[memorial.ref_user].profile.image}}" style="width:64px;height:64px;"/>
+        </div>
+      </div>
+      <div>
+        <button ng-click="cancel()">취소</button>
+        <button ng-click="accept()">요청</button>
+      </div>
+    <div class="col-xs-4">
+  </div>
+</div>

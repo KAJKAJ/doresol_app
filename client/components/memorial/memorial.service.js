@@ -96,6 +96,25 @@
 		return  era.$remove(eraId);
 	}
 
+	var addMember = function(memorialId, inviteeId){
+		var membersRef = ref.child(memorialId + '/members');
+		var member = $firebase(membersRef);
+
+		return member.$set(inviteeId, true).then(function(value){
+			return {
+				memorialId: memorialId,
+				inviteeId: inviteeId
+			};
+		});
+	};
+
+	var addWaiting = function(memorialId, requesterId) {
+		var waitingsRef = ref.child(memorialId + '/waitings');
+		var waiting = $firebase(waitingsRef);
+
+		return waiting.$set(requesterId, true);
+	};
+
 	return {
 		remove: remove,
 		create: create,
@@ -111,7 +130,13 @@
 
 		createEra:createEra,
 		updateEra:updateEra,
-		removeEra:removeEra
+		removeEra:removeEra,
+
+		//member 
+		addMember: addMember,
+
+		// waiting
+		addWaiting:addWaiting
 
 	};
 	
