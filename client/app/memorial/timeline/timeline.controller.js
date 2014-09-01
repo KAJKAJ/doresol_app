@@ -11,9 +11,6 @@ angular.module('doresolApp')
     $scope.isChanged = false;
 
     $scope.waitStoryLoaded = function(){
-      // console.log('--');
-      // console.log($scope.totalStoryCnt);
-      // console.log($scope.storyCnt);
       if($scope.totalStoryCnt == $scope.storyCnt){
         if($scope.totalStoryCnt > 0){
           // $scope.toggleEditMode();
@@ -22,6 +19,7 @@ angular.module('doresolApp')
           if($scope.currentUser.uid == $scope.memorial.ref_user){
             $scope.toggleEditMode();
           }
+
         }else{
           if($scope.currentUser.uid == $scope.memorial.ref_user){
             $scope.toggleEditMode();
@@ -30,7 +28,7 @@ angular.module('doresolApp')
       }else{
         $timeout($scope.waitStoryLoaded(), 100);
       }
-    }
+    };
 
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
@@ -85,6 +83,8 @@ angular.module('doresolApp')
       $scope.totalStoryCnt = _timelineStories.length;
       // console.log($scope.totalStoryCnt);
     });
+
+    
 
     _timelineStories.$watch(function(event){
       switch(event.event){
