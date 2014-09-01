@@ -1,54 +1,56 @@
 <div>
 	<!-- invite url -->
-  <div> 초대하기
+  <div>
   	<i class="fa fa-2x fa-envelope-o"></i>
   	<div class="fa fa-2x">초대하기 URL</div>
   	<input type="text" ng-model="inviteUrl" />
   </div>
-   <hr/>
-    <div>
-      {{currentUser.uid}}
-    </div>
 
-
-  <div> 
-    <div class="col-sm-2">
-      메모리얼 리더 => id : {{leader.uid}}
-      <div class="story-avatar">
-        <img ng-src="{{users[leader.uid].profile.image}}" style="width:64px;height:64px;"/>
-      </div>
+  <p></p>
+  <div class="block-section">
+    <div class="block-title">
+        <h2><strong>멤버</strong></h2>
     </div>
-  </div>
-  <hr/>
-
-	<!-- member list -->
-  <div> 
-    <div class="col-sm-2" ng-repeat="(uid, member) in members"> 멤버
-      id : {{member.uid}}
-      <div class="story-avatar">
-        <img ng-src="{{users[uid].profile.image}}" style="width:64px;height:64px;"/>
+    <!-- Leader First -->
+    <div masonry item-selector=".brick-member">
+      <div class="brick-member col-sm-2">
+        <div class="brick-member-detail">
+          <img ng-src="{{users[leader.uid].profile.image}}" class="img-responsive" style="width:150px;height:150px"/>
+        </div>
       </div>
-      <div ng-if="currentUser.uid == leader.uid">
-        <button class="fa fa-2x" ng-click="removeMember(uid)">강제 탈퇴</button>
-      </div>
-      <div ng-if="currentUser.uid == uid">
-        <button class="fa fa-2x" ng-click="removeMember(uid)">탈퇴</button>
-      </div>
-    </div>
-  </div>
-<hr/>
- 
-  <!-- member list -->
-  <div> 요청하고 있는 사람
-    <div class="col-sm-2" ng-repeat="(uid, waiting) in waitings">
-      id : {{waiting.uid}}
-      <div class="story-avatar">
-        <img ng-src="{{users[uid].profile.image}}" style="width:64px;height:64px;"/>
-      </div>
-      <div ng-if="currentUser.uid == leader.uid">
-        <button class="fa fa-2x" ng-click="moveMember(uid)">승인</button>
+      <div masonry-brick class="brick-member col-sm-2" ng-repeat="(uid, member) in members">
+        <div class="brick-member-detail">
+          <img ng-src="{{users[uid].profile.image}}" class="img-responsive" style="width:150px;height:150px"/>
+          <div class="overlay text-center">
+            <br/><br/><br/><br/>
+            <div class="overlay_detail">
+              <h4><strong>{{member.uid}}</strong></h4>
+              <button ng-if="leader.uid == currentUser.uid" type="button" class="btn btn-success" ng-click="removeMember(uid)">탈퇴 시키기</button>
+              <button ng-if="uid == currentUser.uid" type="button" class="btn btn-success" ng-click="removeMember(uid)">탈퇴하기</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+ <div class="block-section">
+  <div class="block-title">
+      <h2><strong>가입 대기자</strong></h2>
+  </div>
+  <div masonry item-selector=".brick-waiting">
+    <div masonry-brick class="brick-waiting col-sm-3" ng-repeat="(uid, member) in waitings">
+      <div class="brick-waiting-detail">
+        <img ng-src="{{users[uid].profile.image}}" class="img-responsive" style="width:150px;height:150px"/>
+        <div class="overlay text-center">
+          <br/><br/><br/><br/>
+          <div class="overlay_detail">
+            <h4><strong>{{member.uid}}</strong></h4>
+            <button ng-if="leader.uid == currentUser.uid" type="button" class="btn btn-success" ng-click="moveMember(uid)">가입 승인하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
