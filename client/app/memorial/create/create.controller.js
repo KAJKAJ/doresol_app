@@ -4,6 +4,7 @@ angular.module('doresolApp')
   .controller('MemorialCreateCtrl', function ($scope,$rootScope, $state,Util,Composite,User) {
     $scope.today = Date.now();
     $scope.newMemorial = {};
+    $scope.newMemorial.public = true;
     $scope.currentUser = User.getCurrentUser();
 
     $scope.createMemorial = function(form){
@@ -22,7 +23,8 @@ angular.module('doresolApp')
             dateOfBirth: moment($scope.newMemorial.dateOfBirth).format("YYYY-MM-DD"),
             dateOfDeath: moment($scope.newMemorial.dateOfDeath).format("YYYY-MM-DD"),
             file:file,
-            ref_user:$scope.currentUser.uid
+            ref_user:$scope.currentUser.uid,
+            public: $scope.newMemorial.public
         };
         
         Composite.createMemorial(memorial).then(function (value) {

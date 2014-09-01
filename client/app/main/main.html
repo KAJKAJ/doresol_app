@@ -85,8 +85,13 @@
         <div class="recent-memorial-detail">
           <img ng-src="{{memorial.file.url}}" class="img-responsive" style="width:300px;height:300px"/>
           <div class="overlay text-center">
-            <br/><br/><br/><br/>
             <div class="overlay_detail">
+              <div class="pull-left public">
+                &nbsp;
+                <span ng-if="memorial.public"><i class="fa fa-unlock fa-2x"></i></span>
+                <span ng-if="!memorial.public"><i class="fa fa-lock fa-2x"></i></span>
+              </div>
+              <br/><br/><br/><br/>
               <h3><strong>{{memorial.name}}</strong></h3>
               <div>
                 <button type="button" class="btn btn-success" ui-sref="memorial.timeline({id:memorial.$id})">보기</button>

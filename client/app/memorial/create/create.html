@@ -13,9 +13,9 @@
 	<div class="container contents" flow-prevent-drop>	
 		<div class="col-sm-1"></div>
 		<div class="col-sm-10">
-			<div class="well text-center">
+			<div class="well">
 				<form name="newMemorialForm" ng-submit="createMemorial(newMemorialForm)" novalidate>
-					<div class="form-group">
+					<div class="form-group text-center">
 							<img flow-img="$flow.files[0]" style="width:300px;height:300px;"/>
 							<div class="upload-btn">
 								<button type="button" class="btn btn-lg btn-primary" flow-btn flow-attrs="{accept:'image/*'}">
@@ -70,6 +70,16 @@
 			  		 <span>기간 설정이 잘못되었습니다.</span>
 			  	</div>
 			  	<br/>
+			  	
+			  	<div class="form-group">
+            <label class="public-label">공개</label>
+            <label class="switch switch-primary" for="val_public">
+              <input type="checkbox" id="val_public" name="val_public" ng-model="newMemorial.public">
+              <span tooltip-placement="bottom" tooltip="공개 설정"></span>
+            </label>
+          </div> 
+			  	<br/>
+
 			  	<button type="submit" class="btn btn-alt btn-success pull-right" ng-disabled="fileUploading||newMemorialForm.$invalid">등록</button>		  
 			  	<br/>
 				</form>
