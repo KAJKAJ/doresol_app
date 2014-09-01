@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MainCtrl', function ($scope, $http, Auth,Memorial,Composite,$state) {
+  .controller('MainCtrl', function ($scope, $http, Auth,Memorial,Composite,$state, ENV, $firebase) {
     // $scope.awesomeThings = [];
 
     // $http.get('/api/things').success(function(awesomeThings) {
@@ -43,4 +43,16 @@ angular.module('doresolApp')
         });
       });
     };
+
+    
+    $scope.recentMemorials = [];
+    var recentMemorialsRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/');
+    var recentMemorials = recentMemorialsRef.limit(12);
+
+    recentMemorials.on('child_added', function(value) { 
+      var memorial = value.val();
+      memorial.$id = value.name();
+      $scope.recentMemorials.unshift(memorial);
+    });
+
   });

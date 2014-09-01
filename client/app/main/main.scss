@@ -136,3 +136,27 @@
         }
     }
 }
+
+/* recent */
+.brick-recent-memorial{
+    margin-bottom: 10px;
+    
+    .overlay{
+        width:300px;
+        height:300px;
+        position: absolute;
+        top: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        display:none;
+    }
+
+    .recent-memorial-detail:hover .overlay{
+        display: block;
+    }
+    
+    .overlay_detail{
+        opacity:1;
+        color:white;
+    }
+
+}
