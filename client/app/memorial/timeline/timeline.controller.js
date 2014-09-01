@@ -83,7 +83,7 @@ angular.module('doresolApp')
     $scope.storyCnt = 0;
     _timelineStories.$loaded().then(function(value){
       $scope.totalStoryCnt = _timelineStories.length;
-      console.log($scope.totalStoryCnt);
+      // console.log($scope.totalStoryCnt);
     });
 
     _timelineStories.$watch(function(event){
