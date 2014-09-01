@@ -10,10 +10,28 @@ angular.module('doresolApp')
     $scope.totalStoryCnt = 0;
     $scope.isChanged = false;
 
+    // $scope.waitStoryLoaded = function(){
+    //   // console.log('--');
+    //   console.log($scope.totalStoryCnt);
+    //   console.log($scope.storyCnt);
+    //   if($scope.totalStoryCnt == $scope.storyCnt){
+    //     if($scope.totalStoryCnt > 0){
+    //       // $scope.toggleEditMode();
+    //       $scope.isChanged = false;
+    //       $scope.createTimeline();
+    //       if($scope.currentUser.uid == $scope.memorial.ref_user){
+    //         $scope.toggleEditMode();
+    //       }
+    //     }else{
+    //       if($scope.currentUser.uid == $scope.memorial.ref_user){
+    //         $scope.toggleEditMode();
+    //       }
+    //     }
+    //   }else{
+    //     $timeout($scope.waitStoryLoaded(), 100);
+    //   }
+    // }
     $scope.waitStoryLoaded = function(){
-      // console.log('--');
-      // console.log($scope.totalStoryCnt);
-      // console.log($scope.storyCnt);
       if($scope.totalStoryCnt == $scope.storyCnt){
         if($scope.totalStoryCnt > 0){
           // $scope.toggleEditMode();
@@ -31,6 +49,14 @@ angular.module('doresolApp')
         $timeout($scope.waitStoryLoaded(), 100);
       }
     }
+
+    // $scope.$watch('totalStoryCnt',function(value){
+    //   if(value > 0){
+    //     if($scope.currentUser.uid != $scope.memorial.ref_user){
+    //       console.log($scope.storiesArray);
+    //     }
+    //   }
+    // })
 
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
@@ -96,6 +122,7 @@ angular.module('doresolApp')
           var childRef = storiesRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
+            // console.log(value);
             // $scope.timelineStories[event.key] = value;
             if($scope.storiesArray[value.ref_era] == undefined) {
               $scope.storiesArray[value.ref_era] = [];
@@ -124,8 +151,15 @@ angular.module('doresolApp')
             value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
               $scope.storiesObject[value.ref_era][event.key].newStory = false;
               $scope.storyCnt++;
+              // console.log($scope.storyCnt);
+              if($scope.totalStoryCnt > 0 && $scope.currentUser.uid != $scope.memorial.ref_user){
+                if($scope.totalStoryCnt == $scope.storyCnt){
+                  $scope.createTimeline();
+                }
+              }
               // console.log($scope.storiesObject[value.ref_era][event.key]);
-            });            
+            });  
+            // console.log($scope.storiesArray);          
           });
         break;
       }
