@@ -5,6 +5,8 @@ angular.module('doresolApp')
     $scope.user = {};
     $scope.errors = {};
 
+    console.log($state.params);
+    
     $scope.login = function(form) {
       $scope.submitted = true;
 

@@ -12,11 +12,15 @@ angular.module('doresolApp')
 
       if(form.$valid) {
         Auth.register($scope.user).then(function (value){
-          Composite.addMember($state.params).then(function(){
-            $state.go("mydoresol");
-          });
 
-          $state.go('mydoresol');
+          if($state.params.memorialId !== undefined) {
+            Composite.addMember($state.params).then(function(){
+              $state.go("mydoresol");
+            });
+          } else {
+            $state.go('mydoresol');
+          }
+
 
         }, function(error){
           var errorCode = error.code;
@@ -35,7 +39,7 @@ angular.module('doresolApp')
 
     $scope.toLogin = function() {
       if($state.params.memorialId !== undefined) {
-        $state.go('login.invites', {memorialId: $state.params.memorialId, userId: $state.params.userId});
+        $state.go('login.invites', {memorialId: $state.params.memorialId, inviterId: $state.params.inviterId});
       } else {
         $state.go('login');
       }

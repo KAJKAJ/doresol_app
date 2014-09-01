@@ -20,7 +20,7 @@ angular.module('doresolApp')
     }
 
     $scope.accept = function() {
-      $state.go('login.invites', {memorialId: $stateParams.memorialId, inviterId: $stateParams.userId});
+      $state.go('login.invites', {memorialId: $stateParams.memorialId, inviterId: $stateParams.inviterId});
     }
 
     // $scope.openModal = function (story) {

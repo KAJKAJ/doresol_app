@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemberCtrl', function ($scope,Memorial,$stateParams,User,$http,ENV,$firebase) {
+  .controller('MemberCtrl', function ($scope,Memorial,$stateParams,User,$http,ENV,$firebase,Composite) {
   	// console.log('ProfileCtrl');
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
@@ -31,7 +31,7 @@ angular.module('doresolApp')
     _members.$watch(function(event){
       switch(event.event){
         case "child_removed":
-          // removeMyMemorial(event.key);
+          delete $scope.members[event.key];
           break;
         case "child_added":
           var childRef = userMembersRef.child(event.key);
@@ -49,7 +49,7 @@ angular.module('doresolApp')
     _waitings.$watch(function(event){
       switch(event.event){
         case "child_removed":
-          // removeMyMemorial(event.key);
+          delete $scope.waitings[event.key];
           break;
         case "child_added":
           var childRef = userMembersRef.child(event.key);
@@ -62,7 +62,34 @@ angular.module('doresolApp')
       }
     });
 
+    $scope.removeMember = function(uid) {
+      var index = _members.$indexFor(uid);
+      _members.$remove(index);
 
+      var userMembersRef =  new Firebase(ENV.FIREBASE_URI + '/users/' + uid + '/memorials/members');
+      $firebase(userMembersRef).$remove($scope.memorialKey).then(function(value){
+        console.log(value);
+
+      }, function(error) {
+        console.log(error);
+
+      });
+    };
+
+    // wainting to members
+    $scope.moveMember = function(uid) {
+      var index = _waitings.$indexFor(uid);
+      _waitings.$remove(index);
+
+      var params = { memorialId: $scope.memorialKey, inviteeId: uid} ;
+      Composite.addMember(params).then(function(){
+        console.log('Success');
+
+      }, function(error){
+        console.log(error);
+
+      })
+    };
 
   });
 
