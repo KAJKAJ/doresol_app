@@ -6,6 +6,6 @@ angular.module('doresolApp')
     $scope.myMemorials = Memorial.getMyMemorials();
 		$scope.user = User.getCurrentUser();
 
-		console.log($scope.user);
+		// console.log($scope.user);
 		
   });

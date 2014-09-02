@@ -55,9 +55,26 @@
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-        <!-- <li ng-hide="currentUser" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
-        <li ng-hide="currentUser" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
-        <li ng-show="currentUser" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li> -->
+        <li ng-show="currentUser" ng-class="{active: isActive('/mydoresol')}"><a href="/mydoresol">메모리얼</a></li>
+
+        <li ng-show="currentUser" class="dropdown open">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            <img ng-src="{{currentUser.profile.file.url}}" alt="avatar" style="width:32px;height:32px;" class="img-circle"> <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+              <li class="dropdown-header text-center">{{currentUser.profile.name}}</li>
+              <li>
+                  <a href="page_ready_user_profile.html">
+                      <i class="fa fa-user fa-fw pull-right"></i>
+                      프로필
+                  </a>
+                  <button type="button" class="btn btn-block btn-danger" ng-click="logout()">로그아웃</button>
+              </li>
+          </ul>
+      </li>
+        <!-- <li ng-show="currentUser" ng-class="{active: isActive('/setting')}"><a href="/setting">Setting</a></li> -->
+        <!-- <li ng-hide="currentUser" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li> -->
+        <!-- <li ng-show="currentUser" ng-class="{active: isActive('/logout')}"><a href="" ng-click="logout()">Logout</a></li> -->
       </ul>
     </nav>
   </div>

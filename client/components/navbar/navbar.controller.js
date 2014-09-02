@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, User, Auth, Composite) {
     $scope.menu = [
       // {
       //   'title': 'Home',
       //   'link': '/'
       // },
-      {
-        'title': 'My doresol',
-        'link': '/mydoresol'
-      },
+      // {
+      //   'title': 'My doresol',
+      //   'link': '/mydoresol'
+      // },
       
     ];
 
@@ -24,24 +24,35 @@ angular.module('doresolApp')
     });
 
     $scope.isCollapsed = true;
-    $scope.isLoggedIn = Auth.isLoggedIn;
-    $scope.isAdmin = Auth.isAdmin;
-    $scope.getCurrentUser = Auth.getCurrentUser;
-
+    
+    $scope.currentUser = User.getCurrentUser();
+    if(!$scope.currentUser){
+      Auth.getCurrentUserFromFirebase().then(function(AuthValue){
+        if(AuthValue){
+          User.getCurrentUserFromFirebase(AuthValue.uid).then(function(userValue){
+            Composite.setMyMemorials(userValue.uid);
+            $scope.currentUser = User.getCurrentUser();
+          });
+        }
+      });
+    }
+    
     $scope.logout = function() {
       Auth.logout();
-      $location.path('/login');
-    };
+      $scope.currentUser = null;
+      $location.path('/home');
+    }
 
     $scope.isActive = function(route) {
       return route === $location.path();
-    };
+    }
 
     $scope.toggle = function(){
       $scope.toggleMenu = true;
-    };
+    }
 
     $scope.untoggle = function(){
       $scope.toggleMenu = false;
-    };
+    }
+
   });

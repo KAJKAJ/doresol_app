@@ -43,10 +43,8 @@ angular.module('doresolApp')
 
     var login = function(user){
       var deferred = $q.defer();
-      logout();
       auth.$login('password',{email:user.email, password:user.password,rememberMe: true}).then(function(value) {
-
-        User.setCurrentUser(value);
+        User.getCurrentUserFromFirebase(value.uid);
         deferred.resolve(value);
 
       }, function(error) {
@@ -57,9 +55,8 @@ angular.module('doresolApp')
 
     var loginFb = function() {
       var deferred = $q.defer();
-      logout();
       auth.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true}).then(function(value) {
-        User.setCurrentUser(value);
+        User.getCurrentUserFromFirebase(value.uid);
         
         var profile = {
           name: value.displayName,
@@ -96,6 +93,7 @@ angular.module('doresolApp')
     var logout = function() {
       currentUser = null;
       User.setCurrentUser(null);
+      auth.$logout();
     }
 
     return {
