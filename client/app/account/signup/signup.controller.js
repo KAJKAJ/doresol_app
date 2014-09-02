@@ -13,10 +13,10 @@ angular.module('doresolApp')
 
           if($state.params.memorialId !== undefined) {
             Composite.addMember($state.params).then(function(){
-              $state.go("mydoresol");
+              $state.go("memorials");
             });
           } else {
-            $state.go('mydoresol');
+            $state.go('memorials');
           }
 
 

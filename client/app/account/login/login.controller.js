@@ -18,14 +18,14 @@ angular.module('doresolApp')
         .then( function (value){
           Memorial.clearMyMemorial();
           Composite.setMyMemorials(value.uid).then(function(){
-              // $location.path('/mydoresol');
+              // $location.path('/memorials');
             if ($state.params.memorialId !== undefined) {
               $state.params.inviteeId = value.uid;
               Composite.addMember($state.params).then(function(){
-                $state.go("mydoresol");
+                $state.go("memorials");
               });
             } else {
-              $state.go("mydoresol");
+              $state.go("memorials");
             }
           });
 
@@ -60,10 +60,10 @@ angular.module('doresolApp')
           if ($state.params.memorialId !== undefined) {
             $state.params.inviteeId = value.uid;
             Composite.addMember($state.params).then(function(){
-              $state.go("mydoresol");
+              $state.go("memorials");
             });
           } else {
-            $state.go("mydoresol");
+            $state.go("memorials");
           }
 
         });
