@@ -3,14 +3,15 @@
 angular.module('doresolApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [
-      {
-        'title': 'Home',
-        'link': '/'
-      },
+      // {
+      //   'title': 'Home',
+      //   'link': '/'
+      // },
       {
         'title': 'My doresol',
         'link': '/mydoresol'
-      }
+      },
+      
     ];
 
     angular.element(window).bind("scroll", function() {

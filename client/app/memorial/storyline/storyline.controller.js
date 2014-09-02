@@ -6,8 +6,7 @@ angular.module('doresolApp')
     $scope.memorial = Memorial.getCurrentMemorial();
     
     $scope.currentUser = User.getCurrentUser();
-    $scope.currentUser.profile = User.getUserProfile($scope.currentUser);
-
+    
     $scope.storiesObject = {};
     $scope.storiesArray = [];
     $scope.users = User.getUsersObject();

@@ -5,8 +5,7 @@ angular.module('doresolApp')
   	$scope.story = Story.findById($scope.storyKey);
   	$scope.commentsObject = {};
     $scope.currentUser = User.getCurrentUser();
-    $scope.currentUser.profile = User.getUserProfile($scope.currentUser);
-    
+    // console.log($scope.currentUser);
     $scope.users = User.getUsersObject();
     $scope.newComment = {};
 

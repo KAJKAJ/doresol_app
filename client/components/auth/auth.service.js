@@ -60,12 +60,21 @@ angular.module('doresolApp')
       logout();
       auth.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true}).then(function(value) {
         User.setCurrentUser(value);
-
+        
+        var profile = {
+          name: value.displayName,
+          file:{
+            location: 'facebook',
+            url: value.thirdPartyUserData.picture.data.url,
+            updated_at: moment().toString()
+          }
+        }
+        
         User.update(value.uid, 
         {
          uid: value.uid,
          id: value.id,         
-         name:  value.displayName,
+         profile: profile,
          thirdPartyUserData: value.thirdPartyUserData
         });
 
