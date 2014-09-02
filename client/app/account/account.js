@@ -22,16 +22,19 @@ angular.module('doresolApp')
       .state('request', {
         url: '/request/:memorialId/:requesterId',
         templateUrl: 'app/account/request/request.html',
-        controller: 'RequestCtrl'
+        controller: 'RequestCtrl',
+        authenticate: true
       })
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/account/settings/settings.html',
-        controller: 'SettingsCtrl'
+        controller: 'SettingsCtrl',
+        authenticate: true
       })
       .state('invites', {
         url: '/invites/:memorialId/:inviterId',
         templateUrl: 'app/account/invites/invites.html',
-        controller: 'InvitesCtrl'
+        controller: 'InvitesCtrl',
+        authenticate: true
       });
   });

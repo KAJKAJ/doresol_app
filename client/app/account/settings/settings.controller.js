@@ -3,7 +3,9 @@
 angular.module('doresolApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
-
+    $scope.currentUser = User.getCurrentUser();
+    console.log($scope.currentUser);
+    
     $scope.changePassword = function(form) {
       $scope.submitted = true;
       if(form.$valid) {
@@ -12,10 +14,10 @@ angular.module('doresolApp')
           $scope.message = 'Password successfully changed.';
         })
         .catch( function() {
-          form.password.$setValidity('mongoose', false);
+          form.password.$setValidity('firebase', false);
           $scope.errors.other = 'Incorrect password';
           $scope.message = '';
         });
       }
-		};
+		}
   });

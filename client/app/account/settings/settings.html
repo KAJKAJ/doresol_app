@@ -1,6 +1,6 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<!-- <div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container">
+<div class="container contents">
   <div class="row">
     <div class="col-sm-12">
       <h1>Change Password</h1>
@@ -12,8 +12,8 @@
           <label>Current Password</label>
 
           <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
+                 firebase-error/>
+          <p class="help-block" ng-show="form.password.$error.firebase">
               {{ errors.other }}
           </p>
         </div>
@@ -36,4 +36,50 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
+
+<div flow-init="{
+       singleFile: true, 
+       target:'/api/fileuploads', 
+       testChunks: false,
+       generateUniqueIdentifier: getFlowFileUniqueId
+     }"
+     flow-file-added="fileUploading=true"
+     flow-files-submitted="$flow.upload()"
+     >
+
+  <div ng-include="'components/navbar/navbar.html'"></div>
+
+  <div class="container contents" flow-prevent-drop>  
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+      <div class="well">
+        <form name="settingForm" ng-submit="createMemorial(settingForm)" novalidate>
+          <div class="form-group text-center">
+              <img ng-show="$flow.files[0]" flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
+              <img ng-show="!$flow.files[0]" ng-src="{{currentUser.profile.file.url}}" style="width:200px;height:200px;"/>
+              <div class="upload-btn">
+                <button type="button" class="btn btn-lg btn-primary" flow-btn flow-attrs="{accept:'image/*'}">
+                  <span>사진 변경</span>
+                </button>
+              </div>    
+          </div>
+          <div class="input-group">
+              <span class="input-group-addon">별명</span>
+              <input type="text" class="form-control" name="name" placeholder="별명을 입력하세요" ng-model="currentUser.profile.name" ng-required="true">
+          </div>
+          <div class="alert alert-danger" role="alert"
+               ng-show="settingForm.name.$dirty && settingForm.name.$invalid">
+               <span ng-show="settingForm.name.$error.required">별명을 입력해 주세요.</span>
+          </div>
+          <br/>
+
+          <button type="submit" class="btn btn-alt btn-success pull-right" ng-disabled="fileUploading||settingForm.$invalid">변경</button>      
+          <br/>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
+
+</div>  

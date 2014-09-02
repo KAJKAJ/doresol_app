@@ -97,6 +97,10 @@ angular.module('doresolApp')
     return usersObject;
   }
 
+  var clearCurrentUser = function(){
+    currentUser = null;
+  }
+
   // $rootScope.$on('$firebaseSimpleLogin:login', function (e, authUser) {
   //   var query = $firebase(ref.startAt(authUser.uid).endAt(authUser.uid));
 
@@ -115,6 +119,7 @@ angular.module('doresolApp')
     createMemorial: createMemorial,
     getCurrentUser:getCurrentUser,
     // setCurrentUser:setCurrentUser,
+    clearCurrentUser:clearCurrentUser,
     getCurrentUserFromFirebase:getCurrentUserFromFirebase,
     update:update,
     setUsersObject:setUsersObject,
