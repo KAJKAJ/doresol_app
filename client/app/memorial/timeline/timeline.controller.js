@@ -40,6 +40,7 @@ angular.module('doresolApp')
           if($scope.currentUser.uid == $scope.memorial.ref_user){
             $scope.toggleEditMode();
           }
+
         }else{
           if($scope.currentUser.uid == $scope.memorial.ref_user){
             $scope.toggleEditMode();
@@ -48,7 +49,7 @@ angular.module('doresolApp')
       }else{
         $timeout($scope.waitStoryLoaded(), 100);
       }
-    }
+    };
 
     // $scope.$watch('totalStoryCnt',function(value){
     //   if(value > 0){
@@ -111,6 +112,8 @@ angular.module('doresolApp')
       $scope.totalStoryCnt = _timelineStories.length;
       // console.log($scope.totalStoryCnt);
     });
+
+    
 
     _timelineStories.$watch(function(event){
       switch(event.event){
