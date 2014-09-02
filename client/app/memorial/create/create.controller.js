@@ -31,12 +31,11 @@ angular.module('doresolApp')
           $state.transitionTo('memorial.timeline', {id: value.name()});
         });
       }
-    };
+    }
 
     $scope.getFlowFileUniqueId = function(file){
-
       return $scope.currentUser.uid.replace(/[^\.0-9a-zA-Z_-]/img, '') + '-' + Util.getFlowFileUniqueId(file);
-    };
+    }
    
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
       $scope.fileUploading = false;
@@ -53,5 +52,5 @@ angular.module('doresolApp')
 
       $scope[variable] = true;
 
-    };
+    }
   });

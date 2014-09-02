@@ -28,7 +28,7 @@ angular.module('doresolApp')
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/account/settings/settings.html',
-        controller: 'SettingsCtrl',
+        // controller: 'SettingsCtrl',
         authenticate: true
       })
       .state('invites', {

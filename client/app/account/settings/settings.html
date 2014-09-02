@@ -46,40 +46,83 @@
      }"
      flow-file-added="fileUploading=true"
      flow-files-submitted="$flow.upload()"
+     ng-controller="SettingsCtrl"
      >
 
   <div ng-include="'components/navbar/navbar.html'"></div>
 
   <div class="container contents" flow-prevent-drop>  
-    <div class="col-sm-1"></div>
-    <div class="col-sm-10">
-      <div class="well">
-        <form name="settingForm" ng-submit="createMemorial(settingForm)" novalidate>
-          <div class="form-group text-center">
-              <img ng-show="$flow.files[0]" flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
-              <img ng-show="!$flow.files[0]" ng-src="{{currentUser.profile.file.url}}" style="width:200px;height:200px;"/>
-              <div class="upload-btn">
-                <button type="button" class="btn btn-lg btn-primary" flow-btn flow-attrs="{accept:'image/*'}">
-                  <span>사진 변경</span>
-                </button>
-              </div>    
-          </div>
-          <div class="input-group">
-              <span class="input-group-addon">별명</span>
-              <input type="text" class="form-control" name="name" placeholder="별명을 입력하세요" ng-model="currentUser.profile.name" ng-required="true">
-          </div>
-          <div class="alert alert-danger" role="alert"
-               ng-show="settingForm.name.$dirty && settingForm.name.$invalid">
-               <span ng-show="settingForm.name.$error.required">별명을 입력해 주세요.</span>
-          </div>
-          <br/>
+    <div class="row">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <div class="block">
+        <div class="block-title">
+          <h2>프로필</h2>
+        </div>
+          <form name="settingForm" ng-submit="changeProfile(settingForm)" novalidate>
+            <div class="form-group text-center">
+                <img ng-show="$flow.files[0]" flow-img="$flow.files[0]" style="width:200px;height:200px;"/>
+                <img ng-show="!$flow.files[0]" ng-src="{{currentUser.profile.file.url}}" style="width:200px;height:200px;"/>
+                <div class="upload-btn">
+                  <button type="button" class="btn btn-lg btn-primary" flow-btn flow-attrs="{accept:'image/*'}">
+                    <span>사진 변경</span>
+                  </button>
+                </div>    
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">별명</span>
+                <input type="text" class="form-control" name="name" placeholder="별명을 입력하세요" ng-model="currentUser.profile.name" ng-required="true">
+            </div>
+            <div class="alert alert-danger" role="alert"
+                 ng-show="settingForm.name.$dirty && settingForm.name.$invalid">
+                 <span ng-show="settingForm.name.$error.required">별명을 입력해 주세요.</span>
+            </div>
+            <br/>
+            <p class="help-block"> {{ profileMessage }} </p>
+            <button type="submit" class="btn btn-alt btn-success" ng-disabled="fileUploading||settingForm.$invalid">저장</button>   
+            <br/>
+          </form>
+        </div>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
+    <div class="row" ng-if="(currentUser.uid.indexOf('simplelogin') > -1)">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-10">
+        <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+          <div class="block">
+            <div class="block-title">
+              <h2>Password</h2>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">변경 전 암호</span>
+                <input type="password" name="password" class="form-control" ng-model="password.oldPassword"
+                     firebase-error/>
+                <p class="help-block" ng-show="form.password.$error.firebase">
+                    {{ errors.other }}
+                </p>
+            </div>
+            <br/>
 
-          <button type="submit" class="btn btn-alt btn-success pull-right" ng-disabled="fileUploading||settingForm.$invalid">변경</button>      
-          <br/>
+            <div class="input-group">
+                <span class="input-group-addon">변경 할 암호</span>
+                <input type="password" name="newPassword" class="form-control" ng-model="password.newPassword"
+                     ng-minlength="3"
+                     required/>
+                <p class="help-block"
+                   ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+                  암호는 3글자 이상이여야 합니다.
+                </p>
+            </div>
+            <p class="help-block"> {{ passwordMessage }} </p>
+
+            <!-- <button class="btn btn-lg btn-primary" type="submit">Save changes</button> -->
+            <button type="submit" class="btn btn-alt btn-success ">저장</button> 
+          </div>
         </form>
       </div>
+      <div class="col-sm-1"></div>
     </div>
-    <div class="col-sm-1"></div>
   </div>
 
 </div>  

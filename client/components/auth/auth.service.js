@@ -56,25 +56,26 @@ angular.module('doresolApp')
     var loginFb = function() {
       var deferred = $q.defer();
       auth.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true}).then(function(value) {
-        User.getCurrentUserFromFirebase(value.uid);
-        
-        var profile = {
-          name: value.displayName,
-          file:{
-            location: 'facebook',
-            url: value.thirdPartyUserData.picture.data.url,
-            updated_at: moment().toString()
+        User.getCurrentUserFromFirebase(value.uid).then(function(userValue){
+          if(!userValue.profile){
+            var profile = {
+              name: value.displayName,
+              file:{
+                location: 'facebook',
+                url: value.thirdPartyUserData.picture.data.url,
+                updated_at: moment().toString()
+              }
+            }
+            
+            User.update(value.uid, 
+            {
+             uid: value.uid,
+             id: value.id,         
+             profile: profile,
+             thirdPartyUserData: value.thirdPartyUserData
+            });
           }
-        }
-        
-        User.update(value.uid, 
-        {
-         uid: value.uid,
-         id: value.id,         
-         profile: profile,
-         thirdPartyUserData: value.thirdPartyUserData
         });
-
         deferred.resolve(value);
       }, function(error) {
         deferred.reject(error);
@@ -96,6 +97,10 @@ angular.module('doresolApp')
       auth.$logout();
     }
 
+    var changePassword = function(email, oldPassword, newPassword) {
+      return auth.$changePassword(email, oldPassword, newPassword);
+    }
+
     return {
 
       register: register,
@@ -108,7 +113,8 @@ angular.module('doresolApp')
 
       getCurrentUser:getCurrentUser,
 
-      getCurrentUserFromFirebase:getCurrentUserFromFirebase
+      getCurrentUserFromFirebase:getCurrentUserFromFirebase,
+      changePassword:changePassword
 
       // isAdmin: function() {
       //   return currentUser.role === 'admin';

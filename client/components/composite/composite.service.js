@@ -54,10 +54,6 @@
   };
 
   var createMemorial = function(memorial) {
-    var errorHandler = function(error){
-      return $q.reject(error);
-    };
-
     var _create_memorial = function(memorial) {
       return Memorial.create(memorial);
     };
@@ -67,7 +63,21 @@
     }else{
       return _create_memorial(memorial).then(User.createMemorial, errorHandler);
     }
-  };
+  }
+
+  var updateUserProfileWithFile = function(user){
+    var _updateNickName = function(user) {
+      return User.update(user.uid,{profile:user.profile}).then(function(value){
+        var userRef = new Firebase(ENV.FIREBASE_URI + '/users/'+user.uid+'/profile/');
+        return {
+          fileParentPath: ENV.FIREBASE_URI + 'users/'+user.uid+'/profile',
+          fileUrl: user.profile.file.url
+        }
+      });
+    };
+
+    return _updateNickName(user).then(File.createLocalFile, errorHandler);
+  }
 
   var errorHandler = function(error){
     return $q.reject(error);
@@ -145,7 +155,8 @@
     createComment:createComment,
 
     // member 
-    addMember: addMember
+    addMember: addMember,
+    updateUserProfileWithFile:updateUserProfileWithFile
 	};
 	
 });
