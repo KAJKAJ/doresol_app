@@ -15,12 +15,12 @@
     <div masonry item-selector=".brick-member">
       <div class="brick-member col-sm-2">
         <div class="brick-member-detail">
-          <img ng-src="{{users[leader.uid].profile.image}}" class="img-responsive" style="width:150px;height:150px"/>
+          <img ng-src="{{users[leader.uid].profile.file.url}}" class="img-responsive" style="width:150px;height:150px"/>
         </div>
       </div>
       <div masonry-brick class="brick-member col-sm-2" ng-repeat="(uid, member) in members">
         <div class="brick-member-detail">
-          <img ng-src="{{users[uid].profile.image}}" class="img-responsive" style="width:150px;height:150px"/>
+          <img ng-src="{{users[uid].profile.file.url}}" class="img-responsive" style="width:150px;height:150px"/>
           <div class="overlay text-center">
             <br/><br/><br/><br/>
             <div class="overlay_detail">
