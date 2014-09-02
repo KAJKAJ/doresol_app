@@ -39,7 +39,7 @@ angular.module('doresolApp')
       Auth.loginOauth(provider).then(function(value){
         Memorial.clearMyMemorial();
         Composite.setMyMemorials(value.uid).then(function(){
-          $state.go('mydoresol');
+          $state.go('memorials');
         });
       });
     };

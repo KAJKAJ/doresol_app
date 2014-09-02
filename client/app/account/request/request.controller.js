@@ -13,13 +13,13 @@ angular.module('doresolApp')
     })
     
     $scope.cancel = function() {
-      $state.go('mydoresol');
+      $state.go('memorials');
     }
 
     $scope.accept = function() {
         console.log($state.params);
         Memorial.addWaiting($state.params.memorialId, $state.params.requesterId).then(function(value){
-            $state.go('mydoresol');
+            $state.go('memorials');
         });
     }
 

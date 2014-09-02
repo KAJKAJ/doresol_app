@@ -9,7 +9,7 @@ angular.module('doresolApp')
       // },
       // {
       //   'title': 'My doresol',
-      //   'link': '/mydoresol'
+      //   'link': '/memorials'
       // },
       
     ];

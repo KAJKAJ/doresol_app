@@ -55,7 +55,7 @@
         <li ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>
-        <li ng-show="currentUser" ng-class="{active: isActive('/mydoresol')}"><a href="/mydoresol">메모리얼</a></li>
+        <li ng-show="currentUser" ng-class="{active: isActive('/memorials')}"><a href="/memorials">메모리얼</a></li>
 
         <li ng-show="currentUser" class="dropdown open">
           <a class="dropdown-toggle" data-toggle="dropdown">
