@@ -1,22 +1,31 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div>
-    <video id="intro_video" preload="auto" autoplay="true" loop="loop" muted="true">
-         <source src="assets/videos/intro_video_1.mp4" type="video/mp4">
-            Sorry, your browser does not support HTML5 video.
-    </video>
+    <div ng-if="!isMobile">
+      <video id="intro_video" preload="auto" autoplay="true" loop="loop" muted="true">
+           <source src="assets/videos/intro_video_1.mp4" type="video/mp4">
+              Sorry, your browser does not support HTML5 video.
+      </video>
 
-    <div id="intro_video_control" ng-if="false">
-        <span ng-show="muted" class="fa-stack fa-lg" ng-click="unmute()">
-            <i class="fa fa-volume-up fa-stack-1x"></i>
-            <i class="fa fa-ban fa-stack-2x"></i> 
-        </span>
-        <span ng-show="!muted" class="fa-stack fa-lg" ng-click="mute()">
-            <i class="fa fa-volume-up fa-stack-1x"></i>
-            <i class="fa fa-circle-o fa-stack-2x"></i> 
-        </span>
+      <div id="intro_video_control" ng-if="false">
+          <span ng-show="muted" class="fa-stack fa-lg" ng-click="unmute()">
+              <i class="fa fa-volume-up fa-stack-1x"></i>
+              <i class="fa fa-ban fa-stack-2x"></i> 
+          </span>
+          <span ng-show="!muted" class="fa-stack fa-lg" ng-click="mute()">
+              <i class="fa fa-volume-up fa-stack-1x"></i>
+              <i class="fa fa-circle-o fa-stack-2x"></i> 
+          </span>
+      </div>
     </div>
-
+    <!-- temp -->
+    <div ng-if="!isMobile">
+      not mobile
+    </div>
+    <div ng-if="isMobile">
+      mobile
+    </div>
+    <!-- temp end -->
     <div id="intro_create_overlay">
       <div class="col-sm-12" ng-if="isLoggedIn">
         <h1 class="intro_create_title">추억, 사랑, 기억</h1>

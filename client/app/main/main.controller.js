@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MainCtrl', function ($scope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User) {
+  .controller('MainCtrl', function ($scope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util) {
 
     $scope.muted = true;
     $scope.signupUser ={};
@@ -139,5 +139,9 @@ angular.module('doresolApp')
       memorial.$id = value.name();
       $scope.recentMemorials.unshift(memorial);
     });
+
+    $scope.browser = Util.getBrowser();
+    $scope.width = Util.getWidth();
+    $scope.isMobile = Util.isMobile();
 
   });
