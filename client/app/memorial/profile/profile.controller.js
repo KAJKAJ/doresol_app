@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('ProfileCtrl', function ($scope,$stateParams,Util,Composite, User, Memorial) {
+  .controller('ProfileCtrl', function ($scope,$stateParams,Util,Composite,$state,User,Memorial) {
     $scope.today = Date.now();
     
     $scope.currentUser = User.getCurrentUser();
@@ -107,6 +107,7 @@ angular.module('doresolApp')
         $scope.isMember = Memorial.isMember();
         $scope.isGuest = Memorial.isGuest();
         $scope.isOwner = Memorial.isOwner();
+        $state.go('memorial.storyline', {id: $scope.memorialKey})
       });
     }
 
