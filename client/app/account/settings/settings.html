@@ -1,44 +1,86 @@
-<!-- <div ng-include="'components/navbar/navbar.html'"></div>
+<div flow-init="{
+       singleFile: true, 
+       target:'/api/fileuploads', 
+       testChunks: false,
+       generateUniqueIdentifier: getFlowFileUniqueId
+     }"
+     flow-file-added="fileUploading=true"
+     flow-files-submitted="$flow.upload()"
+     ng-controller="SettingsCtrl"
+     >
 
-<div class="container contents">
-  <div class="row">
-    <div class="col-sm-12">
-      <h1>Change Password</h1>
-    </div>
-    <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+  <div ng-include="'components/navbar/navbar.html'"></div>
 
-        <div class="form-group">
-          <label>Current Password</label>
-
-          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
-                 firebase-error/>
-          <p class="help-block" ng-show="form.password.$error.firebase">
-              {{ errors.other }}
-          </p>
+  <div class="container contents" flow-prevent-drop>  
+    <div class="col-md-2">
+      <form name="settingForm" ng-submit="changeProfile(settingForm)" novalidate>
+        <div class="form-group text-center">
+          <img ng-show="$flow.files[0]" flow-img="$flow.files[0]" class="img-responsive"/>
+          <img ng-show="!$flow.files[0]" ng-src="{{currentUser.profile.file.url}}" class="img-responsive"/>
+          <div class="profile-img-upload-btn">
+            <span class="pull-left">&nbsp;</span>
+            <span class="fa-stack fa-lg pull-left" flow-btn flow-attrs="{accept:'image/*'}" style="cursor:pointer;">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-camera fa-stack-1x fa-inverse"></i>
+            </span>
+          </div>    
         </div>
 
         <div class="form-group">
-          <label>New Password</label>
-
-          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
-                 ng-minlength="3"
-                 required/>
-          <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
-            Password must be at least 3 characters.
-          </p>
+          <label for="name" style="position: relative;left: -35px;">닉네임</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="닉네임을 입력하세요" ng-model="currentUser.profile.name" ng-required="true">
         </div>
-
-        <p class="help-block"> {{ message }} </p>
-
-        <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        <div class="alert alert-danger" role="alert"
+             ng-show="settingForm.name.$dirty && settingForm.name.$invalid">
+           <span ng-show="settingForm.name.$error.required">닉네임을 입력해 주세요.</span>
+        </div>
+        <p class="help-block"> {{ profileMessage }} </p>
+        <button type="submit" class="btn btn-block btn-primary" ng-disabled="fileUploading||settingForm.$invalid">저장</button>   
       </form>
     </div>
-  </div>
-</div> -->
 
-<div flow-init="{
+    <div class="col-md-10">
+      <div class="block-section">
+        <div class="block-title">
+            <h2><strong>기본정보</strong></h2>
+        </div>
+        가입일: {{currentUser.created_at}}
+      </div>
+      <br/>
+      <div class="block-section" ng-if="(currentUser.uid.indexOf('simplelogin') > -1)">
+        <div class="block-title">
+            <h2><strong>암호 변경</strong></h2>
+        </div>
+        <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+          <div class="input-group">
+            <span class="input-group-addon">변경 전 암호</span>
+            <input type="password" name="password" class="form-control" ng-model="password.oldPassword"
+                 firebase-error/>
+            <p class="help-block" ng-show="form.password.$error.firebase">
+                {{ errors.other }}
+            </p>
+          </div>
+          <br/>
+
+          <div class="input-group">
+            <span class="input-group-addon">변경 할 암호</span>
+            <input type="password" name="newPassword" class="form-control" ng-model="password.newPassword"
+                 ng-minlength="3"
+                 required/>
+            <p class="help-block"
+               ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+              암호는 3글자 이상이여야 합니다.
+            </p>
+          </div>
+          <p class="help-block"> {{ passwordMessage }} </p>
+
+          <button type="submit" class="btn btn-lg btn-primary">저장</button> 
+        </form>
+      </div>
+    </div>
+  </div>
+</div>  
+<!-- <div flow-init="{
        singleFile: true, 
        target:'/api/fileuploads', 
        testChunks: false,
@@ -116,7 +158,6 @@
             </div>
             <p class="help-block"> {{ passwordMessage }} </p>
 
-            <!-- <button class="btn btn-lg btn-primary" type="submit">Save changes</button> -->
             <button type="submit" class="btn btn-alt btn-success ">저장</button> 
           </div>
         </form>
@@ -125,4 +166,4 @@
     </div>
   </div>
 
-</div>  
+</div>   -->

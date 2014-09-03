@@ -53,7 +53,8 @@ angular.module('doresolApp')
       uid: newUser.uid,
       id: newUser.id,
       email: newUser.email,
-      profile:profile
+      profile:profile,
+      created_at: moment().format("YYYY-MM-DD HH:mm:ss")
     }
 
     return users.$set(newUser.uid, user);

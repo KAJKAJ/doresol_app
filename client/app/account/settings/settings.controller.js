@@ -5,8 +5,7 @@ angular.module('doresolApp')
     $scope.errors = {};
     $scope.currentUser = User.getCurrentUser();
     $scope.password = {};
-
-    // if(user.uid.indexOf("simplelogin") > -1)
+console.log($scope.currentUser);
     $scope.changePassword = function(form) {
       $scope.submitted = true;
       if(form.$valid) {

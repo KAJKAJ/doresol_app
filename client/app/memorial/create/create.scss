@@ -1,6 +1,6 @@
-.upload-btn{
+.profile-img-upload-btn{
 	position: relative;
-	top: -60px;
+	top: -35px;
 }
 
 .public-label{
@@ -11,4 +11,9 @@
 .profile-img-empty{
 	height:300px;
 	border:1px dotted gray;
+}
+
+.divider{
+	border-bottom: 1px dotted #dddddd;
+	margin: 20px 0px 20px 0px;
 }
