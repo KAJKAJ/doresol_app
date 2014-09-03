@@ -65,6 +65,19 @@
     }
   }
 
+  var changeMemorialProfileImage = function(memorial){
+    var _update_memorial_profile_image = function(memorial) {
+      return Memorial.update(memorial.$id,{file:memorial.file}).then(function(value){
+        return {
+          fileParentPath: value.toString(),
+          fileUrl:  memorial.file.url
+        }
+      });
+    };
+
+    return _update_memorial_profile_image(memorial).then(File.createLocalFile, errorHandler);
+  }
+
   var updateUserProfileWithFile = function(user){
     var _updateNickName = function(user) {
       return User.update(user.uid,{profile:user.profile}).then(function(value){
@@ -147,6 +160,7 @@
   return {
 		createMemorial:createMemorial,
     setMyMemorials:setMyMemorials,
+    changeMemorialProfileImage:changeMemorialProfileImage,
 
     // story 
     createTimelineStory:createTimelineStory,

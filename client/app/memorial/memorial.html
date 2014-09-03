@@ -2,8 +2,33 @@
 
 <div class="container contents">	
   <div class="col-md-2">
-		<a ui-sref="memorial.profile({id:memorialKey})"><img ng-src="{{memorial.file.url}}" class="img-responsive hover-opacity-8"/></a>
-  	<div class="text-center">
+		<div flow-init="{
+       singleFile: true, 
+       target:'/api/fileuploads', 
+       testChunks: false,
+       generateUniqueIdentifier: getFlowFileUniqueId
+     }"
+     flow-file-added="fileUploading=true"
+     flow-files-submitted="$flow.upload()"
+     ng-controller="ProfileCtrl">
+      <div class="flow-prevent-drop">
+        <a ui-sref="memorial.profile({id:memorialKey})">
+          <img ng-if="!$flow.files[0]" ng-src="{{memorial.file.url}}" class="img-responsive hover-opacity-8"/>
+          <div ng-if="$flow.files[0]">
+            <img flow-img="$flow.files[0]" class="img-responsive"/>
+          </div>
+        </a>
+        <div ng-if="memorial.ref_user == currentUser.uid" class="profile-img-upload-btn">
+          <span class="pull-left">&nbsp;</span>
+          <span class="fa-stack fa-lg pull-left" flow-btn flow-attrs="{accept:'image/*'}" style="cursor:pointer;">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-camera fa-stack-1x fa-inverse"></i>
+          </span>
+        </div>  
+        <button ng-if="memorial.ref_user == currentUser.uid && $flow.files[0] && lastUploadingFile" class="btn btn-block btn-primary" ng-disabled="fileUploading" ng-click="changeProfileImage()">저장</button> 
+      </div>
+    </div>
+    <div class="text-center" style="clear:both;">
       <h3> {{memorial.name}} </h3>  	
     </div>
     <ul class="nav nav-pills nav-stacked" role="tablist" >
@@ -19,3 +44,5 @@
   	<div ui-view=""></div>
   </div>
 </div>
+    
+      
