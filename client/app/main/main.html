@@ -102,8 +102,8 @@
             <div class="overlay_detail">
               <div class="pull-left public">
                 &nbsp;
-                <span ng-if="memorial.public"><i class="fa fa-unlock fa-2x"></i></span>
-                <span ng-if="!memorial.public"><i class="fa fa-lock fa-2x"></i></span>
+                <button ng-if="memorial.public" class="btn btn-xs btn-default" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
+                <button ng-if="!memorial.public" class="btn btn-xs btn-default" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button>
               </div>
               <br/><br/><br/><br/>
               <h3><strong>{{memorial.name}}</strong></h3>

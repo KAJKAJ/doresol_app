@@ -60,6 +60,11 @@
 		});  	
   }
 
+  var update = function(memorialId, data) {
+  	var updateMemorial = $firebase(ref);
+    return updateMemorial.$update(memorialId, data);
+  }
+
 	var findById = function(memorialId){
 		var memorial = ref.child(memorialId);
 		return $firebase(memorial).$asObject();
@@ -119,6 +124,7 @@
 		remove: remove,
 		create: create,
 		findById: findById,
+		update:update,
 
 		addMyMemorial:addMyMemorial,
 		removeMyMemorial:removeMyMemorial,

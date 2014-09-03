@@ -34,6 +34,18 @@ angular.module('doresolApp', [
       };
       return $delegate;
     });
+
+    //temporary solution for angular-bootstrap datepicker format error in 0.11.0 version
+    $provide.decorator('dateParser', function($delegate){
+      var oldParse = $delegate.parse;
+      $delegate.parse = function(input, format) {
+        if ( !angular.isString(input) || !format ) {
+          return input;
+        }
+        return oldParse.apply(this, arguments);
+      };
+      return $delegate;
+    });
   })
   
   .config(['datepickerPopupConfig', function(datepickerPopupConfig) {
@@ -42,7 +54,6 @@ angular.module('doresolApp', [
     // datepickerPopupConfig.toggleWeeksText = "week?";
     datepickerPopupConfig.closeText = "닫기";
   }]) 
-  
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {
