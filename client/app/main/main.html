@@ -18,33 +18,39 @@
     </div>
 
     <div id="intro_create_overlay">
-        <div class="col-md-2"></div>
-        <div class="col-md-7">
-            <h1 class="intro_create_title">추억, 사랑, 기억</h1>
-            <h2 class="intro_create_sub_title">도래솔은 진심을 다해 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
-        </div>
-        <div></div>
-        <div ng-show="waitForLogging && !isLoggedIn" class="login-signup col-md-3">
+      <div class="col-sm-12" ng-if="isLoggedIn">
+        <h1 class="intro_create_title">추억, 사랑, 기억</h1>
+        <h2 class="intro_create_sub_title">도래솔은 진심을 다해 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
+      </div>
+      <div class="col-sm-9" ng-if="waitForLogging && !isLoggedIn">
+        <h1 class="intro_create_title">추억, 사랑, 기억</h1>
+        <h2 class="intro_create_sub_title">도래솔은 진심을 다해 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
+      </div>
+      <div class="col-sm-3" ng-if="waitForLogging && !isLoggedIn">
+        <div ng-show="waitForLogging && !isLoggedIn" class="login-block">
           <div>
-            <span class="btn btn-primary" ng-click="loginOauth('facebook')"><i class="fa fa-facebook"></i> 페이스북으로 로그인</span>
-            <p>또는</p>
-            <form class="form" name="loginForm" ng-submit="login(loginForm)" novalidate>
-                <input type="text" name="email" placeholder="email" class="form-control" ng-model="loginUser.email">
-                <input type="password" name="password" placeholder="password" class="form-control" ng-model="loginUser.password">
-                <button class="btn btn-info btn-lg btn-login" type="submit">
-                 로그인
-                </button>
-              <div class="form-group has-error">
-                <p class="help-block" ng-show="loginForm.email.$error.required && loginForm.password.$error.required && loginSubmitted">
-                   Please enter your email and password.
-                </p>
-                <p class="help-block">{{ loginErrors.other }}</p>
-              </div>
-              <hr>
-            </form>
+            <div class="well">
+              <span class="btn btn-block btn-primary" ng-click="loginOauth('facebook')"><i class="fa fa-facebook"></i> 페이스북으로 로그인</span>
+                <span style="color:gray;font-size:10px;">OR</span>
+              <form class="form" name="loginForm" ng-submit="login(loginForm)" novalidate>
+                  <input type="text" name="email" placeholder="email" class="form-control" ng-model="loginUser.email">
+                  <input type="password" name="password" placeholder="password" class="form-control" ng-model="loginUser.password">
+                  <button class="btn btn-info btn-block btn-login" type="submit">
+                   로그인
+                  </button>
+                <div class="form-group has-error">
+                  <p class="help-block" ng-show="loginForm.email.$error.required && loginForm.password.$error.required && loginSubmitted">
+                     Please enter your email and password.
+                  </p>
+                  <p class="help-block">{{ loginErrors.other }}</p>
+                </div>
+              </form>
+            </div>
+            <hr>
             <!-- register -->
+            <div class="well">
+              <span style="color:gray;font-size:14px;">도래솔에 처음이세요?</span>
               <form class="form" name="signupForm" ng-submit="signup(signupForm)" novalidate>
-                도래솔에 처음이세요?| 가입하기
                 <div class="form-group" ng-class="{ 'has-success': signupForm.email.$valid && signupSubmitted,
                                                     'has-error': signupForm.email.$invalid && signupSubmitted }">
                   <input type="email" name="email" placeholder="email을 입력하세요" class="form-control" ng-model="signupUser.email"
@@ -74,14 +80,16 @@
                     {{ singupErrors.password }}
                   </p>
                 </div>
-                  <button class="btn btn-info btn-lg btn-login" type="submit">
+                  <button class="btn btn-info btn-block btn-login" type="submit">
                     가입하기
                   </button>
               </form>
-
+            </div>
 
           </div> <!-- login -->
+      </div>
     </div>
+
 </div>
 
 <div class="container">
