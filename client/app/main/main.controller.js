@@ -10,7 +10,7 @@ angular.module('doresolApp')
     $scope.signupErrors = {};
 
     $scope.isLoggedIn = false;
-    $scope.waitForLogging = false;
+    $scope.waitForLogging = true;
 
     // $scope.mute = function(){
     //   $("video")[0].muted=true;
@@ -24,18 +24,17 @@ angular.module('doresolApp')
     // $scope.$watch('currentUser', function() {
     //   console.log($scope.currentUser);
     // };
-    console.log($state.params);
+    // $scope.checkLoggedIn = function() {
+    //   $scope.waitForLogging = true;
+    // }
+    // $timeout($scope.checkLoggedIn(), 3000);
 
-    $scope.checkLoggedIn = function() {
-      $scope.waitForLogging = true;
-    }
-
-    $timeout($scope.checkLoggedIn(), 3000);
-
-    $scope.$watch(function(){return Auth.getCurrentUser();}, 
+    $scope.$watch(function(){return User.getCurrentUser();}, 
       function (newValue) {
         if(newValue !== null) {
           $scope.isLoggedIn = true;
+        } else {
+          $scope.isLoggedIn = false;
         }
     }, true);
     

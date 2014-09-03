@@ -42,7 +42,7 @@ angular.module('doresolApp')
     
     $scope.logout = function() {
       Auth.logout();
-      $scope.currentUser = {};
+      $scope.currentUser = null;
       $location.path('/home');
     }
 
