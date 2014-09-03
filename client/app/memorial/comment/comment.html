@@ -16,7 +16,7 @@
 
   <!-- new comment -->
   <hr/>
-  <li class="comment">
+  <li ng-if="!isGuest" class="comment">
   		<div class="comment-avatar">
         <img ng-src="{{currentUser.profile.file.url}}" style="width:32px;height:32px;"/>
       </div>

@@ -41,7 +41,7 @@
   <div masonry item-selector=".brick-waiting">
     <div masonry-brick class="brick-waiting col-sm-3" ng-repeat="(uid, member) in waitings">
       <div class="brick-waiting-detail">
-        <img ng-src="{{users[uid].profile.image}}" class="img-responsive" style="width:150px;height:150px"/>
+        <img ng-src="{{users[uid].profile.file.url}}" class="img-responsive" style="width:150px;height:150px"/>
         <div class="overlay text-center">
           <br/><br/><br/><br/>
           <div class="overlay_detail">

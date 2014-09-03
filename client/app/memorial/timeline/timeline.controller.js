@@ -63,6 +63,11 @@ angular.module('doresolApp')
     $scope.memorial = Memorial.getCurrentMemorial();
 
     $scope.memorial.$loaded().then(function(value){
+
+      $scope.isOwner = Memorial.isOwner();
+      $scope.isMember = Memorial.isMember();
+      $scope.isGuest = Memorial.isGuest();
+
       //set default tab for era
       if(value.timeline && value.timeline.era){
         var firstEraKey = null;
@@ -112,8 +117,6 @@ angular.module('doresolApp')
       $scope.totalStoryCnt = _timelineStories.length;
       // console.log($scope.totalStoryCnt);
     });
-
-    
 
     _timelineStories.$watch(function(event){
       switch(event.event){

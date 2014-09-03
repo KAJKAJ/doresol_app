@@ -1,10 +1,8 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
 
-<div class="container contents">  
+<!-- <div class="container contents">  
   <div class="row-fluid">
     선택하신 메모리얼을 확인하기 위해서는 승인이 필요합니다.
     아래 요청을 누르시면 관리자에게 승인 요청이 가며, 향후 승인 시에 연락을 받으실 수 있습니다.
-    <!-- profile start-->
     <div class="col-xs-4">
     </div>
     <div class="col-xs-4 memorial_profile">
@@ -12,16 +10,49 @@
         <h3> 요청하는 메모리얼:  {{memorial.name}} </h3>
         <a ui-sref="memorial.profile({id:memorialKey})"><img ng-src="{{memorial.file.url}}" class="img-responsive" style="width:250px;height:250px;"/></a>
       </div>
+
       <div>
-        <h3> 메모리얼 관리자:</h3>
-        <div class="story-avatar">
-          <img ng-src="{{users[memorial.ref_user].profile.image}}" style="width:64px;height:64px;"/>
-        </div>
-      </div>
-      <div>
-        <button ng-click="cancel()">취소</button>
-        <button ng-click="accept()">요청</button>
       </div>
     <div class="col-xs-4">
   </div>
+</div> -->
+
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container contents">  
+  <div class="col-md-2">
+    <div>
+      <div>
+        <a disabled>
+          <img ng-src="{{memorial.file.url}}" class="img-responsive hover-opacity-8"/>
+        </a>
+      </div>
+    </div>
+    <div class="text-center" style="clear:both;">
+      <h3> {{memorial.name}} </h3>    
+    </div>
+    <ul class="nav nav-pills nav-stacked" role="tablist" >
+      <li><a disabled style="color:gray;"><i class="fa fa-comment"></i> Storyline</a></li>
+      <li><a disabled style="color:gray;"><i class="fa fa-road"></i> Timeline</a></li>
+      <li><a disabled style="color:gray;"><i class="fa fa-map-marker"></i> StoryMap</a></li>
+      <li><a disabled style="color:gray;"><i class="fa fa-users"></i> Member</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-10">
+    <ul class="list-group">
+      <li class="list-group-item">이름: {{memorial.name}}</li>
+      <li class="list-group-item">태어나신 날: {{memorial.dateOfBirth}}</li>
+      <li class="list-group-item">돌아가신 날: {{memorial.dateOfDeath}}</li>
+    </ul>
+    <div class="well">
+      선택하신 메모리얼을 확인하기 위해서는 관리자의 승인이 필요합니다.<br>
+      아래 요청을 누르시면 관리자에게 승인 요청이 가며, 향후 승인 시에 연락을 받으실 수 있습니다.
+    </div>
+    <button class="btn btn-primary" ng-click="accept()">요청하기
+    <button class="btn btn-primary" ng-click="cancel()">취소하기
+  </div>
+
 </div>
+    
+      

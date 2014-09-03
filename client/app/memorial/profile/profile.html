@@ -2,7 +2,7 @@
   <div class="block-title">
       <h2><strong>기본 정보</strong></h2>
   </div>
-	<div ng-if="memorial.ref_user == currentUser.uid">
+	<div ng-if="isOwner">
 		<form name="memorialForm" ng-submit="updateMemorial(memorialForm)" novalidate>
 			<div class="input-group">
 			  <span class="input-group-addon">이름</span>
@@ -66,7 +66,7 @@
 		</form>
 	</div>
 
-	<div ng-if="memorial.ref_user != currentUser.uid">
+	<div ng-if="!isOwner">
 		<ul class="list-group">
 		  <li class="list-group-item">이름: {{memorial.name}}</li>
 		  <li class="list-group-item">태어나신 날: {{memorial.dateOfBirth}}</li>
