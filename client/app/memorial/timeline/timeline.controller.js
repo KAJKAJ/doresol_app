@@ -113,8 +113,6 @@ angular.module('doresolApp')
       // console.log($scope.totalStoryCnt);
     });
 
-    
-
     _timelineStories.$watch(function(event){
       switch(event.event){
         case "child_removed":

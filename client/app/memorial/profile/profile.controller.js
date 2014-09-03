@@ -15,6 +15,9 @@ angular.module('doresolApp')
       angular.copy($scope.memorial,$scope.copyMemorial);
     });
 
+    $scope.isOwner = Memorial.isOwner();
+    $scope.isMember = Memorial.isMember();
+    $scope.isGuest = Memorial.isGuest();
 
     $scope.updateMemorial = function(form){
     	if(form.$valid){

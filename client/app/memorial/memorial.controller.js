@@ -10,12 +10,31 @@ angular.module('doresolApp')
 	  $scope.user = User.getCurrentUser();
 
 		$scope.memorial.$loaded().then(function(value) {
-			// 관리자 이거나 member가 아니면, 가입 요청하도록 수정
-			if( $scope.user.uid !== $scope.memorial.ref_user ) {
-				if( $scope.memorial.members === undefined 
-					|| !$scope.memorial.members[$scope.user.uid]) {
-					$state.go('request', {memorialId: $scope.memorialKey, requesterId: $scope.user.uid});
+			// role setting
+			if($scope.user.uid === $scope.memorial.ref_user ) {
+				Memorial.setMyRole('owner');
+			} else {
+				// no member 
+				if($scope.memorial.members === undefined) {
+					Memorial.setMyRole('guest');
+
+				} else {
+					// member
+					if($scope.memorial.members[$scope.user.uid]) {
+						Memorial.setMyRole('member');
+					} else {
+						Memorial.setMyRole('guest');
+					}
 				}
+			}
+
+			$scope.isGuest = Memorial.isGuest();
+			$scope.isOwner = Memorial.isOwner();
+			$scope.isMember = Memorial.isMember();
+
+			// in case public and guest
+			if($scope.memorial.public && Memorial.isGuest()){
+				$state.go('request', {memorialId: $scope.memorialKey, requesterId: $scope.user.uid});
 			}
 		});
   });

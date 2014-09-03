@@ -11,10 +11,10 @@ angular.module('doresolApp')
     $scope.members = {};
     $scope.waitings = {};
 
+    // generate invites url
 		var longUrl = {
     	"longUrl" : "http://localhost:9876/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
     };
-
     $http.post(ENV.GOOGLE_API_URI, angular.toJson(longUrl)).success(function (data) {
     	$scope.inviteUrl = data.id;
     });
@@ -68,7 +68,7 @@ angular.module('doresolApp')
 
       var userMembersRef =  new Firebase(ENV.FIREBASE_URI + '/users/' + uid + '/memorials/members');
       $firebase(userMembersRef).$remove($scope.memorialKey).then(function(value){
-        console.log(value);
+        $state.go('memorials');
 
       }, function(error) {
         console.log(error);

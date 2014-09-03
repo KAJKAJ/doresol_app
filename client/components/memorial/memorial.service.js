@@ -6,6 +6,11 @@
   var myMemorials = {};
   var currentMemorial = null;
 
+  var myRole = null;
+  var isRoleOwner = false;
+  var isRoleMember = false;
+  var isRoleGuest = false;
+
   var setCurrentMemorial = function(memorialId){
     currentMemorial = findById(memorialId);
   }
@@ -118,7 +123,38 @@
 		var waiting = $firebase(waitingsRef);
 
 		return waiting.$set(requesterId, true);
-	};
+	}
+
+	var setMyRole = function(role){
+		myRole = role;
+		switch(role) {
+			case 'owner':
+				isRoleOwner= true;
+				break;
+			case 'member':
+				isRoleMember = true;
+				break;
+			default:
+				isRoleGuest = true;
+				break;
+		}
+	}
+
+	var getMyRole = function(){
+		return myRole;
+	}
+
+	var isOwner = function(){
+		return isRoleOwner;
+	}
+
+	var isMember = function(){
+		return isRoleMember;
+	}
+
+	var isGuest = function(){
+		return isRoleGuest;
+	}
 
 	return {
 		remove: remove,
@@ -142,8 +178,14 @@
 		addMember: addMember,
 
 		// waiting
-		addWaiting:addWaiting
+		addWaiting:addWaiting,
 
+		// role related
+		setMyRole:setMyRole,
+		getMyRole:getMyRole,
+		isOwner:isOwner,
+		isMember:isMember,
+		isGuest:isGuest
 	};
 	
 });
