@@ -20,7 +20,7 @@
           <h2><strong><i class="fa fa-envelope-o"></i></strong> NEW</h2>
       </div>
       <form name="newStoryForm" class="block-content-full block-content-mini-padding" ng-submit="createNewStory(newStoryForm)" novalidate>
-        <input type="text" class="form-control" ng-model="newStory.headline" placeholder="제목" style="margin: 1px 0px 10px;" ng-required="true"/>
+        <!-- <input type="text" class="form-control" ng-model="newStory.headline" placeholder="제목" style="margin: 1px 0px 10px;" ng-required="true"/> -->
         <textarea class="form-control" ng-model="newStory.text" rows="2" placeholder="전하고 싶은 이야기.." style="resize: vertical;margin: 1px 0px 10px;" ng-required="true"/>
         <div class="clearfix">
             <button type="submit" class="btn btn-sm btn-primary pull-right" ng-disabled="newStoryForm.$invalid"><i class="fa fa-pencil"></i> 등록</button>
@@ -73,14 +73,8 @@
               </div>
               <div class="story-author">
                 <div class="story-show">
-                  <div ng-if="story.ref_user == currentUser.uid">
-                    <strong><input type="text" ng-model="story.headline" ng-blur="storyContentChanged(story)" placeholder="제목을 입력하세요.." /></strong>
-                  </div>
-                  <div ng-if="story.ref_user != currentUser.uid">
-                    <strong>{{story.headline}}</strong>
-                  </div>
+                  <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
                 </div>
-                <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
                 <span class="text-muted">
                   <small>{{story.fromNow}}</small>
                   <span class="text-success"><i class="fa fa-globe" tooltip-placement="right" tooltip="웹" ></i></span>

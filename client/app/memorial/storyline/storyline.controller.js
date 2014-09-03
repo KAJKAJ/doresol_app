@@ -144,6 +144,7 @@ angular.module('doresolApp')
 
     $scope.createNewStory = function(form){
     	if(form.$valid){
+    		$scope.newStory.type = 'storyline';
     		if($scope.newStory.file){
 		    	var file = {
 	          type: $scope.newStory.file.type,
