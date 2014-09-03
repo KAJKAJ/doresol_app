@@ -122,9 +122,11 @@
 
   var createTimelineStory = function(memorialId, newStory) {
     if(newStory.file){
-      return Story.create(newStory).then(File.createLocalFile).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
+      // return Story.create(newStory).then(File.createLocalFile).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
+      return Story.create(newStory).then(File.createLocalFile).then(_create_timeline_story, errorHandler);
     }else{
-      return Story.create(newStory).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
+      // return Story.create(newStory).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
+      return Story.create(newStory).then(_create_timeline_story, errorHandler);
     }
   }
 
