@@ -84,7 +84,7 @@
         </div> 
 		  	<br/>
 
-		  	<button type="submit" class="btn btn-lg btn-primary" ng-disabled="fileUploading||newMemorialForm.$invalid">만들기</button>		  
+		  	<button type="submit" class="btn btn-lg btn-primary" ng-disabled="fileUploading||newMemorialForm.$invalid||!newMemorial.lastUploadingFile">만들기</button>		  
 		  	<br/>
 		  </div>
 	  </form>

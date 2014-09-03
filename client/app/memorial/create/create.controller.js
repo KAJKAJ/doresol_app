@@ -16,20 +16,20 @@ angular.module('doresolApp')
               url: '/tmp/' + $scope.newMemorial.lastUploadingFile,
               updated_at: moment().toString()
             }
-        }
 
-        var memorial = {
-            name: $scope.newMemorial.name,
-            dateOfBirth: moment($scope.newMemorial.dateOfBirth).format("YYYY-MM-DD"),
-            dateOfDeath: moment($scope.newMemorial.dateOfDeath).format("YYYY-MM-DD"),
-            file:file,
-            ref_user:$scope.currentUser.uid,
-            public: $scope.newMemorial.public
-        };
-        
-        Composite.createMemorial(memorial).then(function (value) {
-          $state.transitionTo('memorial.timeline', {id: value.name()});
-        });
+            var memorial = {
+                name: $scope.newMemorial.name,
+                dateOfBirth: moment($scope.newMemorial.dateOfBirth).format("YYYY-MM-DD"),
+                dateOfDeath: moment($scope.newMemorial.dateOfDeath).format("YYYY-MM-DD"),
+                file:file,
+                ref_user:$scope.currentUser.uid,
+                public: $scope.newMemorial.public
+            };
+            
+            Composite.createMemorial(memorial).then(function (value) {
+              $state.transitionTo('memorial.timeline', {id: value.name()});
+            });
+        }
       }
     }
 
