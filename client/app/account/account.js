@@ -34,7 +34,6 @@ angular.module('doresolApp')
       .state('invites', {
         url: '/invites/:memorialId/:inviterId',
         templateUrl: 'app/account/invites/invites.html',
-        controller: 'InvitesCtrl',
-        authenticate: true
+        controller: 'InvitesCtrl'
       });
   });

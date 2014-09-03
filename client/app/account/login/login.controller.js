@@ -51,23 +51,5 @@ angular.module('doresolApp')
         $state.go('signup');
       }
     };
-
-    $scope.loginOauth = function(provider) {
-      Auth.loginOauth(provider).then(function(value){
-        Memorial.clearMyMemorial();
-        Composite.setMyMemorials(value.uid).then(function(){
-
-          if ($state.params.memorialId !== undefined) {
-            $state.params.inviteeId = value.uid;
-            Composite.addMember($state.params).then(function(){
-              $state.go("memorials");
-            });
-          } else {
-            $state.go("memorials");
-          }
-
-        });
-      });
-    };
     
   });

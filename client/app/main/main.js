@@ -7,5 +7,10 @@ angular.module('doresolApp')
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
+      })
+      .state('main_invites', {
+        url: '/invited/:memorialId/:inviterId',
+        templateUrl: 'app/main/main.html',
+        controller: 'MainCtrl'
       });
   });

@@ -1,41 +1,3 @@
-<!-- <div ng-include="'components/navbar/navbar.html'"></div>
-
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header>
-
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-lg-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
-      </ul>
-    </div>
-  </div>
-
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-      </span>
-    </p>
-  </form>
-</div>
-
-<footer class="footer">
-  <div class="container">
-      <p><a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
-  </div>
-</footer> -->
-
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div>
@@ -44,7 +6,7 @@
             Sorry, your browser does not support HTML5 video.
     </video>
 
-    <div id="intro_video_control">
+    <div id="intro_video_control" ng-if="false">
         <span ng-show="muted" class="fa-stack fa-lg" ng-click="unmute()">
             <i class="fa fa-volume-up fa-stack-1x"></i>
             <i class="fa fa-ban fa-stack-2x"></i> 
@@ -57,17 +19,69 @@
 
     <div id="intro_create_overlay">
         <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-7">
             <h1 class="intro_create_title">추억, 사랑, 기억</h1>
             <h2 class="intro_create_sub_title">도래솔은 진심을 다해 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
-            <span class="intro_create_start" ng-click="loginOauth('facebook')"><i class="fa fa-facebook-square"></i> Start Now</span>
-            <p class="intro_create_signup">
-                or          <a ui-sref="signup">Sign up</a>
-                with Email      </p>
         </div>
-        <div class="col-md-2"></div>
+        <div></div>
+        <div ng-show="waitForLogging && !isLoggedIn" class="login-signup col-md-3">
+          <div>
+            <span class="btn btn-primary" ng-click="loginOauth('facebook')"><i class="fa fa-facebook"></i> 페이스북으로 로그인</span>
+            <p>또는</p>
+            <form class="form" name="loginForm" ng-submit="login(loginForm)" novalidate>
+                <input type="text" name="email" placeholder="email" class="form-control" ng-model="loginUser.email">
+                <input type="password" name="password" placeholder="password" class="form-control" ng-model="loginUser.password">
+                <button class="btn btn-info btn-lg btn-login" type="submit">
+                 로그인
+                </button>
+              <div class="form-group has-error">
+                <p class="help-block" ng-show="loginForm.email.$error.required && loginForm.password.$error.required && loginSubmitted">
+                   Please enter your email and password.
+                </p>
+                <p class="help-block">{{ loginErrors.other }}</p>
+              </div>
+              <hr>
+            </form>
+            <!-- register -->
+              <form class="form" name="signupForm" ng-submit="signup(signupForm)" novalidate>
+                도래솔에 처음이세요?| 가입하기
+                <div class="form-group" ng-class="{ 'has-success': signupForm.email.$valid && signupSubmitted,
+                                                    'has-error': signupForm.email.$invalid && signupSubmitted }">
+                  <input type="email" name="email" placeholder="email을 입력하세요" class="form-control" ng-model="signupUser.email"
+                         required
+                         firebase-error/>
+                  <p class="help-block" ng-show="signupForm.email.$error.email && signupSubmitted">
+                    Doesn't look like a valid email.
+                  </p>
+                  <p class="help-block" ng-show="signupForm.email.$error.required && signupSubmitted">
+                    What's your email address?
+                  </p>
+                  <p class="help-block" ng-show="signupForm.email.$error.firebase">
+                    {{ singupErrors.email }}
+                  </p>
+                </div>
+                <div ng-class="{ 'has-success': signupForm.password.$valid && signupSubmitted,
+                                                    'has-error': signupForm.password.$invalid && signupSubmitted }">
+                  <input type="password" placeholder="password" name="password" class="form-control" ng-model="signupUser.password"
+                         ng-minlength="3"
+                         required
+                         firebase-error/>
+                  <p class="help-block"
+                     ng-show="(signupForm.password.$error.minlength || signupForm.password.$error.required) && signupSubmitted">
+                    Password must be at least 3 characters.
+                  </p>
+                  <p class="help-block" ng-show="signupForm.password.$error.mongoose">
+                    {{ singupErrors.password }}
+                  </p>
+                </div>
+                  <button class="btn btn-info btn-lg btn-login" type="submit">
+                    가입하기
+                  </button>
+              </form>
+
+
+          </div> <!-- login -->
     </div>
-    
 </div>
 
 <div class="container">

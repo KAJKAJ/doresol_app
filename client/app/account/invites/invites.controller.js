@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('InvitesCtrl', function ($scope, Util, $stateParams, Memorial, User,$state) {
+  .controller('InvitesCtrl', function ($scope, $window, Auth, Util, $stateParams, Composite, Memorial, User,$state) {
 
     console.log($stateParams);
     $scope.memorial = Memorial.findById($stateParams.memorialId);
@@ -16,11 +16,23 @@ angular.module('doresolApp')
     User.setUsersObject($scope.inviterId);
 
     $scope.cancel = function() {
-      $state.go('login');
+      if(!User.getCurrentUser()) {
+        $stae.go('main');
+      } else {
+        $window.history.back();
+      }
     }
 
     $scope.accept = function() {
-      $state.go('login.invites', {memorialId: $stateParams.memorialId, inviterId: $stateParams.inviterId});
+      var currentUser = User.getCurrentUser();
+      if(currentUser) {
+        $state.params.inviteeId = currentUser.uid;
+        Composite.addMember($state.params).then(function(){
+          $state.go("memorials");
+        });
+      } else {
+        $state.go('main_invites', {memorialId: $stateParams.memorialId, inviterId: $stateParams.inviterId});
+      }
     }
 
     // $scope.openModal = function (story) {

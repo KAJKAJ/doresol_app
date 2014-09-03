@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $q, User, ENV, $firebaseSimpleLogin, Composite) {
+  .factory('Auth', function Auth($location, $q, $rootScope, User, ENV, $firebaseSimpleLogin, Composite) {
     var auth = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
     var currentUser = null;
     
@@ -20,8 +20,6 @@ angular.module('doresolApp')
       return dfd.promise;
     }
 
-    // getCurrentUserFromFirebase();
-
     var register =  function(user) {
     	var _register = function() {
         return auth.$createUser(user.email,user.password).then( function (value){
@@ -29,7 +27,6 @@ angular.module('doresolApp')
           return value;
         });
       };
-
       return _register(user).then(User.create);
     }
 
@@ -102,7 +99,6 @@ angular.module('doresolApp')
     }
 
     return {
-
       register: register,
 
       login: login,

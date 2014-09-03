@@ -94,7 +94,7 @@ angular.module('doresolApp', [
             $state.go(toState, toParams);
             // $state.go(toState, toParams,{notify:false});
           },function(error){
-            $location.path('/login');
+            $location.path('/');
           });
         }
       }

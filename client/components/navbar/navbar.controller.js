@@ -26,6 +26,7 @@ angular.module('doresolApp')
     $scope.isCollapsed = true;
     
     $scope.currentUser = User.getCurrentUser();
+
     if(!$scope.currentUser){
       Auth.getCurrentUserFromFirebase().then(function(AuthValue){
         if(AuthValue){
@@ -34,12 +35,14 @@ angular.module('doresolApp')
             $scope.currentUser = User.getCurrentUser();
           });
         }
+      }, function(error){
+        console.log('auth error');
       });
     }
     
     $scope.logout = function() {
       Auth.logout();
-      $scope.currentUser = null;
+      $scope.currentUser = {};
       $location.path('/home');
     }
 

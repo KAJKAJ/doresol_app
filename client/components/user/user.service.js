@@ -7,8 +7,9 @@ angular.module('doresolApp')
   var users = $firebase(ref);
   
   var currentUser = null;
-
   var usersObject = {};
+
+  var loginTried = false;
 
   var getCurrentUserFromFirebase = function(userId){
     var dfd = $q.defer();
@@ -97,7 +98,7 @@ angular.module('doresolApp')
     return usersObject;
   }
 
-  var clearCurrentUser = function(){
+  var clearCurrentUser = function() {
     currentUser = null;
   }
 
@@ -124,7 +125,7 @@ angular.module('doresolApp')
     update:update,
     setUsersObject:setUsersObject,
     getUsersObject:getUsersObject
-    
+
   }
 
 });
