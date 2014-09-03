@@ -1,8 +1,8 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container contents">	
-	<div masonry item-selector=".brick-memorials">
-		<div class="brick-memorials col-sm-3">
+	<div masonry item-selector=".brick-memorials" preserve-order>
+		<div class="brick-memorials col-md-3">
 			<div class="well">
 				<a ui-sref="memorial_create">
 					<div class="text-center" style="height:300px;border: 2px #1cc41c dashed;">
@@ -11,7 +11,7 @@
 				</a>
 			</div>
 		</div>
-	  <div masonry-brick class="brick-memorials col-sm-3" ng-repeat="(key, memorial) in myMemorials">
+	  <div masonry-brick class="brick-memorials col-md-3" ng-repeat="(key, memorial) in myMemorials">
   		<div class="well">
     		<a ui-sref="memorial.timeline({id:key})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
 	    	<div class="row text-center">
