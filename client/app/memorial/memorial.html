@@ -25,7 +25,8 @@
             <i class="fa fa-camera fa-stack-1x fa-inverse"></i>
           </span>
         </div>  
-        <button ng-if="isOwner && $flow.files[0] && lastUploadingFile" class="btn btn-block btn-primary" ng-disabled="fileUploading" ng-click="changeProfileImage()">저장</button> 
+        <button ng-if="isOwner && $flow.files[0] && lastUploadingFile" class="btn btn-block btn-primary" ng-disabled="fileUploading" ng-click="changeProfileImage()">저장</button>
+        <button ng-if="isGuest" class="btn btn-block btn-primary" ng-click="subscribe()">가입하기</button>
       </div>
     </div>
     <div class="text-center" style="clear:both;">

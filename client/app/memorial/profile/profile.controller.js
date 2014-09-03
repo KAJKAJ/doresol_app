@@ -94,4 +94,20 @@ angular.module('doresolApp')
       $scope[variable] = !$scope[variable];
       console.log($scope[variable]);
     }
+
+    // public인데 guest가 가입코자 할때
+    $scope.subscribe = function() {
+      var params = {
+        memorialId: $scope.memorialKey,
+        inviterId: $scope.currentUser.uid,
+        inviteeId: $scope.currentUser.uid
+      };
+      Composite.addMember(params).then(function(){
+        Memorial.setMyRole('member');
+        $scope.isMember = Memorial.isMember();
+        $scope.isGuest = Memorial.isGuest();
+        $scope.isOwner = Memorial.isOwner();
+      });
+    }
+
   });
