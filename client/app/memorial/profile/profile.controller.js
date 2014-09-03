@@ -13,11 +13,11 @@ angular.module('doresolApp')
     $scope.copyMemorial = {};
 		$scope.memorial.$loaded().then(function(value){
       angular.copy($scope.memorial,$scope.copyMemorial);
-    });
 
-    $scope.isOwner = Memorial.isOwner();
-    $scope.isMember = Memorial.isMember();
-    $scope.isGuest = Memorial.isGuest();
+      $scope.isOwner = Memorial.isOwner();
+      $scope.isMember = Memorial.isMember();
+      $scope.isGuest = Memorial.isGuest();
+    });
 
     $scope.updateMemorial = function(form){
     	if(form.$valid){
@@ -25,7 +25,8 @@ angular.module('doresolApp')
     			{
     				name:$scope.copyMemorial.name,
     				dateOfBirth:moment($scope.copyMemorial.dateOfBirth).format("YYYY-MM-DD"),
-    				dateOfDeath:moment($scope.copyMemorial.dateOfDeath).format("YYYY-MM-DD")
+    				dateOfDeath:moment($scope.copyMemorial.dateOfDeath).format("YYYY-MM-DD"),
+            public:$scope.copyMemorial.public
     			}
     		).then(function(){
     			$scope.message = '저장되었습니다.';

@@ -33,7 +33,7 @@ angular.module('doresolApp')
 			$scope.isMember = Memorial.isMember();
 
 			// in case public and guest
-			if($scope.memorial.public && Memorial.isGuest()){
+			if(!$scope.memorial.public && Memorial.isGuest()){
 				$state.go('request', {memorialId: $scope.memorialKey, requesterId: $scope.user.uid});
 			}
 		});

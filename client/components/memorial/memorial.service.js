@@ -130,11 +130,14 @@
 		switch(role) {
 			case 'owner':
 				isRoleOwner= true;
+				isRoleMember = isRoleGuest = false;
 				break;
 			case 'member':
+				isRoleOwner = isRoleGuest = false;
 				isRoleMember = true;
 				break;
 			default:
+				isRoleOwner = isRoleMember = false;
 				isRoleGuest = true;
 				break;
 		}
