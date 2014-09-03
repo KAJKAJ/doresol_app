@@ -2,8 +2,10 @@
 
 <div class="container contents">	
   <div class="col-md-2">
-		<a ui-sref="memorial.profile({id:memorialKey})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
-  	<h3> {{memorial.name}} </h3>  	
+		<a ui-sref="memorial.profile({id:memorialKey})"><img ng-src="{{memorial.file.url}}" class="img-responsive hover-opacity-8"/></a>
+  	<div class="text-center">
+      <h3> {{memorial.name}} </h3>  	
+    </div>
     <ul class="nav nav-pills nav-stacked" role="tablist" >
 	  	<li ng-class="{active: $state.includes('memorial.storyline')}"><a ui-sref="memorial.storyline({id:memorialKey})"><i class="fa fa-comment"></i> Storyline</a></li>
 	  	<li ng-class="{active: $state.includes('memorial.timeline')}"><a ui-sref="memorial.timeline({id:memorialKey})"><i class="fa fa-road"></i> Timeline</a></li>

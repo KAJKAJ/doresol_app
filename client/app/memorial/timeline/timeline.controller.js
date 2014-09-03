@@ -274,7 +274,7 @@ angular.module('doresolApp')
         "timeline": {
            "headline": $scope.memorial.name,
            "type":"default",
-           "text": $scope.memorial.name + "님의 일대기",
+           "text": $scope.memorial.name + "님의 Timeline",
            "startDate": $scope.memorial.dateOfBirth,
            "asset": {
                         "media": $scope.memorial.file.url
