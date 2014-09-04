@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemberCtrl', function ($scope,Memorial,$stateParams,User,$http,ENV,$firebase,Composite) {
+  .controller('MemberCtrl', function ($scope,Memorial,$stateParams,User,$state,$http,ENV,$firebase,Composite) {
   	// console.log('ProfileCtrl');
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
