@@ -132,13 +132,35 @@ angular.module('doresolApp')
     
     $scope.recentMemorials = [];
     var recentMemorialsRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/');
-    var recentMemorials = recentMemorialsRef.limit(12);
+    var recentMemorials = recentMemorialsRef.limit(500);
 
     recentMemorials.on('child_added', function(value) { 
       var memorial = value.val();
       memorial.$id = value.name();
       $scope.recentMemorials.unshift(memorial);
     });
+
+    // $scope.recentMemorials = [];
+    // var memorialsRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/');
+    // var recentMemorials = $firebase(memorialsRef).$asArray();
+
+    // recentMemorials.$watch(function(event){
+    //   switch(event.event){
+    //     case "child_removed":
+    //       break;
+    //     case "child_added":
+    //       var childRef = memorialsRef.child(event.key);
+    //       var child = $firebase(childRef).$asObject();
+    //       child.$loaded().then(function(value){
+    //         // console.log(value);
+    //         $scope.recentMemorials.push(value);
+    //         $scope.recentMemorials.sort(function(aValue,bValue){
+    //           return aValue.$id < bValue.$id ? 1 : -1;
+    //         });
+    //       });
+    //       break;
+    //   }
+    // });
 
     $scope.browser = Util.getBrowser();
     $scope.width = Util.getWidth();
