@@ -62,29 +62,33 @@ angular.module('doresolApp')
       }
     });
 
-    $scope.removeMember = function(uid) {
+    // remove member from member list
+    $scope.removeMember = function(uid, role) {
       var index = _members.$indexFor(uid);
       _members.$remove(index);
 
       var userMembersRef =  new Firebase(ENV.FIREBASE_URI + '/users/' + uid + '/memorials/members');
       $firebase(userMembersRef).$remove($scope.memorialKey).then(function(value){
-        $state.go('memorials');
-
+        if(role == 'member') $state.go('memorials');          
       }, function(error) {
         console.log(error);
 
       });
     };
 
-    // wainting to members
+    // from waiting list to member list
     $scope.moveMember = function(uid) {
-      var index = _waitings.$indexFor(uid);
-      _waitings.$remove(index);
+      // var index = _waitings.$indexFor(uid);
+      // _waitings.$remove(index);
 
       var params = { memorialId: $scope.memorialKey, inviteeId: uid} ;
       Composite.addMember(params).then(function(){
-        console.log('Success');
-
+        var removeParams = {
+            memorialId: $scope.memorialKey,
+            requesterId: uid
+        };
+        Composite.removeWaiting(removeParams).then(function(value){
+        })
       }, function(error){
         console.log(error);
 
