@@ -6,16 +6,16 @@
         <h2><strong>My 메모리얼</strong></h2>
     </div>
 		<div masonry item-selector=".brick-memorials" preserve-order>
-			<div class="brick-memorials col-md-3">
-				<div class="well">
+			<div class="brick-memorials col-md-3 col-sm-6 col-xs-12">
+				<div class="brick-memorial-wrapper">
 					<a ui-sref="memorial_create">
-						<div class="text-center" style="width:300px;height:300px;border: 2px #1cc41c dashed;">
+						<div class="text-center" style="height:300px;border: 2px #1cc41c dashed;">
 							<span class="memorial-plus-btn text-success"><i class="fa fa-plus-circle fa-4x"></i></span>
 						</div>
 					</a>
 				</div>
 			</div>
-		  <div masonry-brick class="brick-memorials col-md-3" ng-repeat="(key, memorial) in myMemorials">
+		  <div masonry-brick class="brick-memorials col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, memorial) in myMemorials">
 		  	<div class="brick-memorial-wrapper">
 	      	<!-- <div class="ribbon-wrapper"><div class="ribbon-green">NEWS</div></div> -->
 	      	<a ui-sref="memorial.timeline({id:key})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
