@@ -277,7 +277,8 @@ angular.module('doresolApp')
         "timeline": {
            "headline": $scope.memorial.name,
            "type":"default",
-           "text": $scope.memorial.name + "님의 Timeline",
+           // "text": $scope.memorial.name + "님의 Timeline",
+           "text": "님의 타임라인입니다..",
            "startDate": $scope.memorial.dateOfBirth,
            "asset": {
                         "media": $scope.memorial.file.url
@@ -306,8 +307,8 @@ angular.module('doresolApp')
 
       createStoryJS({
            type:       'timeline',
-           width:      '100%',
-           height:     '600',
+           // width:      '100%',
+           height:     '700',
            source:     timeline_data,
            embed_id:   'timeline-embed'
        });
