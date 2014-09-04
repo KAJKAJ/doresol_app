@@ -25,10 +25,16 @@
     <!-- endbuild -->
   </head>
   <body>
-    <!--[if lt IE 9]>
-      <script>alert("지원하지 않는 버전의 브라우저 입니다. IE10 버전 이상, 혹은 Chrome 브라우져를 사용해 주세요.");</script>
+    <!--[if lt IE 10]>
+      <div>
+        <div class="alert alert-danger" role="alert">
+            <br/><br/><br/><br/>
+            지원하지 않는 버전의 브라우저 입니다. IE10 버전 이상, 혹은 Chrome 브라우져를 사용해 주세요.
+            <br/><br/><br/><br/>
+        </div>
+      </div>
     <![endif]-->
-
+   
     <!-- Add your site or application content here -->
     <div ui-view=""></div>
 
