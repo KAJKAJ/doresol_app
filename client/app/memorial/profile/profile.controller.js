@@ -107,7 +107,8 @@ angular.module('doresolApp')
         $scope.isMember = Memorial.isMember();
         $scope.isGuest = Memorial.isGuest();
         $scope.isOwner = Memorial.isOwner();
-        $state.go('memorial.storyline', {id: $scope.memorialKey})
+        // $state.go('memorial.storyline', {id: $scope.memorialKey})
+        $state.transitionTo('memorial.storyline', {id: $scope.memorialKey}, {'reload':true});
       });
     }
 
