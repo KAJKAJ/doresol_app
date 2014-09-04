@@ -20,20 +20,24 @@
     return currentMemorial;
   }
 
-  var addMyMemorial = function(key,value){
-  	// console.log(value);
-  	value.count_member = 1;
-  	if(value.timeline && value.timeline.stories){
-  		value.count_timeline = Object.keys(value.timeline.stories).length;
+  var setMemorialSummary = function(memorial){
+  	memorial.count_member = 1;
+  	if(memorial.timeline && memorial.timeline.stories){
+  		memorial.count_timeline = Object.keys(memorial.timeline.stories).length;
   	}else{
-  		value.count_timeline = 0;
+  		memorial.count_timeline = 0;
   	}
 
-  	if(value.storyline && value.storyline.stories){
-  		value.count_storyline = Object.keys(value.storyline.stories).length;
+  	if(memorial.storyline && memorial.storyline.stories){
+  		memorial.count_storyline = Object.keys(memorial.storyline.stories).length;
   	}else{
-  		value.count_storyline = 0;
+  		memorial.count_storyline = 0;
   	}
+  	return memorial;
+  }
+
+  var addMyMemorial = function(key,value){
+  	value = setMemorialSummary(value);
   	myMemorials[key] = value;
   }
 
@@ -53,25 +57,20 @@
   	var userMemorialWaitingsRef = new Firebase(ENV.FIREBASE_URI + '/users/' + userId + '/memorials/waitings');
   	var _waitings = $firebase(userMemorialWaitingsRef).$asArray();
 
-  	_waitings.$loaded().then(function(values){
-  		angular.forEach(values, function(value, key) {
-  			var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/' + value.$id);
-  			var _memorial = $firebase(memorialRef).$asObject();
-  			myWaitingMemorials[value.$id] = _memorial;
-  			// _memorial.$loaded().then(function(memorial) {
-					// myWaitingMemorials[memorial.id] = memorial;
-  			// });
-  		})
-  	})
-
   	_waitings.$watch(function(event){
       switch(event.event){
         case "child_removed":
-        	delete myWaitingMemorials[event.key];
+        	// delete myWaitingMemorials[event.key];
         break;
         case "child_added":
-        	myWaitingMemorials[event.key] = event;
-        break;
+        	var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/' + event.key);
+	  			var _memorial = $firebase(memorialRef).$asObject();
+	  			
+	  			_memorial.$loaded().then(function(value){
+	  				value = setMemorialSummary(value);
+	  				myWaitingMemorials[value.$id] = value;
+	  			});
+	  	  break;
       }
     });
   }

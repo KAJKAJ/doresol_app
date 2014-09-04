@@ -24,6 +24,7 @@
           var childRef = memorialsRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
+            value.own = true;
             Memorial.addMyMemorial(event.key,value);
           });
         break;
@@ -43,6 +44,7 @@
           var childRef = memorialsRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
+            value.own = false;
             Memorial.addMyMemorial(event.key,value);
           });
         break;
