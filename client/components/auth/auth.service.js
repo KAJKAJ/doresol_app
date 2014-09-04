@@ -72,6 +72,25 @@ angular.module('doresolApp')
              thirdPartyUserData: value.thirdPartyUserData
             });
           }
+        },function(error){
+          if(error === 'user is deleted'){
+            var profile = {
+              name: value.displayName,
+              file:{
+                location: 'facebook',
+                url: value.thirdPartyUserData.picture.data.url,
+                updated_at: moment().toString()
+              }
+            }
+            
+            User.update(value.uid, 
+            {
+             uid: value.uid,
+             id: value.id,         
+             profile: profile,
+             thirdPartyUserData: value.thirdPartyUserData
+            });
+          }
         });
         deferred.resolve(value);
       }, function(error) {
