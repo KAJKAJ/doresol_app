@@ -158,7 +158,24 @@
 
     return Memorial.addMember(object.memorialId, object.inviteeId).then(_add_member, errorHandler);
   }
-  
+
+  var addWaiting = function(object) {
+    var _add_waiting = function(object){
+      var waitingRef = new Firebase(ENV.FIREBASE_URI + '/users/' + object.requesterId + '/memorials/waitings');
+      return $firebase(waitingRef).$set(object.memorialId, true);
+    }
+    return Memorial.addWaiting(object.memorialId, object.requesterId).then(_add_waiting, errorHandler);
+  }
+
+  var removeWaiting = function(object) {
+   var _remove_waiting = function(object){
+      var waitingRef = new Firebase(ENV.FIREBASE_URI + '/users/' + object.requesterId + '/memorials/waitings');
+      return $firebase(waitingRef).$remove(object.memorialId);
+    }
+
+    return Memorial.removeWaiting(object.memorialId, object.requesterId).then(_remove_waiting, errorHandler); 
+  }
+
   return {
 		createMemorial:createMemorial,
     setMyMemorials:setMyMemorials,
@@ -172,7 +189,10 @@
 
     // member 
     addMember: addMember,
-    updateUserProfileWithFile:updateUserProfileWithFile
+    updateUserProfileWithFile:updateUserProfileWithFile,
+
+    addWaiting: addWaiting,
+    removeWaiting: removeWaiting
 	};
 	
 });

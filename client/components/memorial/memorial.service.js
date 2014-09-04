@@ -4,6 +4,7 @@
   .factory('Memorial', function Memorial($firebase, $q, ENV) {
   
   var myMemorials = {};
+  var myWaitingMemorials = {};
   var currentMemorial = null;
 
   var myRole = null;
@@ -42,6 +43,37 @@
 
   var getMyMemorials = function(){
   	return myMemorials;
+  }
+
+  var getMyWaitingMemorials = function() {
+  	return myWaitingMemorials;
+  }
+
+  var fetchMyWaitingMemorials = function(userId) {
+  	var userMemorialWaitingsRef = new Firebase(ENV.FIREBASE_URI + '/users/' + userId + '/memorials/waitings');
+  	var _waitings = $firebase(userMemorialWaitingsRef).$asArray();
+
+  	_waitings.$loaded().then(function(values){
+  		angular.forEach(values, function(value, key) {
+  			var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/' + value.$id);
+  			var _memorial = $firebase(memorialRef).$asObject();
+  			myWaitingMemorials[value.$id] = _memorial;
+  			// _memorial.$loaded().then(function(memorial) {
+					// myWaitingMemorials[memorial.id] = memorial;
+  			// });
+  		})
+  	})
+
+  	_waitings.$watch(function(event){
+      switch(event.event){
+        case "child_removed":
+        	delete myWaitingMemorials[event.key];
+        break;
+        case "child_added":
+        	myWaitingMemorials[event.key] = event;
+        break;
+      }
+    });
   }
 
   var getMyMemorial = function(memorialId) {
@@ -122,8 +154,25 @@
 		var waitingsRef = ref.child(memorialId + '/waitings');
 		var waiting = $firebase(waitingsRef);
 
-		return waiting.$set(requesterId, true);
-	}
+		return waiting.$set(requesterId, true).then(function(value){
+			return {
+				memorialId: memorialId,
+				requesterId: requesterId
+			};
+		});
+	};
+
+	var removeWaiting = function(memorialId, requesterId) {
+		var waitingsRef = ref.child(memorialId + '/waitings');
+		var waiting = $firebase(waitingsRef);
+
+		return waiting.$remove(requesterId).then(function(value){
+			return {
+				memorialId: memorialId,
+				requesterId: requesterId
+			};
+		});
+	};
 
 	var setMyRole = function(role){
 		myRole = role;
@@ -172,6 +221,8 @@
     clearMyMemorial:clearMyMemorial,
     setCurrentMemorial:setCurrentMemorial,
     getCurrentMemorial:getCurrentMemorial,
+    getMyWaitingMemorials:getMyWaitingMemorials,
+    fetchMyWaitingMemorials:fetchMyWaitingMemorials,
 
 		createEra:createEra,
 		updateEra:updateEra,
@@ -182,6 +233,7 @@
 
 		// waiting
 		addWaiting:addWaiting,
+		removeWaiting:removeWaiting,
 
 		// role related
 		setMyRole:setMyRole,

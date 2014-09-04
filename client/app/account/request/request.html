@@ -47,10 +47,11 @@
     </ul>
     <div class="well">
       선택하신 메모리얼을 확인하기 위해서는 관리자의 승인이 필요합니다.<br>
-      아래 요청을 누르시면 관리자에게 승인 요청이 가며, 향후 승인 시에 연락을 받으실 수 있습니다.
+      아래 요청을 누르시면 관리자에게 승인 요청이 가며, 향후 승인 시에 연락을 받으실 수 있습니다.<br>
+      이미 요청을 하신 분이면, 관리자가 승인 하기 전에 요청 취소를 할 수 있습니다.
     </div>
-    <button class="btn btn-primary" ng-click="accept()">요청하기
-    <button class="btn btn-primary" ng-click="cancel()">취소하기
+    <button ng-if="memorial.waitings[currentUser.uid]" class="btn btn-primary" ng-click="cancel()">요청 취소하기
+    <button ng-if="!memorial.waitings[currentUser.uid]" class="btn btn-primary" ng-click="accept()">가입 요청하기
   </div>
 
 </div>

@@ -1,26 +1,38 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('RequestCtrl', function RequestCtrl($scope, Util, $stateParams, Memorial, User,$state) {
+  .controller('RequestCtrl', function RequestCtrl($scope, Util, $stateParams, Memorial, Composite, User,$state) {
 
     $scope.memorial = Memorial.findById($stateParams.memorialId);
+    $scope.currentUser = User.getCurrentUser();
     $scope.users = User.getUsersObject();
 
     console.log($scope.memorial);
+    console.log($state.params);
 
     $scope.memorial.$loaded().then(function() {
-        User.setUsersObject($scope.memorial.ref_user);    
+        User.setUsersObject($scope.memorial.ref_user);
     })
     
     $scope.cancel = function() {
-      $state.go('memorials');
+        var params = {
+            memorialId: $state.params.memorialId,
+            requesterId: $state.params.requesterId
+        };
+        Composite.removeWaiting(params).then(function(value){
+            $state.go('memorials');
+        })
     }
 
     $scope.accept = function() {
         console.log($state.params);
-        Memorial.addWaiting($state.params.memorialId, $state.params.requesterId).then(function(value){
+        var params = {
+            memorialId: $state.params.memorialId,
+            requesterId: $state.params.requesterId
+        };
+        Composite.addWaiting(params).then(function(value){
             $state.go('memorials');
-        });
+        })
     }
 
     // $scope.openModal = function (story) {
