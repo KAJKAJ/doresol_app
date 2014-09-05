@@ -4,6 +4,7 @@ angular.module('doresolApp')
   .controller('MemorialCreateCtrl', function ($scope,$rootScope, $state,Util,Composite,User) {
     $scope.today = Date.now();
     $scope.newMemorial = {};
+    $scope.newMemorial.public = true;
     $scope.currentUser = User.getCurrentUser();
 
     $scope.createMemorial = function(form){
@@ -15,25 +16,26 @@ angular.module('doresolApp')
               url: '/tmp/' + $scope.newMemorial.lastUploadingFile,
               updated_at: moment().toString()
             }
-        }
 
-        var memorial = {
-            name: $scope.newMemorial.name,
-            dateOfBirth: moment($scope.newMemorial.dateOfBirth).format("YYYY-MM-DD"),
-            dateOfDeath: moment($scope.newMemorial.dateOfDeath).format("YYYY-MM-DD"),
-            file:file
-        };
-        
-        Composite.createMemorial(memorial).then(function (value) {
-          $state.transitionTo('memorial.timeline', {id: value.name()});
-        });
+            var memorial = {
+                name: $scope.newMemorial.name,
+                dateOfBirth: moment($scope.newMemorial.dateOfBirth).format("YYYY-MM-DD"),
+                dateOfDeath: moment($scope.newMemorial.dateOfDeath).format("YYYY-MM-DD"),
+                file:file,
+                ref_user:$scope.currentUser.uid,
+                public: $scope.newMemorial.public
+            };
+            
+            Composite.createMemorial(memorial).then(function (value) {
+              $state.transitionTo('memorial.timeline', {id: value.name()});
+            });
+        }
       }
-    };
+    }
 
     $scope.getFlowFileUniqueId = function(file){
-
       return $scope.currentUser.uid.replace(/[^\.0-9a-zA-Z_-]/img, '') + '-' + Util.getFlowFileUniqueId(file);
-    };
+    }
    
     $scope.$on('flow::fileSuccess', function (event, $flow, flowFile, message) {
       $scope.fileUploading = false;
@@ -50,5 +52,5 @@ angular.module('doresolApp')
 
       $scope[variable] = true;
 
-    };
+    }
   });

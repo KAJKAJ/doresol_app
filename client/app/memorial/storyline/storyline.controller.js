@@ -6,8 +6,7 @@ angular.module('doresolApp')
     $scope.memorial = Memorial.getCurrentMemorial();
     
     $scope.currentUser = User.getCurrentUser();
-    $scope.currentUser.profile = User.getUserProfile($scope.currentUser);
-
+    
     $scope.storiesObject = {};
     $scope.storiesArray = [];
     $scope.users = User.getUsersObject();
@@ -22,6 +21,10 @@ angular.module('doresolApp')
 
     $scope.memorial.$loaded().then(function(value){
     	fetchStories($scope.priorityForOldStory);
+
+    	$scope.isMember = Memorial.isMember();
+    	$scope.isOwner = Memorial.isOwner();
+    	$scope.isGuest = Memorial.isGuest();
     });
 
     $scope.fetchMoreStories = function(){
@@ -145,6 +148,7 @@ angular.module('doresolApp')
 
     $scope.createNewStory = function(form){
     	if(form.$valid){
+    		$scope.newStory.type = 'storyline';
     		if($scope.newStory.file){
 		    	var file = {
 	          type: $scope.newStory.file.type,

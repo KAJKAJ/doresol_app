@@ -10,7 +10,7 @@
 
 .drop {
     padding: 15px;
-    border: 2px #f1f1f1 dashed;
+    border: 2px #1cc41c dashed;
     border-radius: 5px;
     line-height: 34px;
 }
@@ -102,11 +102,17 @@
   height:212px;
   width:212px;
   vertical-align: middle;
+  /*border: 1px dotted #cfcfcf;*/
+  border-radius: 4px 4px 4px 4px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
   border: 1px dotted #cfcfcf;
+  /*box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .1);*/
+
   margin-bottom: 1px;
 }
 .superbox-list.new {
-  border: 1px solid red;
+  border: 1px solid  red;
 }
 /* spinner */
 .superbox-spinner{

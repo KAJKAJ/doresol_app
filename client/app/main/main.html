@@ -1,73 +1,131 @@
-<!-- <div ng-include="'components/navbar/navbar.html'"></div>
-
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
+<div ng-if="isMobile">
+  <div class="alert alert-info alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="fa fa-info-circle"></i> Info</h4> 현재 모바일 버전은 지원하지 않습니다.
   </div>
-</header>
-
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-lg-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
-      </ul>
-    </div>
-  </div>
-
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-      </span>
-    </p>
-  </form>
 </div>
 
-<footer class="footer">
-  <div class="container">
-      <p><a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
-         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
-  </div>
-</footer> -->
-
-<div ng-include="'components/navbar/navbar.html'"></div>
-
-<div>
-    <video id="intro_video" preload="auto" autoplay="true" loop="loop" muted="true">
-         <source src="assets/videos/intro_video_1.mp4" type="video/mp4">
+<div ng-if="!isMobile">
+  <div ng-include="'components/navbar/navbar.html'"></div>
+      <!-- <video id="intro_video" preload="auto" autoplay="true" loop="loop" muted="true">
+         <source type="video/mp4" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_high.mp4">
+         <source type="video/ogg" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg">
             Sorry, your browser does not support HTML5 video.
-    </video>
+      </video> -->
+      
+      <iframe src="//player.vimeo.com/video/105320016?autoplay=true&loop=true" width="100%" height="800px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-    <div id="intro_video_control">
-        <span ng-show="muted" class="fa-stack fa-lg" ng-click="unmute()">
-            <i class="fa fa-volume-up fa-stack-1x"></i>
-            <i class="fa fa-ban fa-stack-2x"></i> 
-        </span>
-        <span ng-show="!muted" class="fa-stack fa-lg" ng-click="mute()">
-            <i class="fa fa-volume-up fa-stack-1x"></i>
-            <i class="fa fa-circle-o fa-stack-2x"></i> 
-        </span>
-    </div>
-
-    <div id="intro_create_overlay">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <h1 class="intro_create_title">추억, 사랑, 기억</h1>
-            <h2 class="intro_create_sub_title">도래솔은 진심을 다해 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
-            <span class="intro_create_start" ng-click="loginOauth('facebook')"><i class="fa fa-facebook-square"></i> Start Now</span>
-            <p class="intro_create_signup">
-                or          <a ui-sref="signup">Sign up</a>
-                with Email      </p>
+      <div id="intro_create_overlay">
+        <div class="col-sm-12" ng-if="isLoggedIn">
+          <h1 class="intro_create_title">추억, 사랑, 기억</h1>
+          <h2 class="intro_create_sub_title">도래솔은 진심을 다해 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
         </div>
-        <div class="col-md-2"></div>
-    </div>
-    
-</div>
+        <div class="col-sm-9" ng-if="waitForLogging && !isLoggedIn">
+          <h1 class="intro_create_title">추억, 사랑, 기억</h1>
+          <h2 class="intro_create_sub_title">도래솔은 진심을 다해 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
+        </div>
+        <div class="col-sm-3" ng-if="waitForLogging && !isLoggedIn">
+          <div ng-show="waitForLogging && !isLoggedIn" class="login-block">
+            <div>
+              <div class="well">
+                <span class="btn btn-block btn-primary" ng-click="loginOauth('facebook')"><i class="fa fa-facebook"></i> 페이스북으로 로그인</span>
+                  <span style="color:gray;font-size:10px;">OR</span>
+                <form class="form" name="loginForm" ng-submit="login(loginForm)" novalidate>
+                    <input type="text" name="email" placeholder="email" class="form-control" ng-model="loginUser.email">
+                    <input type="password" name="password" placeholder="password" class="form-control" ng-model="loginUser.password">
+                    <button class="btn btn-info btn-block btn-login" type="submit">
+                     로그인
+                    </button>
+                  <div class="form-group has-error">
+                    <p class="help-block" ng-show="loginForm.email.$error.required && loginForm.password.$error.required && loginSubmitted">
+                       Please enter your email and password.
+                    </p>
+                    <p class="help-block">{{ loginErrors.other }}</p>
+                  </div>
+                </form>
+              </div>
+              <hr>
+              
+              <div class="well">
+                <span style="color:gray;font-size:14px;">도래솔에 처음이세요?</span>
+                <form class="form" name="signupForm" ng-submit="signup(signupForm)" novalidate>
+                  <div class="form-group" ng-class="{ 'has-success': signupForm.email.$valid && signupSubmitted,
+                                                      'has-error': signupForm.email.$invalid && signupSubmitted }">
+                    <input type="email" name="email" placeholder="email을 입력하세요" class="form-control" ng-model="signupUser.email"
+                           required
+                           firebase-error/>
+                    <p class="help-block" ng-show="signupForm.email.$error.email && signupSubmitted">
+                      Doesn't look like a valid email.
+                    </p>
+                    <p class="help-block" ng-show="signupForm.email.$error.required && signupSubmitted">
+                      What's your email address?
+                    </p>
+                    <p class="help-block" ng-show="signupForm.email.$error.firebase">
+                      {{ singupErrors.email }}
+                    </p>
+                  </div>
+                  <div ng-class="{ 'has-success': signupForm.password.$valid && signupSubmitted,
+                                                      'has-error': signupForm.password.$invalid && signupSubmitted }">
+                    <input type="password" placeholder="password" name="password" class="form-control" ng-model="signupUser.password"
+                           ng-minlength="3"
+                           required
+                           firebase-error/>
+                    <p class="help-block"
+                       ng-show="(signupForm.password.$error.minlength || signupForm.password.$error.required) && signupSubmitted">
+                      Password must be at least 3 characters.
+                    </p>
+                    <p class="help-block" ng-show="signupForm.password.$error.mongoose">
+                      {{ singupErrors.password }}
+                    </p>
+                  </div>
+                    <button class="btn btn-info btn-block btn-login" type="submit">
+                      가입하기
+                    </button>
+                </form>
+              </div>
 
-           
+            </div>
+        </div>
+      </div>
+
+  </div>
+
+  <div class="container">
+    <div>
+     사이트 소개
+    </div>
+    <br/><br/>
+
+    <div class="block-section">
+      <div class="block-title">
+          <h2><strong>Recent Memorials</strong></h2>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <input type="text" class="form-control" placeholder="Search.." ng-model="recent.search">
+        </div>
+      </div>
+      <div masonry item-selector=".brick-recent-memorial">
+        <div masonry-brick class="brick-recent-memorial" ng-repeat="(key, memorial) in recentMemorials | filter:{ name: recent.search }">
+          <div class="recent-memorial-detail">
+            <img ng-src="{{memorial.file.url}}" class="img-responsive" style="width:300px;height:300px"/>
+            <div class="overlay text-center">
+              <div class="overlay_detail">
+                <div class="pull-left public">
+                  &nbsp;
+                  <button ng-if="memorial.public" class="btn btn-xs btn-default" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
+                  <button ng-if="!memorial.public" class="btn btn-xs btn-default" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button>
+                </div>
+                <br/><br/><br/><br/>
+                <h3><strong>{{memorial.name}}</strong></h3>
+                <div>
+                  <button type="button" class="btn btn-success" ui-sref="memorial.timeline({id:memorial.$id})">보기</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

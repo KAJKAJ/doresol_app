@@ -1,5 +1,5 @@
 
-<ul class="slot-list-wrapper">
+<!-- <ul class="slot-list-wrapper">
 	<span ng-repeat="(key, era) in memorial.timeline.era" class="slot" ng-class="{slotactive: getSelectedEraKey() == key}" ng-click="setSelectedEra(key, era)">
 		<li >
 			{{era.headline}}
@@ -11,4 +11,13 @@
   <li class="slot-add" style="text-align:center" ng-class="{slotactive: getSelectedEraKey() == 'tempKey'}" ng-click="setSelectedEra('tempKey', {})">
       <i class="fa fa-plus-circle fa-2x text-success"/>
   </li>
+</ul> -->
+
+<ul class="nav nav-tabs" data-toggle="tabs">
+  <li ng-repeat="(key, era) in memorial.timeline.era" ng-class="{active: getSelectedEraKey() == key}" ng-click="setSelectedEra(key, era)">
+  	<a>{{era.headline}} <span class="badge">{{storiesArray[key].length}}</span></a>
+  </li>
+  <li ng-class="{active: getSelectedEraKey() == 'tempKey'}" ng-click="setSelectedEra('tempKey', {})">
+    <a><i class="fa fa-plus-circle"/></a>
+	</li>
 </ul>

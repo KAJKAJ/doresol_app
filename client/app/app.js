@@ -7,10 +7,11 @@ angular.module('doresolApp', [
   'ui.bootstrap',
   'ui.router',
   'flow',
-  'xeditable',
+  // 'xeditable',
   'config',
   'firebase',
-  'ui.sortable'
+  'ui.sortable',
+  'wu.masonry'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -33,6 +34,18 @@ angular.module('doresolApp', [
       };
       return $delegate;
     });
+
+    //temporary solution for angular-bootstrap datepicker format error in 0.11.0 version
+    $provide.decorator('dateParser', function($delegate){
+      var oldParse = $delegate.parse;
+      $delegate.parse = function(input, format) {
+        if ( !angular.isString(input) || !format ) {
+          return input;
+        }
+        return oldParse.apply(this, arguments);
+      };
+      return $delegate;
+    });
   })
   
   .config(['datepickerPopupConfig', function(datepickerPopupConfig) {
@@ -41,7 +54,6 @@ angular.module('doresolApp', [
     // datepickerPopupConfig.toggleWeeksText = "week?";
     datepickerPopupConfig.closeText = "닫기";
   }]) 
-  
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {
@@ -69,9 +81,10 @@ angular.module('doresolApp', [
     };
   })
 
-  .run(function ($rootScope, $location, $state, Auth, User, editableOptions, Composite) {
+  // .run(function ($rootScope, $location, $state, Auth, User, editableOptions, Composite) {
+  .run(function ($rootScope, $location, $state, Auth, User, Composite) {    
 
-    editableOptions.theme = 'bs3';
+    // editableOptions.theme = 'bs3';
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
       var _getUserAuth = function(){
@@ -93,7 +106,7 @@ angular.module('doresolApp', [
             $state.go(toState, toParams);
             // $state.go(toState, toParams,{notify:false});
           },function(error){
-            $location.path('/login');
+            $location.path('/');
           });
         }
       }

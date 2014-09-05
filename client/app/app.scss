@@ -32,12 +32,15 @@ input.ng-invalid.ng-dirty {
 // injector
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
+@import 'deckgrid.scss';
 @import 'main/main.scss';
+@import 'memorial/create/create.scss';
+@import 'memorial/member/member.scss';
 @import 'memorial/memorial.scss';
 @import 'memorial/storyline/storyline.scss';
 @import 'memorial/timeline/timeline.scss';
 @import 'memorial/timeline/timeline_story.scss';
-@import 'mydoresol/mydoresol.scss';
+@import 'memorials/memorials.scss';
 @import 'proui.scss';
 @import 'navbar/navbar.scss';
 // endinjector

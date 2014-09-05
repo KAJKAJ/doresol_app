@@ -3,37 +3,90 @@
 angular.module('doresolApp')
   .controller('TimelineCtrl', function ($scope, $q, Util, Composite,Memorial,$stateParams,User,Story,$state, ENV, $firebase,$timeout) {
 
-    $scope.editMode = true;
+    $scope.editMode = false;
     $scope.newStoryCnt = 0;
+    $scope.currentUser = User.getCurrentUser();
 
-    var waitStoryLoaded = function(){
+    $scope.totalStoryCnt = 0;
+    $scope.isChanged = false;
+
+    // $scope.waitStoryLoaded = function(){
+    //   // console.log('--');
+    //   console.log($scope.totalStoryCnt);
+    //   console.log($scope.storyCnt);
+    //   if($scope.totalStoryCnt == $scope.storyCnt){
+    //     if($scope.totalStoryCnt > 0){
+    //       // $scope.toggleEditMode();
+    //       $scope.isChanged = false;
+    //       $scope.createTimeline();
+    //       if($scope.currentUser.uid == $scope.memorial.ref_user){
+    //         $scope.toggleEditMode();
+    //       }
+    //     }else{
+    //       if($scope.currentUser.uid == $scope.memorial.ref_user){
+    //         $scope.toggleEditMode();
+    //       }
+    //     }
+    //   }else{
+    //     $timeout($scope.waitStoryLoaded(), 100);
+    //   }
+    // }
+    $scope.waitStoryLoaded = function(){
       if($scope.totalStoryCnt == $scope.storyCnt){
         if($scope.totalStoryCnt > 0){
-          $scope.toggleEditMode();
+          // $scope.toggleEditMode();
+          $scope.isChanged = false;
           $scope.createTimeline();
+          if($scope.currentUser.uid == $scope.memorial.ref_user){
+            $scope.toggleEditMode();
+          }
+
+        }else{
+          if($scope.currentUser.uid == $scope.memorial.ref_user){
+            $scope.toggleEditMode();
+          }
         }
       }else{
-        $timeout(waitStoryLoaded, 100);
+        $timeout($scope.waitStoryLoaded(), 100);
       }
     };
+
+    // $scope.$watch('totalStoryCnt',function(value){
+    //   if(value > 0){
+    //     if($scope.currentUser.uid != $scope.memorial.ref_user){
+    //       console.log($scope.storiesArray);
+    //     }
+    //   }
+    // })
 
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
 
     $scope.memorial.$loaded().then(function(value){
-      // console.log(value);
-      // //temp
-      // $timeout(function(){$scope.createTimeline()},500);
-      // if(!value.timeline || !value.timeline.stories){
-      //   $scope.editMode = true;
-      // }
-      waitStoryLoaded();
+
+      $scope.isOwner = Memorial.isOwner();
+      $scope.isMember = Memorial.isMember();
+      $scope.isGuest = Memorial.isGuest();
+
+      //set default tab for era
+      if(value.timeline && value.timeline.era){
+        var firstEraKey = null;
+        for (var key in value.timeline.era) {
+            firstEraKey = key;
+            break;
+        }
+        if(firstEraKey){
+          $scope.setSelectedEra(firstEraKey,$scope.memorial.timeline.era[firstEraKey]);
+        }
+      }else{
+        $scope.setSelectedEra("tempKey",{});
+      }
+      $scope.waitStoryLoaded();  
     });
 
     // $scope.selectedEraKey = {};
     $scope.selectedEra = {};
-    $scope.currentUser = User.getCurrentUser();
-
+    
     $scope.storiesArray = {};
     $scope.storiesObject = {};
 
@@ -51,6 +104,7 @@ angular.module('doresolApp')
         // for (var i=0; i< $scope.storiesArray[$scope.selectedEraKey].length; i++) {
           
         // };
+        $scope.isChanged = true;
       }
     };
 
@@ -61,6 +115,7 @@ angular.module('doresolApp')
     $scope.storyCnt = 0;
     _timelineStories.$loaded().then(function(value){
       $scope.totalStoryCnt = _timelineStories.length;
+      // console.log($scope.totalStoryCnt);
     });
 
     _timelineStories.$watch(function(event){
@@ -73,6 +128,7 @@ angular.module('doresolApp')
           var childRef = storiesRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
+            // console.log(value);
             // $scope.timelineStories[event.key] = value;
             if($scope.storiesArray[value.ref_era] == undefined) {
               $scope.storiesArray[value.ref_era] = [];
@@ -101,8 +157,15 @@ angular.module('doresolApp')
             value.$bindTo($scope, "storiesObject['"+value.ref_era+"']['"+event.key+"']").then(function(){
               $scope.storiesObject[value.ref_era][event.key].newStory = false;
               $scope.storyCnt++;
+              // console.log($scope.storyCnt);
+              if($scope.totalStoryCnt > 0 && $scope.currentUser.uid != $scope.memorial.ref_user){
+                if($scope.totalStoryCnt == $scope.storyCnt){
+                  $scope.createTimeline();
+                }
+              }
               // console.log($scope.storiesObject[value.ref_era][event.key]);
-            });            
+            });  
+            // console.log($scope.storiesArray);          
           });
         break;
       }
@@ -134,7 +197,7 @@ angular.module('doresolApp')
       $scope.selectedEraKey = key;
       angular.copy(era, $scope.selectedEra);
       // $scope.stories = [];
-      if(key == 'tempKey'){
+      if(key == 'tempKey' && $scope.eraForm){
         $scope.eraForm.$setPristine();
       }else{
         /*
@@ -147,7 +210,7 @@ angular.module('doresolApp')
         });
         */
       }
-    };
+    }
 
     $scope.removeSelectedEra = function(key){
       $scope.selectedEraKey = null;
@@ -156,7 +219,15 @@ angular.module('doresolApp')
       Memorial.removeEra($scope.memorialKey,key);
       // todo : should delete stories referenced
       //
-    };
+    }
+
+    var waitSubmittedEraLoaded = function(eraKey){
+      if($scope.memorial.timeline.era[eraKey]){
+        $scope.setSelectedEra(eraKey,$scope.memorial.timeline.era[eraKey]);
+      }else{
+        $timeout(waitSubmittedEraLoaded, 100);
+      }
+    }
 
     $scope.submitEra = function(form) {
       if(form.$valid) {
@@ -165,11 +236,13 @@ angular.module('doresolApp')
         $scope.selectedEra.endDate = moment($scope.selectedEra.endDate).format('YYYY-MM-DD');
 
         if($scope.selectedEraKey == 'tempKey') {
-          Memorial.createEra($scope.memorialKey, $scope.selectedEra);
-          $scope.selectedEra = {}
-          $scope.selectedEraKey = null;
-          $scope.eraForm.$setPristine();
-
+          Memorial.createEra($scope.memorialKey, $scope.selectedEra).then(function(value){
+            var newEraKey = value.name();
+            $scope.selectedEra = {}
+            $scope.selectedEraKey = null;
+            $scope.eraForm.$setPristine();
+            waitSubmittedEraLoaded(newEraKey);
+          });
         } else {
           Memorial.updateEra($scope.memorialKey, $scope.selectedEraKey, $scope.selectedEra);
         }
@@ -204,7 +277,8 @@ angular.module('doresolApp')
         "timeline": {
            "headline": $scope.memorial.name,
            "type":"default",
-           "text": $scope.memorial.name + "님의 일대기",
+           // "text": $scope.memorial.name + "님의 Timeline",
+           "text": "님의 타임라인입니다..",
            "startDate": $scope.memorial.dateOfBirth,
            "asset": {
                         "media": $scope.memorial.file.url
@@ -233,53 +307,58 @@ angular.module('doresolApp')
 
       createStoryJS({
            type:       'timeline',
-           width:      '100%',
-           height:     '600',
+           // width:      '100%',
+           height:     '700',
            source:     timeline_data,
            embed_id:   'timeline-embed'
        });
     };
 
    $scope.uploadTimelineStory = function(){
-      angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
-        var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
-        var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
-        var cntStories = storiesKey.length;
-        var timeStep = (eraEnd - eraStart)/cntStories;
-        var index = 0;
+      if(!angular.equals({}, $scope.storiesArray)){
+        angular.forEach($scope.storiesArray, function(storiesKey, eraKey) {
+          var eraStart = moment($scope.memorial.timeline.era[eraKey].startDate);
+          var eraEnd = moment($scope.memorial.timeline.era[eraKey].endDate);
+          var cntStories = storiesKey.length;
+          var timeStep = (eraEnd - eraStart)/cntStories;
+          var index = 0;
 
-        angular.forEach(storiesKey, function(storyKey, key) {
-          $scope.storiesObject[eraKey][storyKey].startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
-          index++;
+          angular.forEach(storiesKey, function(storyKey, key) {
+            $scope.storiesObject[eraKey][storyKey].startDate = moment(eraStart + timeStep*index).format("YYYY-MM-DD");
+            index++;
 
-          if($scope.storiesObject[eraKey][storyKey].newStory){
-            $scope.totalStoryCnt++;     
-            // create story
-            var copyStory = {};
-            angular.copy($scope.storiesObject[eraKey][storyKey],copyStory);
+            if($scope.storiesObject[eraKey][storyKey].newStory){
+              $scope.totalStoryCnt++;     
+              // create story
+              var copyStory = {};
+              angular.copy($scope.storiesObject[eraKey][storyKey],copyStory);
 
-            var file = {
-              type: copyStory.file.type,
-              location: 'local',
-              url: '/tmp/' + copyStory.file.uniqueIdentifier,
-              updated_at: moment().toString()
+              var file = {
+                type: copyStory.file.type,
+                location: 'local',
+                url: '/tmp/' + copyStory.file.uniqueIdentifier,
+                updated_at: moment().toString()
+              }
+              copyStory.file = file;
+              
+              // delete copyStory.newStory;
+              Composite.createTimelineStory($scope.memorialKey,copyStory).then(function(value){
+              }, function(error){
+                console.log(error);
+              });
+
             }
-            copyStory.file = file;
-            
-            // delete copyStory.newStory;
-            Composite.createTimelineStory($scope.memorialKey,copyStory).then(function(value){
-            }, function(error){
-              console.log(error);
-            });
-
-          }
+          });
         });
-      });
-      
-      waitStoryLoaded();
+        $scope.isChanged = false;
+        // waitStoryLoaded(true);
+      }else{
+        alert("재생 할 아이템이 없습니다.");
+      }
     };
     
     $scope.flowFilesAdded = function($files){
+      $scope.isChanged = true;
       angular.forEach($files, function(value, key) {
         value.type = value.file.type.split("/")[0];
       
@@ -294,6 +373,7 @@ angular.module('doresolApp')
         $scope.storiesArray[$scope.selectedEraKey].push(tempKey);
         $scope.storiesObject[$scope.selectedEraKey][tempKey] = 
           {
+            type: 'timeline',
             file: value,
             newStory: true,
             tempKey: tempKey,
@@ -350,49 +430,9 @@ angular.module('doresolApp')
         //click ok
         // console.log('click ok');
         // $scope.paramFromDialogObject = paramFromDialogObject;
-        console.log($scope);
       }, function () {
         //canceled
       });
     };
   });
 
-// {
-//     "timeline":
-//     {
-//         "headline":"The Main Timeline Headline Goes here",
-//         "type":"default",
-//         "text":"<p>Intro body text goes here, some HTML is ok</p>",
-//         "asset": {
-//             "media":"http://yourdomain_or_socialmedialink_goes_here.jpg",
-//             "credit":"Credit Name Goes Here",
-//             "caption":"Caption text goes here"
-//         },
-//         "date": [
-//             {
-//                 "startDate":"2011,12,10",
-//                 "endDate":"2011,12,11",
-//                 "headline":"Headline Goes Here",
-//                 "text":"<p>Body text goes here, some HTML is OK</p>",
-//                 "tag":"This is Optional",
-//                 "classname":"optionaluniqueclassnamecanbeaddedhere",
-//                 "asset": {
-//                     "media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
-//                     "thumbnail":"optional-32x32px.jpg",
-//                     "credit":"Credit Name Goes Here",
-//                     "caption":"Caption text goes here"
-//                 }
-//             }
-//         ],
-//         "era": [
-//             {
-//                 "startDate":"2011,12,10",
-//                 "endDate":"2011,12,11",
-//                 "headline":"Headline Goes Here",
-//                 "text":"<p>Body text goes here, some HTML is OK</p>",
-//                 "tag":"This is Optional"
-//             }
-
-//         ]
-//     }
-// }

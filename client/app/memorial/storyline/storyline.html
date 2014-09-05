@@ -1,6 +1,6 @@
 <div class="col-sm-8">
   <!-- create new story -->
-  <div class="block">
+  <div class="block" ng-if="!isGuest">
       <div class="block-title">
           <!-- 공개, 비공개 여부는 나중에..일단 주석-->
           <!-- <div class="block-options pull-right">
@@ -19,8 +19,8 @@
           </div> -->
           <h2><strong><i class="fa fa-envelope-o"></i></strong> NEW</h2>
       </div>
-      <form name="newStoryForm" class="block-content-full block-content-mini-padding" ng-submit="createNewStory(newStoryForm)" novalidate>
-        <input type="text" class="form-control" ng-model="newStory.headline" placeholder="제목" style="margin: 1px 0px 10px;" ng-required="true"/>
+      <form  name="newStoryForm" class="block-content-full block-content-mini-padding" ng-submit="createNewStory(newStoryForm)" novalidate>
+        <!-- <input type="text" class="form-control" ng-model="newStory.headline" placeholder="제목" style="margin: 1px 0px 10px;" ng-required="true"/> -->
         <textarea class="form-control" ng-model="newStory.text" rows="2" placeholder="전하고 싶은 이야기.." style="resize: vertical;margin: 1px 0px 10px;" ng-required="true"/>
         <div class="clearfix">
             <button type="submit" class="btn btn-sm btn-primary pull-right" ng-disabled="newStoryForm.$invalid"><i class="fa fa-pencil"></i> 등록</button>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="flow-thumbnail-remove"><i class="fa fa-times-circle fa-2x text-danger" ng-click="removeFlowFile()"></i></div>
               </div>
-              <span class="btn btn-link btn-icon" flow-attrs="{accept:['image/*','video/*']}" flow-btn="" popover="Add Photo/Video" popover-trigger="mouseenter" popover-placement="left"><i class="fa fa-camera"></i><input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+              <span class="btn btn-link btn-icon" flow-attrs="{accept:['image/*','video/*']}" flow-btn="" tooltip-placement="bottom" tooltip="사진첨부"><i class="fa fa-camera"></i><input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
             </div>
         </div>
       </form>
@@ -62,28 +62,22 @@
         <!-- Block with Options Title -->
         <div class="block-title">
             <div class="block-options pull-right">
-              <span class="btn btn-alt btn-sm btn-default" ng-if="story.ref_user == currentUser.uid" ng-click="removeStory(story)" popover="Delete" popover-trigger="mouseenter" popover-placement="right" >
+              <span class="btn btn-alt btn-sm btn-default" ng-if="story.ref_user == currentUser.uid" ng-click="removeStory(story)" tooltip-placement="top" tooltip="삭제" >
                 <i class="fa fa-times"></i>
               </span>
             </div>
 
             <div class="storyline-story-title">
               <div class="story-avatar">
-                <img ng-src="{{users[story.ref_user].profile.image}}" style="width:32px;height:32px;"/>
+                <img ng-src="{{users[story.ref_user].profile.file.url}}" style="width:32px;height:32px;"/>
               </div>
               <div class="story-author">
                 <div class="story-show">
-                  <div ng-if="story.ref_user == currentUser.uid">
-                    <strong><input type="text" ng-model="story.headline" ng-blur="storyContentChanged(story)" placeholder="제목을 입력하세요.." /></strong>
-                  </div>
-                  <div ng-if="story.ref_user != currentUser.uid">
-                    <strong>{{story.headline}}</strong>
-                  </div>
+                  <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
                 </div>
-                <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
                 <span class="text-muted">
                   <small>{{story.fromNow}}</small>
-                  <span class="text-success"><i class="fa fa-globe" popover="From Web" popover-trigger="mouseenter" popover-placement="right" ></i></span>
+                  <span class="text-success"><i class="fa fa-globe" tooltip-placement="right" tooltip="웹" ></i></span>
                 </span>
               </div>
             </div>

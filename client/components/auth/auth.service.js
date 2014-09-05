@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .factory('Auth', function Auth($location, $q, User, ENV, $firebaseSimpleLogin) {
+  .factory('Auth', function Auth($location, $q, $rootScope, User, ENV, $firebaseSimpleLogin, Composite) {
     var auth = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
     var currentUser = null;
     
@@ -18,9 +18,7 @@ angular.module('doresolApp')
         dfd.resolve(currentUser);
       }
       return dfd.promise;
-    };
-
-    // getCurrentUserFromFirebase();
+    }
 
     var register =  function(user) {
     	var _register = function() {
@@ -29,72 +27,99 @@ angular.module('doresolApp')
           return value;
         });
       };
-
       return _register(user).then(User.create);
-    };
+    }
 
     var getCurrentUser = function(){
       return currentUser;
-    };
+    }
 
     var setCurrentUser = function(authUser) {
       currentUser = authUser;
-    };
+    }
 
     var login = function(user){
       var deferred = $q.defer();
-      logout();
       auth.$login('password',{email:user.email, password:user.password,rememberMe: true}).then(function(value) {
-
-        setCurrentUser(value);
+        User.getCurrentUserFromFirebase(value.uid);
         deferred.resolve(value);
 
       }, function(error) {
         deferred.reject(error);
       });
       return deferred.promise;
-    };
+    }
 
     var loginFb = function() {
       var deferred = $q.defer();
-      logout();
       auth.$login('facebook', {scope: 'user_photos, email, user_likes',rememberMe: true}).then(function(value) {
-        setCurrentUser(value);
-
-        User.update(value.uid, 
-        {
-         uid: value.uid,
-         id: value.id,         
-         name:  value.displayName,
-         thirdPartyUserData: value.thirdPartyUserData
+        User.getCurrentUserFromFirebase(value.uid).then(function(userValue){
+          if(!userValue.profile){
+            var profile = {
+              name: value.displayName,
+              file:{
+                location: 'facebook',
+                url: value.thirdPartyUserData.picture.data.url,
+                updated_at: moment().toString()
+              }
+            }
+            
+            User.update(value.uid, 
+            {
+             uid: value.uid,
+             id: value.id,         
+             profile: profile,
+             thirdPartyUserData: value.thirdPartyUserData,
+             created_at: moment().format("YYYY-MM-DD HH:mm:ss")
+            });
+          }
+        },function(error){
+          if(error === 'user is deleted'){
+            var profile = {
+              name: value.displayName,
+              file:{
+                location: 'facebook',
+                url: value.thirdPartyUserData.picture.data.url,
+                updated_at: moment().toString()
+              }
+            }
+            
+            User.update(value.uid, 
+            {
+             uid: value.uid,
+             id: value.id,         
+             profile: profile,
+             thirdPartyUserData: value.thirdPartyUserData,
+             created_at: moment().format("YYYY-MM-DD HH:mm:ss")
+            });
+          }
         });
-
         deferred.resolve(value);
       }, function(error) {
         deferred.reject(error);
       });
       return deferred.promise;
-    };
+    }
 
     var loginOauth = function(provider){
       switch(provider){
         case 'facebook':
-          return loginFb().then( function (){
-            $location.path('/mydoresol');
-          } ,function(error){
-            console.log(error);
-          });
+          return loginFb();
         break;
       }
-    };
+    }
 
     var logout = function() {
       currentUser = null;
-      User.setCurrentUser(null);
-    };
+      User.clearCurrentUser();
+      auth.$logout();
+    }
+
+    var changePassword = function(email, oldPassword, newPassword) {
+      return auth.$changePassword(email, oldPassword, newPassword);
+    }
 
     return {
-
       register: register,
 
       login: login,
@@ -105,7 +130,8 @@ angular.module('doresolApp')
 
       getCurrentUser:getCurrentUser,
 
-      getCurrentUserFromFirebase:getCurrentUserFromFirebase
+      getCurrentUserFromFirebase:getCurrentUserFromFirebase,
+      changePassword:changePassword
 
       // isAdmin: function() {
       //   return currentUser.role === 'admin';

@@ -33,7 +33,20 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'development',
-            FIREBASE_URI: 'https://doresol-dev.firebaseio.com/'
+            FIREBASE_URI: 'https://doresol-dev.firebaseio.com/',
+            GOOGLE_API_URI: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyAR3-1YSkP2LM-HuJshMivhOZuai9L5htM'
+          }
+        }
+      },
+      beta: {
+        options: {
+          dest: 'client/config.js'
+        },
+        constants: {
+          ENV: {
+            name: 'beta',
+            FIREBASE_URI: 'https://doresol-beta.firebaseio.com/',
+            GOOGLE_API_URI: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyAR3-1YSkP2LM-HuJshMivhOZuai9L5htM'
           }
         }
       },
@@ -44,7 +57,8 @@ module.exports = function (grunt) {
         constants: {
           ENV: {
             name: 'production',
-            FIREBASE_URI: 'https://doresol.firebaseio.com/'
+            FIREBASE_URI: 'https://doresol.firebaseio.com/',
+            GOOGLE_API_URI: 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyAR3-1YSkP2LM-HuJshMivhOZuai9L5htM'
           }
         }
       }
@@ -569,22 +583,37 @@ module.exports = function (grunt) {
         'autoprefixer',
         'concurrent:debug'
       ]);
+    } else if (target === 'beta') {
+      grunt.task.run([
+        'clean:server',
+        'env:all',
+        'injector:sass', 
+        'concurrent:server',
+        'injector',
+        'bowerInstall',
+        'ngconstant:beta',
+        'autoprefixer',
+        'express:dev',
+        'wait',
+        // 'open',
+        'watch'
+      ]);
+    }else{
+      grunt.task.run([
+        'clean:server',
+        'env:all',
+        'injector:sass', 
+        'concurrent:server',
+        'injector',
+        'bowerInstall',
+        'ngconstant:development',
+        'autoprefixer',
+        'express:dev',
+        'wait',
+        // 'open',
+        'watch'
+      ]);
     }
-
-    grunt.task.run([
-      'clean:server',
-      'env:all',
-      'injector:sass', 
-      'concurrent:server',
-      'injector',
-      'bowerInstall',
-      'ngconstant:development',
-      'autoprefixer',
-      'express:dev',
-      'wait',
-      // 'open',
-      'watch'
-    ]);
   });
 
   grunt.registerTask('server', function () {

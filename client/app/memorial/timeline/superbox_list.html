@@ -1,5 +1,5 @@
 <span ng-if="story.newStory">
-	<div ng-if="story.file.type == 'image'">
+	<div ng-if="story.file.type == 'image'" tooltip-placement="top" tooltip="Drag">
 		<img flow-image="story.file" class="superbox-img" ng-show="story.file.isComplete()"> 
 		<!-- <img flow-image="story.file" class="superbox-img"> -->
 	</div>
@@ -14,7 +14,7 @@
 	</div>
 </span>
 
-<span ng-if="!story.newStory">
+<span ng-if="!story.newStory" tooltip-placement="top" tooltip="Drag">
 	<div ng-if="story.file.type == 'image'">
 		<img ng-src="{{story.file.url}}" class="superbox-img"> 
 		<!-- <img flow-image="story.file" class="superbox-img"> -->

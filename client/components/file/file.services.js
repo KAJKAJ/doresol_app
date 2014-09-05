@@ -8,7 +8,7 @@ angular.module('doresolApp')
     var createLocalFile = function(params) {
 	  	return localFiles.$add({
 	  		fileParentPath: params.fileParentPath,
-				fileUrl: params.fileParentPath
+				fileUrl: params.fileUrl
 	  	}).then( function(ref) {
       	return params;
 			});

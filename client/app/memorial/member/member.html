@@ -1,0 +1,56 @@
+<div>
+	<!-- invite url -->
+  <div>
+  	<i class="fa fa-2x fa-envelope-o"></i>
+  	<div class="fa fa-2x">초대하기 URL</div>
+  	<input type="text" ng-model="inviteUrl" />
+  </div>
+
+  <p></p>
+  <div class="block-section">
+    <div class="block-title">
+        <h2><strong>멤버</strong></h2>
+    </div>
+    <!-- Leader First -->
+    <div masonry item-selector=".brick-member">
+      <div class="brick-member col-sm-2">
+        <div class="brick-member-detail">
+          <img ng-src="{{users[leader.uid].profile.file.url}}" class="img-responsive" style="width:150px;height:150px"/>
+        </div>
+      </div>
+      <div masonry-brick class="brick-member col-sm-2" ng-repeat="(uid, member) in members">
+        <div class="brick-member-detail">
+          <img ng-src="{{users[uid].profile.file.url}}" class="img-responsive" style="width:150px;height:150px"/>
+          <div class="overlay text-center">
+            <br/><br/><br/><br/>
+            <div class="overlay_detail">
+              <h4><strong>{{member.uid}}</strong></h4>
+              <button ng-if="leader.uid == currentUser.uid" type="button" class="btn btn-success" ng-click="removeMember(uid)">탈퇴 시키기</button>
+              <button ng-if="uid == currentUser.uid" type="button" class="btn btn-success" ng-click="removeMember(uid, 'member')">탈퇴하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <div class="block-section">
+  <div class="block-title">
+      <h2><strong>가입 대기자</strong></h2>
+  </div>
+  <div masonry item-selector=".brick-waiting">
+    <div masonry-brick class="brick-waiting col-sm-3" ng-repeat="(uid, member) in waitings">
+      <div class="brick-waiting-detail">
+        <img ng-src="{{users[uid].profile.file.url}}" class="img-responsive" style="width:150px;height:150px"/>
+        <div class="overlay text-center">
+          <br/><br/><br/><br/>
+          <div class="overlay_detail">
+            <h4><strong>{{member.uid}}</strong></h4>
+            <button ng-if="leader.uid == currentUser.uid" type="button" class="btn btn-success" ng-click="moveMember(uid)">가입 승인하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

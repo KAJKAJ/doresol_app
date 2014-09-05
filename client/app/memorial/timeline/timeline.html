@@ -1,5 +1,5 @@
 <!-- timeline edit -->
-<div class="row" ng-show="editMode">
+<!-- <div class="row" ng-show="editMode">
 	<div class="col-xs-3" >
 	  <slot-list></slot-list>
 	</div>
@@ -11,11 +11,38 @@
   <button class="btn btn-info btn-lg btn-block">
 		<div ng-click="uploadTimelineStory()">일대기 보기</div>
 	</button>	
+</div> -->
+<div class="row" ng-show="editMode">
+	<div class="block">
+	  <div class="block-title">
+	      <h2>설정 모드</h2>
+	      <div class="block-options pull-right">
+		      <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="waitStoryLoaded()" class="btn btn-alt btn-sm btn-default" tooltip-placement="top" tooltip="보기">
+		      	<i class="fa fa-play"></i>
+		      </span>
+		    </div>
+	  </div>
+	  <div class="block-content">
+	  	<slot-list></slot-list>
+	  	<story-list></story-list>
+	  </div>
+	</div>
+	<button type="button" class="btn btn-block btn-primary btn-alt" ng-show="isChanged" ng-click="uploadTimelineStory()">변경사항 저장</button>
+	<br/>
 </div>
 
 <div class="row" ng-show="!editMode">
-	<button class="btn btn-info btn-lg btn-block">
-		<div ng-disabled="!memorial.timeline.stories" ng-click="toggleEditMode()" >설정 모드</div>
-	</button>
-	<div id="timeline-embed" timeline-embed></div>
+	<div class="block">
+	  <div class="block-title">
+	      <h2>일대기</h2>
+	      <div class="block-options pull-right">
+		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="toggleEditMode()" class="btn btn-alt btn-sm btn-default" tooltip-placement="top" tooltip="설정">
+		      	<i class="fa fa-cog"></i>
+		      </span>
+		    </div>
+	  </div>
+	  <div class="block-content">
+	  	<div id="timeline-embed" timeline-embed>아직 생성되지 않았습니다.</div>
+	  </div>
+	</div>
 </div>

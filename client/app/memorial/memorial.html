@@ -1,35 +1,49 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container contents">	
-	<div class="row-fluid">
-	  <!-- profile start-->
-	  <div class="memorial_profile">
-		  <!-- large screen profile -->
-		  <div class="col-lg-2 visible-lg">
-		  	<img ng-src="{{memorial.file.url}}" class="img-responsive"/>
-		  	<h3> {{memorial.name}} </h3>  	
-		  	<!-- memorial nav -->
-		    <!-- <ul class="nav nav-pills nav-stacked">
-			  	<li ng-class="{active: $state.includes('memorial.profile')}"><a ui-sref="memorial.profile({id:memorial._id})">Profile</a></li>
-			  	<li ng-class="{active: $state.includes('memorial.timeline')}"><a ui-sref="memorial.timeline({id:memorial._id})">Timeline</a></li>
-			  	<li ng-class="{active: $state.includes('memorial.storyline')}"><a ui-sref="memorial.storyline({id:memorial._id})">Storyline</a></li>
-		  	</ul> -->
-		  	
-	      <ul class="nav nav-pills nav-stacked" role="tablist" >
-					<li ng-class="{active: $state.includes('memorial.profile')}"><a ui-sref="memorial.profile({id:memorialKey})"><i class="fa fa-user"></i> Profile</a></li>
-			  	<li ng-class="{active: $state.includes('memorial.timeline')}"><a ui-sref="memorial.timeline({id:memorialKey})"><i class="fa fa-road"></i> Timeline</a></li>
-			  	<li ng-class="{active: $state.includes('memorial.storyline')}"><a ui-sref="memorial.storyline({id:memorialKey})"><i class="fa fa-comment"></i> Storyline</a></li>
-				</ul>
-		  </div>
-		  
-		  <!-- small size profile -->
-		  <div class="visible-xs visible-sm visible-md">profile for small device</div>
-		  <!-- profile end -->  
-	  </div>
-	  <!-- timeline start -->
-	  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
-	  	<br/>
-	  	<div ui-view=""></div>
-	  </div>
-	</div>
+  <div class="col-md-2">
+		<div flow-init="{
+       singleFile: true, 
+       target:'/api/fileuploads', 
+       testChunks: false,
+       generateUniqueIdentifier: getFlowFileUniqueId
+     }"
+     flow-file-added="fileUploading=true"
+     flow-files-submitted="$flow.upload()"
+     ng-controller="ProfileCtrl">
+      <div class="flow-prevent-drop">
+        <a ui-sref="memorial.profile({id:memorialKey})">
+          <img ng-if="!$flow.files[0]" ng-src="{{memorial.file.url}}" class="img-responsive hover-opacity-8"/>
+          <div ng-if="$flow.files[0]">
+            <img flow-img="$flow.files[0]" class="img-responsive"/>
+          </div>
+        </a>
+        <div ng-if="isOwner" class="profile-img-upload-btn">
+          <span class="pull-left">&nbsp;</span>
+          <span class="fa-stack fa-lg pull-left" flow-btn flow-attrs="{accept:'image/*'}" style="cursor:pointer;">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-camera fa-stack-1x fa-inverse"></i>
+          </span>
+        </div>  
+        <button ng-if="isOwner && $flow.files[0] && lastUploadingFile" class="btn btn-block btn-primary" ng-disabled="fileUploading" ng-click="changeProfileImage()">저장</button>
+        <button ng-if="isGuest" class="btn btn-block btn-primary" ng-click="subscribe()">가입하기</button>
+      </div>
+    </div>
+    <div class="text-center" style="clear:both;">
+      <h3> {{memorial.name}} </h3>  	
+    </div>
+    <ul class="nav nav-pills nav-stacked" role="tablist" >
+	  	<li ng-class="{active: $state.includes('memorial.storyline')}"><a ui-sref="memorial.storyline({id:memorialKey})"><i class="fa fa-comment"></i> Storyline</a></li>
+	  	<li ng-class="{active: $state.includes('memorial.timeline')}"><a ui-sref="memorial.timeline({id:memorialKey})"><i class="fa fa-road"></i> Timeline</a></li>
+	  	<li ng-class="{active: $state.includes('memorial.storymap')}"><a ui-sref="memorial.storymap({id:memorialKey})"><i class="fa fa-map-marker"></i> StoryMap</a></li>
+			<li ng-class="{active: $state.includes('memorial.member')}"><a ui-sref="memorial.member({id:memorialKey})"><i class="fa fa-users"></i> Member</a></li>
+		</ul>
+  </div>
+	  
+  <!-- timeline start -->
+  <div class="col-md-10">
+  	<div ui-view=""></div>
+  </div>
 </div>
+    
+      

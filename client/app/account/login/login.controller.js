@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('LoginCtrl', function ($scope, Auth, User, $location, $window) {
+  .controller('LoginCtrl', function ($scope, Auth, User, $window,$state,Memorial,Composite) {
     $scope.user = {};
     $scope.errors = {};
 
+    console.log($state.params);
+    
     $scope.login = function(form) {
       $scope.submitted = true;
 
@@ -14,9 +16,19 @@ angular.module('doresolApp')
           password: $scope.user.password
         })
         .then( function (value){
+          Memorial.clearMyMemorial();
+          Composite.setMyMemorials(value.uid).then(function(){
+              // $location.path('/memorials');
+            if ($state.params.memorialId !== undefined) {
+              $state.params.inviteeId = value.uid;
+              Composite.addMember($state.params).then(function(){
+                $state.go("memorials");
+              });
+            } else {
+              $state.go("memorials");
+            }
+          });
 
-          $location.path('/mydoresol');
-          
         } ,function(error){
           // console.log(error);
           var errorCode = error.code;
@@ -32,8 +44,12 @@ angular.module('doresolApp')
       }
     };
 
-    $scope.loginOauth = function(provider) {
-      Auth.loginOauth(provider);
+    $scope.toRegister = function() {
+      if($state.params.memorialId !== undefined) {
+        $state.go('signup.invites', {memorialId: $state.params.memorialId, inviterId: $state.params.inviterId});
+      } else {
+        $state.go('signup');
+      }
     };
     
   });
