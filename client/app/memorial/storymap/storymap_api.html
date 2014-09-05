@@ -1,0 +1,13 @@
+<div class="form-group move-down">
+	  <input type="text" id="Autocomplete" name="Autocomplete" ng-autocomplete="mapSearchResult" 
+    	details="mapSearchDetails" options="mapSearchOptions" ng-model="autocomplete"
+    	style="background-color:white;color:black;border:2px solid white;"/>
+
+    <!-- <span class="input-group-btn">
+        <button type="button" class="btn btn-default">저장</button>
+    </span> -->
+</div>
+<br/>
+<google-map center="map.center" zoom="map.zoom">
+	<marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id" ></marker>
+</google-map>

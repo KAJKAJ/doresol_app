@@ -19,7 +19,7 @@ var all = {
   root: path.normalize(__dirname + '/../../..'),
 
   // Server port
-  port: process.env.PORT || 9876,
+  port: process.env.PORT || 80,
 
   // Should we populate the DB with sample data?
   seedDB: true,
@@ -44,7 +44,7 @@ var all = {
   facebook: {
     clientID:     process.env.FACEBOOK_ID || 'id',
     clientSecret: process.env.FACEBOOK_SECRET || 'secret',
-    callbackURL:  'http://localhost:9876/auth/facebook/callback'
+    callbackURL:  'http://doresol.net/auth/facebook/callback'
   },
 
 };

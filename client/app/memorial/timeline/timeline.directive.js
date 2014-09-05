@@ -49,12 +49,71 @@ angular.module('doresolApp')
       replace: true,
       templateUrl: "app/memorial/timeline/superbox_show.html",
       controller: function($scope){
-        $scope.updateStory = function(storyId){
+        $scope.changed = function(){
+          // console.log($scope);
         }
+        // $scope.mapDetails = {};
+        // $scope.map = {
+        //   center: {
+        //       latitude: 45,
+        //       longitude: -73
+        //   },
+        //   zoom: 8
+        // };
       }
       // link: function(scope, element, attrs) {
       //  });
       }
+  })
+  .directive('storymapApi',function(){
+    return {
+      restrict: 'E',
+      scope:{
+        story: '='
+      },
+      templateUrl: "app/memorial/storymap/storymap_api.html",
+      controller: function($scope){
+        $scope.mapDetails = {};
+        if($scope.story.location){
+          $scope.autocomplete = $scope.story.location.name;
+        }
+
+        $scope.map = {
+          center: {
+              latitude: $scope.story.location.lat ? $scope.story.location.lat : 35.907757 ,
+              longitude: $scope.story.location.lon ? $scope.story.location.lon : 127.76692200000002  
+          },
+          zoom: $scope.story.location ? 15 : 7
+        };
+
+        $scope.marker = {
+          id:0,
+          coords: {
+              latitude: $scope.story.location.lat ? $scope.story.location.lat : 35.907757 ,
+              longitude: $scope.story.location.lon ? $scope.story.location.lon : 127.76692200000002  
+          },
+          options: { draggable: false }
+        }
+
+        $scope.$watch('mapSearchDetails',function(value){
+          if(value){
+            var lon = value.geometry.location.B;
+            var lat = value.geometry.location.k;
+
+            $scope.map.center.latitude = lat;
+            $scope.map.center.longitude = lon;
+
+            //marker
+            $scope.marker.coords.latitude = lat;
+            $scope.marker.coords.longitude = lon;
+
+            $scope.story.location.lat = lat;
+            $scope.story.location.lon = lon;
+            $scope.story.location.name = $scope.autocomplete;
+          }
+        });
+      }
+    }
   })
   // Slot List Directive
   .directive('slotList', function () {

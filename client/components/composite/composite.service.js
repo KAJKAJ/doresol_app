@@ -132,6 +132,28 @@
     }
   }
 
+  var _create_storymap_story = function(params) {
+    var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+    var timelineStoriesRef = memorialsRef.child(params.memorialId + '/storymap/stories');
+
+    return $firebase(timelineStoriesRef).$set(params.key,true).then(function(value){
+      return{
+        key: value.name(),
+        memorialId:params.memorialId
+      }
+    });
+  }
+
+  var createStorymapStory = function(memorialId, newStory) {
+    if(newStory.file){
+      // return Story.create(newStory).then(File.createLocalFile).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
+      return Story.create(newStory).then(File.createLocalFile).then(_create_storymap_story, errorHandler);
+    }else{
+      // return Story.create(newStory).then(_create_timeline_story).then(_create_storyline_story, errorHandler);
+      return Story.create(newStory).then(_create_storymap_story, errorHandler);
+    }
+  }
+
   var createStorylineStory = function(memorialId, newStory) {
     if(newStory.file){
       return Story.create(newStory).then(File.createLocalFile).then(_create_storyline_story, errorHandler);
@@ -186,6 +208,7 @@
     // story 
     createTimelineStory:createTimelineStory,
     createStorylineStory:createStorylineStory,
+    createStorymapStory:createStorymapStory,
 
     createComment:createComment,
 

@@ -1,26 +1,280 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util) {
+  .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story,$timeout) {
+
+    $scope.editMode = false;
+    $scope.newStoryCnt = 0;
+    $scope.currentUser = User.getCurrentUser();
+
+    $scope.totalStoryCnt = 0;
+    $scope.isChanged = false;
+
+    $scope.waitStoryLoaded = function(){
+      if($scope.totalStoryCnt == $scope.storyCnt){
+        if($scope.totalStoryCnt > 0){
+          // $scope.toggleEditMode();
+          $scope.isChanged = false;
+         
+          if($scope.currentUser.uid == $scope.memorial.ref_user){
+            $scope.toggleEditMode();
+            $timeout(function(){
+               $scope.createStorymap();
+            });
+          }
+
+        }else{
+          if($scope.currentUser.uid == $scope.memorial.ref_user){
+            $scope.toggleEditMode();
+          }
+        }
+      }else{
+        $timeout($scope.waitStoryLoaded(), 100);
+      }
+    };
+
+    $scope.memorialKey = $stateParams.id;
+    $scope.memorial = Memorial.getCurrentMemorial();
+
+    $scope.memorial.$loaded().then(function(value){
+
+      $scope.isOwner = Memorial.isOwner();
+      $scope.isMember = Memorial.isMember();
+      $scope.isGuest = Memorial.isGuest();
+      
+      $scope.waitStoryLoaded();  
+    });
+
+    $scope.storiesArray = [];
+    $scope.storiesObject = {};
+
+    $scope.sortableOptions = {
+      // containment: "parent",
+      cursor: "move",
+      tolerance: "pointer",
+
+      start: function(e, ui) {
+        $(e.target).data("ui-sortable").floating = true;
+      },
+      
+      // After sorting is completed
+      stop: function(e, ui) {
+        // for (var i=0; i< $scope.storiesArray[$scope.selectedEraKey].length; i++) {
+          
+        // };
+        $scope.isChanged = true;
+      }
+    };
+
+    var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
+    var currentStorymapStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storymap/stories');
+    var _storymapStories = $firebase(currentStorymapStoriesRef).$asArray();
+
+    $scope.storyCnt = 0;
+    _storymapStories.$loaded().then(function(value){
+      $scope.totalStoryCnt = _storymapStories.length;
+      // console.log($scope.totalStoryCnt);
+    });
+
+    _storymapStories.$watch(function(event){
+      switch(event.event){
+        case "child_removed":
+          $scope.storyCnt--;
+          // removeMyMemorial(event.key);
+          break;
+        case "child_added":
+          var childRef = storiesRef.child(event.key);
+          var child = $firebase(childRef).$asObject();
+          child.$loaded().then(function(value){
+            $scope.storiesArray.push(event.key);
+            $scope.storiesObject[event.key] = value;  
+            
+            // new object case delete it
+            if(value.newStory) {
+              delete $scope.storiesObject[value.tempKey];
+              var index = $scope.storiesArray.indexOf(value.tempKey);
+              $scope.storiesArray.splice(index, 1);
+            }
+            
+            $scope.storiesArray.sort(function(aKey,bKey){
+              var aPosition = $scope.storiesObject[aKey].position;
+              var bPosition = $scope.storiesObject[bKey].position;
+
+              return aPosition > bPosition ? 1 : -1;
+            });
+
+            // $scope.stories[value.ref_era][event.key] = true;
+
+            value.$bindTo($scope, "storiesObject['"+event.key+"']").then(function(){
+              $scope.storiesObject[event.key].newStory = false;
+              $scope.storyCnt++;
+             
+              if($scope.totalStoryCnt > 0 && $scope.currentUser.uid != $scope.memorial.ref_user){
+                if($scope.totalStoryCnt == $scope.storyCnt){
+                  $scope.createStorymap();
+                }
+              }
+              // console.log($scope.storiesObject[value.ref_era][event.key]);
+            });  
+            // console.log($scope.storiesArray);          
+          });
+        break;
+      }
+    });
+
+    $scope.getFlowFileUniqueId = function(file){
+      return $scope.currentUser.uid.replace(/[^\.0-9a-zA-Z_-]/img, '') + '-' + Util.getFlowFileUniqueId(file,$scope.currentUser);
+    };
+    
+    $scope.removeSelectedStory = function(storyId) {
+      $scope.totalStoryCnt--;
+      // delete $scope.storiesObject[$scope.selectedEraKey][storyId];
+      var index = $scope.storiesArray.indexOf(storyId);
+      $scope.storiesArray.splice(index, 1);  
+
+      if(!$scope.storiesObject[storyId].newStory){
+        // TODO: 바껴야 됨
+        Story.removeStoryFromStorymap($scope.memorialKey,storyId);
+      }
+    };
+
+    $scope.createStorymap = function(){
+      // certain settings must be passed within a separate options object
+      var storymap_options = {
+        // width: 500,                // required for embed tool; width of StoryMap                    
+        // height: 800,               // required for embed tool; width of StoryMap
+        storymap: {
+            language: "KR",          // required; two-letter ISO language code
+            map_type: "stamen:toner-lines",          // required
+            map_as_image: false,       // required
+        }
+      }
+      
+      var storymap_data = {
+        storymap:{
+          slides:[]
+        }
+      };
+
+      storymap_data.storymap.slides.push(
+        {
+            type: "overview",
+            text: {
+               headline: $scope.memorial.name + "<small>Story Map..</small>",
+               text: ""
+            },
+            media: {
+              url:              $scope.memorial.file.url,
+              caption:          "Overview"
+            }
+        }
+      );
+
+      angular.forEach($scope.storiesArray,function(storyKey){
+        var copyStory = {};
+        angular.copy($scope.storiesObject[storyKey],copyStory);
+        storymap_data.storymap.slides.push(copyStory);
+      });
+
+      angular.element('#mapdiv').empty();
+
+      var storymap = new VCO.StoryMap('mapdiv', storymap_data, storymap_options);
+
+      window.onresize = function(event) {
+        storymap.updateDisplay(); // this isn't automatic
+      } 
+      
+    };
+
+   $scope.uploadStorymapStory = function(){
+      if($scope.storiesArray.length > 0){
+        angular.forEach($scope.storiesArray, function(storyKey,index) {
+          $scope.storiesObject[storyKey].position = index;
+          if($scope.storiesObject[storyKey].newStory){
+            $scope.totalStoryCnt++;     
+            // create story
+            var copyStory = {};
+            angular.copy($scope.storiesObject[storyKey],copyStory);
+
+            var file = {
+              type: copyStory.file.type,
+              location: 'local',
+              url: '/tmp/' + copyStory.file.uniqueIdentifier,
+              updated_at: moment().toString()
+            }
+            copyStory.file = file;
+            
+            // delete copyStory.newStory;
+            Composite.createStorymapStory($scope.memorialKey,copyStory).then(function(value){
+            }, function(error){
+              console.log(error);
+            });
+          }
+          
+        });
+        $scope.isChanged = false;
+        // waitStoryLoaded(true);
+      }else{
+        alert("재생 할 아이템이 없습니다.");
+      }
+    };
+    
+    $scope.flowFilesAdded = function($files){
+      $scope.isChanged = true;
+      angular.forEach($files, function(value, key) {
+        value.type = value.file.type.split("/")[0];
+      
+        var tempKey = Util.getUniqueId();
+        $scope.storiesArray.push(tempKey);
+        $scope.storiesObject[tempKey] = 
+          {
+            type: 'storymap',
+            file: value,
+            newStory: true,
+            tempKey: tempKey,
+
+            ref_memorial: $scope.memorialKey,
+            ref_user: $scope.currentUser.uid,
+            
+            text: {
+              headline:'내용없음',
+              text:'내용없음'
+            },
+            media:{
+              url: '/tmp/' + value.uniqueIdentifier,
+              credit: '',
+              caption: ''
+            },
+            location:{
+              
+            }
+          };
+      });
+      // console.log($scope);
+    };
+
+    $scope.toggleEditMode = function(){
+      $scope.editMode = !$scope.editMode;
+    };
+
 
   // storymap_data can be an URL or a Javascript object
-  var storymap_data = 'http://localhost:9876/app/memorial/storymap/storymap.json'; 
-  // var storymap_data = 'http://storymap.knightlab.com/static/demo/demo.json'; 
+  // var storymap_data = 'http://localhost:9876/app/memorial/storymap/storymap.json'; 
+  
+  // // certain settings must be passed within a separate options object
+  // var storymap_options = {
+  //   width: 500,                // required for embed tool; width of StoryMap                    
+  //   height: 500,               // required for embed tool; width of StoryMap
+  //   storymap: {
+  //       language: "KR",          // required; two-letter ISO language code
+  //       map_type: "stamen:toner-lines",          // required
+  //       map_as_image: false,       // required
+  //   }
+  // };
 
-  // certain settings must be passed within a separate options object
-  var storymap_options = {
-    width: 500,                // required for embed tool; width of StoryMap                    
-    height: 500,               // required for embed tool; width of StoryMap
-    storymap: {
-        language: "KR",          // required; two-letter ISO language code
-        map_type: "stamen:toner-lines",          // required
-        map_as_image: false,       // required
-    }
-  };
-
-  var storymap = new VCO.StoryMap('mapdiv', storymap_data, storymap_options);
-  window.onresize = function(event) {
-      storymap.updateDisplay(); // this isn't automatic
-  }          
+  // var storymap = new VCO.StoryMap('mapdiv', storymap_data, storymap_options);
+  // window.onresize = function(event) {
+  //     storymap.updateDisplay(); // this isn't automatic
+  // }          
 
   });

@@ -11,7 +11,9 @@ angular.module('doresolApp', [
   'config',
   'firebase',
   'ui.sortable',
-  'wu.masonry'
+  'wu.masonry',
+  'google-maps',
+  'ngAutocomplete'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
