@@ -111,7 +111,7 @@ angular.module('doresolApp')
              
               if($scope.totalStoryCnt > 0 && $scope.currentUser.uid != $scope.memorial.ref_user){
                 if($scope.totalStoryCnt == $scope.storyCnt){
-                  $scope.createStoryMap();
+                  $scope.createStorymap();
                 }
               }
               // console.log($scope.storiesObject[value.ref_era][event.key]);
