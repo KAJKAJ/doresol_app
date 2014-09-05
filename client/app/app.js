@@ -11,11 +11,7 @@ angular.module('doresolApp', [
   'config',
   'firebase',
   'ui.sortable',
-  'wu.masonry',
-  'com.2fdevs.videogular',
-  'com.2fdevs.videogular.plugins.buffering',
-  'com.2fdevs.videogular.plugins.controls',
-  'com.2fdevs.videogular.plugins.poster'
+  'wu.masonry'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
