@@ -7,7 +7,7 @@ angular.module('doresolApp', [
   'ui.bootstrap',
   'ui.router',
   'flow',
-  'xeditable',
+  // 'xeditable',
   'config',
   'firebase',
   'ui.sortable',
@@ -85,9 +85,10 @@ angular.module('doresolApp', [
     };
   })
 
-  .run(function ($rootScope, $location, $state, Auth, User, editableOptions, Composite) {
+  // .run(function ($rootScope, $location, $state, Auth, User, editableOptions, Composite) {
+  .run(function ($rootScope, $location, $state, Auth, User, Composite) {    
 
-    editableOptions.theme = 'bs3';
+    // editableOptions.theme = 'bs3';
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
       var _getUserAuth = function(){

@@ -4,10 +4,9 @@
       <h4><i class="fa fa-info-circle"></i> Info</h4> 현재 모바일 버전은 지원하지 않습니다.
   </div>
 </div>
+
 <div ng-if="!isMobile">
   <div ng-include="'components/navbar/navbar.html'"></div>
-<div>
-    <div ng-if="!isMobile">
       <!-- <video id="intro_video" preload="auto" autoplay="true" loop="loop" muted="true">
          <source type="video/mp4" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_high.mp4">
          <source type="video/ogg" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg">
@@ -18,18 +17,6 @@
             <vg-video vg-src="videoConfig.sources" style="height:auto;"></vg-video>
             <vg-buffering></vg-buffering>
         </videogular>
-      </div>
-
-        <div id="intro_video_control" ng-if="false">
-            <span ng-show="muted" class="fa-stack fa-lg" ng-click="unmute()">
-                <i class="fa fa-volume-up fa-stack-1x"></i>
-                <i class="fa fa-ban fa-stack-2x"></i> 
-            </span>
-            <span ng-show="!muted" class="fa-stack fa-lg" ng-click="mute()">
-                <i class="fa fa-volume-up fa-stack-1x"></i>
-                <i class="fa fa-circle-o fa-stack-2x"></i> 
-            </span>
-        </div>
       </div>
       
       <div id="intro_create_overlay">
@@ -146,11 +133,3 @@
     </div>
   </div>
 </div>
-<!-- temp -->
-<!-- <div>
-  {{browser}}<br/>
-  {{width}}<br/>
-  {{isMobile}}<br/>
-  <br/>
-</div> -->
-<!-- temp end -->
