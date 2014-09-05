@@ -22,9 +22,10 @@ angular.module('doresolApp')
             } else{
               $timeout(function(){
                 scope.$root.superboxToggled = scope.storyKey;
-                var htmlElement = angular.element("<superbox-show story='story'></superbox-show>");
+                var htmlElement = angular.element("<superbox-show></superbox-show>");
                 element.after(htmlElement);
                 $compile(element.next()[0])(scope);
+                
               }); // timeout
             } // else 
           }else{
@@ -44,24 +45,51 @@ angular.module('doresolApp')
   .directive('superboxShow', function () {
     return {
       restrict: 'E',
-      scope: {
-        story: '=story'
-      },
+      scope: false,
       replace: true,
       templateUrl: "app/memorial/timeline/superbox_show.html",
       controller: function($scope){
-        console.log($scope.story);
-          // var mapOptions = {
-        //     zoom: 8,
-        //     center: new google.maps.LatLng(-34.397, 150.644)
-        //   };
-        //   map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-        
-        // var mapOptions = {
-        //     zoom: 8,
-        //     center: new google.maps.LatLng(-34.397, 150.644)
-        //   };
-        //   map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+        $scope.changed = function(){
+          // console.log($scope);
+        }
+        // $scope.mapDetails = {};
+        // $scope.map = {
+        //   center: {
+        //       latitude: 45,
+        //       longitude: -73
+        //   },
+        //   zoom: 8
+        // };
+      }
+      // link: function(scope, element, attrs) {
+      //  });
+      }
+  })
+  .directive('storymapApi',function(){
+    return {
+      restrict: 'E',
+      scope:{
+        story: '='
+      },
+      templateUrl: "app/memorial/storymap/storymap_api.html",
+      controller: function($scope){
+        $scope.$watch('mapSearchDetails',function(value){
+          if(value){
+            var lon = value.geometry.location.B;
+            var lat = value.geometry.location.k;
+
+            $scope.map.center.latitude = lat;
+            $scope.map.center.longitude = lon;
+          }
+        });
+        $scope.mapDetails = {};
+        $scope.map = {
+          center: {
+              latitude: 45,
+              longitude: -73
+          },
+          zoom: 8
+        };
       }
     }
   })
