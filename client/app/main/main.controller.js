@@ -175,6 +175,4 @@ angular.module('doresolApp')
         autoPlay:true
     };
 
-    console.log($sce);
-
   });
