@@ -11,7 +11,17 @@
          <source type="video/mp4" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_high.mp4">
          <source type="video/ogg" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg">
             Sorry, your browser does not support HTML5 video.
-      </video> -->
+      </video> 
+      <div id="intro_video_control">
+        <span ng-show="muted" class="fa-stack fa-lg" ng-click="unmute()">
+            <i class="fa fa-volume-up fa-stack-1x"></i>
+            <i class="fa fa-ban fa-stack-2x"></i> 
+        </span>
+        <span ng-show="!muted" class="fa-stack fa-lg" ng-click="mute()">
+            <i class="fa fa-volume-up fa-stack-1x"></i>
+            <i class="fa fa-circle-o fa-stack-2x"></i> 
+        </span>
+      </div>-->
       <div>
         <videogular vg-autoplay="videoConfig.autoPlay">
             <vg-video vg-src="videoConfig.sources" style="height:auto;"></vg-video>
