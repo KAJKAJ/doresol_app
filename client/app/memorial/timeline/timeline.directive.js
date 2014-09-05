@@ -73,6 +73,28 @@ angular.module('doresolApp')
       },
       templateUrl: "app/memorial/storymap/storymap_api.html",
       controller: function($scope){
+        $scope.mapDetails = {};
+        if($scope.story.location){
+          $scope.autocomplete = $scope.story.location.name;
+        }
+
+        $scope.map = {
+          center: {
+              latitude: $scope.story.location.lat ? $scope.story.location.lat : 35.907757 ,
+              longitude: $scope.story.location.lon ? $scope.story.location.lon : 127.76692200000002  
+          },
+          zoom: $scope.story.location ? 15 : 7
+        };
+
+        $scope.marker = {
+          id:0,
+          coords: {
+              latitude: $scope.story.location.lat ? $scope.story.location.lat : 35.907757 ,
+              longitude: $scope.story.location.lon ? $scope.story.location.lon : 127.76692200000002  
+          },
+          options: { draggable: false }
+        }
+
         $scope.$watch('mapSearchDetails',function(value){
           if(value){
             var lon = value.geometry.location.B;
@@ -80,16 +102,16 @@ angular.module('doresolApp')
 
             $scope.map.center.latitude = lat;
             $scope.map.center.longitude = lon;
+
+            //marker
+            $scope.marker.coords.latitude = lat;
+            $scope.marker.coords.longitude = lon;
+
+            $scope.story.location.lat = lat;
+            $scope.story.location.lon = lon;
+            $scope.story.location.name = $scope.autocomplete;
           }
         });
-        $scope.mapDetails = {};
-        $scope.map = {
-          center: {
-              latitude: 45,
-              longitude: -73
-          },
-          zoom: 8
-        };
       }
     }
   })

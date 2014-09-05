@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util) {
+  .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story) {
 
     $scope.editMode = false;
     $scope.newStoryCnt = 0;
@@ -131,15 +131,15 @@ angular.module('doresolApp')
 
       if(!$scope.storiesObject[storyId].newStory){
         // TODO: 바껴야 됨
-        Story.removeStoryFromTimeline($scope.memorialKey,storyId);
+        Story.removeStoryFromStorymap($scope.memorialKey,storyId);
       }
     };
 
     $scope.createStorymap = function(){
       // certain settings must be passed within a separate options object
       var storymap_options = {
-        width: 500,                // required for embed tool; width of StoryMap                    
-        height: 500,               // required for embed tool; width of StoryMap
+        // width: 500,                // required for embed tool; width of StoryMap                    
+        // height: 800,               // required for embed tool; width of StoryMap
         storymap: {
             language: "KR",          // required; two-letter ISO language code
             map_type: "stamen:toner-lines",          // required
@@ -158,7 +158,7 @@ angular.module('doresolApp')
             type: "overview",
             text: {
                headline: $scope.memorial.name + "<small>Story Map..</small>",
-               text: "지도"
+               text: ""
             },
             media: {
               url:              $scope.memorial.file.url,
@@ -242,11 +242,7 @@ angular.module('doresolApp')
               caption: ''
             },
             location:{
-              name: "Crawford County, Missouri",
-              lat: 36.244242, 
-              lon: 128.299169,
-              zoom: 10,
-              line: true
+              
             }
           };
       });
