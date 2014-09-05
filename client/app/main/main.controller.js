@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MainCtrl', function ($scope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util, $sce, VG_UTILS) {
+  .controller('MainCtrl', function ($scope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util, $sce) {
 
     $scope.muted = true;
     $scope.signupUser ={};
