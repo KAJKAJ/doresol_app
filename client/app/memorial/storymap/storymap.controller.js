@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story) {
+  .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story,$timeout) {
 
     $scope.editMode = false;
     $scope.newStoryCnt = 0;
@@ -15,9 +15,12 @@ angular.module('doresolApp')
         if($scope.totalStoryCnt > 0){
           // $scope.toggleEditMode();
           $scope.isChanged = false;
-          $scope.createStorymap();
+         
           if($scope.currentUser.uid == $scope.memorial.ref_user){
             $scope.toggleEditMode();
+            $timeout(function(){
+               $scope.createStorymap();
+            });
           }
 
         }else{
@@ -176,8 +179,9 @@ angular.module('doresolApp')
       angular.element('#mapdiv').empty();
 
       var storymap = new VCO.StoryMap('mapdiv', storymap_data, storymap_options);
+
       window.onresize = function(event) {
-          storymap.updateDisplay(); // this isn't automatic
+        storymap.updateDisplay(); // this isn't automatic
       } 
       
     };
