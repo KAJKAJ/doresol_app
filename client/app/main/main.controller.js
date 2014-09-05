@@ -165,14 +165,4 @@ angular.module('doresolApp')
     $scope.browser = Util.getBrowser();
     $scope.width = Util.getWidth();
     $scope.isMobile = Util.isMobile();
-
-    //video
-    $scope.videoConfig = {
-        sources: [
-            {src: $sce.trustAsResourceUrl("https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_hd.mp4"), type: "video/mp4"},
-            {src: $sce.trustAsResourceUrl("https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg"), type: "video/ogg"}
-        ],
-        autoPlay:true
-    };
-
   });

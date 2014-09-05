@@ -30,7 +30,11 @@
     padding-right: 5px;
 }
 
+/*@import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+font-family:'Nanum Brush Script', sans-serif;*/
+
 @import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+
 .signup-overlay{
     font-family: 'Nanum Myeongjo', sans-serif;
     position:absolute;
@@ -66,12 +70,12 @@
     display: block;
 
     .login-block{
-        padding-top:140px;
+        padding-top:100px;
     }
     
     .intro_create_title{
         margin: auto;
-        padding-top: 140px;
+        padding-top: 250px;
         font-size: 7.2rem;
         font-weight: 300;
         line-height: 9rem;
