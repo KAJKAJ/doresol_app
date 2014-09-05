@@ -69,7 +69,8 @@ angular.module('doresolApp')
              uid: value.uid,
              id: value.id,         
              profile: profile,
-             thirdPartyUserData: value.thirdPartyUserData
+             thirdPartyUserData: value.thirdPartyUserData,
+             created_at: moment().format("YYYY-MM-DD HH:mm:ss")
             });
           }
         },function(error){
@@ -88,7 +89,8 @@ angular.module('doresolApp')
              uid: value.uid,
              id: value.id,         
              profile: profile,
-             thirdPartyUserData: value.thirdPartyUserData
+             thirdPartyUserData: value.thirdPartyUserData,
+             created_at: moment().format("YYYY-MM-DD HH:mm:ss")
             });
           }
         });
