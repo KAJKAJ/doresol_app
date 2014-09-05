@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MainCtrl', function ($scope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util) {
+  .controller('MainCtrl', function ($scope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util, $sce, VG_UTILS) {
 
     $scope.muted = true;
     $scope.signupUser ={};
@@ -165,5 +165,14 @@ angular.module('doresolApp')
     $scope.browser = Util.getBrowser();
     $scope.width = Util.getWidth();
     $scope.isMobile = Util.isMobile();
+
+    //video
+    $scope.videoConfig = {
+        sources: [
+            {src: $sce.trustAsResourceUrl("https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_high.mp4"), type: "video/mp4"},
+            {src: $sce.trustAsResourceUrl("https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg"), type: "video/ogg"}
+        ],
+        autoPlay:true
+    };
 
   });

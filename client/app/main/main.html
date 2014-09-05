@@ -8,12 +8,17 @@
   <div ng-include="'components/navbar/navbar.html'"></div>
 <div>
     <div ng-if="!isMobile">
-      <video id="intro_video" preload="auto" autoplay="true" loop="loop" muted="true">
-           <source src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_high.mp4" type="video/mp4">
-           <source src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg" type="video/ogg">
-           <!-- <source src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_low.mp4" type="video/mp4"> -->
-              Sorry, your browser does not support HTML5 video.
-      </video>
+      <!-- <video id="intro_video" preload="auto" autoplay="true" loop="loop" muted="true">
+         <source type="video/mp4" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_high.mp4">
+         <source type="video/ogg" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg">
+            Sorry, your browser does not support HTML5 video.
+      </video> -->
+      <div>
+        <videogular vg-autoplay="videoConfig.autoPlay">
+            <vg-video vg-src="videoConfig.sources" style="height:auto;"></vg-video>
+            <vg-buffering></vg-buffering>
+        </videogular>
+      </div>
 
         <div id="intro_video_control" ng-if="false">
             <span ng-show="muted" class="fa-stack fa-lg" ng-click="unmute()">
@@ -57,7 +62,7 @@
                 </form>
               </div>
               <hr>
-              <!-- register -->
+              
               <div class="well">
                 <span style="color:gray;font-size:14px;">도래솔에 처음이세요?</span>
                 <form class="form" name="signupForm" ng-submit="signup(signupForm)" novalidate>
@@ -96,7 +101,7 @@
                 </form>
               </div>
 
-            </div> <!-- login -->
+            </div>
         </div>
       </div>
 
