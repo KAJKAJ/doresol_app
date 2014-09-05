@@ -594,9 +594,10 @@ module.exports = function (grunt) {
         'ngconstant:beta',
         'autoprefixer',
         'express:dev',
-        'wait',
+        'express-keepalive'
+        // 'wait',
         // 'open',
-        'watch'
+        // 'watch'
       ]);
     }else{
       grunt.task.run([
