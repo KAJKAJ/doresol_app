@@ -42,7 +42,7 @@ angular.module('doresolApp')
           }
 
         }else{
-          if($scope.currentUser.uid == $scope.memorial.ref_user){
+          if($scope.user && $scope.currentUser.uid == $scope.memorial.ref_user){
             $scope.toggleEditMode();
           }
         }
@@ -158,9 +158,13 @@ angular.module('doresolApp')
               $scope.storiesObject[value.ref_era][event.key].newStory = false;
               $scope.storyCnt++;
               // console.log($scope.storyCnt);
-              if($scope.totalStoryCnt > 0 && $scope.currentUser.uid != $scope.memorial.ref_user){
+              if($scope.totalStoryCnt > 0){
                 if($scope.totalStoryCnt == $scope.storyCnt){
-                  $scope.createTimeline();
+                  if($scope.user && $scope.currentUser.uid != $scope.memorial.ref_user){
+                    $scope.createTimeline();
+                  }else{
+                    $scope.createTimeline();
+                  }
                 }
               }
               // console.log($scope.storiesObject[value.ref_era][event.key]);

@@ -21,6 +21,7 @@ angular.module('doresolApp')
                 name: $scope.newMemorial.name,
                 dateOfBirth: moment($scope.newMemorial.dateOfBirth).format("YYYY-MM-DD"),
                 dateOfDeath: moment($scope.newMemorial.dateOfDeath).format("YYYY-MM-DD"),
+                description: $scope.newMemorial.description,
                 file:file,
                 ref_user:$scope.currentUser.uid,
                 public: $scope.newMemorial.public

@@ -12,12 +12,14 @@ angular.module('doresolApp')
     $scope.waitings = {};
 
     // generate invites url
-		var longUrl = {
-    	"longUrl" : "http://localhost:9876/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
-    };
-    $http.post(ENV.GOOGLE_API_URI, angular.toJson(longUrl)).success(function (data) {
-    	$scope.inviteUrl = data.id;
-    });
+    if($scope.user){
+  		var longUrl = {
+      	"longUrl" : "http://localhost:9876/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
+      };
+      $http.post(ENV.GOOGLE_API_URI, angular.toJson(longUrl)).success(function (data) {
+      	$scope.inviteUrl = data.id;
+      });
+    }
 
     $scope.memorial.$loaded().then(function(value) {
       $scope.leader = User.findById($scope.memorial.ref_user);
