@@ -10,7 +10,9 @@ angular.module('doresolApp')
     newStory.created_at = moment().toString();
     newStory.updated_at = newStory.created_at;
 
-    return stories.$push(newStory).then(function(value){
+    var storyRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+newStory.ref_memorial+'/stories');
+    var story = $firebase(storyRef);
+    return story.$push(newStory).then(function(value){
       return {
         key: value.name(),
         memorialId: newStory.ref_memorial,

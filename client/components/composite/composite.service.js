@@ -168,9 +168,9 @@
 
   var createStory = function(memorialId, newStory) {
     if(newStory.file){
-      return Story.create(newStory).then(File.createLocalFile).then(_create_story, errorHandler);
+      return Story.create(newStory).then(File.createLocalFile, errorHandler);
     }else{
-      return Story.create(newStory).then(_create_story, errorHandler);
+      return Story.create(newStory, errorHandler);
     }
   }
 
