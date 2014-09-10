@@ -213,9 +213,9 @@ angular.module('doresolApp')
         }
       );
 
-      angular.forEach($scope.storiesArray,function(storyKey){
+      angular.forEach($scope.storymapStoriesArray,function(storyKey){
         var copyStory = {};
-        angular.copy($scope.storiesObject[storyKey],copyStory);
+        angular.copy($scope.storymapStoriesObject[storyKey],copyStory);
         storymap_data.storymap.slides.push(copyStory);
       });
 
