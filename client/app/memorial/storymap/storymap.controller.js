@@ -54,7 +54,7 @@ angular.module('doresolApp')
       tolerance: "pointer",
 
       start: function(e, ui) {
-        $(e.target).data("ui-sortable").floating = true;
+        // $(e.target).data("ui-sortable").floating = true;
       },
       
       // After sorting is completed
