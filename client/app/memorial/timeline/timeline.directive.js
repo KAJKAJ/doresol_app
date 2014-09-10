@@ -65,6 +65,7 @@ angular.module('doresolApp')
       //  });
       }
   })
+  
   .directive('storymapApi',function(){
     return {
       restrict: 'E',
