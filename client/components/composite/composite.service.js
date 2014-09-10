@@ -154,6 +154,26 @@
     }
   }
 
+  var _create_story = function(params) {
+    var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
+    var storiesRef = memorialsRef.child(params.memorialId + '/stories');
+
+    return $firebase(storiesRef).$set(params.key,true).then(function(value){
+      return{
+        key: value.name(),
+        memorialId:params.memorialId
+      }
+    });
+  }
+
+  var createStory = function(memorialId, newStory) {
+    if(newStory.file){
+      return Story.create(newStory).then(File.createLocalFile).then(_create_story, errorHandler);
+    }else{
+      return Story.create(newStory).then(_create_story, errorHandler);
+    }
+  }
+
   var createStorylineStory = function(memorialId, newStory) {
     if(newStory.file){
       return Story.create(newStory).then(File.createLocalFile).then(_create_storyline_story, errorHandler);
@@ -209,6 +229,7 @@
     createTimelineStory:createTimelineStory,
     createStorylineStory:createStorylineStory,
     createStorymapStory:createStorymapStory,
+    createStory:createStory,
 
     createComment:createComment,
 

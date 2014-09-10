@@ -37,17 +37,17 @@
       <h5>{{memorial.description}}</h5>
     </div>
     <ul class="nav nav-pills nav-stacked" role="tablist" >
-	  	<li ng-class="{active: $state.includes('memorial.storyline')}"  tooltip-placement="bottom" tooltip="일화나 전하고 싶은 이야기를 전달하세요">
-        <a ui-sref="memorial.storyline({id:memorialKey})"><i class="fa fa-comment"></i> Storyline</a>
-      </li>
-	  	<li ng-class="{active: $state.includes('memorial.timeline')}" tooltip-placement="bottom" tooltip="시간의 흐름에 따른 일대기를 만들어보세요">
+	  	<!-- <li ng-class="{active: $state.includes('memorial.timeline')}" tooltip-placement="bottom" tooltip="시간의 흐름에 따른 일대기를 만들어보세요">
         <a ui-sref="memorial.timeline({id:memorialKey})"><i class="fa fa-road"></i> Timeline</a>
-      </li>
+      </li> -->
 	  	<li ng-class="{active: $state.includes('memorial.storymap')}" tooltip-placement="bottom" tooltip="장소의 이동에 따른 일대기를 만들어보세요">
-        <a ui-sref="memorial.storymap({id:memorialKey})"><i class="fa fa-map-marker"></i> StoryMap</a>
+        <a ui-sref="memorial.storymap({id:memorialKey})"><i class="fa fa-road"></i> 스토리</a>
       </li>
-			<li ng-class="{active: $state.includes('memorial.member')}" tooltip-placement="bottom" tooltip="참여하고 있는 분들을 확인해 보세요">
-        <a ui-sref="memorial.member({id:memorialKey})"><i class="fa fa-users"></i> Member</a>
+			<li ng-class="{active: $state.includes('memorial.storyline')}"  tooltip-placement="bottom" tooltip="일화나 전하고 싶은 이야기를 전달하세요">
+        <a ui-sref="memorial.storyline({id:memorialKey})"><i class="fa fa-comment"></i> 방명록</a>
+      </li>
+      <li ng-class="{active: $state.includes('memorial.member')}" tooltip-placement="bottom" tooltip="참여하고 있는 분들을 확인해 보세요">
+        <a ui-sref="memorial.member({id:memorialKey})"><i class="fa fa-users"></i> 멤버</a>
       </li>
 		</ul>
   </div>

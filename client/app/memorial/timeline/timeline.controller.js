@@ -51,14 +51,6 @@ angular.module('doresolApp')
       }
     };
 
-    // $scope.$watch('totalStoryCnt',function(value){
-    //   if(value > 0){
-    //     if($scope.currentUser.uid != $scope.memorial.ref_user){
-    //       console.log($scope.storiesArray);
-    //     }
-    //   }
-    // })
-
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
 

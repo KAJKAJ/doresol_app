@@ -49,13 +49,16 @@ angular.module('doresolApp')
     return $firebase(memorialRef).$remove(storyId);
   }
 
+  var removeStoryFromMemorial = function(memorialId,storyId){
+    var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+memorialId+'/stories');
+    return $firebase(memorialRef).$remove(storyId);
+  }
+
   var removeStory = function(story){
     //TODO: delete related files??
     
-    return removeStoryFromTimeline(story.ref_memorial,story.$id).then(function(){
-      removeStoryFromStoryline(story.ref_memorial,story.$id).then(function(){
-        remove(story.$id);
-      });
+    return removeStoryFromMemorial(story.ref_memorial,story.$id).then(function(value){
+     remove(story.$id);
     });
   }
 
@@ -67,6 +70,7 @@ angular.module('doresolApp')
     removeStoryFromTimeline:removeStoryFromTimeline,
     removeStoryFromStoryline:removeStoryFromStoryline,
     removeStoryFromStorymap:removeStoryFromStorymap,
+    removeStoryFromMemorial:removeStoryFromMemorial,
     removeStory:removeStory
   };
 

@@ -28,7 +28,7 @@ angular.module('doresolApp')
             };
             
             Composite.createMemorial(memorial).then(function (value) {
-              $state.transitionTo('memorial.timeline', {id: value.name()});
+              $state.transitionTo('memorial.storymap', {id: value.name()});
             });
         }
       }

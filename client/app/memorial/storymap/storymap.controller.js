@@ -67,16 +67,16 @@ angular.module('doresolApp')
     };
 
     var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
-    var currentStorymapStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storymap/stories');
-    var _storymapStories = $firebase(currentStorymapStoriesRef).$asArray();
+    var currentStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/stories');
+    var _stories = $firebase(currentStoriesRef).$asArray();
 
     $scope.storyCnt = 0;
-    _storymapStories.$loaded().then(function(value){
-      $scope.totalStoryCnt = _storymapStories.length;
+    _stories.$loaded().then(function(value){
+      $scope.totalStoryCnt = _stories.length;
       // console.log($scope.totalStoryCnt);
     });
 
-    _storymapStories.$watch(function(event){
+    _stories.$watch(function(event){
       switch(event.event){
         case "child_removed":
           $scope.storyCnt--;
@@ -95,12 +95,13 @@ angular.module('doresolApp')
               var index = $scope.storiesArray.indexOf(value.tempKey);
               $scope.storiesArray.splice(index, 1);
             }
-            
-            $scope.storiesArray.sort(function(aKey,bKey){
-              var aPosition = $scope.storiesObject[aKey].position;
-              var bPosition = $scope.storiesObject[bKey].position;
 
-              return aPosition > bPosition ? 1 : -1;
+            $scope.storiesArray.sort(function(aKey,bKey){
+              var aValue = $scope.storiesObject[aKey];
+              var bValue = $scope.storiesObject[bKey];
+              var aStartDate = moment(aValue.startDate).unix();
+              var bStartDate = moment(bValue.startDate).unix();
+              return aStartDate > bStartDate ? 1 : -1;
             });
 
             // $scope.stories[value.ref_era][event.key] = true;
@@ -138,7 +139,7 @@ angular.module('doresolApp')
 
       if(!$scope.storiesObject[storyId].newStory){
         // TODO: 바껴야 됨
-        Story.removeStoryFromStorymap($scope.memorialKey,storyId);
+        Story.removeStory($scope.storiesObject[storyId]);
       }
     };
 
@@ -190,10 +191,16 @@ angular.module('doresolApp')
       
     };
 
-   $scope.uploadStorymapStory = function(){
+   $scope.uploadStory = function(){
       if($scope.storiesArray.length > 0){
+        var memorialStart = moment($scope.memorial.dateOfBirth);
+        var memorialEnd = moment($scope.memorial.dateOfDeath);
+        var cntStories = $scope.storiesArray.length;
+        var timeStep = (memorialEnd - memorialStart)/cntStories;
+        var index = 0;
         angular.forEach($scope.storiesArray, function(storyKey,index) {
-          $scope.storiesObject[storyKey].position = index;
+          $scope.storiesObject[storyKey].startDate = moment(memorialStart + timeStep*index).format("YYYY-MM-DD");
+          index++;
           if($scope.storiesObject[storyKey].newStory){
             $scope.totalStoryCnt++;     
             // create story
@@ -207,11 +214,9 @@ angular.module('doresolApp')
               updated_at: moment().toString()
             }
             copyStory.file = file;
-            
-            // delete copyStory.newStory;
-            Composite.createStorymapStory($scope.memorialKey,copyStory).then(function(value){
-            }, function(error){
-              console.log(error);
+            Composite.createStory($scope.memorialKey,copyStory).then(function(value){
+              }, function(error){
+                console.log(error);
             });
           }
           
@@ -232,7 +237,6 @@ angular.module('doresolApp')
         $scope.storiesArray.push(tempKey);
         $scope.storiesObject[tempKey] = 
           {
-            type: 'storymap',
             file: value,
             newStory: true,
             tempKey: tempKey,
@@ -254,31 +258,9 @@ angular.module('doresolApp')
             }
           };
       });
-      // console.log($scope);
     };
 
     $scope.toggleEditMode = function(){
       $scope.editMode = !$scope.editMode;
     };
-
-
-  // storymap_data can be an URL or a Javascript object
-  // var storymap_data = 'http://localhost:9876/app/memorial/storymap/storymap.json'; 
-  
-  // // certain settings must be passed within a separate options object
-  // var storymap_options = {
-  //   width: 500,                // required for embed tool; width of StoryMap                    
-  //   height: 500,               // required for embed tool; width of StoryMap
-  //   storymap: {
-  //       language: "KR",          // required; two-letter ISO language code
-  //       map_type: "stamen:toner-lines",          // required
-  //       map_as_image: false,       // required
-  //   }
-  // };
-
-  // var storymap = new VCO.StoryMap('mapdiv', storymap_data, storymap_options);
-  // window.onresize = function(event) {
-  //     storymap.updateDisplay(); // this isn't automatic
-  // }          
-
   });
