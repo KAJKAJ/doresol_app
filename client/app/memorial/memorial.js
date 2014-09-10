@@ -21,31 +21,31 @@ angular.module('doresolApp')
         url:'/profile',
         templateUrl: 'app/memorial/profile/profile.html',
         controller: 'ProfileCtrl',
-        // authenticate: true
+        authenticate: true
       })
       .state('memorial.timeline', {
         url:'/timeline',
         templateUrl: 'app/memorial/timeline/timeline.html',
         controller: 'TimelineCtrl',
-        // authenticate: true
+        authenticate: true
       })      
       .state('memorial.storyline', {
         url:'/storyline',
         templateUrl: 'app/memorial/storyline/storyline.html',
         controller: 'StorylineCtrl',
-        // authenticate: true
+        authenticate: true
       })
       .state('memorial.storymap', {
         url:'/storymap',
         templateUrl: 'app/memorial/storymap/storymap.html',
         controller: 'StorymapCtrl',
-        // authenticate: true
+        authenticate: true
       })
       .state('memorial.member', {
         url:'/member',
         templateUrl: 'app/memorial/member/member.html',
         controller: 'MemberCtrl',
-        // authenticate: true
+        authenticate: true
       })
       .state('memorial_create', {
         templateUrl: 'app/memorial/create/create.html',
