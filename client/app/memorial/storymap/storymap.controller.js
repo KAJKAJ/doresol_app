@@ -51,7 +51,7 @@ angular.module('doresolApp')
     $scope.sortableOptions = {
       // containment: "parent",
       cursor: "move",
-      tolerance: "pointer",
+      tolerance: "pointer", 
 
       start: function(e, ui) {
         // $(e.target).data("ui-sortable").floating = true;
