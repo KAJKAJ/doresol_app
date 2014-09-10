@@ -78,10 +78,20 @@ angular.module('doresolApp')
           $scope.autocomplete = $scope.story.location.name;
         }
 
+        var default_lat = 35.907757;
+        var default_lon = 127.76692200000002 ;
+        if($scope.story.location){
+          if($scope.story.location.lat){
+            default_lat = $scope.story.location.lat;
+          }
+          if($scope.story.location.lon){
+            default_lon = $scope.story.location.lon;
+          }
+        }
         $scope.map = {
           center: {
-              latitude: $scope.story.location.lat ? $scope.story.location.lat : 35.907757 ,
-              longitude: $scope.story.location.lon ? $scope.story.location.lon : 127.76692200000002  
+              latitude: default_lat ,
+              longitude: default_lon  
           },
           zoom: $scope.story.location ? 15 : 7
         };
@@ -89,8 +99,8 @@ angular.module('doresolApp')
         $scope.marker = {
           id:0,
           coords: {
-              latitude: $scope.story.location.lat ? $scope.story.location.lat : 35.907757 ,
-              longitude: $scope.story.location.lon ? $scope.story.location.lon : 127.76692200000002  
+              latitude: default_lat ,
+              longitude: default_lon  
           },
           options: { draggable: false }
         }

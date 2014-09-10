@@ -19,7 +19,7 @@ angular.module('doresolApp')
           if($scope.currentUser.uid == $scope.memorial.ref_user){
             $scope.toggleEditMode();
             $timeout(function(){
-               $scope.createStorymap();
+               // $scope.createStorymap();
             });
           }
 
@@ -113,9 +113,9 @@ angular.module('doresolApp')
               if($scope.totalStoryCnt > 0){
                 if($scope.totalStoryCnt == $scope.storyCnt){
                   if($scope.user && $scope.currentUser.uid != $scope.memorial.ref_user){
-                    $scope.createStorymap();
+                    // $scope.createStorymap();
                   }else{
-                    $scope.createStorymap();
+                    // $scope.createStorymap();
                   }
                 }
               }
