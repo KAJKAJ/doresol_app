@@ -73,7 +73,6 @@ angular.module('doresolApp')
     };
 
     $scope.changeMode = function(mode){
-    $scope.mode = mode;
      switch(mode) {
         case 'setting':
           break;
@@ -86,6 +85,7 @@ angular.module('doresolApp')
         default:
           break;
       };
+      $scope.mode = mode;
     }
 
     var currentStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/stories');
@@ -170,17 +170,15 @@ angular.module('doresolApp')
 
     // Update Story 
     $scope.saveStory = function(storyKey) {
-      
-      var _story = $firebase(currentStoriesRef);
-
-      _story.$set(storyKey, $scope.storiesObject['timeline'][storyKey]).then(function() {
-        if($scope.storiesObject['timeline'][storyKey].location) {
-          $scope.storiesObject['storymap'][storyKey] = $scope.storiesObject['timeline'][storyKey];
-        }
-      });
-
-      // $scope.storiesObject['timeline'].$save(storyKey);
-      // timeline에는 무조건 save 한다.
+      if(!$scope.storiesObject['timeline'][storyKey].newStory) {
+        var _story = $firebase(currentStoriesRef);
+        _story.$update(storyKey, $scope.storiesObject['timeline'][storyKey]).then(function() {
+          if($scope.storiesObject['timeline'][storyKey].location) {
+            $scope.storiesObject['storymap'][storyKey] = $scope.storiesObject['timeline'][storyKey];
+          }
+        });
+      }
+      $scope.isChanged = true;
     }
 
     
@@ -258,11 +256,13 @@ angular.module('doresolApp')
            source:     timeline_data,
            embed_id:   'timeline-embed'
        });
+
     };
 
     $scope.createStorymap = function(){
 
       if ($scope.storiesArray['storymap'].length == 0) return;
+
       // certain settings must be passed within a separate options object
       var storymap_options = {
         // width: 500,                // required for embed tool; width of StoryMap                    
@@ -284,40 +284,49 @@ angular.module('doresolApp')
         {
             type: "overview",
             text: {
-               headline: $scope.memorial.name + "<small>Story Map..</small>",
+               headline: $scope.memorial.name + "<small>지나온 발자..</small>",
                text: ""
             },
             media: {
-              url:              $scope.memorial.file.url,
-              caption:          "Overview"
+              url:   $scope.memorial.file.url,
+              caption: "Overview"
             }
         }
       );
+
       angular.forEach($scope.storiesArray['storymap'],function(storyKey){
         var copyStory = {
-          $id: $scope.storiesObject['storymap'][storyKey].$id,
+          // $id: $scope.storiesObject['storymap'][storyKey].$id,
           text:$scope.storiesObject['storymap'][storyKey].text,
-          created_at:$scope.storiesObject['storymap'][storyKey].created_at,
-          file:$scope.storiesObject['storymap'][storyKey].file,
+          // created_at:$scope.storiesObject['storymap'][storyKey].created_at,
+          // file:$scope.storiesObject['storymap'][storyKey].file,
           location:$scope.storiesObject['storymap'][storyKey].location,
           media:$scope.storiesObject['storymap'][storyKey].media,
-          newStory:$scope.storiesObject['storymap'][storyKey].newStory,
-          ref_memorial:$scope.storiesObject['storymap'][storyKey].ref_memorial,
-          ref_user:$scope.storiesObject['storymap'][storyKey].ref_user,
-          startDate:$scope.storiesObject['storymap'][storyKey].startDate,
-          updated_at:$scope.storiesObject['storymap'][storyKey].updated_at
+          // newStory:$scope.storiesObject['storymap'][storyKey].newStory,
+          // ref_memorial:$scope.storiesObject['storymap'][storyKey].ref_memorial,
+          // ref_user:$scope.storiesObject['storymap'][storyKey].ref_user,
+          // startDate:$scope.storiesObject['storymap'][storyKey].startDate,
+          // updated_at:$scope.storiesObject['storymap'][storyKey].updated_at
         };
         
         storymap_data.storymap.slides.push(copyStory);
       });
 
+      console.log('--- fail data ---');
+      console.log(storymap_data);
+
+      storymap_data = 'http://localhost:9876/app/memorial/storymap/storymap.json';
+
+      console.log('--- success data ---');
+      console.log(storymap_data);
+
       angular.element('#mapdiv').empty();
 
       var storymap = new VCO.StoryMap('mapdiv', storymap_data, storymap_options);
-
+      
       window.onresize = function(event) {
         storymap.updateDisplay(); // this isn't automatic
-      } 
+      }
       
     };
 

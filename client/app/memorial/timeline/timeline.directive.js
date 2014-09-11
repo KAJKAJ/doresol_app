@@ -81,9 +81,9 @@ angular.module('doresolApp')
       templateUrl: "app/memorial/storymap/storymap_api.html",
       controller: function($scope){
         $scope.mapDetails = {};
-        // if($scope.story.location){
-        //   $scope.autocomplete = $scope.story.location.name;
-        // }
+        if($scope.story.location){
+          $scope.autocomplete = $scope.story.location.name;
+        }
 
         var default_lat = 35.907757;
         var default_lon = 127.76692200000002 ;
@@ -124,9 +124,12 @@ angular.module('doresolApp')
             $scope.marker.coords.latitude = lat;
             $scope.marker.coords.longitude = lon;
 
-            $scope.story.location.lat = lat;
-            $scope.story.location.lon = lon;
-            $scope.story.location.name = $scope.autocomplete;
+            $scope.story.location = {
+              lat: lat,
+              lon: lon,
+              name: value.formatted_address
+            }
+            // $scope.story.location.name = $scope.autocomplete;
           }
         });
       }
