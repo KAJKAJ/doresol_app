@@ -56,11 +56,11 @@ angular.module('doresolApp')
     return $firebase(memorialRef).$remove(storyId);
   }
 
-  var removeStory = function(story){
+  var removeStory = function(memorialId, storyId){
     //TODO: delete related files??
-    
-    return removeStoryFromMemorial(story.ref_memorial,story.$id).then(function(value){
-     remove(story.$id);
+
+    return removeStoryFromMemorial(memorialId,storyId).then(function(value){
+     remove(storyId);
     });
   }
 

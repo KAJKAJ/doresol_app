@@ -13,21 +13,16 @@ angular.module('doresolApp')
 
     // for setting
     $scope.storiesArray = [];
+    $scope.storiesArray['timeline'] = [];
+    $scope.storiesArray['storymap'] = [];
+    
     $scope.storiesObject = {};
-
-    // for timeline
-    $scope.timelineStoriesArray = [];
-    $scope.timelineStoriesObject = [];
-
-    // for storymap
-    $scope.storymapStoriesArray = [];
-    $scope.storymapStoriesObject = [];
+    $scope.storiesObject['timeline'] = {};
+    $scope.storiesObject['storymap'] = {};
 
     $scope.isMemorialLoaded = false;
 
     $scope.memorial.$loaded().then(function(value){
-
-      console.log(value.stories);
 
       $scope.isOwner = Memorial.isOwner();
       $scope.isMember = Memorial.isMember();
@@ -35,15 +30,12 @@ angular.module('doresolApp')
 
       angular.forEach(value.stories, function(story, key) {
 
-        $scope.storiesArray.push(key);
-        $scope.storiesObject[key] = story;
-
-        $scope.timelineStoriesArray.push(key);
-        $scope.timelineStoriesObject[key] = story;
+        $scope.storiesArray['timeline'].push(key);
+        $scope.storiesObject['timeline'][key] = story;
 
         if(story.location) {
-          $scope.storymapStoriesArray.push(key);
-          $scope.storymapStoriesObject[key] = story;
+          $scope.storiesArray['storymap'].push(key);
+          $scope.storiesObject['storymap'][key] = story;
         }
       });
 
@@ -58,8 +50,9 @@ angular.module('doresolApp')
           break;
       };
 
-    });
+      $scope.isMemorialLoaded = true;
 
+    });
 
     $scope.sortableOptions = {
       // containment: "parent",
@@ -99,67 +92,96 @@ angular.module('doresolApp')
     var _stories = $firebase(currentStoriesRef).$asArray();
 
     _stories.$watch(function(event){
-        switch(event.event){
-          case "child_removed":
-            if($scope.isMemorialLoaded == false) break;
-            // removeMyMemorial(event.key);
-            break;
-          case "child_added":
+      switch(event.event){
+        case "child_removed":
 
-            if($scope.isMemorialLoaded == false) break;
+          var storyId = event.key;
 
-            var childRef = currentStoriesRef.child(event.key);
-            var child = $firebase(childRef).$asObject();
-            
-            child.$loaded().then(function(value){
-              // console.log(value);
-              $scope.storiesArray.push(event.key);
-              $scope.storiesObject[event.key] = value;  
-              
-              // new object case delete it
-              if(value.newStory) {
-                delete $scope.storiesObject[value.tempKey];
-                var index = $scope.storiesArray.indexOf(value.tempKey);
-                $scope.storiesArray.splice(index, 1);
-              }
+          // delete from timeline and setting
+          var index = $scope.storiesArray['timeline'].indexOf(event.key);
+          if( index >= 0) {
+            $scope.storiesArray['timeline'].splice(index, 1);
+            delete $scope.storiesObject['timeline'][storyId];
+          }
 
-              $scope.storiesArray.sort(function(aKey,bKey){
-                var aValue = $scope.storiesObject[aKey];
-                var bValue = $scope.storiesObject[bKey];
-                var aStartDate = moment(aValue.startDate).unix();
-                var bStartDate = moment(bValue.startDate).unix();
-                return aStartDate > bStartDate ? 1 : -1;
-              });
-
-              if(value.location){
-                $scope.storymapStoriesArray.push(event.key);
-                $scope.storymapStoriesObject[event.key] = value;  
-
-                $scope.storymapStoriesArray.sort(function(aKey,bKey){
-                  var aValue = $scope.storymapStoriesObject[aKey];
-                  var bValue = $scope.storymapStoriesObject[bKey];
-                  var aStartDate = moment(aValue.startDate).unix();
-                  var bStartDate = moment(bValue.startDate).unix();
-                  return aStartDate > bStartDate ? 1 : -1;
-                });
-
-              }else{
-                $scope.timelineStoriesArray.push(event.key);
-                $scope.timelineStoriesObject[event.key] = value;
-
-                $scope.timelineStoriesArray.sort(function(aKey,bKey){
-                  var aValue = $scope.timelineStoriesObject[aKey];
-                  var bValue = $scope.timelineStoriesObject[bKey];
-                  var aStartDate = moment(aValue.startDate).unix();
-                  var bStartDate = moment(bValue.startDate).unix();
-                  return aStartDate > bStartDate ? 1 : -1;
-                });
-              }
-            });
+          // delete from storymap
+          index = $scope.storiesArray['storymap'].indexOf(storyId);
+          if( index >= 0) {
+            $scope.storiesArray['storymap'].splice(index, 1);
+            delete $scope.storiesObject['storymap'][storyId];
+          }
 
           break;
-        }
+        case "child_added":
+
+          if($scope.isMemorialLoaded == false || $scope.storiesArray['timeline'].indexOf(event.key) >= 0) break;
+
+          var childRef = currentStoriesRef.child(event.key);
+          var child = $firebase(childRef).$asObject();
+          
+          child.$loaded().then(function(value){
+
+            if(value.newStory) {
+              delete $scope.storiesObject['timeline'][value.tempKey];
+              var index = $scope.storiesArray['timeline'].indexOf(value.tempKey);
+              $scope.storiesArray['timeline'].splice(index, 1);
+
+              // change newStory to false
+              child.newStory = false;
+              child.$save().then(function(newValue){
+                $scope.assignStory(child);
+              });
+            } else {
+              $scope.assignStory(value);
+            }
+
+          });
+
+        break;
+      }
     });
+
+    $scope.assignStory = function(value) {
+
+      $scope.storiesArray['timeline'].push(value.$id);
+      $scope.storiesObject['timeline'][value.$id] = value;
+      
+      $scope.storiesArray['timeline'].sort(function(aKey,bKey){
+        var aValue = $scope.storiesObject['timeline'][aKey];
+        var bValue = $scope.storiesObject['timeline'][bKey];
+        var aStartDate = moment(aValue.startDate).unix();
+        var bStartDate = moment(bValue.startDate).unix();
+        return aStartDate > bStartDate ? 1 : -1;
+      });
+
+      if(value.location){
+        $scope.storiesArray['storymap'].push(value.$id);
+        $scope.storiesObject['storymap'][value.$id] = value;  
+
+        $scope.storiesArray['storymap'].sort(function(aKey,bKey){
+          var aValue = $scope.storiesObject['storymap'][aKey];
+          var bValue = $scope.storiesObject['storymap'][bKey];
+          var aStartDate = moment(aValue.startDate).unix();
+          var bStartDate = moment(bValue.startDate).unix();
+          return aStartDate > bStartDate ? 1 : -1;
+        });
+      }
+    }
+
+    // Update Story 
+    $scope.saveStory = function(storyKey) {
+      
+      var _story = $firebase(currentStoriesRef);
+
+      _story.$set(storyKey, $scope.storiesObject['timeline'][storyKey]).then(function() {
+        if($scope.storiesObject['timeline'][storyKey].location) {
+          $scope.storiesObject['storymap'][storyKey] = $scope.storiesObject['timeline'][storyKey];
+        }
+      });
+
+      // $scope.storiesObject['timeline'].$save(storyKey);
+      // timeline에는 무조건 save 한다.
+    }
 
     
     $scope.getFlowFileUniqueId = function(file){
@@ -167,17 +189,31 @@ angular.module('doresolApp')
     };
     
     $scope.removeSelectedStory = function(storyId) {
-      // delete $scope.storiesObject[$scope.selectedEraKey][storyId];
-      var index = $scope.storiesArray.indexOf(storyId);
-      $scope.storiesArray.splice(index, 1);  
 
-      if(!$scope.storiesObject[storyId].newStory){
+      var _story = $firebase(currentStoriesRef);
+
+      // delete from timeline and setting
+      var index = $scope.storiesArray['timeline'].indexOf(storyId);
+      $scope.storiesArray['timeline'].splice(index, 1);
+      if(!$scope.storiesObject['timeline'][storyId].newStory){
         // TODO: 바껴야 됨
-        Story.removeStory($scope.storiesObject[storyId]);
+        _story.$remove(storyId).then(function() {
+        });
+      }
+      delete $scope.storiesObject['timeline'][storyId];
+
+      // delete from storymap
+      var index = $scope.storiesArray['storymap'].indexOf(storyId);
+      if( index >= 0) {
+        $scope.storiesArray['storymap'].splice(index, 1);
+        delete $scope.storiesObject['storymap'][storyId];
       }
     };
 
     $scope.createTimeline = function(){
+
+      if($scope.storiesArray['timeline'].length ==0) return;
+
       var timeline_data = {
         "timeline": {
            "headline": $scope.memorial.name,
@@ -192,18 +228,17 @@ angular.module('doresolApp')
       };
 
       var timeline_dates = [];
-      angular.forEach($scope.timelineStoriesArray,function(storyKey,index){
+      angular.forEach($scope.storiesArray['timeline'],function(storyKey,index){
         var copyStory = {
-          file:$scope.timelineStoriesObject[storyKey].file,
-          newStory: false,
-          ref_memorial:$scope.timelineStoriesObject[storyKey].ref_memorial,
-          ref_user:$scope.timelineStoriesObject[storyKey].ref_user,
-          startDate:$scope.timelineStoriesObject[storyKey].startDate,
-          text:$scope.timelineStoriesObject[storyKey].text.text,
-          headline:$scope.timelineStoriesObject[storyKey].text.headline,
+          file:$scope.storiesObject['timeline'][storyKey].file,
+          ref_memorial:$scope.storiesObject['timeline'][storyKey].ref_memorial,
+          ref_user:$scope.storiesObject['timeline'][storyKey].ref_user,
+          startDate:$scope.storiesObject['timeline'][storyKey].startDate,
+          text:$scope.storiesObject['timeline'][storyKey].text.text,
+          headline:$scope.storiesObject['timeline'][storyKey].text.headline,
           asset:{
-            media:$scope.timelineStoriesObject[storyKey].media.url,
-            thumbnail:$scope.timelineStoriesObject[storyKey].media.url
+            media:$scope.storiesObject['timeline'][storyKey].media.url,
+            thumbnail:$scope.storiesObject['timeline'][storyKey].media.url
           }
         }
         timeline_dates.push(copyStory);
@@ -213,6 +248,9 @@ angular.module('doresolApp')
       console.log(timeline_data);
       angular.element('#timeline-embed').empty();
 
+      console.log('timeline_data');
+      console.log(timeline_data);
+      
       createStoryJS({
            type:       'timeline',
            // width:      '100%',
@@ -223,6 +261,8 @@ angular.module('doresolApp')
     };
 
     $scope.createStorymap = function(){
+
+      if ($scope.storiesArray['storymap'].length == 0) return;
       // certain settings must be passed within a separate options object
       var storymap_options = {
         // width: 500,                // required for embed tool; width of StoryMap                    
@@ -253,19 +293,19 @@ angular.module('doresolApp')
             }
         }
       );
-      angular.forEach($scope.storymapStoriesArray,function(storyKey){
+      angular.forEach($scope.storiesArray['storymap'],function(storyKey){
         var copyStory = {
-          $id: $scope.storymapStoriesObject[storyKey].$id,
-          text:$scope.storymapStoriesObject[storyKey].text,
-          created_at:$scope.storymapStoriesObject[storyKey].created_at,
-          file:$scope.storymapStoriesObject[storyKey].file,
-          location:$scope.storymapStoriesObject[storyKey].location,
-          media:$scope.storymapStoriesObject[storyKey].media,
-          newStory:$scope.storymapStoriesObject[storyKey].newStory,
-          ref_memorial:$scope.storymapStoriesObject[storyKey].ref_memorial,
-          ref_user:$scope.storymapStoriesObject[storyKey].ref_user,
-          startDate:$scope.storymapStoriesObject[storyKey].startDate,
-          updated_at:$scope.storymapStoriesObject[storyKey].updated_at
+          $id: $scope.storiesObject['storymap'][storyKey].$id,
+          text:$scope.storiesObject['storymap'][storyKey].text,
+          created_at:$scope.storiesObject['storymap'][storyKey].created_at,
+          file:$scope.storiesObject['storymap'][storyKey].file,
+          location:$scope.storiesObject['storymap'][storyKey].location,
+          media:$scope.storiesObject['storymap'][storyKey].media,
+          newStory:$scope.storiesObject['storymap'][storyKey].newStory,
+          ref_memorial:$scope.storiesObject['storymap'][storyKey].ref_memorial,
+          ref_user:$scope.storiesObject['storymap'][storyKey].ref_user,
+          startDate:$scope.storiesObject['storymap'][storyKey].startDate,
+          updated_at:$scope.storiesObject['storymap'][storyKey].updated_at
         };
         
         storymap_data.storymap.slides.push(copyStory);
@@ -282,19 +322,20 @@ angular.module('doresolApp')
     };
 
    $scope.uploadStory = function(){
-      if($scope.storiesArray.length > 0){
+      if($scope.storiesArray['timeline'].length > 0){
         var memorialStart = moment($scope.memorial.dateOfBirth);
         var memorialEnd = moment($scope.memorial.dateOfDeath);
-        var cntStories = $scope.storiesArray.length;
+        var cntStories = $scope.storiesArray['timeline'].length;
         var timeStep = (memorialEnd - memorialStart)/cntStories;
         var index = 0;
-        angular.forEach($scope.storiesArray, function(storyKey,index) {
-          $scope.storiesObject[storyKey].startDate = moment(memorialStart + timeStep*index).format("YYYY-MM-DD");
+
+        angular.forEach($scope.storiesArray['timeline'], function(storyKey,index) {
+          $scope.storiesObject['timeline'][storyKey].startDate = moment(memorialStart + timeStep*index).format("YYYY-MM-DD");
           index++;
-          if($scope.storiesObject[storyKey].newStory){
+          if($scope.storiesObject['timeline'][storyKey].newStory){
             // create story
             var copyStory = {};
-            angular.copy($scope.storiesObject[storyKey],copyStory);
+            angular.copy($scope.storiesObject['timeline'][storyKey],copyStory);
 
             var file = {
               type: copyStory.file.type,
@@ -302,8 +343,18 @@ angular.module('doresolApp')
               url: '/tmp/' + copyStory.file.uniqueIdentifier,
               updated_at: moment().toString()
             }
+
+            if(!copyStory.location) {
+              copyStory.location = {
+                name: '',
+                lat: '',
+                lon: ''
+              };
+            }
             copyStory.file = file;
             Composite.createStory($scope.memorialKey,copyStory).then(function(value){
+                
+
               }, function(error){
                 console.log(error);
             });
@@ -323,8 +374,8 @@ angular.module('doresolApp')
         value.type = value.file.type.split("/")[0];
       
         var tempKey = Util.getUniqueId();
-        $scope.storiesArray.push(tempKey);
-        $scope.storiesObject[tempKey] = 
+        $scope.storiesArray['timeline'].push(tempKey);
+        $scope.storiesObject['timeline'][tempKey] = 
           {
             file: value,
             newStory: true,

@@ -1,4 +1,4 @@
-<div class="superbox-show" style="display: block; color:white">
+<div class="superbox-show" story="story" save-story-detail="saveStory(storyKey)" style="display: block; color:white">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
      <!--  <div ng-if="story.type === 'timeline'">
@@ -40,6 +40,6 @@
         <textarea class="form-control" ng-model="story.text.text" placeholder="설명이 필요하면 적어주세요"  rows="5" style="resize: vertical;"/>
       </div>
     </div>
-    <button class='btn btn-primary'>변경 사항 저장</buton>
+    <button class='btn btn-primary' ng-click="saveStoryDetail(storyKey)">변경 사항 저장</buton>
   </div>
 </div>

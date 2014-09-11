@@ -23,8 +23,8 @@
 	  <br>
 
 	  <div class="row">
-		   <div ui-sortable="sortableOptions" class="superbox col-sm-12" ng-model="storiesArray">
-			  	<div ng-repeat="storyKey in storiesArray" class="superbox-list" story="storiesObject[storyKey]" story-key="storyKey" ng-class="{active:$root.superboxToggled == storyKey,new:storiesObject[storyKey].newStory}" remove-selected-story="removeSelectedStory(storyKey)"></div>
+		   <div ui-sortable="sortableOptions" class="superbox col-sm-12" ng-model="storiesArray['timeline']">
+			  	<div ng-repeat="storyKey in storiesArray['timeline']" class="superbox-list" story="storiesObject['timeline'][storyKey]" story-key="storyKey" ng-class="{active:$root.superboxToggled == storyKey,new:storiesObject['timeline'][storyKey].newStory}" remove-selected-story="removeSelectedStory(storyKey)" save-story="saveStory(storyKey)"></div>
     	</div>
   	</div> 
 </div>

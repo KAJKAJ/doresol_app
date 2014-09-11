@@ -7,7 +7,8 @@ angular.module('doresolApp')
       scope:{
         story: '=story',
         storyKey: '=storyKey',
-        removeSelectedStory: '&'
+        removeSelectedStory: '&',
+        saveStory: '&'
       },
       templateUrl: 'app/memorial/timeline/superbox_list.html',
       link: function(scope, element, attrs) {
@@ -45,13 +46,18 @@ angular.module('doresolApp')
   .directive('superboxShow', function () {
     return {
       restrict: 'E',
-      scope: false,
+      // scope: false,
+      scope: {
+        story: '=',
+        saveStoryDetail: '&'
+      },
       replace: true,
       templateUrl: "app/memorial/timeline/superbox_show.html",
       controller: function($scope){
         $scope.changed = function(){
           // console.log($scope);
         }
+
         // $scope.mapDetails = {};
         // $scope.map = {
         //   center: {
@@ -75,9 +81,9 @@ angular.module('doresolApp')
       templateUrl: "app/memorial/storymap/storymap_api.html",
       controller: function($scope){
         $scope.mapDetails = {};
-        if($scope.story.location){
-          $scope.autocomplete = $scope.story.location.name;
-        }
+        // if($scope.story.location){
+        //   $scope.autocomplete = $scope.story.location.name;
+        // }
 
         var default_lat = 35.907757;
         var default_lon = 127.76692200000002 ;

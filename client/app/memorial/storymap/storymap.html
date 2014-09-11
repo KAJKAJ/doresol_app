@@ -3,10 +3,10 @@
 	  <div class="block-title">
 	      <h2>설정 모드</h2>
 	      <div class="block-options pull-right">
-		      <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-alt btn-sm btn-default" tooltip-placement="top" tooltip="보기">
+		      <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-alt btn-sm btn-default" tooltip-placement="top" tooltip="장소 기준으로 보기">
 		      	<i class="fa fa-play"></i>
 		      </span>
-		       <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-alt btn-sm btn-default" tooltip-placement="top" tooltip="보기">
+		       <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-alt btn-sm btn-default" tooltip-placement="top" tooltip="시간 기준으로 보기">
 		      	<i class="fa fa-play"></i>
 		      </span>
 		    </div>
