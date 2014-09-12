@@ -43,7 +43,6 @@ angular.module('doresolApp')
       auth.$login('password',{email:user.email, password:user.password,rememberMe: true}).then(function(value) {
         User.getCurrentUserFromFirebase(value.uid);
         deferred.resolve(value);
-
       }, function(error) {
         deferred.reject(error);
       });

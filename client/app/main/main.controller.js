@@ -37,6 +37,24 @@ angular.module('doresolApp')
           $scope.isLoggedIn = false;
         }
     }, true);
+
+    $scope.goToMemorialsAfterLogin = function(value){
+      Memorial.clearMyMemorial();
+      Composite.setMyMemorials(value.uid).then(function(){
+          // $location.path('/memorials');
+        if ($state.params.memorialId !== undefined) {
+          $state.params.inviteeId = value.uid;
+          Composite.addMember($state.params).then(function(){
+            $state.go("memorials");
+          });
+        } else {
+          console.log('go to memorials');
+          $state.go("memorials");
+        }
+      },function(error){
+        console.log(error);
+      });
+    }
     
     $scope.signup = function(signupForm) {
       $scope.signupSubmitted = true;
@@ -50,7 +68,7 @@ angular.module('doresolApp')
                 email: $scope.signupUser.email,
                 password: $scope.signupUser.password
               }).then(function(){
-                $state.go("memorials");  
+                $scope.goToMemorialsAfterLogin(value);
               })
             });
           } else {
@@ -58,7 +76,7 @@ angular.module('doresolApp')
                 email: $scope.signupUser.email,
                 password: $scope.signupUser.password
              }).then(function(){
-              $state.go("memorials");  
+              $scope.goToMemorialsAfterLogin(value);
             })
           }
 
@@ -69,6 +87,10 @@ angular.module('doresolApp')
             case "EMAIL_TAKEN":
               signupForm['email'].$setValidity('firebase',false);
               $scope.signupErrors['email'] = '이미 등록된 이메일 주소입니다.';
+            break;
+            default:
+              signupForm['email'].$setValidity('firebase',false);
+              $scope.signupErrors['email'] = errorCode;
             break;
           }
           
@@ -102,28 +124,23 @@ angular.module('doresolApp')
           password: $scope.loginUser.password
         })
         .then( function (value){
-          Memorial.clearMyMemorial();
-          Composite.setMyMemorials(value.uid).then(function(){
-              // $location.path('/memorials');
-            if ($state.params.memorialId !== undefined) {
-              $state.params.inviteeId = value.uid;
-              Composite.addMember($state.params).then(function(){
-                $state.go("memorials");
-              });
-            } else {
-              $state.go("memorials");
-            }
-          });
-
+          $scope.goToMemorialsAfterLogin(value);
         } ,function(error){
           // console.log(error);
           var errorCode = error.code;
+          // console.log(error);
           switch(errorCode){
+            case "INVALID_EMAIL":
+              $scope.loginErrors.other = "잘못된 형식의 이메일 주소입니다.";
+              break;
             case "INVALID_USER":
               $scope.loginErrors.other = "등록되어있지 않은 이메일 주소입니다.";
             break;
             case "INVALID_PASSWORD":
               $scope.loginErrors.other = "잘못된 패스워드입니다.";
+            break;
+            default:
+              $scope.loginErrors.other = errorCode;
             break;
           }
         });        
