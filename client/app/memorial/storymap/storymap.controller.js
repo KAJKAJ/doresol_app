@@ -118,31 +118,31 @@ angular.module('doresolApp')
           break;
         case "child_added":
 
-          if($scope.isMemorialLoaded == false || $scope.storiesArray['timeline'].indexOf(event.key) >= 0) break;
+          // if($scope.isMemorialLoaded == false || $scope.storiesArray['timeline'].indexOf(event.key) >= 0) break;
 
-          var childRef = currentStoriesRef.child(event.key);
-          var child = $firebase(childRef).$asObject();
+          // var childRef = currentStoriesRef.child(event.key);
+          // var child = $firebase(childRef).$asObject();
 
-          child.$loaded().then(function(value){
+          // child.$loaded().then(function(value){
 
-            if(value.newStory) {
-              var index = $scope.storiesArray['timeline'].indexOf(value.tempKey);
-              if(index >=0 ) {
-                $scope.storiesArray['timeline'].splice(index, 1);
-                delete $scope.storiesObject['timeline'][value.tempKey];
-              }
+          //   if(value.newStory) {
+          //     var index = $scope.storiesArray['timeline'].indexOf(value.tempKey);
+          //     if(index >=0 ) {
+          //       $scope.storiesArray['timeline'].splice(index, 1);
+          //       delete $scope.storiesObject['timeline'][value.tempKey];
+          //     }
               
-              // change newStory to false
-              child.newStory = false;
-              $scope.assignStory(child);
-              child.$save().then(function(newValue){
-              });
+          //     // change newStory to false
+          //     child.newStory = false;
+          //     $scope.assignStory(child);
+          //     child.$save().then(function(newValue){
+          //     });
 
-            } else {
-              $scope.assignStory(value);
-            }
+          //   } else {
+          //     $scope.assignStory(value);
+          //   }
 
-          });
+          // });
 
         break;
       }
@@ -251,12 +251,8 @@ angular.module('doresolApp')
       });
       
       timeline_data.timeline.date = timeline_dates;
-      console.log(timeline_data);
       angular.element('#timeline-embed').empty();
 
-      console.log('timeline_data');
-      console.log(timeline_data);
-      
       createStoryJS({
            type:       'timeline',
            // width:      '100%',
@@ -361,16 +357,18 @@ angular.module('doresolApp')
               };
             }
             copyStory.file = file;
-
-            console.log($scope.storiesArray['timeline']);
+            copyStory.newStory = false;
 
             Composite.createStory($scope.memorialKey,copyStory).then(function(value){
-              var tempIndex = $scope.storiesArray['timeline'].indexOf(value.tempKey);
-              if( tempIndex >= 0) {
-                $scope.storiesArray['timeline'].splice(tempIndex, 1);
-                delete $scope.storiesObject['timeline'][value.tempKey];
+              var index = $scope.storiesArray['timeline'].indexOf(storyKey);
+              if(index >=0 ) {
+                $scope.storiesArray['timeline'].splice(index, 1);
+                delete $scope.storiesObject['timeline'][storyKey];
               }
-            
+
+              copyStory.$id = value.key;
+              $scope.assignStory(copyStory);
+              
               }, function(error){
                 console.log(error);
             });
