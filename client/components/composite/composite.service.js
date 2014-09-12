@@ -3,8 +3,6 @@
  angular.module('doresolApp')
   .factory('Composite', function Composite($q,Memorial,File,User,ENV,$firebase,Story,Comment,Util) {
 
-  var user = User.getCurrentUser();
-
   var setMyMemorials = function(userId){
     var dfd = $q.defer();
 
@@ -24,7 +22,10 @@
           var childRef = memorialsRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
-            value.own = true;
+            if(value.ref_user == userId){
+              value.own = true;
+            }
+            value = Memorial.setMemorialSummary(value);
             Memorial.addMyMemorial(event.key,value);
           });
         break;
