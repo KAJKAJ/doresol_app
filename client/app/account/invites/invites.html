@@ -1,8 +1,7 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<!-- <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container contents">  
   <div class="row-fluid">
-    <!-- profile start-->
     <div class="col-xs-4">
     </div>
     <div class="col-xs-4 memorial_profile">
@@ -22,4 +21,49 @@
       </div>
     <div class="col-xs-4">
   </div>
+</div> -->
+
+
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container contents">  
+  <div class="col-md-2">
+    <div>
+      <div>
+        <a disabled>
+          <img ng-src="{{memorial.file.url}}" class="img-responsive hover-opacity-8"/>
+        </a>
+      </div>
+    </div>
+    <div class="text-center" style="clear:both;">
+      <h3> {{memorial.name}} </h3>    
+    </div>
+    <ul class="nav nav-pills nav-stacked" role="tablist" >
+      <li><a disabled style="color:gray;"><i class="fa fa-comment"></i> Storyline</a></li>
+      <li><a disabled style="color:gray;"><i class="fa fa-road"></i> Timeline</a></li>
+      <li><a disabled style="color:gray;"><i class="fa fa-map-marker"></i> StoryMap</a></li>
+      <li><a disabled style="color:gray;"><i class="fa fa-users"></i> Member</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-10">
+    <ul class="list-group">
+      <li class="list-group-item">이름: {{memorial.name}}</li>
+      <li class="list-group-item">태어나신 날: {{memorial.dateOfBirth}}</li>
+      <li class="list-group-item">돌아가신 날: {{memorial.dateOfDeath}}</li>
+    </ul>
+    <div class="well">
+        <b> 나를 초대한 사람:</b>
+        <div class="story-avatar">
+          <img ng-src="{{users[inviterId].profile.file.url}}" style="width:64px;height:64px;"/>
+        </div>
+      
+      해당 메모리얼로 초대되었습니다.<br>
+      아래 승낙 버튼을 누르면 해당 메모리얼의 멤버가 됩니다. <br>
+    </div>
+    <button ng-click="cancel()">취소
+    <button ng-click="accept()">수락하기
+  </div>
+
 </div>
+    

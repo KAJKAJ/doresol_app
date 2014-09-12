@@ -12,7 +12,6 @@ angular.module('doresolApp')
     $scope.inviterId = $stateParams.inviterId;
 
     $scope.users = User.getUsersObject();
-
     User.setUsersObject($scope.inviterId);
 
     $scope.cancel = function() {
