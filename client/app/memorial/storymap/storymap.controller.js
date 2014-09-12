@@ -73,18 +73,22 @@ angular.module('doresolApp')
     };
 
     $scope.changeMode = function(mode){
-     switch(mode) {
+      switch(mode) {
         case 'setting':
           break;
         case 'timeline':
-          $scope.createTimeline();
+          $timeout(function(){
+            $scope.createTimeline();
+          });
           break;
         case 'storymap':
-          $scope.createStorymap();
+          $timeout(function(){
+            $scope.createStorymap();
+          });
           break;
         default:
           break;
-      };
+      }
       $scope.mode = mode;
     }
 
@@ -311,14 +315,6 @@ angular.module('doresolApp')
         
         storymap_data.storymap.slides.push(copyStory);
       });
-
-      console.log('--- fail data ---');
-      console.log(storymap_data);
-
-      storymap_data = 'http://localhost:9876/app/memorial/storymap/storymap.json';
-
-      console.log('--- success data ---');
-      console.log(storymap_data);
 
       angular.element('#mapdiv').empty();
 
