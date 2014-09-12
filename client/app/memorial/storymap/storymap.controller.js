@@ -3,7 +3,7 @@
 angular.module('doresolApp')
   .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story,$timeout) {
 
-    $scope.mode = 'setting';
+    $scope.mode = 'timeline';
 
     $scope.currentUser = User.getCurrentUser();
     $scope.isChanged = false;
@@ -288,7 +288,7 @@ angular.module('doresolApp')
         {
             type: "overview",
             text: {
-               headline: $scope.memorial.name + "<small>지나온 발자..</small>",
+               headline: $scope.memorial.name + "<small>지나온 발자취..</small>",
                text: ""
             },
             media: {
