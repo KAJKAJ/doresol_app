@@ -37,8 +37,9 @@
   }
 
   var addMyMemorial = function(key,value){
-  	value = setMemorialSummary(value);
-  	myMemorials[key] = value;
+  	var newVal = setMemorialSummary(value);
+  	console.log(newVal);
+  	myMemorials[key] = newVal;
   }
 
   var removeMyMemorial = function(key){

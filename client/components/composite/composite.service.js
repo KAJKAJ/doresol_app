@@ -1,7 +1,7 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('Composite', function Composite($q,Memorial,File,User,ENV,$firebase,Story,Comment,Util) {
+  .factory('Composite', function Composite($q,Memorial,File,User,ENV,$firebase,Story,Comment,Util,$timeout) {
 
   var setMyMemorials = function(userId){
     var dfd = $q.defer();
@@ -25,7 +25,6 @@
             if(value.ref_user == userId){
               value.own = true;
             }
-            value = Memorial.setMemorialSummary(value);
             Memorial.addMyMemorial(event.key,value);
           });
         break;

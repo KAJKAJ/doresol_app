@@ -24,7 +24,10 @@ angular.module('doresolApp')
                 description: $scope.newMemorial.description?$scope.newMemorial.description:null,
                 file:file,
                 ref_user:$scope.currentUser.uid,
-                public: $scope.newMemorial.public
+                public: $scope.newMemorial.public,
+                count_timeline:0,
+                count_storyline:0,
+                count_member:1
             };
             
             Composite.createMemorial(memorial).then(function (value) {

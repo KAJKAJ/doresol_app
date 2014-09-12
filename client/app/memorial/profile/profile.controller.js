@@ -26,7 +26,7 @@ angular.module('doresolApp')
     				name:$scope.copyMemorial.name,
     				dateOfBirth:moment($scope.copyMemorial.dateOfBirth).format("YYYY-MM-DD"),
     				dateOfDeath:moment($scope.copyMemorial.dateOfDeath).format("YYYY-MM-DD"),
-            description: $scope.copyMemorial.description,
+            description: $scope.copyMemorial.description?$scope.copyMemorial.description:null,
             public:$scope.copyMemorial.public
     			}
     		).then(function(){
