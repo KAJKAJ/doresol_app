@@ -55,14 +55,14 @@
 			
 			<div class="form-group">
 			  <label class="public-label">공개</label>
-			  <label class="switch switch-primary" for="val_public">
+			  <label class="switch switch-success" for="val_public">
 			    <input type="checkbox" id="val_public" name="val_public" ng-model="copyMemorial.public">
 			    <span tooltip-placement="bottom" tooltip="공개 설정"></span>
 			  </label>
 			</div> 
 			<br/>
 
-			<button type="submit" class="btn btn-lg btn-primary" ng-disabled="fileUploading||memorialForm.$invalid">저장</button>		  
+			<button type="submit" class="btn btn-lg btn-success" ng-disabled="fileUploading||memorialForm.$invalid">저장</button>		  
 			<br/>
 			<p>{{message}}</p>
 		</form>

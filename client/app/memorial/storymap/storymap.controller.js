@@ -391,8 +391,8 @@ angular.module('doresolApp')
             ref_user: $scope.currentUser.uid,
             
             text: {
-              headline:'내용없음',
-              text:'내용없음'
+              headline:'',
+              text:''
             },
             media:{
               url: '/tmp/' + value.uniqueIdentifier,

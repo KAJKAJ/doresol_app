@@ -33,7 +33,7 @@
                 <form class="form" name="loginForm" ng-submit="login(loginForm)" novalidate>
                     <input type="text" name="email" placeholder="email" class="form-control" ng-model="loginUser.email">
                     <input type="password" name="password" placeholder="password" class="form-control" ng-model="loginUser.password">
-                    <button class="btn btn-info btn-block btn-login" type="submit">
+                    <button class="btn btn-success btn-block btn-login" type="submit">
                      로그인
                     </button>
                   <div class="form-group has-error">
@@ -78,7 +78,7 @@
                       {{ singupErrors.password }}
                     </p>
                   </div>
-                    <button class="btn btn-info btn-block btn-login" type="submit">
+                    <button class="btn btn-success btn-block btn-login" type="submit">
                       가입하기
                     </button>
                 </form>
@@ -154,8 +154,8 @@
               <div class="overlay_detail">
                 <div class="pull-left public">
                   &nbsp;
-                  <button ng-if="memorial.public" class="btn btn-xs btn-default" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
-                  <button ng-if="!memorial.public" class="btn btn-xs btn-default" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button>
+                  <button ng-if="memorial.public" class="btn btn-xs btn-info" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
+                  <button ng-if="!memorial.public" class="btn btn-xs btn-danger" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button>
                 </div>
                 <br/><br/><br/><br/>
                 <h3><strong>{{memorial.name}}</strong></h3>
