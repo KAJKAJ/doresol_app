@@ -619,6 +619,19 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.registerTask('beta', function () {
+     grunt.task.run([
+        'clean:server',
+        'env:all',
+        'injector:sass', 
+        'concurrent:server',
+        'injector',
+        'bowerInstall',
+        'ngconstant:beta',
+        'autoprefixer'
+      ]);
+  });
+
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
