@@ -10,11 +10,10 @@ angular.module('doresolApp')
     $scope.users = User.getUsersObject();
     $scope.members = {};
     $scope.waitings = {};
-
     // generate invites url
     if($scope.user){
   		var longUrl = {
-      	"longUrl" : "http://localhost:9876/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
+      	"longUrl" : ENV.HOST + "/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
       };
       $http.post(ENV.GOOGLE_API_URI, angular.toJson(longUrl)).success(function (data) {
       	$scope.inviteUrl = data.id;

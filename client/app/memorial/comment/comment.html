@@ -7,8 +7,11 @@
       <div class="comment-body story-comment">
           <strong class="comment-user-id">{{users[comment.ref_user].profile.name}}</strong>
           <span class="text-muted text-small"><em>{{comment.fromNow}}</em></span>
-          <span ng-if="comment.ref_user == currentUser.uid">
+          <!-- <span ng-if="comment.ref_user == currentUser.uid">
            	<i class="fa fa-times-circle text-danger" ng-click="deleteComment(story.$id, commentKey)"></i><p><input type="text" ng-model="comment.body"/></p>
+          </span> -->
+          <span ng-if="comment.ref_user == currentUser.uid">
+            <i class="fa fa-times-circle text-danger" ng-click="deleteComment(story.$id, commentKey)"></i><p>{{comment.body}}</p>
           </span>
          	<p ng-if="comment.ref_user != currentUser.uid">{{comment.body}}</p>
       </div>
@@ -24,7 +27,7 @@
         <strong class="comment-user-id">{{currentUser.profile.name}}</strong>
         <form name="commentForm" ng-submit="addComment(story.$id,newComment)" novalidate style="padding-right:30px;">
 					<textarea class="form-control" ng-model="newComment.body" placeholder="댓글을 입력하세요.." rows="2" style="resize: vertical;"/>
-          <button type="submit" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i>댓글 저장</button>
+          <button type="submit" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i>댓글 저장</button>
 			  </form>            
       </div>
   </li>        

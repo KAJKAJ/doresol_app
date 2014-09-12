@@ -22,8 +22,8 @@
 
   var setMemorialSummary = function(memorial){
   	memorial.count_member = 1;
-  	if(memorial.timeline && memorial.timeline.stories){
-  		memorial.count_timeline = Object.keys(memorial.timeline.stories).length;
+  	if(memorial.stories){
+  		memorial.count_timeline = Object.keys(memorial.stories).length;
   	}else{
   		memorial.count_timeline = 0;
   	}
@@ -60,7 +60,7 @@
   	_waitings.$watch(function(event){
       switch(event.event){
         case "child_removed":
-        	// delete myWaitingMemorials[event.key];
+        	delete myWaitingMemorials[event.key];
         break;
         case "child_added":
         	var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/' + event.key);
@@ -222,6 +222,7 @@
     getCurrentMemorial:getCurrentMemorial,
     getMyWaitingMemorials:getMyWaitingMemorials,
     fetchMyWaitingMemorials:fetchMyWaitingMemorials,
+    setMemorialSummary:setMemorialSummary,
 
 		createEra:createEra,
 		updateEra:updateEra,
