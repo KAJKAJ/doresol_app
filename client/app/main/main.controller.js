@@ -33,6 +33,7 @@ angular.module('doresolApp')
       function (newValue) {
         if(newValue !== null) {
           $scope.isLoggedIn = true;
+          $scope.user = User.getCurrentUser();
         } else {
           $scope.isLoggedIn = false;
         }
