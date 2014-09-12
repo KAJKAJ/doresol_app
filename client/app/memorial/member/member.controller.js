@@ -15,6 +15,7 @@ angular.module('doresolApp')
   		var longUrl = {
       	"longUrl" : ENV.HOST + "/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
       };
+      console.log(longUrl);
       $http.post(ENV.GOOGLE_API_URI, angular.toJson(longUrl)).success(function (data) {
       	$scope.inviteUrl = data.id;
       });

@@ -38,7 +38,6 @@
 
   var addMyMemorial = function(key,value){
   	var newVal = setMemorialSummary(value);
-  	console.log(newVal);
   	myMemorials[key] = newVal;
   }
 
