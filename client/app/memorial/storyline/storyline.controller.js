@@ -42,6 +42,7 @@ angular.module('doresolApp')
     	var childRef = storiesRef.child(story.name());
       var child = $firebase(childRef).$asObject();
       child.$loaded().then(function(storyValue){
+      	console.log(storyValue);
       	if(!$scope.commentsObject[storyValue.$id]){
           $scope.commentsObject[storyValue.$id] = {};
         }
@@ -58,7 +59,9 @@ angular.module('doresolApp')
         var storyCnt = $scope.storiesArray.length;
         User.setUsersObject(storyValue.ref_user);
 
-        storyValue.$bindTo($scope, "storiesObject['"+storyValue.$id+"']").then(function(){
+        var storyId = storyValue.$id;
+
+        storyValue.$bindTo($scope, "storiesObject['"+storyId+"']").then(function(){
         	var currentStoryCommentsRef =  new Firebase(ENV.FIREBASE_URI + '/stories/'+storyValue.$id+'/comments/');
         	var _comments = $firebase(currentStoryCommentsRef).$asArray();
         	_comments.$watch(function(event){
@@ -90,7 +93,7 @@ angular.module('doresolApp')
     	var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
 
 			var currentStorylineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/stories/');
-			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(20);
+			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(1);
 
 			_storylineStories.on('child_added', function(value) { 
 				fetchStory(value);
@@ -164,7 +167,9 @@ angular.module('doresolApp')
 
         Composite.createStorylineStory($scope.memorialKey,$scope.newStory).then(function(value){
         	$scope.newStory = {};
-        	$scope.newStoryForm.$setPristine({reload: true,notify: true});
+        	if($scope.newStoryForm){
+        		$scope.newStoryForm.$setPristine({reload: true,notify: true});
+        	}
         }, function(error){
           console.log(error);
         });

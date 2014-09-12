@@ -6,6 +6,22 @@ angular.module('doresolApp')
   var ref = new Firebase(ENV.FIREBASE_URI + '/stories');
   var stories = $firebase(ref);
   
+  var createStoryLineStory = function(newStory){
+    newStory.created_at = moment().toString();
+    newStory.updated_at = newStory.created_at;
+
+    var storyRef = new Firebase(ENV.FIREBASE_URI + '/stories');
+    var story = $firebase(storyRef);
+    return story.$push(newStory).then(function(value){
+      return {
+        key: value.name(),
+        memorialId: newStory.ref_memorial,
+        fileParentPath: newStory.file?value.toString():null,
+        fileUrl:  newStory.file?newStory.file.url:null
+      }
+    });
+  }
+
   var create = function(newStory) {
     newStory.created_at = moment().toString();
     newStory.updated_at = newStory.created_at;
@@ -73,7 +89,8 @@ angular.module('doresolApp')
     removeStoryFromStoryline:removeStoryFromStoryline,
     removeStoryFromStorymap:removeStoryFromStorymap,
     removeStoryFromMemorial:removeStoryFromMemorial,
-    removeStory:removeStory
+    removeStory:removeStory,
+    createStoryLineStory:createStoryLineStory
   };
 
 });
