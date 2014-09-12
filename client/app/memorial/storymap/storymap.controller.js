@@ -232,6 +232,7 @@ angular.module('doresolApp')
       var timeline_dates = [];
       angular.forEach($scope.storiesArray['timeline'],function(storyKey,index){
         var copyStory = {
+          $id:storyKey,
           file:$scope.storiesObject['timeline'][storyKey].file,
           ref_memorial:$scope.storiesObject['timeline'][storyKey].ref_memorial,
           ref_user:$scope.storiesObject['timeline'][storyKey].ref_user,
