@@ -33,7 +33,8 @@ angular.module('doresolApp')
         key: value.name(),
         memorialId: newStory.ref_memorial,
         fileParentPath: newStory.file?value.toString():null,
-        fileUrl:  newStory.file?newStory.file.url:null
+        fileUrl:  newStory.file?newStory.file.url:null,
+        tempKey: newStory.tempKey
       }
     });
   }

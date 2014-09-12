@@ -122,19 +122,22 @@ angular.module('doresolApp')
 
           var childRef = currentStoriesRef.child(event.key);
           var child = $firebase(childRef).$asObject();
-          
+
           child.$loaded().then(function(value){
 
             if(value.newStory) {
-              delete $scope.storiesObject['timeline'][value.tempKey];
               var index = $scope.storiesArray['timeline'].indexOf(value.tempKey);
-              $scope.storiesArray['timeline'].splice(index, 1);
-
+              if(index >=0 ) {
+                $scope.storiesArray['timeline'].splice(index, 1);
+                delete $scope.storiesObject['timeline'][value.tempKey];
+              }
+              
               // change newStory to false
               child.newStory = false;
+              $scope.assignStory(child);
               child.$save().then(function(newValue){
-                $scope.assignStory(child);
               });
+
             } else {
               $scope.assignStory(value);
             }
@@ -336,7 +339,7 @@ angular.module('doresolApp')
 
         angular.forEach($scope.storiesArray['timeline'], function(storyKey,index) {
           $scope.storiesObject['timeline'][storyKey].startDate = moment(memorialStart + timeStep*index).format("YYYY-MM-DD");
-          index++;
+          // index++;
           if($scope.storiesObject['timeline'][storyKey].newStory){
             // create story
             var copyStory = {};
@@ -357,9 +360,16 @@ angular.module('doresolApp')
               };
             }
             copyStory.file = file;
-            Composite.createStory($scope.memorialKey,copyStory).then(function(value){
-                
 
+            console.log($scope.storiesArray['timeline']);
+
+            Composite.createStory($scope.memorialKey,copyStory).then(function(value){
+              var tempIndex = $scope.storiesArray['timeline'].indexOf(value.tempKey);
+              if( tempIndex >= 0) {
+                $scope.storiesArray['timeline'].splice(tempIndex, 1);
+                delete $scope.storiesObject['timeline'][value.tempKey];
+              }
+            
               }, function(error){
                 console.log(error);
             });

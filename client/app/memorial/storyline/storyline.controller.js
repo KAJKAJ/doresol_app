@@ -20,11 +20,14 @@ angular.module('doresolApp')
     $scope.newStory.public = true;
 
     $scope.memorial.$loaded().then(function(value){
+    	console.log(value);
+    	
     	fetchStories($scope.priorityForOldStory);
 
     	$scope.isMember = Memorial.isMember();
     	$scope.isOwner = Memorial.isOwner();
     	$scope.isGuest = Memorial.isGuest();
+
     });
 
     $scope.fetchMoreStories = function(){
