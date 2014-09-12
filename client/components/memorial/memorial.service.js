@@ -22,8 +22,8 @@
 
   var setMemorialSummary = function(memorial){
   	memorial.count_member = 1;
-  	if(memorial.timeline && memorial.timeline.stories){
-  		memorial.count_timeline = Object.keys(memorial.timeline.stories).length;
+  	if(memorial.stories){
+  		memorial.count_timeline = Object.keys(memorial.stories).length;
   	}else{
   		memorial.count_timeline = 0;
   	}
