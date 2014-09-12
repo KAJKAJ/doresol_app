@@ -156,6 +156,9 @@ angular.module('doresolApp')
       $scope.recentMemorials.unshift(memorial);
     });
 
+    $scope.alertLogin = function(){
+      alert('로그인이 필요합니다.');
+    }
     // $scope.recentMemorials = [];
     // var memorialsRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/');
     // var recentMemorials = $firebase(memorialsRef).$asArray();

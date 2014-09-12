@@ -159,8 +159,11 @@
                 </div>
                 <br/><br/><br/><br/>
                 <h3><strong>{{memorial.name}}</strong></h3>
-                <div>
+                <div ng-if="user">
                   <button type="button" class="btn btn-success" ui-sref="memorial.storymap({id:memorial.$id})">보기</button>
+                </div>
+                <div ng-if="!user">
+                  <button type="button" class="btn btn-success" ng-click="alertLogin()">보기</button>
                 </div>
               </div>
             </div>
