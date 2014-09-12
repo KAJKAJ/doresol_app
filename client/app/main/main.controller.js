@@ -48,7 +48,6 @@ angular.module('doresolApp')
             $state.go("memorials");
           });
         } else {
-          console.log('go to memorials');
           $state.go("memorials");
         }
       },function(error){

@@ -24,7 +24,7 @@
           <div class="overlay text-center">
             <br/><br/><br/><br/>
             <div class="overlay_detail">
-              <h4><strong>{{member.uid}}</strong></h4>
+              <h4><strong>{{users[member.uid].profile.name}}</strong></h4>
               <button ng-if="leader.uid == currentUser.uid" type="button" class="btn btn-success" ng-click="removeMember(uid)">탈퇴 시키기</button>
               <button ng-if="uid == currentUser.uid" type="button" class="btn btn-success" ng-click="removeMember(uid, 'member')">탈퇴하기</button>
             </div>
@@ -45,7 +45,7 @@
         <div class="overlay text-center">
           <br/><br/><br/><br/>
           <div class="overlay_detail">
-            <h4><strong>{{member.uid}}</strong></h4>
+            <h4><strong>{{users[member.uid].profile.name}}</strong></h4>
             <button ng-if="leader.uid == currentUser.uid" type="button" class="btn btn-success" ng-click="moveMember(uid)">가입 승인하기</button>
           </div>
         </div>
