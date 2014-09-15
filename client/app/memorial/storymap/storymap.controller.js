@@ -29,14 +29,8 @@ angular.module('doresolApp')
       $scope.isGuest = Memorial.isGuest();
 
       angular.forEach(value.stories, function(story, key) {
-
-        $scope.storiesArray['timeline'].push(key);
-        $scope.storiesObject['timeline'][key] = story;
-
-        if(story.location) {
-          $scope.storiesArray['storymap'].push(key);
-          $scope.storiesObject['storymap'][key] = story;
-        }
+        story.$id = key;
+        $scope.assignStory(story);
       });
 
       switch($scope.mode) {
@@ -335,6 +329,7 @@ angular.module('doresolApp')
         var index = 0;
 
         angular.forEach($scope.storiesArray['timeline'], function(storyKey,index) {
+          var oldStartDate = $scope.storiesObject['timeline'][storyKey].startDate;
           $scope.storiesObject['timeline'][storyKey].startDate = moment(memorialStart + timeStep*index).format("YYYY-MM-DD");
           // index++;
           if($scope.storiesObject['timeline'][storyKey].newStory){
@@ -372,6 +367,11 @@ angular.module('doresolApp')
               }, function(error){
                 console.log(error);
             });
+          }else{
+            if(oldStartDate != $scope.storiesObject['timeline'][storyKey].startDate){
+              delete $scope.storiesObject['timeline'][storyKey].$id;
+              Story.update(storyKey,$scope.storiesObject['timeline'][storyKey]);
+            }
           }
           
         });

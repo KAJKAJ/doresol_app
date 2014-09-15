@@ -39,9 +39,15 @@ angular.module('doresolApp')
     });
   }
 
-  var update = function(storyKey, story) {
-    // newStory.updated_at = moment().toString();
-    return stories.$update(storyKey, story);
+  // var update = function(storyKey, story) {
+  //   // newStory.updated_at = moment().toString();
+  //   return stories.$update(storyKey, story);
+  // }
+
+  var update = function(storyKey,story){
+    var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+story.ref_memorial+'/stories/');
+    var _stories = $firebase(memorialRef);
+    return _stories.$update(storyKey, story);
   }
 
   var findById = function(storyKey) {
