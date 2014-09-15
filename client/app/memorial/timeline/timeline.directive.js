@@ -8,7 +8,8 @@ angular.module('doresolApp')
         story: '=story',
         storyKey: '=storyKey',
         removeSelectedStory: '&',
-        saveStory: '&'
+        saveStory: '&',
+        saveMessage: '='
       },
       templateUrl: 'app/memorial/timeline/superbox_list.html',
       link: function(scope, element, attrs) {
@@ -49,7 +50,8 @@ angular.module('doresolApp')
       // scope: false,
       scope: {
         story: '=',
-        saveStoryDetail: '&'
+        saveStoryDetail: '&',
+        saveMessage:'='
       },
       replace: true,
       templateUrl: "app/memorial/timeline/superbox_show.html",

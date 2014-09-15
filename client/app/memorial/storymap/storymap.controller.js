@@ -172,14 +172,18 @@ angular.module('doresolApp')
     // Update Story 
     $scope.saveStory = function(storyKey) {
       if(!$scope.storiesObject['timeline'][storyKey].newStory) {
+        delete $scope.storiesObject['timeline'][storyKey].$id;
         var _story = $firebase(currentStoriesRef);
         _story.$update(storyKey, $scope.storiesObject['timeline'][storyKey]).then(function() {
           if($scope.storiesObject['timeline'][storyKey].location) {
             $scope.storiesObject['storymap'][storyKey] = $scope.storiesObject['timeline'][storyKey];
           }
+          $scope.saveMessage = '저장되었습니다.';
+          $timeout(function(){
+            $scope.saveMessage = '';
+          },2000);
         });
       }
-      $scope.isChanged = true;
     }
 
     
