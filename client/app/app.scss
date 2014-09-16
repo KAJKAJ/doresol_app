@@ -32,6 +32,7 @@ input.ng-invalid.ng-dirty {
 // injector
 @import '_imported/deckgrid.scss';
 @import '_imported/proui.scss';
+@import '_imported/proui_spring_theme.scss';
 @import 'account/login/login.scss';
 @import 'admin/admin.scss';
 @import 'main/main.scss';
@@ -44,3 +45,11 @@ input.ng-invalid.ng-dirty {
 @import 'memorials/memorials.scss';
 @import 'navbar/navbar.scss';
 // endinjector
+
+.block-title{
+    background-color: #ebf2ee;
+}
+
+.timenav-background{
+    background-color: #ebf2ee;
+}
