@@ -1,0 +1,296 @@
+<div class="qna">
+  <ul class="nav nav-tabs nav-justified" role="tablist">
+    <li ng-click="changeQnaTab('send_photo')" ng-class="{active: qnaTab == 'send_photo'}"><a><i class="fa fa-camera"></i> 사진을 보내주세요</a></li>
+    <li ng-click="changeQnaTab('origin')" ng-class="{active: qnaTab == 'origin'}"><a><i class="fa fa-tree"></i> 도래솔의 탄생배경</a></li>
+    <li ng-click="changeQnaTab('faq')" ng-class="{active: qnaTab == 'faq'}"><a><i class="fa fa-lightbulb-o"></i> 자주묻는 질문</a></li>
+    <li ng-click="changeQnaTab('qna')" ng-class="{active: qnaTab == 'qna'}"><a><i class="fa fa-question-circle"></i> 고객문의</a></li>
+  </ul>
+
+  <div ng-if="qnaTab=='send_photo'">
+    <div class="qna-content">
+      <div class="tab-pane active" id="pt-grid-based">
+        <h3>고객님의 인화된 사진을 보내주세요.</h3>
+        <p>사진파일이 없어서 고민이신가요? 다 앨범으로만 있음? 고민 노노..택배로 보내셈..우리가 알아서 함. 올리고 메일드림.</p>
+        <!-- Alternative Style -->
+        <div class="row">
+          <div class="col-sm-3">
+            <table class="table table-borderless table-pricing">
+              <thead>
+                <tr>
+                  <th>1. 사진 보내기</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                 <td>
+                   <p>업로드 하고 싶은 사진들을 모아서 도래솔로 택배를 보내주세요. 사진과 관련된 추억이나 장소등을 같이 적어주시면 더욱 풍성한 자료가 업로드 될 수 있습니다.</p>
+                 </td>
+                </tr>
+                <tr>
+                  <td class="table-price">
+                    <h1><i class="fa fa-truck fa-2x"></i></h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="javascript:void(0)" class="btn btn-success">보내실 곳</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-3">
+            <table class="table table-borderless table-pricing table-featured">
+              <thead>
+                <tr>
+                  <th>2. 디지털 사진 제작</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                 <td>
+                   <br/>
+                   <p>고객님께서 보내주신 사진들을 스캔 및 보정 작업을 통해 HD급의 디지털 사진을 제작합니다. 또한 해당 사진들을 담은 DVD를 제작합니다.</p>
+                 </td>
+                </tr>
+                <tr>
+                  <td class="table-price">
+                    <h1><i class="fa fa-picture-o fa-2x"></i></h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="javascript:void(0)" class="btn btn-success">가격</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-3">
+            <table class="table table-borderless table-pricing table-featured">
+              <thead>
+                <tr>
+                  <th>3. 메모리얼 생성</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                 <td>
+                   <br/>
+                   <p>디지털 사진으로 고인의 메모리얼을 생성합니다. 사진과 함께 보내주신 자료를 바탕으로 시간 순, 장소 순으로 사진을 정리하여 드립니다.</p>
+                 </td>
+                </tr>
+                <tr>
+                  <td class="table-price">
+                    <h1><i class="fa fa-cloud-upload fa-2x"></i></h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="javascript:void(0)" class="btn btn-success">보내실 곳</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-3">
+            <table class="table table-borderless table-pricing">
+              <thead>
+                <tr>
+                  <th>4. 사진 돌려드리기</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                 <td>
+                   <br/>
+                   <p>메모리얼이 생성이 되고 난 후, 고객님 댁으로 보내주신 사진들과 디지털 사진을 담은 DVD를 안전하게 돌려드립니다.</p>
+                 </td>
+                </tr>
+                <tr>
+                  <td class="table-price">
+                    <h1><i class="fa fa-book fa-2x"></i></h1>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="javascript:void(0)" class="btn btn-success">보내실 곳</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <div ng-if="qnaTab=='origin'">
+    <div class="qna-content">
+      <article>
+          <h3 class="sub-header text-center">by <a href="page_ready_user_profile.html"><strong>Explorer</strong></a> on <strong>January 20, 2014</strong></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus. Mauris tincidunt tincidunt turpis in porta. Integer fermentum tincidunt auctor. Vestibulum ullamcorper, odio sed rhoncus imperdiet, enim elit sollicitudin orci, eget dictum leo mi nec lectus. Nam commodo turpis id lectus scelerisque vulputate. Integer sed dolor erat. Fusce erat ipsum, varius vel euismod sed, tristique et lectus? Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque?</p>
+          <div class="row push-top-bottom">
+              <div class="col-xs-6">
+                  <p>
+                      <a href="img/placeholders/photos/photo1.jpg" data-toggle="lightbox-image">
+                          <img src="img/placeholders/photos/photo1.jpg" alt="image" class="img-responsive">
+                      </a>
+                  </p>
+              </div>
+              <div class="col-xs-6">
+                  <p>
+                      <a href="img/placeholders/photos/photo21.jpg" data-toggle="lightbox-image">
+                          <img src="img/placeholders/photos/photo21.jpg" alt="image" class="img-responsive">
+                      </a>
+                  </p>
+              </div>
+          </div>
+          <p>Proin rhoncus dui at ligula vestibulum ut facilisis ante sodales! Suspendisse potenti. Aliquam tincidunt sollicitudin sem nec ultrices. Sed at mi velit. Ut egestas tempor est, in cursus enim venenatis eget! Nulla quis ligula ipsum. Donec vitae ultrices dolor? Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <blockquote>
+              <p>It was the ultimate trip! The view at the top was breathtaking!</p>
+              <footer>Explorer</footer>
+          </blockquote>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus. Mauris tincidunt tincidunt turpis in porta. Integer fermentum tincidunt auctor. Vestibulum ullamcorper, odio sed rhoncus imperdiet, enim elit sollicitudin orci, eget dictum leo mi nec lectus. Nam commodo turpis id lectus scelerisque vulputate. Integer sed dolor erat. Fusce erat ipsum, varius vel euismod sed, tristique et lectus? Etiam egestas fringilla enim, id convallis lectus laoreet at. Fusce purus nisi, gravida sed consectetur ut, interdum quis nisi. Quisque egestas nisl id lectus facilisis scelerisque?</p>
+          <div class="row push-top-bottom">
+              <div class="col-xs-4">
+                  <p>
+                      <a href="img/placeholders/photos/photo14.jpg" data-toggle="lightbox-image">
+                          <img src="img/placeholders/photos/photo14.jpg" alt="image" class="img-responsive">
+                      </a>
+                  </p>
+              </div>
+              <div class="col-xs-4">
+                  <p>
+                      <a href="img/placeholders/photos/photo18.jpg" data-toggle="lightbox-image">
+                          <img src="img/placeholders/photos/photo18.jpg" alt="image" class="img-responsive">
+                      </a>
+                  </p>
+              </div>
+              <div class="col-xs-4">
+                  <p>
+                      <a href="img/placeholders/photos/photo22.jpg" data-toggle="lightbox-image">
+                          <img src="img/placeholders/photos/photo22.jpg" alt="image" class="img-responsive">
+                      </a>
+                  </p>
+              </div>
+          </div>
+          <p>Proin rhoncus dui at ligula vestibulum ut facilisis ante sodales! Suspendisse potenti. Aliquam tincidunt sollicitudin sem nec ultrices. Sed at mi velit. Ut egestas tempor est, in cursus enim venenatis eget! Nulla quis ligula ipsum. Donec vitae ultrices dolor? Donec lacinia venenatis metus at bibendum? In hac habitasse platea dictumst. Proin ac nibh rutrum lectus rhoncus eleifend. Sed porttitor pretium venenatis. Suspendisse potenti. Aliquam quis ligula elit. Aliquam at orci ac neque semper dictum. Sed tincidunt scelerisque ligula, et facilisis nulla hendrerit non. Suspendisse potenti. Pellentesque non accumsan orci. Praesent at lacinia dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida, urna ligula hendrerit nibh, ac cursus nibh sapien in purus.</p>
+      </article>
+    </div>
+  </div>
+  
+  <div ng-if="qnaTab=='faq'">
+    <div class="qna-content">
+      <h4 class="sub-header"><strong>회원가입</strong></h4>
+      <accordion>
+        <accordion-group is-open="faq_status_1.open">
+          <accordion-heading>
+            > I can have markup, too! <i class="pull-right fa" ng-class="{'fa-minus-square': faq_status_1.open, 'fa-plus-square': !faq_status_1.open}"></i>
+          </accordion-heading>
+          This is just some content to illustrate fancy headings.
+        </accordion-group>
+        <accordion-group is-open="faq_status_2.open">
+          <accordion-heading>
+            > I can have markup, too! <i class="pull-right fa" ng-class="{'fa-minus-square': faq_status_2.open, 'fa-plus-square': !faq_status_2.open}"></i>
+          </accordion-heading>
+          This is just some content to illustrate fancy headings.
+        </accordion-group>
+        <accordion-group is-open="faq_status_3.open">
+          <accordion-heading>
+            > I can have markup, too! <i class="pull-right fa" ng-class="{'fa-minus-square': faq_status_3.open, 'fa-plus-square': !faq_status_3.open}"></i>
+          </accordion-heading>
+          This is just some content to illustrate fancy headings.
+        </accordion-group>
+      </accordion>
+
+      <h4 class="sub-header"><strong>멤버</strong></h4>
+      <accordion>
+        <accordion-group is-open="faq_status_1.open">
+          <accordion-heading>
+            > I can have markup, too! <i class="pull-right fa" ng-class="{'fa-minus-square': faq_status_1.open, 'fa-plus-square': !faq_status_1.open}"></i>
+          </accordion-heading>
+          This is just some content to illustrate fancy headings.
+        </accordion-group>
+        <accordion-group is-open="faq_status_2.open">
+          <accordion-heading>
+            > I can have markup, too! <i class="pull-right fa" ng-class="{'fa-minus-square': faq_status_2.open, 'fa-plus-square': !faq_status_2.open}"></i>
+          </accordion-heading>
+          This is just some content to illustrate fancy headings.
+        </accordion-group>
+        <accordion-group is-open="faq_status_3.open">
+          <accordion-heading>
+            > I can have markup, too! <i class="pull-right fa" ng-class="{'fa-minus-square': faq_status_3.open, 'fa-plus-square': !faq_status_3.open}"></i>
+          </accordion-heading>
+          This is just some content to illustrate fancy headings.
+        </accordion-group>
+      </accordion>
+    </div>
+  </div>
+
+  <div ng-if="qnaTab=='qna'">
+    <div class="qna-content">
+      <div class="table-responsive">
+        <table class="table table-hover table-vcenter">
+          <thead>
+            <tr>
+              <td><button type="button" class="btn btn-sm btn-success">문의하기</button></td>
+              <td class="text-right" colspan="2">
+                <strong>1-30</strong> from <strong>5250</strong>
+                <div class="btn-group btn-group-sm">
+                  <a href="javascript:void(0)" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i></a>
+                  <a href="javascript:void(0)" class="btn btn-sm btn-default"><i class="fa fa-angle-right"></i></a>
+                </div>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="width: 20%;">Debra Stanley</td>
+              <td>
+                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
+                <span class="text-muted">Hey, just wanted to let you know..</span>
+              </td>
+              <td class="text-right" style="width: 90px;"><em>just now</em></td>
+            </tr>
+            <tr>
+              <td style="width: 20%;">Debra Stanley</td>
+              <td>
+                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
+                <span class="text-muted">Hey, just wanted to let you know..</span>
+              </td>
+              <td class="text-right" style="width: 90px;"><em>just now</em></td>
+            </tr>
+            <tr>
+              <td style="width: 20%;">Debra Stanley</td>
+              <td>
+                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
+                <span class="text-muted">Hey, just wanted to let you know..</span>
+              </td>
+              <td class="text-right" style="width: 90px;"><em>just now</em></td>
+            </tr>
+            <tr>
+              <td style="width: 20%;">Debra Stanley</td>
+              <td>
+                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
+                <span class="text-muted">Hey, just wanted to let you know..</span>
+              </td>
+              <td class="text-right" style="width: 90px;"><em>just now</em></td>
+            </tr>
+            <tr>
+              <td style="width: 20%;">Debra Stanley</td>
+              <td>
+                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
+                <span class="text-muted">Hey, just wanted to let you know..</span>
+              </td>
+              <td class="text-right" style="width: 90px;"><em>just now</em></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div></div>

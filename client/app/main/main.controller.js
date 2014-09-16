@@ -185,4 +185,11 @@ angular.module('doresolApp')
     $scope.browser = Util.getBrowser();
     $scope.width = Util.getWidth();
     $scope.isMobile = Util.isMobile();
+
+    $scope.qnaTab = 'send_photo';
+
+    $scope.changeQnaTab = function(qnaTab){
+      $scope.qnaTab = qnaTab;
+    }
+    
   });
