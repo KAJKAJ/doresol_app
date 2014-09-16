@@ -1,9 +1,9 @@
 <div class="qna">
   <ul class="nav nav-tabs nav-justified" role="tablist">
-    <li ng-click="changeQnaTab('send_photo')" ng-class="{active: qnaTab == 'send_photo'}"><a><i class="fa fa-camera"></i> 사진을 보내주세요</a></li>
+    <!-- <li ng-click="changeQnaTab('send_photo')" ng-class="{active: qnaTab == 'send_photo'}"><a><i class="fa fa-camera"></i> 사진을 보내주세요</a></li> -->
     <li ng-click="changeQnaTab('origin')" ng-class="{active: qnaTab == 'origin'}"><a><i class="fa fa-tree"></i> 도래솔의 탄생배경</a></li>
     <li ng-click="changeQnaTab('faq')" ng-class="{active: qnaTab == 'faq'}"><a><i class="fa fa-lightbulb-o"></i> 자주묻는 질문</a></li>
-    <li ng-click="changeQnaTab('qna')" ng-class="{active: qnaTab == 'qna'}"><a><i class="fa fa-question-circle"></i> 고객문의</a></li>
+    <li ng-click="changeQnaTab('qna')" ng-class="{active: qnaTab == 'qna'}"><a><i class="fa fa-question-circle"></i> QnA</a></li>
   </ul>
 
   <div ng-if="qnaTab=='send_photo'">
@@ -235,59 +235,42 @@
         <table class="table table-hover table-vcenter">
           <thead>
             <tr>
-              <td><button type="button" class="btn btn-sm btn-success">문의하기</button></td>
-              <td class="text-right" colspan="2">
-                <strong>1-30</strong> from <strong>5250</strong>
-                <div class="btn-group btn-group-sm">
-                  <a href="javascript:void(0)" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i></a>
-                  <a href="javascript:void(0)" class="btn btn-sm btn-default"><i class="fa fa-angle-right"></i></a>
-                </div>
+              <td colspan="3">
+                <form  name="newQnaForm" class="block-content-full block-content-mini-padding" ng-submit="createNewQna(newQnaForm)" novalidate>
+                  <textarea class="form-control" ng-model="newQna.text" rows="5" placeholder="문의하실 내용을 적어주세요.." style="resize: none;margin: 1px 0px 10px;" ng-required="true"/>
+                  <div class="clearfix">
+                    <button type="submit" class="btn btn-sm btn-success pull-right" ng-disabled="newQnaForm.$invalid"><i class="fa fa-pencil"></i> 문의하기</button>
+                  </div>
+                </form>
+                <div>{{qnaMessage}}</div>
               </td>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style="width: 20%;">Debra Stanley</td>
+            <tr ng-repeat="qna in qnaArray">
+              <td style="width: 20%;"><img src="{{users[qna.ref_user].profile.file.url}}" style="width:32px;height:32px;"/> {{users[qna.ref_user].profile.name}}</td>
               <td>
-                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
-                <span class="text-muted">Hey, just wanted to let you know..</span>
+                <a ng-click="openModal(qna)">{{qna.text|limitTo:100}}</a>
               </td>
-              <td class="text-right" style="width: 90px;"><em>just now</em></td>
+              <td class="text-right" style="width: 200px;"><em>{{qna.fromNow}}</em></td>
             </tr>
-            <tr>
-              <td style="width: 20%;">Debra Stanley</td>
-              <td>
-                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
-                <span class="text-muted">Hey, just wanted to let you know..</span>
+            <!-- <tr>
+              <td class="text-right" colspan="3">
+                <strong>1-30</strong> from <strong>5250</strong>
+                <div class="btn-group btn-group-sm">
+                  <a class="btn btn-sm btn-default" ng-click="fetchQnaPrev()"><i class="fa fa-angle-left"></i></a>
+                  <a class="btn btn-sm btn-default" ng-click="fetchQnaMore()"><i class="fa fa-angle-right"></i></a>
+                </div>
               </td>
-              <td class="text-right" style="width: 90px;"><em>just now</em></td>
-            </tr>
-            <tr>
-              <td style="width: 20%;">Debra Stanley</td>
-              <td>
-                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
-                <span class="text-muted">Hey, just wanted to let you know..</span>
-              </td>
-              <td class="text-right" style="width: 90px;"><em>just now</em></td>
-            </tr>
-            <tr>
-              <td style="width: 20%;">Debra Stanley</td>
-              <td>
-                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
-                <span class="text-muted">Hey, just wanted to let you know..</span>
-              </td>
-              <td class="text-right" style="width: 90px;"><em>just now</em></td>
-            </tr>
-            <tr>
-              <td style="width: 20%;">Debra Stanley</td>
-              <td>
-                <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
-                <span class="text-muted">Hey, just wanted to let you know..</span>
-              </td>
-              <td class="text-right" style="width: 90px;"><em>just now</em></td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
+
+        <ul class="pager" ng-if="qnaArray.length > 0">
+          <li class="previous"><a  ng-click="fetchQnaPrev()">이전</a></li>
+          <li class="next"><a ng-click="fetchQnaMore()">다음</a></li>
+        </ul>
+                                
     </div>
     </div>
   </div>
