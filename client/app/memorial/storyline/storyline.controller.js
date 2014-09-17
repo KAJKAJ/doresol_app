@@ -19,8 +19,16 @@ angular.module('doresolApp')
     $scope.newStory = {};
     $scope.newStory.public = true;
 
+    $scope.totalStoryCnt = 0;
+    var storylineCntRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/cnt');
+    storylineCntRef.on('value', function(value) {
+    	$scope.totalStoryCnt = value.val();
+		});
+
+    $scope.storyCnt = 0;
+    // console.log($scope.totalStoryCnt);
     $scope.memorial.$loaded().then(function(value){
-    	console.log(value);
+    	// console.log(value);
     	
     	fetchStories($scope.priorityForOldStory);
 
@@ -118,13 +126,18 @@ angular.module('doresolApp')
     	var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
 
 			var currentStorylineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/stories/');
-			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(20);
+			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(2);
 
 			_storylineStories.on('child_added', function(value) { 
+				// console.log(value);
+				$scope.storyCnt++;
+				console.log($scope.totalStoryCnt);
+				console.log($scope.storyCnt);
 				fetchStory(value);
 			});
 
 			_storylineStories.on('child_removed',function(value){
+				$scope.storyCnt--;
 				var storyKey = value.name();
 				var tempStory = $scope.storiesObject[value.name()];
 				var index = -1;

@@ -55,8 +55,13 @@
       </form>
   </div>
 <hr/>
-  <!-- story list -->                    
-	<ul class="storyline media-list">
+  <!-- story list -->          
+  <div ng-if="storiesArray.length==0">
+    <div class="alert alert-success">
+     <h4><i class="fa fa-check-circle"></i> 아직 등록된 방명록이 없습니다.</h4>
+    </div>
+  </div>          
+	<ul class="storyline media-list" ng-if="storiesArray.length > 0">
 	  <li class="storyline-story media" ng-repeat="story in storiesArray">
       <div class="block">
         <!-- Block with Options Title -->
@@ -73,7 +78,7 @@
               </div>
               <div class="story-author">
                 <div class="story-show">
-                  <strong class="story-user-id">{{users[story.ref_user].profile.name}}</strong>
+                  <a><strong>{{users[story.ref_user].profile.name}}</strong></a>
                 </div>
                 <span class="text-muted">
                   <small>{{story.fromNow}}</small>
@@ -117,7 +122,7 @@
         <!-- END Block with Options Content -->
       </div>
 	  </li>
-    <li class="storyline-story media text-center">
+    <li class="storyline-story media text-center" ng-if="storyCnt !== totalStoryCnt">
       <button class="btn btn-xs btn-default push" ng-click="fetchMoreStories()">MORE</button>
     </li>
 	</ul>
