@@ -114,6 +114,12 @@ angular.module('doresolApp')
           options: { draggable: false }
         }
 
+        $scope.$watch('autocomplete',function(value){
+          if(!value){
+             $scope.story.location = null;
+          }
+        });
+
         $scope.$watch('mapSearchDetails',function(value){
           if(value){
             var lon = value.geometry.location.B;

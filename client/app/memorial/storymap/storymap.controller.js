@@ -178,6 +178,13 @@ angular.module('doresolApp')
           if($scope.storiesObject['timeline'][storyKey].location) {
             $scope.storiesObject['storymap'][storyKey] = $scope.storiesObject['timeline'][storyKey];
             $scope.storiesArray['storymap'].push(storyKey);
+          }else{
+            delete $scope.storiesObject['storymap'][storyKey];
+            var index = $scope.storiesArray['storymap'].indexOf(storyKey);
+            if( index >= 0) {
+              $scope.storiesArray['storymap'].splice(index, 1);
+              delete $scope.storiesObject['storymap'][storyKey];
+            }
           }
           $scope.saveMessage = '저장되었습니다.';
           $timeout(function(){
