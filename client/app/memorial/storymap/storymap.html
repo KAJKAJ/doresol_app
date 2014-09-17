@@ -1,13 +1,16 @@
 <div class="row" ng-show="mode=='setting'">
 	<div class="block">
 	  <div class="block-title">
-	      <h2>설정 모드</h2>
+	      <h2>설정하기</h2>
 	      <div class="block-options pull-right">
+			     <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="슬라이드쇼">
+				     <i class="fa fa-video-camera"></i> 슬라이드
+  				 </span>
 		       <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="시간 기준으로 보기">
-		      	<i class="fa fa-clock-o"></i> 시간으로 보기
+		      	<i class="fa fa-clock-o"></i> 시간순 보기
 		      </span>
 		      <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="장소 기준으로 보기">
-		      	<i class="fa fa-map-marker"></i> 장소로 보기
+		      	<i class="fa fa-map-marker"></i> 장소기준 보기
 		      </span>
 		    </div>
 	  </div>
@@ -22,13 +25,16 @@
 <div class="row" ng-show="mode=='storymap'">
 	<div class="block">
 	  <div class="block-title">
-	      <h2>Story Map</h2>
+	      <h2>장소기준 보기</h2>
 	      <div class="block-options pull-right">
+					<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="슬라이드">
+		      	<i class="fa fa-video-camera"></i> 슬라이드쇼
+		      </span>	      	
 	      	<span ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="시간 기준으로 보기">
-		      	<i class="fa fa-clock-o"></i> 시간으로 보기
+		      	<i class="fa fa-clock-o"></i> 시간순 보기
 		      </span>
 		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="설정">
-		      	<i class="fa fa-cog"></i>
+		      	<i class="fa fa-cog"></i> 설정하기
 		      </span>
 		    </div>
 	  </div>
@@ -41,13 +47,16 @@
 <div class="row" ng-show="mode=='timeline'">
 	<div class="block">
 	  <div class="block-title">
-	      <h2>Timeline</h2>
+	      <h2>시간순 보기</h2>
 	      <div class="block-options pull-right">
+	      	<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="슬라이드">
+		      	<i class="fa fa-video-camera"></i> 슬라이드쇼
+		      </span>
 	      	<span ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="장소 기준으로 보기">
-		      	<i class="fa fa-map-marker"></i> 장소로 보기
+		      	<i class="fa fa-map-marker"></i> 장소기준 보기
 		      </span>
 		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="설정">
-		      	<i class="fa fa-cog"></i>
+		      	<i class="fa fa-cog"></i> 설정하기
 		      </span>
 		    </div>
 	  </div>
@@ -56,6 +65,53 @@
 	  </div>
 	</div>
 </div>
+
+<div class="row" ng-show="mode=='video'">
+	<div class="block">
+	  <div class="block-title">
+	      <h2>슬라이드쇼</h2>
+	      <div class="block-options pull-right">
+	      	<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="동영상으로 보기">
+		      	<i class="fa fa-video-camera"></i> 슬라이드쇼
+		      </span>
+		      <span ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="시간 기준으로 보기">
+		      	<i class="fa fa-clock-o"></i> 시간순 보기
+		      </span>
+		      <span ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="장소 기준으로 보기">
+		      	<i class="fa fa-map-marker"></i> 장소기준 보기
+		      </span>
+		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="설정">
+		      	<i class="fa fa-cog"></i> 설정하기
+		      </span>
+		    </div>
+	  </div>
+	  <div class="block-content">
+	  	<div class="slidegroup">
+	  		<div id="slide{{index}}" class="slideshow" ng-repeat="(index, items) in slides">
+	  			<img class="{{item.class}}" ng-src="{{item.src}}" ng-repeat="item in items">
+	  		</div>
+	  	</div>
+	  	<!-- <div class="slidegroup">
+	  		<div id="slideshow1" class="slideshow">
+					<img class="blur1" ng-src="{{slides[5].src}}">
+				  <img class="blur2" ng-src="{{slides[6].src}}">
+				  <img class="blur3" ng-src="{{slides[7].src}}">
+				  <img class="blur4" ng-src="{{slides[8].src}}">
+				  <img class="item rotate_left" src="{{slides[9].src}}">
+				</div>
+				<div id="slideshow2" class="slideshow">
+					<img class="blur1" ng-src="{{slides[0].src}}">
+				  <img class="blur2" ng-src="{{slides[1].src}}">
+				  <img class="blur3" ng-src="{{slides[2].src}}">
+				  <img class="item rotate_right" ng-src="{{slides[3].src}}">
+				  <img class="blur4"  ng-src="{{slides[4].src}}">
+				</div>				
+			</div>
+ -->
+  	</div>
+	</div>
+</div>
+
 
 <!-- <div ng-show="!editMode">
 	<div id="mapdiv" style="width: 100%; height: 600px;">아직 생성되지 않았습니다.</div>
