@@ -10,12 +10,13 @@ angular.module('doresolApp')
     $scope.users = User.getUsersObject();
     $scope.members = {};
     $scope.waitings = {};
+    $scope.watingsCnt = 0;
     // generate invites url
     if($scope.user){
   		var longUrl = {
       	"longUrl" : ENV.HOST + "/invites/" + $scope.memorialKey + "/" + $scope.currentUser.uid
       };
-      console.log(longUrl);
+      // console.log(longUrl);
       $http.post(ENV.GOOGLE_API_URI, angular.toJson(longUrl)).success(function (data) {
       	$scope.inviteUrl = data.id;
       });
@@ -51,9 +52,11 @@ angular.module('doresolApp')
     _waitings.$watch(function(event){
       switch(event.event){
         case "child_removed":
+          $scope.watingsCnt--;
           delete $scope.waitings[event.key];
           break;
         case "child_added":
+          $scope.watingsCnt++;
           var childRef = userMembersRef.child(event.key);
           var child = $firebase(childRef).$asObject();
           child.$loaded().then(function(value){
