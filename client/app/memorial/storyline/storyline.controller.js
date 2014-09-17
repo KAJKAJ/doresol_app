@@ -126,7 +126,7 @@ angular.module('doresolApp')
     	var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
 
 			var currentStorylineStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/storyline/stories/');
-			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(2);
+			var _storylineStories = currentStorylineStoriesRef.startAt(priority+1).limit(20);
 
 			_storylineStories.on('child_added', function(value) { 
 				// console.log(value);
