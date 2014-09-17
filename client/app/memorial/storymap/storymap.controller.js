@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story,$timeout) {
+  .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story,$timeout){
 
     $scope.mode = 'timeline';
 
@@ -80,12 +80,92 @@ angular.module('doresolApp')
             $scope.createStorymap();
           });
           break;
+        case 'video':
+          $timeout(function(){
+            $scope.createVideo();
+          });
         default:
           break;
       }
       $scope.mode = mode;
     }
 
+    $scope.createVideo = function() {
+
+      var totLen = $scope.storiesArray['timeline'].length;
+
+      $scope.slides = [];
+      angular.forEach($scope.storiesArray['timeline'], function(storyKey, index){
+        var slideItems = [];
+        for (var i=1; i<5; i++) {
+          var blurIndex = index + i;
+          if(totLen <= blurIndex) {
+            blurIndex = blurIndex - totLen;
+          }
+          var blurStoryKey = $scope.storiesArray['timeline'][blurIndex];
+          slideItems.push( {class: 'blur' + i, src: $scope.storiesObject['timeline'][blurStoryKey].file.url});
+        }
+
+        var classAdditional = "";
+        if(index % 2 == 0) {
+          classAdditional = "rotate_left";
+        } else {
+          classAdditional = "rotate_right";
+        }
+
+        slideItems.push( {class: 'item ' + classAdditional , src: $scope.storiesObject['timeline'][storyKey].file.url});
+        $scope.slides.push(slideItems);
+      });
+
+      $scope.$digest();
+
+      var $slides = $(".slideshow");
+      var currentSlide = 0;
+      var stayTime = 3;
+      var slideTime = 3;
+
+      var toggleFlag = true;
+      var tempRotate = 0;
+      var rotateRight = 10;
+      var rotateLeft = -10;
+
+      var fadeOutRotate = 0;
+      var fadeInRotate = 0;
+      var rotation = 5;
+
+      var index =0;
+
+      // TweenLite.set($slides.filter(":gt(0)", 0, {autoAlpha:0}));
+      TweenLite.set($slides, {autoAlpha:0});
+      TweenLite.set($slides[0], {autoAlpha:1});
+
+      // fade in first slide
+      TweenLite.to($slides[0], 3, {rotation: rotation, scale: 1.1});
+      TweenLite.to($slides[0], 3, {autoAlpha:1});  
+
+      TweenLite.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+
+      function nextSlide() {
+
+        if(index %2 == 0) {
+          rotation = 5;
+        } else {
+          rotation = -5;
+        }
+        index++;
+
+        TweenLite.to($slides.eq(currentSlide), 1, {autoAlpha:0, scale:1});   //fade out current slide
+
+        currentSlide = ++currentSlide % $slides.length;             //find out the next slide
+
+        TweenLite.to($slides.eq(currentSlide), 5, {rotation: -rotation, scale: 1.1});
+        TweenLite.to($slides.eq(currentSlide), 5, {autoAlpha:1});   //fade in the next slide
+        TweenLite.to($slides.eq(currentSlide-1), {rotation: -rotation});   //fade in the next slide
+
+        TweenLite.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+      }
+    }
+    
     var currentStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/stories');
     var _stories = $firebase(currentStoriesRef).$asArray();
 

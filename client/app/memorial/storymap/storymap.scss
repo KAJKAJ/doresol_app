@@ -1,0 +1,136 @@
+/*
+	Some basic styling
+*/
+
+
+.slidegroup {
+	position:relative;
+	background-image: url("/assets/images/dark_wood.png");
+	width: 1200px;
+	height: 900px;
+	overflow: hidden;
+	margin: 0px auto 0px;
+}
+
+.slideshow {
+	position: absolute; 
+	width:900px; 
+	height:600px;
+}
+
+.blur1 {
+	/* position */
+	position: absolute;
+	left: 5%;
+	top: 5%;
+
+	/* blur */
+	width:367; 
+	height:459px; 
+	-webkit-filter: blur(3px); 
+	-moz-filter: blur(3px); 
+	-o-filter: blur(3px); 
+	-ms-filter: blur(3px); 
+	filter: blur(3px); 
+
+	/* rotate */
+	-ms-transform: rotate(-2deg); /* IE 9 */
+  -webkit-transform: rotate(-2deg); /* Chrome, Safari, Opera */
+  transform: rotate(-2deg);
+
+   border-style: solid;
+   border-width: 12px;
+   border-color: white;
+
+}
+
+.blur2 { 
+	position: absolute;
+	left: 50%;
+	top: 5%;
+
+	width:367; 
+	height:459px; 
+	-webkit-filter: blur(3px); 
+	-moz-filter: blur(3px); 
+	-o-filter: blur(3px); 
+	-ms-filter: blur(3px); 
+	filter: blur(3px); 
+
+	-ms-transform: rotate(32deg); /* IE 9 */
+  -webkit-transform: rotate(32deg); /* Chrome, Safari, Opera */
+  transform: rotate(32deg);
+
+   border-style: solid;
+   border-width: 12px;
+   border-color: white;
+
+}
+
+.blur3 { 
+	position: absolute;
+	left: 5%;
+	top: 500px;
+
+	width:367; 
+	height:459px; 
+	-webkit-filter: blur(3px); 
+	-moz-filter: blur(3px); 
+	-o-filter: blur(3px); 
+	-ms-filter: blur(3px); 
+	filter: blur(3px); 
+
+	-ms-transform: rotate(-12deg); /* IE 9 */
+  -webkit-transform: rotate(-12deg); /* Chrome, Safari, Opera */
+  transform: rotate(-12deg);
+
+   border-style: solid;
+   border-width: 12px;
+   border-color: white;
+
+}
+
+.blur4 { 
+	position: absolute;
+	left: 50%;
+	top:  500px;
+
+	width:367; 
+	height:459px; 
+	-webkit-filter: blur(3px); 
+	-moz-filter: blur(3px); 
+	-o-filter: blur(3px); 
+	-ms-filter: blur(3px); 
+	filter: blur(3px); 
+
+	-ms-transform: rotate(2deg); /* IE 9 */
+  -webkit-transform: rotate(2deg); /* Chrome, Safari, Opera */
+  transform: rotate(2deg);
+
+   border-style: solid;
+   border-width: 12px;
+   border-color: white;
+}
+
+.item {
+	position: absolute;
+	left:30%;
+	top: 150px;
+	z-index: 20;
+
+	border-style: solid;
+	border-width: 12px;
+	border-color: white;
+}
+
+.rotate_left {
+	-ms-transform: rotate(-5deg); /* IE 9 */
+  -webkit-transform: rotate(-5deg); /* Chrome, Safari, Opera */
+  transform: rotate(-5deg);		
+}
+
+.rotate_right {
+	-ms-transform: rotate(5deg); /* IE 9 */
+  -webkit-transform: rotate(5deg); /* Chrome, Safari, Opera */
+  transform: rotate(5deg);		
+}

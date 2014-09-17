@@ -13,7 +13,8 @@ angular.module('doresolApp', [
   'ui.sortable',
   'wu.masonry',
   'google-maps',
-  'ngAutocomplete'
+  'ngAutocomplete',
+  'ngAnimate'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
