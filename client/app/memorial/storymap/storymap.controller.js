@@ -96,8 +96,16 @@ angular.module('doresolApp')
 
       $scope.slides = [];
       angular.forEach($scope.storiesArray['timeline'], function(storyKey, index){
+
+        var blurItemCnt =0;
         var slideItems = [];
-        for (var i=1; i<5; i++) {
+        if(totLen > 5) {
+          blurItemCnt = 5;
+        } else {
+          blurItemCnt = totLen;
+        }
+
+        for (var i=1; i<blurItemCnt; i++) {
           var blurIndex = index + i;
           if(totLen <= blurIndex) {
             blurIndex = blurIndex - totLen;
