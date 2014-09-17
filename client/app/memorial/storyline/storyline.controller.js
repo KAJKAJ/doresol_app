@@ -233,7 +233,9 @@ angular.module('doresolApp')
     	// delete $scope.storiesObject[story.$id];
     	// var index = $scope.storiesArray.indexOf(story);
      //  $scope.storiesArray.splice(index, 1);		
-    	Story.removeStory(story);
+     	// console.log(story);
+     	Story.removeStoryFromStoryline(story.ref_memorial,story.$id,story.pagingKey);
+    	// Story.removeStory(story.ref_memorial,story.$id);
     }
 
     $scope.storyContentChanged = function(story){

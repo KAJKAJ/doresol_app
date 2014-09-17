@@ -74,9 +74,26 @@ angular.module('doresolApp')
     return $firebase(memorialRef).$remove(storyId);
   }
 
-  var removeStoryFromStoryline = function(memorialId,storyId){
+  var removeStoryFromStoryline = function(memorialId,storyId,storylineKey){
     var memorialRef = new Firebase(ENV.FIREBASE_URI + '/memorials/'+memorialId+'/storyline/stories');
-    return $firebase(memorialRef).$remove(storyId);
+    $firebase(memorialRef).$remove(storylineKey).then(function(){
+      var storylineCnt = $firebase(new Firebase(ENV.FIREBASE_URI + '/memorials/' + memorialId + "/storyline/cnt/"));
+      // Increment the message count by 1
+      storylineCnt.$transaction(function(currentCount) {
+        if (!currentCount) return 0;   // Initial value for counter.
+        if (currentCount < 0) return;  // Return undefined to abort transaction.
+        return currentCount -1;       // Increment the count by 1.
+      }).then(function(snapshot) {
+        if (!snapshot) {
+          // Handle aborted transaction.
+        } else {
+          // Do something.
+        }
+      }, function(err) {
+        // Handle the error condition.
+      });
+      $firebase(ref).$remove(storyId);
+    });
   }
 
   var removeStoryFromMemorial = function(memorialId,storyId){
