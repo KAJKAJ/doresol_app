@@ -111,13 +111,9 @@
   }
 
   var _create_storyline_story = function(params){
-    var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
-    var storylineStoriesRef = memorialsRef.child(params.memorialId + '/storyline/stories/'+ params.key);
-    // return $firebase(storylineStoriesRef).$set(params.key,true);
-
-    var forever = moment("99991231235959999", "YYYYMMDDHHmmssSSS").unix();
-    var now = moment().unix();
-    storylineStoriesRef.setWithPriority(true,forever - now + Util.getSequence(),function(){
+    var storylineStoriesRef = new Firebase(ENV.FIREBASE_URI + '/memorials/' + params.memorialId + '/storyline/stories/');
+    var storyline = $firebase(storylineStoriesRef);
+    storyline.$push(params.key).then(function(){
       var storylineCnt = $firebase(new Firebase(ENV.FIREBASE_URI + '/memorials/' + params.memorialId + "/storyline/cnt/"));
       // Increment the message count by 1
       storylineCnt.$transaction(function(currentCount) {
@@ -134,6 +130,26 @@
         // Handle the error condition.
       });
     });
+
+    // var forever = moment("99991231235959999", "YYYYMMDDHHmmssSSS").unix();
+    // var now = moment().unix();
+    // storylineStoriesRef.setWithPriority(true,forever - now + Util.getSequence(),function(){
+    //   var storylineCnt = $firebase(new Firebase(ENV.FIREBASE_URI + '/memorials/' + params.memorialId + "/storyline/cnt/"));
+    //   // Increment the message count by 1
+    //   storylineCnt.$transaction(function(currentCount) {
+    //     if (!currentCount) return 1;   // Initial value for counter.
+    //     if (currentCount < 0) return;  // Return undefined to abort transaction.
+    //     return currentCount + 1;       // Increment the count by 1.
+    //   }).then(function(snapshot) {
+    //     if (!snapshot) {
+    //       // Handle aborted transaction.
+    //     } else {
+    //       // Do something.
+    //     }
+    //   }, function(err) {
+    //     // Handle the error condition.
+    //   });
+    // });
 
     return params;
   }
