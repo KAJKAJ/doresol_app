@@ -235,7 +235,7 @@
         <table class="table table-hover table-vcenter">
           <thead>
             <tr>
-              <td colspan="3">
+              <td colspan="4">
                 <form  name="newQnaForm" class="block-content-full block-content-mini-padding" ng-submit="createNewQna(newQnaForm)" novalidate>
                   <textarea class="form-control" ng-model="newQna.text" rows="5" placeholder="문의하실 내용을 적어주세요.." style="resize: none;margin: 1px 0px 10px;" ng-required="true"/>
                   <div class="clearfix">
@@ -250,8 +250,9 @@
             <tr ng-repeat="qna in qnaArray">
               <td style="width: 20%;"><img src="{{users[qna.ref_user].profile.file.url}}" style="width:32px;height:32px;"/> {{users[qna.ref_user].profile.name}}</td>
               <td>
-                <a ng-click="openModal(qna)">{{qna.text|limitTo:100}}</a>
+                <a ng-click="openModal(qna)">{{qna.text|limitTo:100}}...</a>
               </td>
+              <td><span class="badge">{{replyCnt[qna.$id]}}</span></td>
               <td class="text-right" style="width: 200px;"><em>{{qna.fromNow}}</em></td>
             </tr>
             <!-- <tr>

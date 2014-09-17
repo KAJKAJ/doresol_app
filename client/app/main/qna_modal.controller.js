@@ -6,6 +6,7 @@ angular.module('doresolApp')
   $scope.currentUser = User.getCurrentUser();
   $scope[paramFromDialogName] = paramFromDialogObject;
   // console.log($scope);
+
   $scope.ok = function () {
     $modalInstance.close($scope[paramFromDialogName]);
   }

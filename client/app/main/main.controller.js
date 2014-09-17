@@ -211,6 +211,7 @@ angular.module('doresolApp')
     $scope.users = User.getUsersObject();
     $scope.qnaPageNum = 0;
     $scope.replyObject = {};
+    $scope.replyCnt = {};
 
     $scope.fetchQna = function(type,key){
       $scope.qnaArray = [];
@@ -237,13 +238,19 @@ angular.module('doresolApp')
           return aValue.created_at < bValue.created_at ? 1 : -1;
         });
 
+        if(!$scope.replyCnt[qna.$id]){
+          $scope.replyCnt[qna.$id] = 0;
+        }
         var replyRef = new Firebase(ENV.FIREBASE_URI + '/qna/'+qna.$id+'/reply/');
         var _reply = $firebase(replyRef).$asArray();
+        
         _reply.$watch(function(event){
           switch(event.event){
             case "child_removed":
+              $scope.replyCnt[qna.$id]--;
               break;
             case "child_added":
+              $scope.replyCnt[qna.$id]++;
               var childRef = replyRef.child(event.key);
               var reply = $firebase(childRef).$asObject();
               reply.$loaded().then(function(value){
