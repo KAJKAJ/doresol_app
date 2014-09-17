@@ -174,9 +174,10 @@ angular.module('doresolApp')
       if(!$scope.storiesObject['timeline'][storyKey].newStory) {
         delete $scope.storiesObject['timeline'][storyKey].$id;
         var _story = $firebase(currentStoriesRef);
-        _story.$update(storyKey, $scope.storiesObject['timeline'][storyKey]).then(function() {
+        _story.$update(storyKey, $scope.storiesObject['timeline'][storyKey]).then(function(value) {
           if($scope.storiesObject['timeline'][storyKey].location) {
             $scope.storiesObject['storymap'][storyKey] = $scope.storiesObject['timeline'][storyKey];
+            $scope.storiesArray['storymap'].push(storyKey);
           }
           $scope.saveMessage = '저장되었습니다.';
           $timeout(function(){
