@@ -93,37 +93,47 @@ angular.module('doresolApp')
     $scope.createVideo = function() {
 
       var totLen = $scope.storiesArray['timeline'].length;
+      $scope.videoPlaying = true;
 
       $scope.slides = [];
-      angular.forEach($scope.storiesArray['timeline'], function(storyKey, index){
 
-        var blurItemCnt =0;
-        var slideItems = [];
-        if(totLen > 5) {
-          blurItemCnt = 5;
-        } else {
-          blurItemCnt = totLen;
-        }
-
+      function makeSlideItems(storyKey, blurItemCnt, index) {
+        var retSlideItems = [];
         for (var i=1; i<blurItemCnt; i++) {
           var blurIndex = index + i;
           if(totLen <= blurIndex) {
             blurIndex = blurIndex - totLen;
           }
           var blurStoryKey = $scope.storiesArray['timeline'][blurIndex];
-          slideItems.push( {class: 'blur' + i, src: $scope.storiesObject['timeline'][blurStoryKey].file.url});
+          retSlideItems.push( {class: 'blur' + i, src: $scope.storiesObject['timeline'][blurStoryKey].file.url});
         }
 
-        var classAdditional = "";
-        if(index % 2 == 0) {
-          classAdditional = "rotate_left";
-        } else {
-          classAdditional = "rotate_right";
-        }
+        var classAdditional = (index%2 ==0)? "rotate_left": "rotate_right";
+        retSlideItems.push( {class: 'item ' + classAdditional , src: $scope.storiesObject['timeline'][storyKey].file.url});
 
-        slideItems.push( {class: 'item ' + classAdditional , src: $scope.storiesObject['timeline'][storyKey].file.url});
+        return retSlideItems;
+      }
+
+      angular.forEach($scope.storiesArray['timeline'], function(storyKey, index){
+
+        var blurItemCnt =0;
+        var slideItems = [];
+        blurItemCnt = (totLen > 5)? 5: totLen;
+        
+        slideItems = makeSlideItems(storyKey, blurItemCnt, index);
         $scope.slides.push(slideItems);
       });
+
+      // in case length is odd
+      // if(totLen % 2 != 0) {
+      //   var blurItemCnt =0;
+      //   var slideItems = [];
+      //   blurItemCnt = (totLen > 5)? 5: totLen;
+        
+      //   var storyKey = $scope.storiesArray['timeline'][0];
+      //   slideItems = makeSlideItems(storyKey, blurItemCnt, 0);
+      //   $scope.slides.push(slideItems);
+      // }
 
       $scope.$digest();
 
@@ -132,48 +142,43 @@ angular.module('doresolApp')
       var stayTime = 3;
       var slideTime = 3;
 
-      var toggleFlag = true;
-      var tempRotate = 0;
-      var rotateRight = 10;
-      var rotateLeft = -10;
-
-      var fadeOutRotate = 0;
-      var fadeInRotate = 0;
       var rotation = 5;
+      var prevSlide = 0;
 
-      var index =0;
+      // var tween = new TweenMax();
 
       // TweenLite.set($slides.filter(":gt(0)", 0, {autoAlpha:0}));
-      TweenLite.set($slides, {autoAlpha:0});
-      TweenLite.set($slides[0], {autoAlpha:1});
+      TweenMax.set($slides, {autoAlpha:0});
+      TweenMax.set($slides[0], {autoAlpha:1});
 
       // fade in first slide
-      TweenLite.to($slides[0], 3, {rotation: rotation, scale: 1.1});
-      TweenLite.to($slides[0], 3, {autoAlpha:1});  
+      console.log(currentSlide);
+      TweenMax.to($slides[currentSlide], 3, {rotation: rotation, scale: 1.1});
+      TweenMax.to($slides[currentSlide], 3, {autoAlpha:1});  
 
-      TweenLite.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+      TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
 
       function nextSlide() {
+        rotation = (currentSlide % 2 == 0)? 5: -5;
 
-        if(index %2 == 0) {
-          rotation = 5;
-        } else {
-          rotation = -5;
-        }
-        index++;
-
-        TweenLite.to($slides.eq(currentSlide), 1, {autoAlpha:0, scale:1});   //fade out current slide
+        prevSlide = currentSlide;
+        TweenMax.to($slides[currentSlide], 1, {autoAlpha:0, scale:1});   //fade out current slide
 
         currentSlide = ++currentSlide % $slides.length;             //find out the next slide
 
-        TweenLite.to($slides.eq(currentSlide), 5, {rotation: -rotation, scale: 1.1});
-        TweenLite.to($slides.eq(currentSlide), 5, {autoAlpha:1});   //fade in the next slide
-        TweenLite.to($slides.eq(currentSlide-1), {rotation: -rotation});   //fade in the next slide
+        TweenMax.to($slides[currentSlide], 5, {rotation: -rotation, scale: 1.1});
+        TweenMax.to($slides[currentSlide], 5, {autoAlpha:1});   //fade in the next slide
+        TweenMax.to($slides[prevSlide], 1, {rotation: -rotation});   //fade out current slide
 
-        TweenLite.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+        if(currentSlide != ($slides.length - 1)) {
+          TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+        } else {
+          $scope.videoPlaying = false;
+          $scope.digest();
+        }
       }
     }
-    
+
     var currentStoriesRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/'+$scope.memorialKey+'/stories');
     var _stories = $firebase(currentStoriesRef).$asArray();
 
