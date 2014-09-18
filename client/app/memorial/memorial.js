@@ -30,13 +30,13 @@ angular.module('doresolApp')
         authenticate: true
       })      
       .state('memorial.storyline', {
-        url:'/storyline',
+        url:'/letter',
         templateUrl: 'app/memorial/storyline/storyline.html',
         controller: 'StorylineCtrl',
         authenticate: true
       })
       .state('memorial.storymap', {
-        url:'/storymap',
+        url:'/story',
         templateUrl: 'app/memorial/storymap/storymap.html',
         controller: 'StorymapCtrl',
         authenticate: true
