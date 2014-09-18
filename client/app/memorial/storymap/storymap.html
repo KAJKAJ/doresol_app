@@ -85,28 +85,16 @@
 		    </div>
 	  </div>
 	  <div class="block-content">
-	  	<div class="slidegroup">
+	  	<div class="slidegroup" ng-if="videoPlaying">
 	  		<div id="slide{{index}}" class="slideshow" ng-repeat="(index, items) in slides">
 	  			<img class="{{item.class}}" ng-src="{{item.src}}" ng-repeat="item in items">
 	  		</div>
 	  	</div>
-	  	<!-- <div class="slidegroup">
-	  		<div id="slideshow1" class="slideshow">
-					<img class="blur1" ng-src="{{slides[5].src}}">
-				  <img class="blur2" ng-src="{{slides[6].src}}">
-				  <img class="blur3" ng-src="{{slides[7].src}}">
-				  <img class="blur4" ng-src="{{slides[8].src}}">
-				  <img class="item rotate_left" src="{{slides[9].src}}">
-				</div>
-				<div id="slideshow2" class="slideshow">
-					<img class="blur1" ng-src="{{slides[0].src}}">
-				  <img class="blur2" ng-src="{{slides[1].src}}">
-				  <img class="blur3" ng-src="{{slides[2].src}}">
-				  <img class="item rotate_right" ng-src="{{slides[3].src}}">
-				  <img class="blur4"  ng-src="{{slides[4].src}}">
-				</div>				
-			</div>
- -->
+			<div masonry item-selector=".brick-stories" preserve-order ng-if="!videoPlaying">
+		  	<div masonry-brick class="brick-stories col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, story) in storiesObject['timeline']">
+		  		<img ng-src="{{story.file.url}}" class="img-responsive"/>
+		  	</div>
+		 	</div>
   	</div>
 	</div>
 </div>

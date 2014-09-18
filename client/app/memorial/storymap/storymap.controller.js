@@ -93,6 +93,7 @@ angular.module('doresolApp')
     $scope.createVideo = function() {
 
       var totLen = $scope.storiesArray['timeline'].length;
+      $scope.videoPlaying = true;
 
       $scope.slides = [];
 
@@ -124,15 +125,15 @@ angular.module('doresolApp')
       });
 
       // in case length is odd
-      if(totLen % 2 != 0) {
-        var blurItemCnt =0;
-        var slideItems = [];
-        blurItemCnt = (totLen > 5)? 5: totLen;
+      // if(totLen % 2 != 0) {
+      //   var blurItemCnt =0;
+      //   var slideItems = [];
+      //   blurItemCnt = (totLen > 5)? 5: totLen;
         
-        var storyKey = $scope.storiesArray['timeline'][0];
-        slideItems = makeSlideItems(storyKey, blurItemCnt, 0);
-        $scope.slides.push(slideItems);
-      }
+      //   var storyKey = $scope.storiesArray['timeline'][0];
+      //   slideItems = makeSlideItems(storyKey, blurItemCnt, 0);
+      //   $scope.slides.push(slideItems);
+      // }
 
       $scope.$digest();
 
@@ -158,18 +159,23 @@ angular.module('doresolApp')
       TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
 
       function nextSlide() {
-        rotation = (currentSlide %2 == 0)? 5: -5;
+        rotation = (currentSlide % 2 == 0)? 5: -5;
 
         prevSlide = currentSlide;
-        TweenMax.to($slides.eq(currentSlide), 1, {autoAlpha:0, scale:1, rotation: -rotation});   //fade out current slide
+        TweenMax.to($slides[currentSlide], 1, {autoAlpha:0, scale:1});   //fade out current slide
 
         currentSlide = ++currentSlide % $slides.length;             //find out the next slide
 
-        console.log(currentSlide);
         TweenMax.to($slides[currentSlide], 5, {rotation: -rotation, scale: 1.1});
         TweenMax.to($slides[currentSlide], 5, {autoAlpha:1});   //fade in the next slide
+        TweenMax.to($slides[prevSlide], 1, {rotation: -rotation});   //fade out current slide
 
-        TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+        if(currentSlide != ($slides.length - 1)) {
+          TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+        } else {
+          $scope.videoPlaying = false;
+          $scope.digest();
+        }
       }
     }
 
