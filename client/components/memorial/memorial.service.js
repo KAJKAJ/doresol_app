@@ -5,6 +5,7 @@
   
   var myMemorials = {};
   var myWaitingMemorials = {};
+  
   var currentMemorial = null;
 
   var myRole = null;
@@ -70,6 +71,7 @@
 	  				value = setMemorialSummary(value);
 	  				myWaitingMemorials[value.$id] = value;
 	  			});
+
 	  	  break;
       }
     });
@@ -81,6 +83,7 @@
   	
   var clearMyMemorial = function(){
   	myMemorials = {};
+  	myWaitingMemorials = {};
   }
 
 	var ref = new Firebase(ENV.FIREBASE_URI + '/memorials');
