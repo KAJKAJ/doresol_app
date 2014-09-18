@@ -6,6 +6,9 @@
   var setMyMemorials = function(userId){
     var dfd = $q.defer();
 
+    //mywatingmemorial
+    // Memorial.fetchMyWaitingMemorials(userId);
+    
     var userRef = new Firebase(ENV.FIREBASE_URI + '/users');
     var memorialsRef = new Firebase(ENV.FIREBASE_URI + '/memorials');
     

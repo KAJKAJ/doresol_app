@@ -3,7 +3,7 @@
 <div class="container contents">	
 	<div class="block-section">
     <div class="block-title">
-        <h2><strong>My 메모리얼</strong></h2>
+        <h2><strong>나의 메모리얼</strong></h2>
     </div>
 		<div masonry item-selector=".brick-memorials" preserve-order>
 			<div class="brick-memorials col-md-3 col-sm-6 col-xs-12">
@@ -43,43 +43,20 @@
 				      </div>
 				  </div>
 				</div>​
-	  		<!-- <div class="well">
-	  				<span ng-if="memorial.own"><i class="fa fa-heart text-danger" tooltip-placement="left" tooltip="Owner"></i></span>
-		    		<span ng-if="!memorial.own" style="color:rgb(255, 215, 0);"><i class="fa fa-star" tooltip-placement="left" tooltip="Member"></i></span>
-	  			<a ui-sref="memorial.timeline({id:key})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
-		    	<div class="row text-center">
-		    		<h3><strong>{{memorial.name}}</strong></h3>
-		    	</div>
-		    	<div class="row text-center">
-				      <div class="col-xs-4">
-				          <h3 class="widget-content-light">
-				              <a ui-sref="memorial.profile({id:key})"><strong>{{memorial.count_member}}</strong><br></a>
-				              <small>Members</small>
-				          </h3>
-				      </div>
-				      <div class="col-xs-4">
-				          <h3 class="widget-content-light">
-				              <a ui-sref="memorial.timeline({id:key})"><strong>{{memorial.count_timeline}}</strong><br></a>
-				              <small>Timeline</small>
-				          </h3>
-				      </div>
-				      <div class="col-xs-4">
-				          <h3 class="widget-content-light">
-				              <a ui-sref="memorial.storyline({id:key})"><strong>{{memorial.count_storyline}}</strong><br></a>
-				              <small>Storyline</small>
-				          </h3>
-				      </div>
-				  </div>
-			  </div> -->
 		  </div>
 		</div>
 		<br/>
 	</div>
 	<div class="block-section">
     <div class="block-title">
-        <h2><strong>가입요청 대기중</strong></h2>
+        <h2><strong>가입승인 대기중</strong></h2>
     </div>
-		<div masonry item-selector=".brick-waitings" preserve-order>
+    <div ng-if="isEmptyObject(myWaitingMemorials)">
+      <div class="alert alert-success">
+       <h4><i class="fa fa-check-circle"></i> 가입승인 대기중인 메모리얼이 없습니다.</h4>
+      </div>
+    </div>
+		<div ng-if="!isEmptyObject(myWaitingMemorials)" masonry item-selector=".brick-waitings" preserve-order>
 			<div masonry-brick class="brick-waitings col-md-3" ng-repeat="(key, memorial) in myWaitingMemorials">
 	  		<div class="well">
 	    		<a ui-sref="memorial.timeline({id:key})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
@@ -89,20 +66,20 @@
 		    	<div class="row text-center">
 				      <div class="col-xs-4">
 				          <h3 class="widget-content-light">
-				              <a ui-sref="memorial.profile({id:key})"><strong>{{memorial.count_member}}</strong><br></a>
-				              <small>Members</small>
-				          </h3>
-				      </div>
-				      <div class="col-xs-4">
-				          <h3 class="widget-content-light">
-				              <a ui-sref="memorial.timeline({id:key})"><strong>{{memorial.count_timeline}}</strong><br></a>
-				              <small>Timeline</small>
+				              <a ui-sref="memorial.storymap({id:key})"><strong>{{memorial.count_timeline}}</strong><br></a>
+				              <small>스토리</small>
 				          </h3>
 				      </div>
 				      <div class="col-xs-4">
 				          <h3 class="widget-content-light">
 				              <a ui-sref="memorial.storyline({id:key})"><strong>{{memorial.count_storyline}}</strong><br></a>
-				              <small>Storyline</small>
+				              <small>방명록</small>
+				          </h3>
+				      </div>
+				      <div class="col-xs-4">
+				          <h3 class="widget-content-light">
+				              <a ui-sref="memorial.profile({id:key})"><strong>{{memorial.count_member}}</strong><br></a>
+				              <small>멤버</small>
 				          </h3>
 				      </div>
 				  </div>
