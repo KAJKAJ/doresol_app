@@ -172,9 +172,10 @@ angular.module('doresolApp')
           TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
 
         } else {
-          TweenMax.to($slides[currentSlide], 3, {autoAlpha:0});
-          $scope.videoPlaying = false;
-          $scope.$digest();
+          $timeout(function(){
+            $scope.videoPlaying = false;
+            $scope.$digest();
+          },7000);
         }
       }
     }
