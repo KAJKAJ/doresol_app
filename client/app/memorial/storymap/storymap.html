@@ -81,8 +81,8 @@
 	<div class="block">
 	  <div class="block-title">
 	      <h2>슬라이드쇼
-					<i ng-if="!videoPlaying" class="fa fa-play-circle-o text-success" ng-click="changeMode('video')" tooltip-placement="top" tooltip="슬라이드쇼 재생"></i>
-					<i ng-if="videoPlaying" class="fa fa-picture-o text-success" ng-click="changeToGalleryMode()" tooltip-placement="top" tooltip="갤러리"></i>
+					<i ng-if="!videoPlaying&&storiesArray['timeline'].length>0" class="fa fa-play-circle-o text-success" ng-click="changeMode('video')" tooltip-placement="top" tooltip="슬라이드쇼 재생"></i>
+					<i ng-if="videoPlaying&&storiesArray['timeline'].length>0" class="fa fa-picture-o text-success" ng-click="changeToGalleryMode()" tooltip-placement="top" tooltip="갤러리"></i>
 				</h2>
 	      <div class="block-options pull-right">
 	      	<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="동영상으로 보기">
@@ -100,6 +100,11 @@
 		    </div>
 	  </div>
 	  <div class="block-content">
+	  	<div ng-if="storiesArray['timeline'].length==0">
+	      <div class="alert alert-success">
+	       <h4><i class="fa fa-check-circle"></i> 아직 생성되지 않았습니다.</h4>
+	      </div>
+	    </div>
 	  	<div class="slidegroup" ng-if="videoPlaying">
 	  		<div id="slide{{index}}" class="slideshow" ng-repeat="(index, items) in slides">
 	  			<img class="{{item.class}}" ng-src="{{item.src}}" ng-repeat="item in items">

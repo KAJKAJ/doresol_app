@@ -3,7 +3,7 @@
 angular.module('doresolApp')
   .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story,$timeout,$modal){
 
-    $scope.mode = 'timeline';
+    $scope.mode = 'video';
 
     $scope.currentUser = User.getCurrentUser();
     $scope.isChanged = false;
@@ -40,6 +40,14 @@ angular.module('doresolApp')
           break;
         case 'storymap':
           $scope.createStorymap();
+          break;
+        case 'video':
+          // console.log(value);
+          if(value.stories) {
+            $timeout(function(){
+              $scope.createVideo();
+            });
+          }
           break;
         default:
           break;
@@ -82,9 +90,11 @@ angular.module('doresolApp')
           });
           break;
         case 'video':
-          $timeout(function(){
-            $scope.createVideo();
-          });
+          if($scope.storiesArray['timeline'].length > 0){
+            $timeout(function(){
+              $scope.createVideo();
+            });
+          }
         default:
           break;
       }
