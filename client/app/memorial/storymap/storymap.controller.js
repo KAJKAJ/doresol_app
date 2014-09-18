@@ -389,6 +389,7 @@ angular.module('doresolApp')
 
       var timeline_dates = [];
       angular.forEach($scope.storiesArray['timeline'],function(storyKey,index){
+        // console.log($scope.storiesObject['timeline'][storyKey]);
         var copyStory = {
           $id:storyKey,
           file:$scope.storiesObject['timeline'][storyKey].file,
@@ -399,7 +400,8 @@ angular.module('doresolApp')
           headline:$scope.storiesObject['timeline'][storyKey].text.headline,
           asset:{
             media:$scope.storiesObject['timeline'][storyKey].media.url,
-            thumbnail:$scope.storiesObject['timeline'][storyKey].media.url
+            thumbnail:$scope.storiesObject['timeline'][storyKey].media.url,
+            caption:$scope.storiesObject['timeline'][storyKey].media.caption
           }
         }
         timeline_dates.push(copyStory);
@@ -515,6 +517,7 @@ angular.module('doresolApp')
             }
             copyStory.file = file;
             copyStory.newStory = false;
+            copyStory.media.caption = 'By ' + $scope.currentUser.profile.name;
 
             Composite.createStory($scope.memorialKey,copyStory).then(function(value){
               var index = $scope.storiesArray['timeline'].indexOf(storyKey);
