@@ -154,28 +154,27 @@ angular.module('doresolApp')
       TweenMax.to($slides[currentSlide], 3, {rotation: rotation, scale: 1.1});
       TweenMax.to($slides[currentSlide], 3, {autoAlpha:1});  
 
-      TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+      TweenMax.delayedCall(4, nextSlide); //wait a couple of seconds before next slide
 
       function nextSlide() {
         rotation = (currentSlide % 2 == 0)? 5: -5;
-
         prevSlide = currentSlide;
-        TweenMax.to($slides[currentSlide], 1, {autoAlpha:0});   //fade out current slide
 
+        TweenMax.to($slides[prevSlide], 2, {autoAlpha:0});   //fade out current slide4
         currentSlide = ++currentSlide % $slides.length;             //find out the next slide
 
-        TweenMax.to($slides[currentSlide], 5, {rotation: -rotation, scale: 1.1});
-        TweenMax.to($slides[currentSlide], 5, {autoAlpha:1});   //fade in the next slide
+        TweenMax.to($slides[currentSlide], 3, {rotation: -rotation, scale: 1.1});
+        TweenMax.to($slides[currentSlide], 3, {autoAlpha:1});   //fade in the next slide
         // TweenMax.to($slides[prevSlide], 1, {rotation: -rotation});   //fade out current slide
 
         if(currentSlide != ($slides.length - 1)) {
-          TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+          TweenMax.delayedCall(4, nextSlide); //wait a couple of seconds before next slide
 
         } else {
           $timeout(function(){
             $scope.videoPlaying = false;
             $scope.$digest();
-          },7000);
+          },4500);
         }
       }
     }
