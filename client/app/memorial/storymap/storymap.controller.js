@@ -412,6 +412,7 @@ angular.module('doresolApp')
           // startDate:$scope.storiesObject['storymap'][storyKey].startDate,
           // updated_at:$scope.storiesObject['storymap'][storyKey].updated_at
         };
+        copyStory.media.caption = copyStory.location.caption;
         
         storymap_data.storymap.slides.push(copyStory);
       });
