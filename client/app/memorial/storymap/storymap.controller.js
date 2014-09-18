@@ -317,12 +317,18 @@ angular.module('doresolApp')
         });
       }
     }
+    
+    $scope.makeTimelineCredit = function(){
+      return 'By ' + $scope.currentUser.profile.name;
+    }
 
     // Update Story 
     $scope.saveStory = function(storyKey) {
       if(!$scope.storiesObject['timeline'][storyKey].newStory) {
         delete $scope.storiesObject['timeline'][storyKey].$id;
         var _story = $firebase(currentStoriesRef);
+        $scope.storiesObject['timeline'][storyKey].media.credit = $scope.makeTimelineCredit();
+
         _story.$update(storyKey, $scope.storiesObject['timeline'][storyKey]).then(function(value) {
           if($scope.storiesObject['timeline'][storyKey].location) {
             $scope.storiesObject['storymap'][storyKey] = $scope.storiesObject['timeline'][storyKey];
@@ -401,7 +407,7 @@ angular.module('doresolApp')
           asset:{
             media:$scope.storiesObject['timeline'][storyKey].media.url,
             thumbnail:$scope.storiesObject['timeline'][storyKey].media.url,
-            caption:$scope.storiesObject['timeline'][storyKey].media.caption
+            credit:$scope.storiesObject['timeline'][storyKey].media.credit
           }
         }
         timeline_dates.push(copyStory);
@@ -517,7 +523,7 @@ angular.module('doresolApp')
             }
             copyStory.file = file;
             copyStory.newStory = false;
-            copyStory.media.caption = 'By ' + $scope.currentUser.profile.name;
+            copyStory.media.credit = $scope.makeTimelineCredit();
 
             Composite.createStory($scope.memorialKey,copyStory).then(function(value){
               var index = $scope.storiesArray['timeline'].indexOf(storyKey);
@@ -535,6 +541,8 @@ angular.module('doresolApp')
           }else{
             if(oldStartDate != $scope.storiesObject['timeline'][storyKey].startDate){
               delete $scope.storiesObject['timeline'][storyKey].$id;
+              $scope.storiesObject['timeline'][storyKey].media.credit = $scope.makeTimelineCredit();
+
               Story.update(storyKey,$scope.storiesObject['timeline'][storyKey]);
             }
           }
