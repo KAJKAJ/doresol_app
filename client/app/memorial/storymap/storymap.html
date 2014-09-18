@@ -68,8 +68,10 @@
 <div class="row" ng-show="mode=='video'">
 	<div class="block">
 	  <div class="block-title">
-	      <h2>슬라이드쇼</h2>
-				<i ng-if="!videoPlaying" class="fa fa-2x fa-undo" ng-click="changeMode('video')"></i>
+	      <h2>슬라이드쇼
+					<i ng-if="!videoPlaying" class="fa fa-play-circle-o text-success" ng-click="changeMode('video')" tooltip-placement="top" tooltip="슬라이드쇼 재생"></i>
+					<i ng-if="videoPlaying" class="fa fa-picture-o text-success" ng-click="changeToGalleryMode()" tooltip-placement="top" tooltip="갤러리"></i>
+				</h2>
 	      <div class="block-options pull-right">
 	      	<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="동영상으로 보기">
 		      	<i class="fa fa-video-camera"></i> 슬라이드쇼
@@ -98,7 +100,7 @@
         </div>
 	  	</div>
 			<div masonry item-selector=".brick-stories" preserve-order ng-if="!videoPlaying">
-		  	<div masonry-brick class="brick-stories col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, story) in storiesObject['timeline']">
+		  	<div masonry-brick class="brick-stories col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, story) in storiesObject['timeline']" ng-click="openImageModal(story)">
 		  		<img ng-src="{{story.file.url}}" class="img-responsive"/>
 		  	</div>
 		 	</div>
