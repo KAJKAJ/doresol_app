@@ -100,7 +100,7 @@
         </div>
 	  	</div>
 			<div masonry item-selector=".brick-stories" preserve-order ng-if="!videoPlaying">
-		  	<div masonry-brick class="brick-stories col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, story) in storiesObject['timeline']" ng-click="openImageModal(story)">
+		  	<div masonry-brick class="brick-stories col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, story) in galleryObject" ng-click="openImageModal(story)">
 		  		<img ng-src="{{story.file.url}}" class="img-responsive"/>
 		  	</div>
 		 	</div>

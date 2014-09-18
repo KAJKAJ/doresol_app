@@ -19,6 +19,7 @@ angular.module('doresolApp')
     $scope.storiesObject = {};
     $scope.storiesObject['timeline'] = {};
     $scope.storiesObject['storymap'] = {};
+    $scope.galleryObject = {};
 
     $scope.isMemorialLoaded = false;
 
@@ -181,8 +182,25 @@ angular.module('doresolApp')
     }
 
     $scope.changeToGalleryMode = function(){
+      angular.copy($scope.storiesObject['timeline'],$scope.galleryObject);
+      // $scope.changeGalleryImageSize();
       $scope.videoPlaying = false;
     }
+
+    // $scope.changeGalleryImageSize = function(){
+    //   angular.forEach($scope.galleryObject,function(value,key){
+    //     var randomValue = Util.getRandomInt(1,10);
+    //     if(randomValue < 2){
+    //       $scope.galleryObject[key].col = "col-md-2";
+    //     }else if(randomValue < 5){
+    //       $scope.galleryObject[key].col = "col-md-3";
+    //     }else if(randomValue < 8){
+    //       $scope.galleryObject[key].col = "col-md-4";
+    //     }else{
+    //       $scope.galleryObject[key].col = "col-md-6";
+    //     }
+    //   });
+    // }
 
     $scope.openImageModal = function(story){
       var modalInstance = $modal.open({
