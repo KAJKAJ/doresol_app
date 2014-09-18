@@ -69,6 +69,7 @@
 	<div class="block">
 	  <div class="block-title">
 	      <h2>슬라이드쇼</h2>
+				<i ng-if="!videoPlaying" class="fa fa-2x fa-undo" ng-click="changeMode('video')"></i>
 	      <div class="block-options pull-right">
 	      	<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="동영상으로 보기">
 		      	<i class="fa fa-video-camera"></i> 슬라이드쇼
@@ -89,6 +90,12 @@
 	  		<div id="slide{{index}}" class="slideshow" ng-repeat="(index, items) in slides">
 	  			<img class="{{item.class}}" ng-src="{{item.src}}" ng-repeat="item in items">
 	  		</div>
+        <div class="overlay text-center">
+        	<div class="overlay_detail">
+        		<i ng-if="!isShowing" class="fa fa-5x fa-play" ng-click="play()"></i>
+        		<i ng-if="isShowing"class="fa fa-5x fa-pause" ng-click="pause()"></i>
+        	</div>
+        </div>
 	  	</div>
 			<div masonry item-selector=".brick-stories" preserve-order ng-if="!videoPlaying">
 		  	<div masonry-brick class="brick-stories col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, story) in storiesObject['timeline']">

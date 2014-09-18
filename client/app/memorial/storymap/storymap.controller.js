@@ -90,11 +90,20 @@ angular.module('doresolApp')
       $scope.mode = mode;
     }
 
-    $scope.createVideo = function() {
+    $scope.play = function() {
+      $scope.isShowing = true;
+      TweenMax.resumeAll();
+    }
 
+    $scope.pause = function() {
+      $scope.isShowing = false;
+      TweenMax.pauseAll();
+    }
+
+    $scope.createVideo = function() {
+      $scope.isShowing = true;
       var totLen = $scope.storiesArray['timeline'].length;
       $scope.videoPlaying = true;
-
       $scope.slides = [];
 
       function makeSlideItems(storyKey, blurItemCnt, index) {
@@ -124,17 +133,6 @@ angular.module('doresolApp')
         $scope.slides.push(slideItems);
       });
 
-      // in case length is odd
-      // if(totLen % 2 != 0) {
-      //   var blurItemCnt =0;
-      //   var slideItems = [];
-      //   blurItemCnt = (totLen > 5)? 5: totLen;
-        
-      //   var storyKey = $scope.storiesArray['timeline'][0];
-      //   slideItems = makeSlideItems(storyKey, blurItemCnt, 0);
-      //   $scope.slides.push(slideItems);
-      // }
-
       $scope.$digest();
 
       var $slides = $(".slideshow");
@@ -162,19 +160,21 @@ angular.module('doresolApp')
         rotation = (currentSlide % 2 == 0)? 5: -5;
 
         prevSlide = currentSlide;
-        TweenMax.to($slides[currentSlide], 1, {autoAlpha:0, scale:1});   //fade out current slide
+        TweenMax.to($slides[currentSlide], 1, {autoAlpha:0});   //fade out current slide
 
         currentSlide = ++currentSlide % $slides.length;             //find out the next slide
 
         TweenMax.to($slides[currentSlide], 5, {rotation: -rotation, scale: 1.1});
         TweenMax.to($slides[currentSlide], 5, {autoAlpha:1});   //fade in the next slide
-        TweenMax.to($slides[prevSlide], 1, {rotation: -rotation});   //fade out current slide
+        // TweenMax.to($slides[prevSlide], 1, {rotation: -rotation});   //fade out current slide
 
         if(currentSlide != ($slides.length - 1)) {
           TweenMax.delayedCall(3, nextSlide); //wait a couple of seconds before next slide
+
         } else {
+          TweenMax.to($slides[currentSlide], 3, {autoAlpha:0});
           $scope.videoPlaying = false;
-          $scope.digest();
+          $scope.$digest();
         }
       }
     }
