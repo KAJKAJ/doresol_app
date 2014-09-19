@@ -107,7 +107,11 @@
 	    </div>
 	  	<div class="slidegroup" ng-if="videoPlaying">
 	  		<div id="slide{{index}}" class="slideshow" ng-repeat="(index, items) in slides">
-	  			<img class="{{item.class}}" ng-src="{{item.src}}" ng-repeat="item in items">
+	  			<span ng-repeat="item in items">
+	  				<img ng-if="!item.main" class="{{item.class}}" ng-src="{{item.src}}">
+	  				<img ng-if="item.main" class="{{item.class}}" ng-src="{{item.src}}" slideshow-main-image/>
+	  			</span>
+	  			<!-- <img class="{{item.class}}" ng-src="{{item.src}}" ng-repeat="item in items"> -->
 	  		</div>
         <div class="overlay text-center">
         	<div class="overlay_detail">

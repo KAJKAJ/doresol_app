@@ -129,7 +129,7 @@ angular.module('doresolApp')
         }
 
         var classAdditional = (index%2 ==0)? "rotate_left": "rotate_right";
-        retSlideItems.push( {class: 'item ' + classAdditional , src: $scope.storiesObject['timeline'][storyKey].file.url});
+        retSlideItems.push( {main: true, class: 'item ' + classAdditional , src: $scope.storiesObject['timeline'][storyKey].file.url});
 
         return retSlideItems;
       }
