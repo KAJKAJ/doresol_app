@@ -161,7 +161,7 @@ angular.module('doresolApp')
       TweenMax.set($slides[0], {autoAlpha:1});
 
       // fade in first slide
-      console.log(currentSlide);
+      // console.log(currentSlide);
       TweenMax.to($slides[currentSlide], 3, {rotation: rotation, scale: 1.1});
       TweenMax.to($slides[currentSlide], 3, {autoAlpha:1});  
 

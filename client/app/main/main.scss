@@ -124,8 +124,6 @@ font-family:'Nanum Brush Script', sans-serif;*/
 
 /* recent */
 .brick-recent-memorial{
-    margin-bottom: 10px;
-    
     .overlay{
         width:300px;
         height:300px;
@@ -137,7 +135,10 @@ font-family:'Nanum Brush Script', sans-serif;*/
     }
 
     .recent-memorial-detail{
-        margin:10px;
+        -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+        -moz-box-shadow:    0px 0px 8px rgba(0,0,0,0.3);
+        box-shadow:         0px 0px 8px rgba(0,0,0,0.3);    
+        margin: 10px;
     }
 
     .recent-memorial-detail:hover .overlay{
@@ -186,4 +187,29 @@ font-family:'Nanum Brush Script', sans-serif;*/
         border:0px;
     }
 }
+
+/* overview */
+.overview-img:hover{
+    cursor:pointer;
+    opacity:0.8;
+}
+
+.overveiw-modal{
+    /*background-color: red;*/
+    width:100%;
+
+    .modal-dialog {
+        width:80%;
+    }
+
+    .modal-content{
+        border:0px;
+    }
+
+    .slide-group{
+        margin:0px;
+    }
+}
+
+
 
