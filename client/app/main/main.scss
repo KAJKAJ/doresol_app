@@ -211,5 +211,20 @@ font-family:'Nanum Brush Script', sans-serif;*/
     }
 }
 
+.overview-btn-close{
+    position: absolute;
+    z-index: 1000;
+    /*left: calc(100% - 34px);*/
+    left:100%;
+    margin:right:34px;
+    display:none;
+}
 
+.overview-btn-close:hover{
+    cursor:pointer;
+}
+
+.modal-body:hover .overview-btn-close{
+    display:block;
+}
 
