@@ -90,6 +90,7 @@ angular.module('doresolApp')
       restrict: 'E',
       scope: {
         storyKey:'@',
+        memorialKey:'@',
         addComment: '&'
       },
       // replace: true,

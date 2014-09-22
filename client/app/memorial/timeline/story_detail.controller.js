@@ -3,7 +3,7 @@
 angular.module('doresolApp')
   .controller('StoryDetailCtrl', function ($scope,$stateParams,$state,Story,Memorial,Composite,ENV,$firebase, User,Comment) {
   	$scope.memorial = Memorial.getCurrentMemorial();
-    $scope.story = Story.findByIdInMemorial($scope.memorial.$id,$scope.storyKey);
+    $scope.story = Story.findByIdInMemorial($scope.memorialKey,$scope.storyKey);
     $scope.commentsObject = {};
     $scope.currentUser = User.getCurrentUser();
     // console.log($scope.currentUser);
