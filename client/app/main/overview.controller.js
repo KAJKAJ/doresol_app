@@ -284,6 +284,8 @@ angular.module('doresolApp')
   }
 
   switch($scope.mode){
+    case 'interview':
+      break;
     case 'video':
       $timeout(function(){
         $scope.createVideo();
