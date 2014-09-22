@@ -15,7 +15,7 @@ angular.module('doresolApp')
     $scope.storiesArray = [];
     $scope.storiesArray['timeline'] = [];
     $scope.storiesArray['storymap'] = [];
-    
+
     $scope.storiesObject = {};
     $scope.storiesObject['timeline'] = {};
     $scope.storiesObject['storymap'] = {};
@@ -27,7 +27,7 @@ angular.module('doresolApp')
       $scope.isOwner = Memorial.isOwner();
       $scope.isMember = Memorial.isMember();
       $scope.isGuest = Memorial.isGuest();
-
+      
       angular.forEach(value.stories, function(story, key) {
         story.$id = key;
         $scope.assignStory(story);
