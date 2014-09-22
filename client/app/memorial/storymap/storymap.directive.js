@@ -105,4 +105,30 @@ angular.module('doresolApp')
         });
       }
     }
-  });
+  })
+  .directive('slideshowMainImage', function () {
+    return {
+      restrict: 'A',
+      scope: false,
+      link: function(scope, element, attrs, ngModel) {
+        element.bind("load" , function(event){ 
+            // success, "load" event catched
+            // now we can do specific stuff:
+            // console.log(element);
+            var width = element[0].width;
+            var height = element[0].height;
+            // console.log(width);
+            // console.log(height);
+            element.removeClass('item');
+            if(width >= height){
+              element.addClass('item-horizontal');
+            }else{
+              element.addClass('item-vertical');
+            }
+            // $compile(element)(scope);
+        });
+
+      }
+    };
+  })
+;

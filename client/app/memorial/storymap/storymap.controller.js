@@ -3,7 +3,7 @@
 angular.module('doresolApp')
   .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story,$timeout,$modal){
 
-    $scope.mode = 'timeline';
+    $scope.mode = 'video';
 
     $scope.currentUser = User.getCurrentUser();
     $scope.isChanged = false;
@@ -19,6 +19,7 @@ angular.module('doresolApp')
     $scope.storiesObject = {};
     $scope.storiesObject['timeline'] = {};
     $scope.storiesObject['storymap'] = {};
+    $scope.galleryObject = {};
 
     $scope.isMemorialLoaded = false;
 
@@ -39,6 +40,14 @@ angular.module('doresolApp')
           break;
         case 'storymap':
           $scope.createStorymap();
+          break;
+        case 'video':
+          // console.log(value);
+          if(value.stories) {
+            $timeout(function(){
+              $scope.createVideo();
+            });
+          }
           break;
         default:
           break;
@@ -81,9 +90,11 @@ angular.module('doresolApp')
           });
           break;
         case 'video':
-          $timeout(function(){
-            $scope.createVideo();
-          });
+          if($scope.storiesArray['timeline'].length > 0){
+            $timeout(function(){
+              $scope.createVideo();
+            });
+          }
         default:
           break;
       }
@@ -118,7 +129,7 @@ angular.module('doresolApp')
         }
 
         var classAdditional = (index%2 ==0)? "rotate_left": "rotate_right";
-        retSlideItems.push( {class: 'item ' + classAdditional , src: $scope.storiesObject['timeline'][storyKey].file.url});
+        retSlideItems.push( {main: true, class: 'item ' + classAdditional , src: $scope.storiesObject['timeline'][storyKey].file.url});
 
         return retSlideItems;
       }
@@ -150,7 +161,7 @@ angular.module('doresolApp')
       TweenMax.set($slides[0], {autoAlpha:1});
 
       // fade in first slide
-      console.log(currentSlide);
+      // console.log(currentSlide);
       TweenMax.to($slides[currentSlide], 3, {rotation: rotation, scale: 1.1});
       TweenMax.to($slides[currentSlide], 3, {autoAlpha:1});  
 
@@ -180,8 +191,25 @@ angular.module('doresolApp')
     }
 
     $scope.changeToGalleryMode = function(){
+      angular.copy($scope.storiesObject['timeline'],$scope.galleryObject);
+      // $scope.changeGalleryImageSize();
       $scope.videoPlaying = false;
     }
+
+    // $scope.changeGalleryImageSize = function(){
+    //   angular.forEach($scope.galleryObject,function(value,key){
+    //     var randomValue = Util.getRandomInt(1,10);
+    //     if(randomValue < 2){
+    //       $scope.galleryObject[key].col = "col-md-2";
+    //     }else if(randomValue < 5){
+    //       $scope.galleryObject[key].col = "col-md-3";
+    //     }else if(randomValue < 8){
+    //       $scope.galleryObject[key].col = "col-md-4";
+    //     }else{
+    //       $scope.galleryObject[key].col = "col-md-6";
+    //     }
+    //   });
+    // }
 
     $scope.openImageModal = function(story){
       var modalInstance = $modal.open({
@@ -289,12 +317,18 @@ angular.module('doresolApp')
         });
       }
     }
+    
+    $scope.makeTimelineCredit = function(){
+      return 'By ' + $scope.currentUser.profile.name;
+    }
 
     // Update Story 
     $scope.saveStory = function(storyKey) {
       if(!$scope.storiesObject['timeline'][storyKey].newStory) {
         delete $scope.storiesObject['timeline'][storyKey].$id;
         var _story = $firebase(currentStoriesRef);
+        $scope.storiesObject['timeline'][storyKey].media.credit = $scope.makeTimelineCredit();
+
         _story.$update(storyKey, $scope.storiesObject['timeline'][storyKey]).then(function(value) {
           if($scope.storiesObject['timeline'][storyKey].location) {
             $scope.storiesObject['storymap'][storyKey] = $scope.storiesObject['timeline'][storyKey];
@@ -361,6 +395,7 @@ angular.module('doresolApp')
 
       var timeline_dates = [];
       angular.forEach($scope.storiesArray['timeline'],function(storyKey,index){
+        // console.log($scope.storiesObject['timeline'][storyKey]);
         var copyStory = {
           $id:storyKey,
           file:$scope.storiesObject['timeline'][storyKey].file,
@@ -369,11 +404,14 @@ angular.module('doresolApp')
           startDate:$scope.storiesObject['timeline'][storyKey].startDate,
           text:$scope.storiesObject['timeline'][storyKey].text.text,
           headline:$scope.storiesObject['timeline'][storyKey].text.headline,
+          videoUrl: $scope.storiesObject['timeline'][storyKey].text.videoUrl,
           asset:{
             media:$scope.storiesObject['timeline'][storyKey].media.url,
-            thumbnail:$scope.storiesObject['timeline'][storyKey].media.url
+            thumbnail:$scope.storiesObject['timeline'][storyKey].media.url,
+            credit:$scope.storiesObject['timeline'][storyKey].media.credit
           }
         }
+        // console.log(copyStory);
         timeline_dates.push(copyStory);
       });
       
@@ -487,6 +525,7 @@ angular.module('doresolApp')
             }
             copyStory.file = file;
             copyStory.newStory = false;
+            copyStory.media.credit = $scope.makeTimelineCredit();
 
             Composite.createStory($scope.memorialKey,copyStory).then(function(value){
               var index = $scope.storiesArray['timeline'].indexOf(storyKey);
@@ -504,6 +543,8 @@ angular.module('doresolApp')
           }else{
             if(oldStartDate != $scope.storiesObject['timeline'][storyKey].startDate){
               delete $scope.storiesObject['timeline'][storyKey].$id;
+              $scope.storiesObject['timeline'][storyKey].media.credit = $scope.makeTimelineCredit();
+
               Story.update(storyKey,$scope.storiesObject['timeline'][storyKey]);
             }
           }

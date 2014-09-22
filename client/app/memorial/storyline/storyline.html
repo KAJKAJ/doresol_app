@@ -49,7 +49,8 @@
                 </div>
                 <div class="flow-thumbnail-remove"><i class="fa fa-times-circle fa-2x text-danger" ng-click="removeFlowFile()"></i></div>
               </div>
-              <span class="btn btn-link btn-icon" flow-attrs="{accept:['image/*','video/*']}" flow-btn="" tooltip-placement="bottom" tooltip="사진첨부"><i class="fa fa-camera"></i><input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+              <!-- <span class="btn btn-link btn-icon" flow-attrs="{accept:['image/*','video/*']}" flow-btn="" tooltip-placement="bottom" tooltip="사진첨부"><i class="fa fa-camera"></i><input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span> -->
+              <span class="btn btn-link btn-icon" flow-attrs="{accept:['image/*']}" flow-btn="" tooltip-placement="bottom" tooltip="사진첨부"><i class="fa fa-camera"></i><input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
             </div>
         </div>
       </form>
@@ -58,7 +59,7 @@
   <!-- story list -->          
   <div ng-if="storiesArray.length==0">
     <div class="alert alert-success">
-     <h4><i class="fa fa-check-circle"></i> 아직 등록된 방명록이 없습니다.</h4>
+     <h4><i class="fa fa-check-circle"></i> 아직 등록된 메세지가 없습니다.</h4>
     </div>
   </div>          
 	<ul class="storyline media-list" ng-if="storiesArray.length > 0">

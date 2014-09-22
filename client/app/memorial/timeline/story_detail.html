@@ -1,7 +1,7 @@
 <!-- <div scroll="auto" style="overflow-x:hidden;height:300px"> -->
 <div>
 	<!-- headline -->
-	<div class="story-show" style="padding-right:30px;">
+	<div class="story-show" style="padding-right:10px;padding-left:10px;">
 		<!-- <div ng-if="isOwner">
 			<h2>
 				<input type="text" ng-model="story.text.headline" placeholder="제목을 입력하세요.." />
@@ -12,8 +12,12 @@
 		</div> -->
 		<!-- <div ng-if="!isOwner"> -->
 		<div>
-			<h2>{{story.text.headline}}</h2>
+			<!-- <h4>{{story.text.headline}}</h4> -->
 			<p>{{story.text.text}}</p>
+			<div ng-if="story.text.videoUrl">
+				<!-- <embed-video data-ng-href="{{story.text.videoUrl}}" controls=1><a href="{{story.text.videoUrl}}">Watch</a></embed-video> -->
+				<embed-video href="{{story.text.videoUrl}}"></embed-video>
+			</div>
 		</div>
 	</div>
 	<!-- text -->

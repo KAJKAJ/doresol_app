@@ -43,12 +43,22 @@ angular.module('doresolApp')
     }
    }
 
+  var getRandomArbitrary = function(min, max) {
+      return Math.random() * (max - min) + min;
+  }
+
+  var getRandomInt = function(min,max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+  } 
+
   return {
   	getUniqueId:getUniqueId,
   	getFlowFileUniqueId:getFlowFileUniqueId,
   	getSequence:getSequence,
     getBrowser:getBrowser,
     getWidth:getWidth,
-    isMobile:isMobile
+    isMobile:isMobile,
+    getRandomArbitrary:getRandomArbitrary,
+    getRandomInt:getRandomInt
   }
 });
