@@ -4,6 +4,11 @@
     슬라이드 쇼
   </div> -->
   <div class="modal-body" style="padding:0px;">
+    <!-- <button class="btn btn-success overview-btn-close" ng-click="cancel()">닫기</button> -->
+    <span class="fa-stack fa-lg overview-btn-close" ng-click="cancel()">
+      <i class="fa fa-circle-o fa-stack-2x text-danger" ></i>
+      <i class="fa fa-stack-1x fa-close text-danger"></i>
+    </span>
     <div ng-if="mode=='video'">
       <div class="slidegroup">
         <div id="slide{{index}}" class="slideshow" ng-repeat="(index, items) in slides">
