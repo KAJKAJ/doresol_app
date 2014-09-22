@@ -404,12 +404,14 @@ angular.module('doresolApp')
           startDate:$scope.storiesObject['timeline'][storyKey].startDate,
           text:$scope.storiesObject['timeline'][storyKey].text.text,
           headline:$scope.storiesObject['timeline'][storyKey].text.headline,
+          videoUrl: $scope.storiesObject['timeline'][storyKey].text.videoUrl,
           asset:{
             media:$scope.storiesObject['timeline'][storyKey].media.url,
             thumbnail:$scope.storiesObject['timeline'][storyKey].media.url,
             credit:$scope.storiesObject['timeline'][storyKey].media.credit
           }
         }
+        // console.log(copyStory);
         timeline_dates.push(copyStory);
       });
       

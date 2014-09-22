@@ -39,6 +39,8 @@
         <br/>
         <textarea class="form-control" ng-model="story.text.text" placeholder="자세한 이야기를 들려주세요.."  rows="5" style="resize: vertical;"/>
         <br/>
+        <input type="text" ng-model="story.text.videoUrl" placeholder="Youtube 링크.."/> 
+        <br/><br/>
         <div class="clearfix">
           <button type="submit" ng-if="!story.newStory"class="btn btn-sm btn-success pull-right" ng-click="saveStoryDetail(storyKey)"  style="padding:8px;">저장</button>
         </div>

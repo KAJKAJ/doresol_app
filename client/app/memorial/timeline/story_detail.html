@@ -14,6 +14,10 @@
 		<div>
 			<!-- <h4>{{story.text.headline}}</h4> -->
 			<p>{{story.text.text}}</p>
+			<div ng-if="story.text.videoUrl">
+				<!-- <embed-video data-ng-href="{{story.text.videoUrl}}" controls=1><a href="{{story.text.videoUrl}}">Watch</a></embed-video> -->
+				<embed-video href="{{story.text.videoUrl}}"></embed-video>
+			</div>
 		</div>
 	</div>
 	<!-- text -->
