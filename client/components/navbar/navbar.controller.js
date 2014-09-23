@@ -15,7 +15,7 @@ angular.module('doresolApp')
     ];
 
     angular.element(window).bind("scroll", function() {
-         if (this.pageYOffset >= 150) {
+         if (this.pageYOffset >= 30) {
              $scope.shrink_header = true;
          } else {
              $scope.shrink_header = false;
