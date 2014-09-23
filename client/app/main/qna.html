@@ -1,7 +1,9 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
 <div class="qna">
   <ul class="nav nav-tabs nav-justified" role="tablist">
     <!-- <li ng-click="changeQnaTab('send_photo')" ng-class="{active: qnaTab == 'send_photo'}"><a><i class="fa fa-camera"></i> 사진을 보내주세요</a></li> -->
-    <li ng-click="changeQnaTab('origin')" ng-class="{active: qnaTab == 'origin'}"><a><i class="fa fa-tree"></i> 도래솔 서비스의 의미</a></li>
+    <li ng-click="changeQnaTab('origin')" ng-class="{active: qnaTab == 'origin'}"><a><i class="fa fa-tree"></i> 도래솔 서비스 시작 계기</a></li>
     <li ng-click="changeQnaTab('faq')" ng-class="{active: qnaTab == 'faq'}"><a><i class="fa fa-lightbulb-o"></i> 자주묻는 질문</a></li>
     <li ng-click="changeQnaTab('qna')" ng-class="{active: qnaTab == 'qna'}"><a><i class="fa fa-question-circle"></i> QnA</a></li>
   </ul>
@@ -127,40 +129,64 @@
 
   <div ng-if="qnaTab=='origin'">
     <div class="qna-content">
-      <article>
-          <p>
-          <img src="/assets/images/qna_overview.png" style="width:450px;height:300px;">
-          먼저 곁을 떠난 이들을 추억할 어떤 방법이 있을까요? 추억이 점점 옅어져 가는 것이 안타까워 이 서비스를 시적하게 되었습니다.
-          여러분은 어떠신가요? 도래솔은 이제는 곁에 없는 이들에 대한 기억들을 더듬어보고자 하는 서비스입니다.</p>
-          <div class="row">
-            <div class="col-xs-4">
-              <p>
-                <img src="/assets/images/qna_overview_2.png" alt="image" class="img-responsive">
-              </p>
-            </div>
-          </div>
-          <p>아버지 하면 몇가지 떠오르는 내용들 중 
-          <br>
-          사랑하는 마음과는 달리 먼저 떠난 이들과의 추억이 점점 옅어져 가는 것이 안타까워서 이 서비스를 시작합니다..
-          <br>
-          여러분은 어떠신가요?
-           <br>
-          도래솔은 이제는 곁에 없는 이들에 대한 기억들을 더듬어보고자 하는 서비스입니다.</p>
-          <div class="row">
-            <div class="col-xs-4">
-             <p>
-              <img src="/assets/images/qna_overview_3.jpg" alt="image" class="img-responsive">
-             </p>
-            </div>
-          </div>
-          <p>먼저 떠난 사랑하는 이들을 추억할 어떤 방법이 있을까요?
-          <br>
-          사랑하는 마음과는 달리 먼저 떠난 이들과의 추억이 점점 옅어져 가는 것이 안타까워서 이 서비스를 시작합니다..
-          <br>
-          여러분은 어떠신가요?
-           <br>
-          도래솔은 이제는 곁에 없는 이들에 대한 기억들을 더듬어보고자 하는 서비스입니다.</p>
-      </article>
+      <div class="row">
+        <div class="col-md-5">
+            <img src="/assets/images/fishing.jpg" class="img-responsive">
+        </div>
+        <div class="col-md-7" style="font-size:23px;"><br>
+          <blockquote>
+            졸업식때면 의례 받았던 꽃다발이 어떻게 생겼는지 기억하지 못합니다.
+            생각하는 꽃에 대한 기억은 초등학교 3학년로 거슬러 올라갑니다.
+            당시 아버지는 나를 자전거에 태우고 어느 강으로 낚시를 하러 갔었습니다.
+            변변한 낚시대라곤 없었으나, 부자간 같이 할 수 있는 놀이로 그만한 것도 없었죠.
+            정확히 어느 강이었었는지, 물고기를 잡긴했었던 건진 기억나지 않습니다.
+          </blockquote>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8" style="font-size:23px;"><br>
+          <blockquote>
+          하지만 지금도 명확히 기억하는건 돌아오는 길에서의 일이었습니다.<br>
+          아버지는 돌아오는 길에 길가에 자전거를 세우시곤 길둑으로 걸아가셔선 진달래를 한웅큼 꺾어 오셔선 나에게 건네셨죠. <br>
+          좀 뜻밖의 상황이라 진달래를 쥐고 자전거 뒤에 앉아서 집으로 오는 내내 설레는 마음을 가졌었습니다.<br>
+          자상하셨으나 겉으로 들어내는 법이 없으셨던 아버지의 온기를 느낄 수 있어서 지금도 아련하게나마 기억하고 있는 추억이지 싶네요.<br><br>
+          </blockquote>
+        </div>        
+        <div class="col-md-4">
+          <img src="/assets/images/qna_overview_2.png" class="img-responsive">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5">
+          <img src="/assets/images/qna_overview.png" class="img-responsive">
+        </div>
+        <div class="col-md-7" style="font-size:23px;"><br>
+          <blockquote>
+          아버지는 이젠 곁을 떠나셨고, 시간이 지나면서 이런 추억들은 자연스레 희미해져가더군요.
+          빛바랜 아버지의 사진들은 고향집 옷장에 묻혀 있었고, 명절 때가 아니면 함께했던 기억들을 얘기할 기회는 점점 없어졌습니다.
+          전 그런 추억들을 정리해두는 서비스가 있으면 어떨까 하고 생각하게 되었습니다.
+          </blockquote>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7" style="font-size:23px;"><br>
+          <blockquote>
+          비슷한 경험을 가진 다른 분들에게도 도움이 될 수 있을거라고 생각하면서요.
+
+          내 아이들에게도 할아버지의 모습과 이야기들을 들려줄 수 있지 않을까요?
+
+          여러분들은 어떠신가요?
+
+          서비스는 이제 시작이지만, 열심히 만들어가도록 하겠습니다.
+
+          감사합니다.
+          </blockquote>
+        </div>
+        <div class="col-md-5">
+          <img src="/assets/images/qna_overview_3.jpg" class="img-responsive">
+        </div>
+      </div>
+
     </div>
   </div>
   

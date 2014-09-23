@@ -27,6 +27,8 @@
         </li>
         <li ng-show="currentUser" ng-class="{active: isActive('/memorials')}"><a href="/memorials">메모리얼</a></li>
 
+        <li ng-show="currentUser" ng-class="{active: isActive('/customercare')}"><a href="/customercare">고객센터</a></li>
+
         <li ng-show="currentUser" class="dropdown open">
           <a class="dropdown-toggle" data-toggle="dropdown">
             <img ng-src="{{currentUser.profile.file.url}}" alt="avatar" style="width:32px;height:32px;" class="img-circle"> <i class="fa fa-angle-down"></i>

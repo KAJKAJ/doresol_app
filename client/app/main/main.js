@@ -12,5 +12,10 @@ angular.module('doresolApp')
         url: '/invited/:memorialId/:inviterId',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
+      })
+      .state('qna', {
+        url: '/customercare',
+        templateUrl: 'app/main/qna.html',
+        controller: 'MainCtrl'
       });
   });
