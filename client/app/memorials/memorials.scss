@@ -29,11 +29,22 @@
 	.memorial-img {
 	  position: relative;
 
-	  .btn {
+	  i {
 	    position: absolute;
 	    left: 5px;
 	    top: 5px;
 	    z-index: 20;
+	    color:white;
+	  }
+
+	  .memorial-header{
+	  	display:none;
+	  }
+
+	  .btn-owner{
+	  	position: absolute;
+			top: 3px;
+			right: 35px;
 	  }
 
 	  .overlay {
@@ -50,7 +61,7 @@
 	    i{
 	      position:absolute;
 	      top: 40%;
-	      left: 40%;
+	      left: 45%;
 	      color: white;
 	    }
 	  }
@@ -59,6 +70,9 @@
 	.memorial-img:hover {
 	  .overlay{
 	    display: block;
+	  }
+	  .memorial-header{
+	  	display:block;
 	  }
 	}
 

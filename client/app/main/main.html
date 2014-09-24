@@ -158,14 +158,23 @@
                      <i class="fa fa-5x fa-play"></i>
                   </div>
                 </a>
-                <button ng-if="memorial.public" class="btn btn-xs btn-info" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
-                <button ng-if="!memorial.public" class="btn btn-xs btn-danger" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button>
-                
+                <!-- <button ng-if="memorial.public" class="btn btn-xs btn-info" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
+                <button ng-if="!memorial.public" class="btn btn-xs btn-danger" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button> -->
+                <span class="memorial-header">
+                  <span class="btn-public">
+                    <i ng-if="memorial.public" class="fa fa-2x fa-unlock" tooltip-placement="top" tooltip="공개"></i>
+                    <i ng-if="!memorial.public" class="fa fa-2x fa-lock" tooltip-placement="top" tooltip="비공개"></i>
+                  </span>
+                  <span class="btn-owner">
+                    <i ng-if="memorial.ref_user == user.uid" class="fa fa-2x fa-heart" tooltip-placement="top" tooltip="Owner"></i>
+                    <i ng-if="memorial.ref_user != user.uid" class="fa fa-2x fa-star" tooltip-placement="top" tooltip="Member"></i>
+                  </span>
+                </span>
               </div>
               <div class="row text-center">
                 <h3><strong>{{memorial.name}}</strong></h3>
-                <span ng-if="memorial.ref_user == user.uid"><i class="fa fa-heart fa-2x text-danger" tooltip-placement="left" tooltip="Owner"></i></span>
-                <span ng-if="memorial.ref_user != user.uid" style="color:rgb(255, 215, 0);"><i class="fa fa-2x fa-star" tooltip-placement="left" tooltip="Member"></i></span>
+                <!-- <span ng-if="memorial.ref_user == user.uid"><i class="fa fa-heart fa-2x text-danger" tooltip-placement="left" tooltip="Owner"></i></span>
+                <span ng-if="memorial.ref_user != user.uid" style="color:rgb(255, 215, 0);"><i class="fa fa-2x fa-star" tooltip-placement="left" tooltip="Member"></i></span> -->
               </div>
               <div class="row text-center">
                   <div class="col-xs-4">
