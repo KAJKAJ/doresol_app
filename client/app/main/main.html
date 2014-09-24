@@ -142,8 +142,14 @@
         <div class="block-title">
             <h2><strong>메모리얼</strong></h2>
         </div>
+        <div class="row">
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Search.." ng-model="recent.search">
+          </div>
+        </div>
+        <br/>
         <div masonry item-selector=".brick-memorials" preserve-order>
-          <div masonry-brick class="brick-memorials col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, memorial) in recentMemorials">
+          <div masonry-brick class="brick-memorials col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, memorial) in recentMemorials | filter:{ name: recent.search }">
             <div class="brick-memorial-wrapper">
               <!-- <div class="ribbon-wrapper"><div class="ribbon-green">NEWS</div></div> -->
               <div class="memorial-img">
