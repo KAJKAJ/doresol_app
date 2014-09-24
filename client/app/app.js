@@ -15,7 +15,8 @@ angular.module('doresolApp', [
   'google-maps',
   'ngAutocomplete',
   'ngAnimate',
-  'videosharing-embed'
+  'videosharing-embed',
+  'mediaPlayer'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

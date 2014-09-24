@@ -39,8 +39,8 @@
 			  <br/>
 
 		  	<div class="input-group">
-            <span class="input-group-addon">태어나신 날짜</span>
-            <input type="text" class="form-control" name="dateOfBirth" placeholder="태어나신 날을 입력하세요" 
+            <span class="input-group-addon">이야기 시작하는 날</span>
+            <input type="text" class="form-control" name="dateOfBirth" placeholder="이야기를 시작하고 싶은 날을 입력하세요." 
 				    is-open="dateOfBirthOpened" datepicker-popup="yyyy-MM-dd" max-date="today"
 				    ng-required="true" ng-model="newMemorial.dateOfBirth"/>
 		        <span class="input-group-btn">
@@ -49,14 +49,14 @@
         </div>
 	      <div class="alert alert-danger" role="alert"
 		  		 ng-show="newMemorialForm.dateOfBirth.$dirty && newMemorialForm.dateOfBirth.$invalid">
-		  		 <span ng-show="!newMemorialForm.dateOfBirth.$error.date&&newMemorialForm.dateOfBirth.$error.required">태어나신 날을 입력해 주세요.</span>
+		  		 <span ng-show="!newMemorialForm.dateOfBirth.$error.date&&newMemorialForm.dateOfBirth.$error.required">이야기를 시작하는 날을 입력해주세요.</span>
 		  		 <span ng-show="newMemorialForm.dateOfBirth.$error.date">정확한 날짜 형식이 아닙니다.</span>
 		  	</div>
 		  	<br/>
 
 		  	<div class="input-group">
-            <span class="input-group-addon">돌아가신 날짜</span>
-            <input type="text" class="form-control" name="dateOfDeath" placeholder="돌아가신 날을 입력하세요" 
+            <span class="input-group-addon">이야기가 끝나는 날</span>
+            <input type="text" class="form-control" name="dateOfDeath" placeholder="이야기가 끝나는 날을 입력하세요" 
 				    is-open="dateOfDeathOpened" datepicker-popup="yyyy-MM-dd" min-date="newMemorial.dateOfBirth" max-date="today"
 				    ng-required="true" ng-model="newMemorial.dateOfDeath"/>
 		        <span class="input-group-btn">
@@ -65,7 +65,7 @@
         </div>
 	      <div class="alert alert-danger" role="alert"
 		  		 ng-show="newMemorialForm.dateOfDeath.$dirty && newMemorialForm.dateOfDeath.$invalid">
-		  		 <span ng-show="!newMemorialForm.dateOfDeath.$error.date&&newMemorialForm.dateOfDeath.$error.required">돌아가신 날을 입력해 주세요.</span>
+		  		 <span ng-show="!newMemorialForm.dateOfDeath.$error.date&&newMemorialForm.dateOfDeath.$error.required">이야기가 끝나는 날을 입력해주세요.</span>
 		  		 <span ng-show="newMemorialForm.dateOfDeath.$error.date">정확한 날짜 형식이 아닙니다.</span>
 		  	</div>
 
