@@ -3,6 +3,7 @@
 */
 
 
+
 .slidegroup {
 	position:relative;
 	background-image: url("/assets/images/dark_wood.png");
@@ -193,4 +194,9 @@
 .image-modal-wrapper:hover{
 	cursor: pointer;
 	opacity:0.8;
+}
+
+.btn-story:hover {
+  background-color: #27ae60;
+  color:white;
 }

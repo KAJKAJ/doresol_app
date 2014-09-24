@@ -3,14 +3,14 @@
 	  <div class="block-title">
 	      <h2>설정하기</h2>
 	      <div class="block-options pull-right">
-			     <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="슬라이드쇼">
-				     <i class="fa fa-video-camera"></i> 슬라이드쇼
+			     <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="슬라이드쇼">
+				     <i class="fa fa-play-circle-o"></i> 슬라이드 쇼
   				 </span>
-		       <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="시간 기준으로 보기">
-		      	<i class="fa fa-clock-o"></i> 시간순 보기
+		       <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="시간 기준으로 보기">
+		      	<i class="fa fa-clock-o"></i> 시간으로 보기
 		      </span>
-		      <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="장소 기준으로 보기">
-		      	<i class="fa fa-map-marker"></i> 장소기준 보기
+		      <span ng-if="currentUser.uid == memorial.ref_user" ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="장소 기준으로 보기">
+		      	<i class="fa fa-map-marker"></i> 장소로 보기
 		      </span>
 		    </div>
 	  </div>
@@ -26,13 +26,13 @@
 	  <div class="block-title">
 	      <h2>장소기준 보기</h2>
 	      <div class="block-options pull-right">
-					<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="슬라이드">
-		      	<i class="fa fa-video-camera"></i> 슬라이드쇼
+					<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="슬라이드">
+		      	<i class="fa fa-play-circle-o"></i> 슬라이드 쇼
 		      </span>	      	
-	      	<span ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="시간 기준으로 보기">
-		      	<i class="fa fa-clock-o"></i> 시간순 보기
+	      	<span ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="시간 기준으로 보기">
+		      	<i class="fa fa-clock-o"></i> 시간으로 보기
 		      </span>
-		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="설정">
+		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="설정">
 		      	<i class="fa fa-cog"></i> 설정하기
 		      </span>
 		    </div>
@@ -54,13 +54,13 @@
 	  <div class="block-title">
 	      <h2>시간순 보기</h2>
 	      <div class="block-options pull-right">
-	      	<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="슬라이드">
-		      	<i class="fa fa-video-camera"></i> 슬라이드쇼
+	      	<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="슬라이드">
+		      	<i class="fa fa-play-circle-o"></i> 슬라이드 쇼
 		      </span>
-	      	<span ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="장소 기준으로 보기">
-		      	<i class="fa fa-map-marker"></i> 장소기준 보기
+	      	<span ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="장소 기준으로 보기">
+		      	<i class="fa fa-map-marker"></i> 장소로 보기
 		      </span>
-		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="설정">
+		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="설정하기">
 		      	<i class="fa fa-cog"></i> 설정하기
 		      </span>
 		    </div>
@@ -85,16 +85,13 @@
 					<i ng-if="videoPlaying&&storiesArray['timeline'].length>0" class="fa fa-picture-o text-success" ng-click="changeToGalleryMode()" tooltip-placement="top" tooltip="갤러리"></i>
 				</h2>
 	      <div class="block-options pull-right">
-	      	<span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="동영상으로 보기">
-		      	<i class="fa fa-video-camera"></i> 슬라이드쇼
+		      <span ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="시간 기준으로 보기">
+		      	<i class="fa fa-clock-o"></i> 시간으로 보기
 		      </span>
-		      <span ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="시간 기준으로 보기">
-		      	<i class="fa fa-clock-o"></i> 시간순 보기
+		      <span ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="장소 기준으로 보기">
+		      	<i class="fa fa-map-marker"></i> 장소로 보기
 		      </span>
-		      <span ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="장소 기준으로 보기">
-		      	<i class="fa fa-map-marker"></i> 장소기준 보기
-		      </span>
-		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-success" tooltip-placement="top" tooltip="설정">
+		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="설정">
 		      	<i class="fa fa-cog"></i> 설정하기
 		      </span>
 		    </div>
