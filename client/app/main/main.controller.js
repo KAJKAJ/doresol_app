@@ -153,6 +153,7 @@ angular.module('doresolApp')
     recentMemorials.on('child_added', function(value) { 
       var memorial = value.val();
       memorial.$id = value.name();
+      memorial = Memorial.setMemorialSummary(memorial);
       $scope.recentMemorials.unshift(memorial);
     });
 

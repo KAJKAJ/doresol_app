@@ -20,7 +20,10 @@
         <div class="col-sm-12" ng-if="isLoggedIn">
           <h1 class="intro_create_title">추억, 사랑, 기억</h1>
           <h2 class="intro_create_sub_title">도래솔은 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
+          <br><br>
+          <button type="button" class="btn btn-lg btn-success" ui-sref="memorials"><h4><i class="fa fa-tree"></i>&nbsp;메모리얼 생성하러 가기</h4></button>
         </div>
+        <br><br>
         <div class="col-sm-9" ng-if="waitForLogging && !isLoggedIn">
           <h1 class="intro_create_title">추억, 사랑, 기억</h1>
           <h2 class="intro_create_sub_title">도래솔은 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
@@ -100,7 +103,7 @@
 
   <!-- recent memorials -->
   <div class="container">
-    <div class="block-section">
+   <!--  <div class="block-section">
       <div class="block-title">
           <h2><strong>메모리얼</strong></h2>
       </div>
@@ -133,8 +136,66 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
+    <div class="block-section">
+        <div class="block-title">
+            <h2><strong>메모리얼</strong></h2>
+        </div>
+        <div masonry item-selector=".brick-memorials" preserve-order>
+          <div masonry-brick class="brick-memorials col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, memorial) in recentMemorials">
+            <div class="brick-memorial-wrapper">
+              <!-- <div class="ribbon-wrapper"><div class="ribbon-green">NEWS</div></div> -->
+              <div class="memorial-img">
+                <a ui-sref="memorial.storymap({id:memorial.$id})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
+                  <div class="overlay">
+                     <i class="fa fa-5x fa-play"></i>
+                  </div>
+                </a>
+                <button ng-if="memorial.public" class="btn btn-xs btn-info" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
+                <button ng-if="!memorial.public" class="btn btn-xs btn-danger" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button>
+                
+              </div>
+              <div class="row text-center">
+                <h3><strong>{{memorial.name}}</strong></h3>
+                <span ng-if="memorial.ref_user == user.uid"><i class="fa fa-heart fa-2x text-danger" tooltip-placement="left" tooltip="Owner"></i></span>
+                <span ng-if="memorial.ref_user != user.uid" style="color:rgb(255, 215, 0);"><i class="fa fa-2x fa-star" tooltip-placement="left" tooltip="Member"></i></span>
+              </div>
+              <div class="row text-center">
+                  <div class="col-xs-4">
+                      <h3 class="widget-content-light">
+                          <a ui-sref="memorial.storymap({id:memorial.$id})"><strong>{{memorial.count_timeline}}</strong><br></a>
+                          <small>스토리</small>
+                      </h3>
+                  </div>
+                  <div class="col-xs-4">
+                      <h3 class="widget-content-light">
+                          <a ui-sref="memorial.storyline({id:memorial.$id})"><strong>{{memorial.count_storyline}}</strong><br></a>
+                          <small>방명록</small>
+                      </h3>
+                  </div>
+                  <div class="col-xs-4">
+                      <h3 class="widget-content-light">
+                          <a ui-sref="memorial.profile({id:memorial.$id})"><strong>{{memorial.count_member}}</strong><br></a>
+                          <small>멤버</small>
+                      </h3>
+                  </div>
+              </div>
+            </div>​
+          </div>
+        </div>
+        <br/>
+      </div>
   </div>
+  
+  <div class="row text-center">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+      <button type="button" class="btn btn-lg btn-success" ui-sref="memorials"><h4><i class="fa fa-tree"></i>&nbsp;메모리얼 생성하러 가기</h4></button>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+  <br>
 
   <div class="copyright  text-center">
     <div class="container">

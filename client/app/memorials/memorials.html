@@ -3,7 +3,7 @@
 <div class="container contents">	
 	<div class="block-section">
     <div class="block-title">
-        <h2><strong>나의 메모리얼</strong></h2>
+        <h2><strong>가입한 메모리얼</strong></h2>
     </div>
 		<div masonry item-selector=".brick-memorials" preserve-order>
 			<div class="brick-memorials col-md-3 col-sm-6 col-xs-12">
@@ -16,8 +16,15 @@
 		  <div masonry-brick class="brick-memorials col-md-3 col-sm-6 col-xs-12" ng-repeat="(key, memorial) in myMemorials">
 		  	<div class="brick-memorial-wrapper">
 	      	<!-- <div class="ribbon-wrapper"><div class="ribbon-green">NEWS</div></div> -->
-	      	<a ui-sref="memorial.storymap({id:key})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/></a>
-		    	<div class="row text-center">
+
+          <div class="memorial-img">
+  					<a ui-sref="memorial.storymap({id:memorial.$id})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
+    					<div class="overlay">
+       					<i class="fa fa-5x fa-play"></i>
+    					</div>
+  					</a>
+  				</div>
+	      	<div class="row text-center">
 		    		<h3><strong>{{memorial.name}}</strong></h3>
 		    		<span ng-if="memorial.ref_user == user.uid"><i class="fa fa-heart fa-2x text-danger" tooltip-placement="left" tooltip="Owner"></i></span>
 		    		<span ng-if="memorial.ref_user != user.uid" style="color:rgb(255, 215, 0);"><i class="fa fa-2x fa-star" tooltip-placement="left" tooltip="Member"></i></span>
