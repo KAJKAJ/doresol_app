@@ -34,6 +34,13 @@ angular.module('doresolApp')
     		});
     	}
     }
+
+    // $scope.mySpecialPlayButton = function () {
+    //   $scope.customText = 'I started angular-media-player with a custom defined action!';
+    //   $scope.audio1.playPause();
+    // };
+
+
     // $scope.createMemorial = function(form){
     //   if(form.$valid){
     //     var file = null;

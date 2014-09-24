@@ -42,4 +42,5 @@ angular.module('doresolApp')
 				}
 			}
 		});
+
   });
