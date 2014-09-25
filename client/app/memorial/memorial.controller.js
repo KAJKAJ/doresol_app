@@ -43,4 +43,7 @@ angular.module('doresolApp')
 			}
 		});
 
+		var audio = document.getElementById("bg_music");
+		audio.volume = 0.3;
+
   });

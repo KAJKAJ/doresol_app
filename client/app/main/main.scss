@@ -440,5 +440,13 @@ font-family:'Nanum Brush Script', sans-serif;*/
   }
 }
 
-
-
+.logo-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size; inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}

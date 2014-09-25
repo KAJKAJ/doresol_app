@@ -312,5 +312,5 @@ angular.module('doresolApp')
         //canceled
       });
     };
-
+    
   });

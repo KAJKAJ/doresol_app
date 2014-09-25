@@ -13,15 +13,14 @@
          <source type="video/ogg" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg">
             Sorry, your browser does not support HTML5 video.
       </video> -->
-      
-      <iframe src="//player.vimeo.com/video/105320016?autoplay=true&loop=true" width="100%" height="800px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      <iframe src="//player.vimeo.com/video/105320016?title=0&byline=0&portrait=0&api=1&autoplay=true&loop=true&player_id=intro" width="100%" height="800px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
       <div id="intro_create_overlay">
         <div class="col-sm-12" ng-if="isLoggedIn">
           <h1 class="intro_create_title">추억, 사랑, 기억</h1>
           <h2 class="intro_create_sub_title">도래솔은 사랑했지만 <br/> 이젠 곁에 없는 이들을 추억하기 위한 서비스입니다.</h2>
           <br><br>
-          <button type="button" class="btn btn-lg btn-success" ui-sref="memorials"><h4><i class="fa fa-tree"></i>&nbsp;메모리얼 생성하러 가기</h4></button>
+          <button type="button" class="btn btn-lg btn-success" ui-sref="memorials"><img ng-src="/assets/images/doresol_logo_lightgreen.png" class="logo-image">&nbsp;메모리얼 생성하러 가기</button>
         </div>
         <br><br>
         <div class="col-sm-9" ng-if="waitForLogging && !isLoggedIn">
