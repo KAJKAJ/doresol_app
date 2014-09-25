@@ -21,6 +21,14 @@ angular.module('doresolApp')
     $scope.storiesObject['storymap'] = {};
     $scope.galleryObject = {};
 
+    $scope.modes = {
+      'setting': { label: '사진 올리기', icon: 'fa-cog'},
+      'video': { label: '슬라이드 쇼', icon: 'fa-play-circle-o'},
+      'timeline': { label: '시간으로 보기', icon: 'fa-clock-o'},
+      'storymap': { label: '장소로 보기', icon: 'fa-map-marker'},
+      'gallery': { label: '사진 갤러리', icon: 'fa-picture-o'},
+    };
+
     $scope.isMemorialLoaded = false;
 
     $scope.memorial.$loaded().then(function(value){
@@ -78,6 +86,11 @@ angular.module('doresolApp')
     $scope.changeMode = function(mode){
       switch(mode) {
         case 'setting':
+          break;
+        case 'gallery':
+          $timeout(function(){
+            $scope.changeToGalleryMode();
+          });
           break;
         case 'timeline':
           $timeout(function(){
@@ -183,7 +196,7 @@ angular.module('doresolApp')
 
         } else {
           $timeout(function(){
-            $scope.changeToGalleryMode();
+            $scope.changeMode('gallery');
             $scope.$digest();
           },4500);
         }
