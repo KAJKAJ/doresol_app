@@ -3,19 +3,19 @@
 	  <div class="block-title">
 	      <h2><i class="fa {{modes[mode].icon}}"></i> {{modes[mode].label}}</h2>
 	      <div class="block-options pull-right">
-		      <span ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="사진올리고 설정하기">
+		      <span ng-class="{menu_active: isSelected('setting')}" ng-if="currentUser.uid == memorial.ref_user" ng-click="changeMode('setting')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="사진올리고 설정하기">
 		      	<i class="fa fa-cog"></i> 사진 올리기
 		      </span>
-		      <span ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="슬라이드쇼">
+		      <span ng-class="{menu_active: isSelected('video')}" 	ng-disabled="isChanged" ng-click="changeMode('video')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="슬라이드쇼">
 			     <i class="fa fa-play-circle-o"></i> 슬라이드 쇼
 				  </span>
-				  <span ng-disabled="isChanged" ng-click="changeMode('gallery')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="사진 모음 갤러리">
+				  <span ng-class="{menu_active: isSelected('gallery')}" ng-disabled="isChanged" ng-click="changeMode('gallery')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="사진 모음 갤러리">
 			     <i class="fa fa-picture-o"></i> 갤러리
 				  </span>
-				  <span ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="시간 기준으로 보기">
+				  <span ng-class="{menu_active: isSelected('timeline')}" ng-disabled="isChanged" ng-click="changeMode('timeline')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="시간 기준으로 보기">
 	      	<i class="fa fa-clock-o"></i> 시간으로 보기
 	       </span>
-	       <span ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="장소 기준으로 보기">
+	       <span ng-class="{menu_active: isSelected('storymap')}" ng-disabled="isChanged" ng-click="changeMode('storymap')" class="btn btn-sm btn-story" tooltip-placement="top" tooltip="장소 기준으로 보기">
 	      	<i class="fa fa-map-marker"></i> 장소로 보기
 	      </span>
 		    </div>
@@ -27,8 +27,8 @@
       <div ng-switch-when="storymap">
 	 	  	<div id="mapdiv" style="width: 100%; height: 600px;">
 		  		<div>
-			      <div class="alert alert-success">
-			       <h4><i class="fa fa-check-circle"></i> '사진 올리기'메뉴에서 사진을 선택하시고 장소 정보를 입력해주세요.</h4>
+			      <div class="alert">
+			       <h4><i class="fa fa-check-circle"></i> <a class="alert-success" ng-click="changeMode('setting')">'사진 올리기'</a>메뉴에서 사진을 선택하시고 장소 정보를 입력해주세요.</h4>
 			      </div>
 			    </div>
 		  	</div>
@@ -37,7 +37,7 @@
 				<div id="timeline-embed" timeline-embed>
 		  		<div>
 			      <div class="alert alert-success">
-			       <h4><i class="fa fa-check-circle"></i> '사진 올리기' 메뉴에서 사진을 올려주세요.</h4>
+			       <h4><i class="fa fa-check-circle"></i> <a ng-click="changeMode('setting')">'사진 올리기'</a> 메뉴에서 사진을 올려주세요.</h4>
 			      </div>
 			    </div>
 		  	</div>		  
@@ -45,7 +45,7 @@
 		  <div ng-switch-when="video">
 			  <div ng-if="storiesArray['timeline'].length==0">
 		      <div class="alert alert-success">
-		       <h4><i class="fa fa-check-circle"></i> '사진 올리기' 메뉴에서 사진을 올려주세요.</h4>
+		       <h4><i class="fa fa-check-circle"></i><a ng-click="changeMode('setting')">'사진 올리기'</a>메뉴에서 사진을 올려주세요.</h4>
 		      </div>
 		    </div>
 		  	<div class="slidegroup" ng-if="videoPlaying">
@@ -66,8 +66,8 @@
 
 		  <div ng-switch-when="gallery">
 		  	<div ng-if="storiesArray['timeline'].length==0">
-		      <div class="alert alert-success">
-		       <h4><i class="fa fa-check-circle"></i> '사진 올리기'에서 사진을 올려주세요.</h4>
+		      <div class="alert">
+		       <h4><i class="fa fa-check-circle"></i> <a class="alert-success" ng-click="changeMode('setting')">'사진 올리기'</a>메뉴에서 사진을 올려주세요.</h4>
 		      </div>
 		    </div>
 				<div masonry item-selector=".brick-stories" preserve-order>

@@ -83,6 +83,10 @@ angular.module('doresolApp')
       }
     };
 
+    $scope.isSelected = function(mode) {
+      return $scope.mode == mode;
+    };
+
     $scope.changeMode = function(mode){
       switch(mode) {
         case 'setting':
