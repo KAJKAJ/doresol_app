@@ -195,14 +195,16 @@ angular.module('doresolApp')
         TweenMax.to($slides[currentSlide], 3, {autoAlpha:1});   //fade in the next slide
         // TweenMax.to($slides[prevSlide], 1, {rotation: -rotation});   //fade out current slide
 
-        if(currentSlide != ($slides.length - 1)) {
-          TweenMax.delayedCall(4, nextSlide); //wait a couple of seconds before next slide
+        if($scope.mode === 'video'){
+          if(currentSlide != ($slides.length - 1)) {
+            TweenMax.delayedCall(4, nextSlide); //wait a couple of seconds before next slide
 
-        } else {
-          $timeout(function(){
-            $scope.changeMode('gallery');
-            $scope.$digest();
-          },4500);
+          } else {
+            $timeout(function(){
+              $scope.changeMode('gallery');
+              $scope.$digest();
+            },4500);
+          }
         }
       }
     }
