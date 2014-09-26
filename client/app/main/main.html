@@ -152,11 +152,20 @@
             <div class="brick-memorial-wrapper">
               <!-- <div class="ribbon-wrapper"><div class="ribbon-green">NEWS</div></div> -->
               <div class="memorial-img">
-                <a ui-sref="memorial.storymap({id:memorial.$id})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
-                  <div class="overlay">
-                     <i class="fa fa-5x fa-play"></i>
-                  </div>
-                </a>
+                <div ng-if="user">
+                  <a ui-sref="memorial.storymap({id:memorial.$id})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
+                    <div class="overlay">
+                       <i class="fa fa-5x fa-play"></i>
+                    </div>
+                  </a>
+                </div>
+                 <div ng-if="!user">
+                  <span ng-click="alertLogin()"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
+                    <div class="overlay">
+                       <i class="fa fa-5x fa-play"></i>
+                    </div>
+                  </span>
+                </div>
                 <!-- <button ng-if="memorial.public" class="btn btn-xs btn-info" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
                 <button ng-if="!memorial.public" class="btn btn-xs btn-danger" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button> -->
                 <span class="memorial-header">
@@ -178,19 +187,34 @@
               <div class="row text-center">
                   <div class="col-xs-4">
                       <h3 class="widget-content-light">
-                          <a ui-sref="memorial.storymap({id:memorial.$id})"><strong>{{memorial.count_timeline}}</strong><br></a>
+                          <div ng-if="user">
+                            <a ui-sref="memorial.storymap({id:memorial.$id})"><strong>{{memorial.count_timeline}}</strong><br></a>
+                          </div>
+                          <div ng-if="!user">
+                            <a ng-click="alertLogin()"><strong>{{memorial.count_timeline}}</strong><br></a>
+                          </div>
                           <small>스토리</small>
                       </h3>
                   </div>
                   <div class="col-xs-4">
                       <h3 class="widget-content-light">
-                          <a ui-sref="memorial.storyline({id:memorial.$id})"><strong>{{memorial.count_storyline}}</strong><br></a>
+                          <div ng-if="user">
+                            <a ui-sref="memorial.storyline({id:memorial.$id})"><strong>{{memorial.count_storyline}}</strong><br></a>
+                          </div>
+                          <div ng-if="!user">
+                            <a ng-click="alertLogin()"><strong>{{memorial.count_storyline}}</strong><br></a>
+                          </div>
                           <small>방명록</small>
                       </h3>
                   </div>
                   <div class="col-xs-4">
                       <h3 class="widget-content-light">
-                          <a ui-sref="memorial.profile({id:memorial.$id})"><strong>{{memorial.count_member}}</strong><br></a>
+                          <div ng-if="user">
+                            <a ui-sref="memorial.profile({id:memorial.$id})"><strong>{{memorial.count_member}}</strong><br></a>
+                          </div>
+                          <div ng-if="!user">
+                            <a ng-click="alertLogin()"><strong>{{memorial.count_member}}</strong><br></a>
+                          </div>
                           <small>멤버</small>
                       </h3>
                   </div>
