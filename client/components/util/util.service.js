@@ -51,6 +51,14 @@ angular.module('doresolApp')
       return Math.floor(Math.random() * (max - min + 1)) + min;
   } 
 
+  var objectSize =  function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+  }
+
   return {
   	getUniqueId:getUniqueId,
   	getFlowFileUniqueId:getFlowFileUniqueId,
@@ -59,6 +67,7 @@ angular.module('doresolApp')
     getWidth:getWidth,
     isMobile:isMobile,
     getRandomArbitrary:getRandomArbitrary,
-    getRandomInt:getRandomInt
+    getRandomInt:getRandomInt,
+    objectSize:objectSize
   }
 });

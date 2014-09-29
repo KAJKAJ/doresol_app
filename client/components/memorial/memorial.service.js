@@ -1,7 +1,7 @@
 'use strict';
 
  angular.module('doresolApp')
-  .factory('Memorial', function Memorial($firebase, $q, ENV) {
+  .factory('Memorial', function Memorial($firebase, $q, ENV, Util) {
   
   var myMemorials = {};
   var myWaitingMemorials = {};
@@ -33,6 +33,10 @@
   		memorial.count_storyline = Object.keys(memorial.storyline.stories).length;
   	}else{
   		memorial.count_storyline = 0;
+  	}
+
+  	if(memorial.members){
+  		memorial.count_member += Util.objectSize(memorial.members);
   	}
   	return memorial;
   }

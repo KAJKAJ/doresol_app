@@ -210,7 +210,7 @@
                   <div class="col-xs-4">
                       <h3 class="widget-content-light">
                           <div ng-if="user">
-                            <a ui-sref="memorial.profile({id:memorial.$id})"><strong>{{memorial.count_member}}</strong><br></a>
+                            <a ui-sref="memorial.member({id:memorial.$id})"><strong>{{memorial.count_member}}</strong><br></a>
                           </div>
                           <div ng-if="!user">
                             <a ng-click="alertLogin()"><strong>{{memorial.count_member}}</strong><br></a>
