@@ -102,41 +102,6 @@
 
   <!-- recent memorials -->
   <div class="container">
-   <!--  <div class="block-section">
-      <div class="block-title">
-          <h2><strong>메모리얼</strong></h2>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <input type="text" class="form-control" placeholder="Search.." ng-model="recent.search">
-        </div>
-      </div>
-      <div masonry item-selector=".brick-recent-memorial">
-        <div masonry-brick class="brick-recent-memorial" ng-repeat="(key, memorial) in recentMemorials | filter:{ name: recent.search }">
-          <div class="recent-memorial-detail">
-            <img ng-src="{{memorial.file.url}}" class="img-responsive" style="width:300px;height:300px"/>
-            <div class="overlay text-center">
-              <div class="overlay_detail">
-                <div class="pull-left public">
-                  &nbsp;
-                  <button ng-if="memorial.public" class="btn btn-xs btn-info" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
-                  <button ng-if="!memorial.public" class="btn btn-xs btn-danger" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button>
-                </div>
-                <br/><br/><br/><br/>
-                <h3><strong>{{memorial.name}}</strong></h3>
-                <div ng-if="user">
-                  <button type="button" class="btn btn-success" ui-sref="memorial.storymap({id:memorial.$id})">보기</button>
-                </div>
-                <div ng-if="!user">
-                  <button type="button" class="btn btn-success" ng-click="alertLogin()">보기</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <div class="block-section">
         <div class="block-title">
             <h2><strong>메모리얼</strong></h2>
@@ -160,7 +125,8 @@
                   </a>
                 </div>
                  <div ng-if="!user">
-                  <span ng-click="alertLogin()"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
+                  <!-- <span ng-click="alertLogin()"><img ng-src="{{memorial.file.url}}" class="img-responsive"/> -->
+                    <a ui-sref="memorial.storymap({id:memorial.$id})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
                     <div class="overlay">
                        <i class="fa fa-5x fa-play"></i>
                     </div>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MainCtrl', function ($scope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util, $sce, Qna, $modal) {
+  .controller('MainCtrl', function ($scope, $rootScope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util, $sce, Qna, $modal, ngDialog) {
     $scope.muted = true;
     $scope.signupUser ={};
     $scope.loginUser = {};
@@ -10,23 +10,6 @@ angular.module('doresolApp')
 
     $scope.isLoggedIn = false;
     $scope.waitForLogging = true;
-
-    // $scope.mute = function(){
-    //   $("video")[0].muted=true;
-    //   $scope.muted = true;
-    // };
-    // $scope.unmute = function(){
-    //   $("video")[0].muted=false;
-    //   $scope.muted = false;
-    // // };
-    // $scope.showLoginForm = false;
-    // $scope.$watch('currentUser', function() {
-    //   console.log($scope.currentUser);
-    // };
-    // $scope.checkLoggedIn = function() {
-    //   $scope.waitForLogging = true;
-    // }
-    // $timeout($scope.checkLoggedIn(), 3000);
 
     $scope.$watch(function(){return User.getCurrentUser();}, 
       function (newValue) {
@@ -45,10 +28,28 @@ angular.module('doresolApp')
         if ($state.params.memorialId !== undefined) {
           $state.params.inviteeId = value.uid;
           Composite.addMember($state.params).then(function(){
-            $state.go("memorials");
+             if($rootScope.modalOpen) {
+              $scope.closeThisDialog('true');
+              $rootScope.modalOpen = false;
+             }
+
+             if($rootScope.toState) {
+              $state.go($rootScope.toState, $rootScope.toParams);
+             } else {
+              state.go("memorials");
+             }
           });
         } else {
-          $state.go("memorials");
+           if($rootScope.modalOpen) {
+            $scope.closeThisDialog('true');
+            $rootScope.modalOpen = false;
+           }
+
+           if($rootScope.toState) {
+            $state.go($rootScope.toState, $rootScope.toParams);
+           } else {
+            state.go("memorials");
+           }
         }
       },function(error){
         console.log(error);
@@ -104,12 +105,31 @@ angular.module('doresolApp')
           if ($state.params.memorialId !== undefined) {
             $state.params.inviteeId = value.uid;
             Composite.addMember($state.params).then(function(){
-              $state.go("memorials");
-            });
-          } else {
-            $state.go("memorials");
-          }
+            
+             if($rootScope.modalOpen) {
+              $scope.closeThisDialog('true');
+              $rootScope.modalOpen = false;
+             }
 
+             if($rootScope.toState) {
+              $state.go($rootScope.toState, $rootScope.toParams);
+             } else {
+              state.go("memorials");
+             }
+            });
+
+          } else {
+            
+            if($rootScope.modalOpen) {
+              $scope.closeThisDialog('true');
+              $rootScope.modalOpen = false;
+            }
+            if($rootScope.toState) {
+             $state.go($rootScope.toState, $rootScope.toParams);
+            } else {
+             state.go("memorials");
+            }
+          }
         });
       });
     };
@@ -160,27 +180,6 @@ angular.module('doresolApp')
     $scope.alertLogin = function(){
       alert('로그인이 필요합니다.');
     }
-    // $scope.recentMemorials = [];
-    // var memorialsRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/');
-    // var recentMemorials = $firebase(memorialsRef).$asArray();
-
-    // recentMemorials.$watch(function(event){
-    //   switch(event.event){
-    //     case "child_removed":
-    //       break;
-    //     case "child_added":
-    //       var childRef = memorialsRef.child(event.key);
-    //       var child = $firebase(childRef).$asObject();
-    //       child.$loaded().then(function(value){
-    //         // console.log(value);
-    //         $scope.recentMemorials.push(value);
-    //         $scope.recentMemorials.sort(function(aValue,bValue){
-    //           return aValue.$id < bValue.$id ? 1 : -1;
-    //         });
-    //       });
-    //       break;
-    //   }
-    // });
 
     $scope.browser = Util.getBrowser();
     $scope.width = Util.getWidth();
@@ -283,7 +282,6 @@ angular.module('doresolApp')
     }
     
     $scope.fetchQna('more',null); 
-
     
     $scope.openModal = function (qna) {
       var modalInstance = $modal.open({

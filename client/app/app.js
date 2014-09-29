@@ -15,7 +15,8 @@ angular.module('doresolApp', [
   'google-maps',
   'ngAutocomplete',
   'ngAnimate',
-  'videosharing-embed'
+  'videosharing-embed',
+  'ngDialog'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -86,7 +87,7 @@ angular.module('doresolApp', [
   })
 
   // .run(function ($rootScope, $location, $state, Auth, User, editableOptions, Composite) {
-  .run(function ($rootScope, $location, $state, Auth, User, Composite) {    
+  .run(function ($rootScope, $location, $state, Auth, User, Composite, $modal, ngDialog) {
 
     // editableOptions.theme = 'bs3';
     // Redirect to login if route requires auth and you're not logged in
@@ -110,7 +111,38 @@ angular.module('doresolApp', [
             $state.go(toState, toParams);
             // $state.go(toState, toParams,{notify:false});
           },function(error){
-            $location.path('/');
+              $rootScope.modalOpen = true;
+              $rootScope.toState = toState;
+              $rootScope.toParams = toParams;
+              
+              ngDialog.openConfirm({ 
+                template: '/app/account/login/login_modal.html',
+                controller: 'MainCtrl',
+                scope: event.targetScope
+              }).then(function (value) {
+                console.log('Modal promise resolved. Value: ', value);
+              }, function(reason) {
+                console.log('Modal promise rejected. Reason: ', reason);
+              });
+
+              // ngDialog.openConfirm({
+              //   template: '<div class="ngdialog-message">
+              //               <h3>ngDialog modal example</h3>
+              //               <p>The <code>.openConfirm()</code> function returns a promise that is resolved when confirmed and rejected when otherwise closed. Modal dialogs by default do not close when clicked outside the dialog or when hitting escape. This can ofcourse be overridden when opening the dialog.</p>
+              //               <p>Confirm can take a value. Enter one here for example and see the console output: <input ng-model="confirmValue" /></p>
+              //             </div>
+              //             <div class="ngdialog-buttons">
+              //               <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(confirmValue)">Confirm</button>
+              //               <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
+              //             </div>',
+              //   plain: true
+              // }).then(function (value) {
+              //   console.log('Modal promise resolved. Value: ', value);
+              // }, function (reason) {
+              //   console.log('Modal promise rejected. Reason: ', reason);
+              // });
+
+            // $location.path('/');
           });
         }
       }

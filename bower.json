@@ -27,7 +27,8 @@
     "ngAutocomplete": "~1.0.0",
     "greensock": "~1.13.2",
     "angular-animate": "~1.2.24",
-    "ng-videosharing-embed": "~0.2.3"
+    "ng-videosharing-embed": "~0.2.3",
+    "ngDialog": "~0.3.0"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",
