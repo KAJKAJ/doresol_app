@@ -497,17 +497,9 @@ angular.module('doresolApp')
         var copyStory = {
           // $id: $scope.storiesObject['storymap'][storyKey].$id,
           text:$scope.storiesObject['storymap'][storyKey].text,
-          // created_at:$scope.storiesObject['storymap'][storyKey].created_at,
-          // file:$scope.storiesObject['storymap'][storyKey].file,
           location:$scope.storiesObject['storymap'][storyKey].location,
           media:$scope.storiesObject['storymap'][storyKey].media,
-          story:$scope.storiesObject['storymap'][storyKey]
-          // newStory:$scope.storiesObject['storymap'][storyKey].newStory,
-          ref_memorial:$scope.storiesObject['storymap'][storyKey].ref_memorial,
-          ref_user:$scope.storiesObject['storymap'][storyKey].ref_user,
-          storyKey:storyKey
-          // startDate:$scope.storiesObject['storymap'][storyKey].startDate,
-          // updated_at:$scope.storiesObject['storymap'][storyKey].updated_at
+          story:$scope.storiesObject['storymap'][storyKey],
         };
         copyStory.media.caption = copyStory.location.caption;
         // console.log(copyStory);

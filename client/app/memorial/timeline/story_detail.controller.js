@@ -48,7 +48,7 @@ angular.module('doresolApp')
     $scope.modalComment = function() {
       ngDialog.openConfirm({ 
         template: '/app/memorial/comment/comment.html',
-        controller: 'StoryDetailCtrl',
+        // controller: 'StoryDetailCtrl',
         scope: $scope
       }).then(function (value) {
         console.log('Modal promise resolved. Value: ', value);

@@ -88,11 +88,15 @@ angular.module('doresolApp')
   .directive('timelineImg', function() {
     return {
       restrict: 'E',
+      replace: true,
+      transclude: true,
       scope: {
         storyKey: '@',
         memorialKey: '@',
         addComment: '&'
-      }
+      },
+      templateUrl: "app/memorial/timeline/timeline_img.html",
+      controller:'StoryDetailCtrl'
     }
   })
 
