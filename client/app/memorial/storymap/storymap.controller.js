@@ -436,7 +436,6 @@ angular.module('doresolApp')
         timeline_dates.push(copyStory);
       });
       
-      console.log(timeline_dates);
       timeline_data.timeline.date = timeline_dates;
       angular.element('#timeline-embed').empty();
 
@@ -507,13 +506,7 @@ angular.module('doresolApp')
         
       });
   
-      console.log('1');
-      console.log(storymap_data);
-      
       angular.element('#mapdiv').empty();
-
-      console.log('--- storymap_data ---');
-      console.log(storymap_data);
 
       var storymap = new VCO.StoryMap('mapdiv', storymap_data, storymap_options);
       

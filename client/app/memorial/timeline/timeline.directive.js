@@ -85,20 +85,23 @@ angular.module('doresolApp')
       }
   })
 
-  .directive('timelineImg', function() {
-    return {
-      restrict: 'E',
-      replace: true,
-      transclude: true,
-      scope: {
-        storyKey: '@',
-        memorialKey: '@',
-        addComment: '&'
-      },
-      templateUrl: "app/memorial/timeline/timeline_img.html",
-      controller:'StoryDetailCtrl'
-    }
-  })
+  // .directive('timelineImg', function() {
+  //   return {
+  //     restrict: 'E',
+  //     replace: true,
+  //     // transclude: true,
+  //     scope: {
+  //       storyKey: '@',
+  //       memorialKey: '@',
+  //       addComment: '&'
+  //     },
+  //     // templateUrl: "app/memorial/timeline/timeline_img.html",
+  //     // controller:'StoryDetailCtrl'
+  //     // controller: function($scope){
+  //     //   console.log($scope);
+  //     // }
+  //   }
+  // })
 
   .directive('storyDetail', function () {
     return {
