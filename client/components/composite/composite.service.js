@@ -228,6 +228,16 @@
     return Comment.create(storyId,newComment).then(_create_comment, errorHandler);
   }
 
+  var createCommentFromStoryInMemorial = function(memorialId, storyId, newComment) {
+    var _create_comment = function(commentKey) {
+      var storyRef = new Firebase(ENV.FIREBASE_URI + '/memorials/' + memorialId + '/stories/' + storyId + '/comments');
+
+      return $firebase(storyRef).$set(commentKey, true);
+    }
+
+    return Comment.create(storyId,newComment).then(_create_comment, errorHandler);
+  }
+
   var addMember = function(object) {
 
     var _add_member = function(object){
@@ -267,6 +277,7 @@
     createStory:createStory,
 
     createComment:createComment,
+    createCommentFromStoryInMemorial:createCommentFromStoryInMemorial,
 
     // member 
     addMember: addMember,

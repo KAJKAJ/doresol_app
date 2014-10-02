@@ -85,6 +85,17 @@ angular.module('doresolApp')
       }
   })
 
+  .directive('timelineImg', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        storyKey: '@',
+        memorialKey: '@',
+        addComment: '&'
+      }
+    }
+  })
+
   .directive('storyDetail', function () {
     return {
       restrict: 'E',
@@ -95,6 +106,20 @@ angular.module('doresolApp')
       },
       // replace: true,
       templateUrl: "app/memorial/timeline/story_detail.html",
+      controller:'StoryDetailCtrl'
+    }
+  })
+
+  .directive('comments', function() {
+    return {
+      restrict: 'E',
+      replace: true,
+      scope: {
+        storyKey: '@',
+        memorialKey: '@',
+        addComment: '&'
+      },
+      templateUrl: "app/memorial/timeline/comments.html",
       controller:'StoryDetailCtrl'
     }
   })

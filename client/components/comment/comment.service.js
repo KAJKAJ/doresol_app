@@ -38,12 +38,20 @@ angular.module('doresolApp')
     });
   }
 
+  var removeCommentFromStoryInMemorial = function(memorialId, storyId, commentId) {
+    var storyCommentsRef = new Firebase(ENV.FIREBASE_URI + '/memorials/' + memorialId + '/stories/'+storyId+'/comments');
+    $firebase(storyCommentsRef).$remove(commentId).then(function(){
+      remove(commentId);
+    });
+  }
+
   return {
     create: create,
     update: update,
     findById: findById,
     remove: remove,
-    removeCommentFromStory:removeCommentFromStory
+    removeCommentFromStory:removeCommentFromStory,
+    removeCommentFromStoryInMemorial:removeCommentFromStoryInMemorial
   };
 
 });
