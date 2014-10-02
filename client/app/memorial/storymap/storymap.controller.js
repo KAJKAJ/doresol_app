@@ -427,7 +427,8 @@ angular.module('doresolApp')
           asset:{
             media:$scope.storiesObject['timeline'][storyKey].media.url,
             thumbnail:$scope.storiesObject['timeline'][storyKey].media.url,
-            credit:$scope.storiesObject['timeline'][storyKey].media.credit
+            // credit:$scope.storiesObject['timeline'][storyKey].media.credit,
+            credit:'<span class="pull-left">hahe</span>' + $scope.storiesObject['timeline'][storyKey].media.credit,
           }
         }
         // console.log(copyStory);
@@ -478,7 +479,8 @@ angular.module('doresolApp')
             media: {
               url:   $scope.memorial.file.url,
               caption: "Overview"
-            }
+            },
+            story:null
         }
       );
 
@@ -490,6 +492,7 @@ angular.module('doresolApp')
           // file:$scope.storiesObject['storymap'][storyKey].file,
           location:$scope.storiesObject['storymap'][storyKey].location,
           media:$scope.storiesObject['storymap'][storyKey].media,
+          story:$scope.storiesObject['storymap'][storyKey]
           // newStory:$scope.storiesObject['storymap'][storyKey].newStory,
           // ref_memorial:$scope.storiesObject['storymap'][storyKey].ref_memorial,
           // ref_user:$scope.storiesObject['storymap'][storyKey].ref_user,
@@ -497,10 +500,14 @@ angular.module('doresolApp')
           // updated_at:$scope.storiesObject['storymap'][storyKey].updated_at
         };
         copyStory.media.caption = copyStory.location.caption;
-        
+        // console.log(copyStory);
         storymap_data.storymap.slides.push(copyStory);
+        
       });
-
+  
+      console.log('1');
+      console.log(storymap_data);
+      
       angular.element('#mapdiv').empty();
 
       var storymap = new VCO.StoryMap('mapdiv', storymap_data, storymap_options);
