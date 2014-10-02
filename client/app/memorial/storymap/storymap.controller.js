@@ -481,7 +481,8 @@ angular.module('doresolApp')
             media: {
               url:   $scope.memorial.file.url,
               caption: "Overview"
-            }
+            },
+            story:null
         }
       );
 
@@ -500,6 +501,7 @@ angular.module('doresolApp')
           // file:$scope.storiesObject['storymap'][storyKey].file,
           location:$scope.storiesObject['storymap'][storyKey].location,
           media:$scope.storiesObject['storymap'][storyKey].media,
+          story:$scope.storiesObject['storymap'][storyKey]
           // newStory:$scope.storiesObject['storymap'][storyKey].newStory,
           ref_memorial:$scope.storiesObject['storymap'][storyKey].ref_memorial,
           ref_user:$scope.storiesObject['storymap'][storyKey].ref_user,
@@ -508,10 +510,14 @@ angular.module('doresolApp')
           // updated_at:$scope.storiesObject['storymap'][storyKey].updated_at
         };
         copyStory.media.caption = copyStory.location.caption;
-        
+        // console.log(copyStory);
         storymap_data.storymap.slides.push(copyStory);
+        
       });
-
+  
+      console.log('1');
+      console.log(storymap_data);
+      
       angular.element('#mapdiv').empty();
 
       console.log('--- storymap_data ---');

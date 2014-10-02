@@ -70,7 +70,7 @@ font-family:'Nanum Brush Script', sans-serif;*/
     display: block;
 
     .login-block{
-        padding-top:100px;
+        padding-top:50px;
     }
     
     .intro_create_title{
@@ -457,4 +457,8 @@ font-family:'Nanum Brush Script', sans-serif;*/
 
 .hover-cursor:hover{
   cursor:pointer;
+}
+
+.hover-opacity:hover{
+  opacity: 0.8;
 }
