@@ -63,7 +63,8 @@ angular.module('doresolApp')
       ngDialog.openConfirm({ 
         template: '/app/memorial/comment/comment.html',
         // controller: 'StoryDetailCtrl',
-        scope: $scope
+        scope: $scope,
+        className:'ngdialog-theme-large'
       }).then(function (value) {
         console.log('Modal promise resolved. Value: ', value);
       }, function(reason) {
