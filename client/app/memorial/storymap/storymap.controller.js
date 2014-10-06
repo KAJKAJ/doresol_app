@@ -470,6 +470,7 @@ angular.module('doresolApp')
         }
       };
 
+      // Storymap Overview
       storymap_data.storymap.slides.push(
         {
             type: "overview",
@@ -486,21 +487,29 @@ angular.module('doresolApp')
       );
 
       angular.forEach($scope.storiesArray['storymap'],function(storyKey){
+        
+        // add comment directive for credit
+        var comments = "<span class='pull-left'><comments story-key='"+ storyKey + "' memorial-key='" + $scope.memorialKey + "'></comments></span>" ;
+        var tmpCredit = comments + $scope.storiesObject['storymap'][storyKey].media.credit;
         var mediaMeta = {
           ref_memorial:$scope.storiesObject['storymap'][storyKey].ref_memorial,
           ref_user:$scope.storiesObject['storymap'][storyKey].ref_user,
           storyKey:storyKey
         }
-        $scope.storiesObject['storymap'][storyKey].media.meta = mediaMeta;
+
+        var media = {};
+        angular.copy($scope.storiesObject['storymap'][storyKey].media, media);
 
         var copyStory = {
           // $id: $scope.storiesObject['storymap'][storyKey].$id,
           text:$scope.storiesObject['storymap'][storyKey].text,
           location:$scope.storiesObject['storymap'][storyKey].location,
-          media:$scope.storiesObject['storymap'][storyKey].media,
+          media:media,
           story:$scope.storiesObject['storymap'][storyKey],
         };
+        // copyStory.media.meta = mediaMeta;
         copyStory.media.caption = copyStory.location.caption;
+        copyStory.media.credit = tmpCredit;
         // console.log(copyStory);
         storymap_data.storymap.slides.push(copyStory);
         
