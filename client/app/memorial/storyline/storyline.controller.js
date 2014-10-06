@@ -40,7 +40,7 @@ angular.module('doresolApp')
     });
 
     $scope.fetchMoreStories = function(){
-    	console.log($scope.storiesArray);
+    	// console.log($scope.storiesArray);
     	fetchStories($scope.storiesArray[$scope.storiesArray.length-1].pagingKey);
     }
 
@@ -50,6 +50,7 @@ angular.module('doresolApp')
 			// if(priority > $scope.priorityForOldStory){
 			// 	$scope.priorityForOldStory = priority;
 			// }
+			// console.log($scope.storiesObject);
 			if(!$scope.storiesObject[storyId]){
 	    	var storiesRef = new Firebase(ENV.FIREBASE_URI + '/stories');
 	    	var childRef = storiesRef.child(storyId);
@@ -96,6 +97,7 @@ angular.module('doresolApp')
 			          var commentRef = new Firebase(ENV.FIREBASE_URI + '/comments/'+event.key);
 			          var comment = $firebase(commentRef).$asObject();
 			          comment.$loaded().then(function(commentValue){
+			          	// console.log(commentValue);
 			            commentValue.fromNow = moment(commentValue.created_at).fromNow();
 			          	$scope.commentsObject[storyValue.$id][event.key] = commentValue;
 			            User.setUsersObject(commentValue.ref_user);
