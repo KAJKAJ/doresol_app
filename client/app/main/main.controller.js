@@ -114,7 +114,7 @@ angular.module('doresolApp')
              if($rootScope.toState) {
               $state.go($rootScope.toState, $rootScope.toParams);
              } else {
-              state.go("memorials");
+              $state.go("memorials");
              }
             });
 
@@ -127,7 +127,7 @@ angular.module('doresolApp')
             if($rootScope.toState) {
              $state.go($rootScope.toState, $rootScope.toParams);
             } else {
-             state.go("memorials");
+             $state.go("memorials");
             }
           }
         });
