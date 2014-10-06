@@ -507,7 +507,7 @@ angular.module('doresolApp')
           media:media,
           story:$scope.storiesObject['storymap'][storyKey],
         };
-        // copyStory.media.meta = mediaMeta;
+        copyStory.media.meta = mediaMeta;
         copyStory.media.caption = copyStory.location.caption;
         copyStory.media.credit = tmpCredit;
         // console.log(copyStory);
