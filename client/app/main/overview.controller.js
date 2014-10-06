@@ -19,7 +19,8 @@ angular.module('doresolApp')
 
   sampleMemorial.on('child_added', function(value) { 
     $scope.memorialKey = value.name();
-    $scope.memorial = Memorial.findById($scope.memorialKey);
+    Memorial.setCurrentMemorial($scope.memorialKey);
+    $scope.memorial = Memorial.getCurrentMemorial();
     $scope.memorial.$loaded().then(function(memorialValue){
       angular.forEach(memorialValue.stories, function(story, key) {
         story.$id = key;
@@ -188,6 +189,7 @@ angular.module('doresolApp')
     var timeline_dates = [];
     angular.forEach($scope.storiesArray['timeline'],function(storyKey,index){
       // console.log($scope.storiesObject['timeline'][storyKey]);
+      var comments = "<span class='pull-left'><comments story-key='"+ storyKey + "' memorial-key='" + $scope.memorialKey + "'></comments></span>" ;
       var copyStory = {
         $id:storyKey,
         file:$scope.storiesObject['timeline'][storyKey].file,
@@ -200,7 +202,7 @@ angular.module('doresolApp')
         asset:{
           media:$scope.storiesObject['timeline'][storyKey].media.url,
           thumbnail:$scope.storiesObject['timeline'][storyKey].media.url,
-          credit:$scope.storiesObject['timeline'][storyKey].media.credit
+          credit: comments + $scope.storiesObject['timeline'][storyKey].media.credit ,
         }
       }
       timeline_dates.push(copyStory);
