@@ -15,11 +15,12 @@
 	 	  
       ng-style="style">
 
-	  <div class="drop" flow-drop="" ng-class="dropClass">
-	    <!-- <span class="btn btn-block btn-default" flow-attrs="{accept:['image/*','video/mp4']}" flow-btn="" >사진 첨부 버튼<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span> -->
-	    <span class="btn btn-block btn-default" flow-attrs="{accept:['image/*']}" flow-btn="" >사진 첨부 버튼<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
-	    <b>또는</b>
-	    사진을 마우스로 여기로 옮겨주세요.
+	  <div class="drop" flow-drop="" ng-class="dropClass" style="text-align:center;">
+	  	<span class="text-muted" style="font-size:25px;">사진 파일을 여기로 드래그 합니다.</span><br>
+	  	<b>또는</b><br>
+	    <span class="btn btn-lg btn-success" flow-attrs="{accept:['image/*']}" flow-btn=""> 컴퓨터에서 사진 파일 선택 <input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+	    
+	    
 	  </div>
 	  <br>
 	  <button type="button" class="btn btn-block btn-primary btn-alt" ng-show="isChanged" ng-click="uploadStory()">변경사항 저장</button>

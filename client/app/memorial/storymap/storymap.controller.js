@@ -3,7 +3,11 @@
 angular.module('doresolApp')
   .controller('StorymapCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,Story,$timeout,$modal,ngDialog){
 
-    $scope.mode = 'video';
+    if($stateParams.mode) {
+      $scope.mode = $stateParams.mode;
+    } else {
+      $scope.mode = 'video';
+    }
 
     $scope.currentUser = User.getCurrentUser();
     $scope.isChanged = false;
