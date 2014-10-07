@@ -36,7 +36,7 @@ angular.module('doresolApp')
         authenticate: true
       })
       .state('memorial.storymap', {
-        url:'/story',
+        url:'/story/:mode',
         templateUrl: 'app/memorial/storymap/storymap.html',
         controller: 'StorymapCtrl',
         authenticate: true
