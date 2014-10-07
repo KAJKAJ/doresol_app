@@ -17,5 +17,10 @@ angular.module('doresolApp')
         url: '/customercare',
         templateUrl: 'app/main/qna.html',
         controller: 'MainCtrl'
+      })
+      .state('agency', {
+        url: '/agency',
+        templateUrl: 'app/main/agency.html',
+        controller: 'AgencyCtrl'
       });
   });
