@@ -195,7 +195,21 @@ angular.module('doresolApp')
 
     $scope.createNewQna = function(form){
       if(!$scope.isLoggedIn){
-        $scope.alertLogin();
+        $rootScope.modalOpen = true;
+        $rootScope.toState = 'qna';
+        
+        ngDialog.openConfirm({
+          template: '/app/account/login/login_modal.html',
+          controller: 'MainCtrl',
+          className: 'ngdialog-theme-default',
+          scope: event.targetScope
+        }).then(function (value) {
+          console.log('Modal promise resolved. Value: ', value);
+        }, function(reason) {
+          console.log('Modal promise rejected. Reason: ', reason);
+          window.location.reload(); 
+        });
+
       }else if(form.$valid){
         $scope.newQna.ref_user = $scope.user.$id;
         Qna.create($scope.newQna).then(function(){

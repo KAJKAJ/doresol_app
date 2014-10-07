@@ -127,6 +127,7 @@ angular.module('doresolApp', [
               ngDialog.openConfirm({ 
                 template: '/app/account/login/login_modal.html',
                 controller: 'MainCtrl',
+                className: 'ngdialog-theme-default',
                 scope: event.targetScope
               }).then(function (value) {
                 console.log('Modal promise resolved. Value: ', value);
