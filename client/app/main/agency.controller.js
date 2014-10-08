@@ -75,7 +75,7 @@ angular.module('doresolApp')
           setUserEmail();
           $scope.saveMessage = {};
           $scope.saveMessage.success = true;
-          $scope.saveMessage.text = '저장되었습니다.';
+          $scope.saveMessage.text = '신청이 정상 처리되었습니다.';
           $timeout(function(){
             $scope.saveMessage = {};
           },5000);
