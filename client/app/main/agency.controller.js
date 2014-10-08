@@ -76,15 +76,15 @@ angular.module('doresolApp')
           $scope.saveMessage = {};
           $scope.saveMessage.success = true;
           $scope.saveMessage.text = '신청이 정상 처리되었습니다.';
-          $timeout(function(){
-            $scope.saveMessage = {};
-          },5000);
+          // $timeout(function(){
+          //   $scope.saveMessage = {};
+          // },5000);
         },function(error){
           $scope.saveMessage.success = false;
           $scope.saveMessage.text = '오류가 발생되었습니다. 잠시 후 다시 시도해 주세요.';
-          $timeout(function(){
-            $scope.saveMessage = {};
-          },10000);
+          // $timeout(function(){
+          //   $scope.saveMessage = {};
+          // },10000);
         });
       }
     }
