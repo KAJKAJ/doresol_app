@@ -139,5 +139,79 @@
       </div> -->
     </div>
   </div>
+  <div class="col-md-10 col-md-offset-1">
+    <div class="block">
+      <div class="block-title">
+        <h2>제작대행 서비스 신청서</h2>
+      </div>
+      <form name="newRequestForm" ng-submit="createRequest(newRequestForm)" class="form-horizontal" novalidate>
+        <div class="form-group">
+          <label class="col-md-3 control-label">고인 성함</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-required="true" ng-model="newRequest.memorialName" ng-click="checkLogin()">
+            <span class="help-block">고인의 성함을 입력해 주세요</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">신청자 이름</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-required="true" ng-model="newRequest.name" ng-click="checkLogin()">
+            <span class="help-block">신청하시는 분의 성함을 입력해 주세요</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">이메일</label>
+          <div class="col-md-9">
+            <input type="email" class="form-control" ng-required="true" ng-model="newRequest.email" ng-click="checkLogin()">
+            <span class="help-block">연락 받으실 이메일 주소를 입력해 주세요</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">휴대폰 번호</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-required="true" ng-model="newRequest.phoneNumber" ng-click="checkLogin()">
+            <span class="help-block">연락 받으실 휴대폰 번호를 입력해 주세요</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">주소</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" ng-required="true" ng-model="newRequest.address" ng-click="checkLogin()">
+            <span class="help-block">사진을 돌려받으실 주소를 입력해 주세요</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">DVD 신청 갯수</label>
+          <div class="col-md-9">
+            <input type="number" class="form-control" ng-required="true" ng-model="newRequest.dvd" ng-click="checkLogin()" min="0">
+            <span class="help-block">추가로 신청하실 DVD의 갯수를 입력해 주세요</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">USB 신청 갯수</label>
+          <div class="col-md-9">
+            <input type="number" class="form-control" ng-required="true" ng-model="newRequest.usb" ng-click="checkLogin()" min="0">
+            <span class="help-block">추가로 신청하실 USB의 갯수를 입력해 주세요</span>
+          </div>
+        </div>
+        <div class="form-group form-actions">
+          <div class="col-md-9 col-md-offset-3">
+            <button type="submit" class="btn btn-lg btn-success" ng-disabled="newRequestForm.$invalid||!isLoggedIn">제작대행 신청</button>
+          </div>
+        </div>
+        <div ng-if="saveMessage.success == true">
+          <div class="alert alert-success">
+           <h4><i class="fa fa-check-circle"></i> {{saveMessage.text}}</h4>
+          </div>
+        </div>
+        <div ng-if="saveMessage.success == false">
+          <div class="alert alert-danger">
+           <h4><i class="fa fa-frown-o"></i> {{saveMessage.text}}</h4>
+          </div>
+        </div>
+      </form>
+    </div>
+   </div>
+</div>
 </div>
     

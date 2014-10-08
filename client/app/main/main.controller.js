@@ -202,11 +202,11 @@ angular.module('doresolApp')
           template: '/app/account/login/login_modal.html',
           controller: 'MainCtrl',
           className: 'ngdialog-theme-default',
-          scope: event.targetScope
+          scope: $scope
         }).then(function (value) {
-          console.log('Modal promise resolved. Value: ', value);
+          // console.log('Modal promise resolved. Value: ', value);
         }, function(reason) {
-          console.log('Modal promise rejected. Reason: ', reason);
+          // console.log('Modal promise rejected. Reason: ', reason);
           window.location.reload(); 
         });
 

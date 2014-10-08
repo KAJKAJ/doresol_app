@@ -130,9 +130,9 @@ angular.module('doresolApp', [
                 className: 'ngdialog-theme-default',
                 scope: event.targetScope
               }).then(function (value) {
-                console.log('Modal promise resolved. Value: ', value);
+                // console.log('Modal promise resolved. Value: ', value);
               }, function(reason) {
-                console.log('Modal promise rejected. Reason: ', reason);
+                // console.log('Modal promise rejected. Reason: ', reason);
               });
 
               // ngDialog.openConfirm({
