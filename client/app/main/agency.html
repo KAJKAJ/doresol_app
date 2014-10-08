@@ -3,7 +3,7 @@
   <div>
     <div class="text-center">
       <h3>메모리얼 제작 대행</h3>
-      <h4>보관중인 앨범이나 사진을 보내주시면 사이트 제작을 대행해 드립니다.</h4>
+      <h4>보관중인 앨범이나 사진을 보내주시면 사이트 제작을 대행해드리고, DVD/USB로 스캔본을 전달 드립니다.</h4>
       <br/>
     </div>
     <!-- Alternative Style -->
@@ -30,7 +30,7 @@
             <tr>
               <td class="table-price" style="text-align:left;height:100px;">
                 보내실 곳 :<br>
-                경기도 성남시 분당구 판교로 253 판교이노밸리 B동 503호 (우) 463-400
+                경기도 성남시 분당구 판교로 253 판교이노밸리 B동 503호 <br> (우) 463-400
                 <!-- <h1><i class="fa fa-picture-o fa-2x"></i></h1> -->
               </td>
             </tr>
@@ -52,24 +52,42 @@
           <tbody>
             <tr>
              <td style="text-align:left;height:250px;">
-               <br/>
-                  <label class="text-primary">
-                    % 보내주신 사진을 통한 샘플 결과물을 보신 후 결제 또는 취소 가능합니다.
-                    <br>
-                    총 비용은 추후 문자 및 이메일로 알려드립니다.
-
-                  </label>
                <div>
-                예상비용 계산
-                 <ul>
-                  <li>기본 개설비용은 1만원 입니다.</li>
-                  <li>사진스캔 1장당 200원입니다.</li>
-                  <li>USB/DVD제작을 원하실 경우 개당 1만원입니다.<br/>(추가 개당 5천원)</li>
-                  <li>
-                    <br/>
-                    예) 사진 20장 + USB 2개 <br/> 기본개설비용(10000) + 사진스캔(4000) + USB(15000) 
-                    <br/> = 총 29000원 (택배비 별도)
-                  </li>
+                  <!-- <div class="row">
+                    <div "col-md-4"><h4>예상 비용 계산</h4></div>
+                    <div "col-md-8">총 예상 비용</div>"
+                  </div> -->
+
+                  <div class="row">
+                    <div class="col-md-3 text-center">사진 수 :</div>
+                    <div class="col-md-8"> 
+                        <input type="number" ng-model="estimate.img" min="0" class="form-control" placeholder="갯수 입력" ng-change="changeTot()">
+                        <span class="help-block">장당 200원, 일반 앨범 1권당 150~200장</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 text-center">DVD 수 :</div>
+                    <div class="col-md-8"> 
+                        <input type="number" ng-model="estimate.dvd" min="0" class="form-control" placeholder="갯수 입력" ng-change="changeTot()">
+                        <span class="help-block">개당 만원</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3 text-center">USB :</div>
+                    <div class="col-md-8"> 
+                        <input type="number" ng-model="estimate.usb" min="0" class="form-control" placeholder="갯수 입력" ng-change="changeTot()">
+                        <span class="help-block">개당 만원</span>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-3 text-center">예상 비용: </div>
+                    <div class="col-md-8 pull-right">{{estimate.tot}} 만원
+                      <span class="help-block">예상 비용이며 총 비용은 문자 및 이메일로 알려드립니다.</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                  </div>
                  </ul>
                 </div>
              </td>
@@ -77,7 +95,11 @@
             <tr>
               <td class="table-price" style="text-align:left;height:100px;">
                 <label class="text-primary">
-                  베타 기간동안 총 제작 대행 총 금액의 50%를 할인해 드립니다.
+                    % 샘플 결과물을 보신 후 결제 진행 또는 취소 가능합니다.
+                    <br>
+                    실제 총 비용은 문자 및 이메일로 알려드립니다.
+                    <br>
+                    베타 기간동안 총 제작 대행 총 금액의 50%를 할인해 드립니다.
                 </label>
               </td>
             </tr>
