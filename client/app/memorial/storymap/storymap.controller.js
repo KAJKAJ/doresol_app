@@ -328,16 +328,18 @@ angular.module('doresolApp')
       });
 
       if(value.location){
-        $scope.storiesArray['storymap'].push(value.$id);
-        $scope.storiesObject['storymap'][value.$id] = value;  
+        if(value.location.name != ''){
+          $scope.storiesArray['storymap'].push(value.$id);
+          $scope.storiesObject['storymap'][value.$id] = value;  
 
-        $scope.storiesArray['storymap'].sort(function(aKey,bKey){
-          var aValue = $scope.storiesObject['storymap'][aKey];
-          var bValue = $scope.storiesObject['storymap'][bKey];
-          var aStartDate = moment(aValue.startDate).unix();
-          var bStartDate = moment(bValue.startDate).unix();
-          return aStartDate > bStartDate ? 1 : -1;
-        });
+          $scope.storiesArray['storymap'].sort(function(aKey,bKey){
+            var aValue = $scope.storiesObject['storymap'][aKey];
+            var bValue = $scope.storiesObject['storymap'][bKey];
+            var aStartDate = moment(aValue.startDate).unix();
+            var bStartDate = moment(bValue.startDate).unix();
+            return aStartDate > bStartDate ? 1 : -1;
+          });
+        }
       }
     }
     
