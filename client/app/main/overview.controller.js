@@ -277,7 +277,9 @@ angular.module('doresolApp')
           story:$scope.storiesObject['storymap'][storyKey],
         };
         copyStory.media.meta = mediaMeta;
-        copyStory.media.caption = copyStory.location.caption;
+        if(copyStory.location.caption){
+          copyStory.media.caption = copyStory.location.caption;
+        }
         copyStory.media.credit = tmpCredit;
         // console.log(copyStory);
         storymap_data.storymap.slides.push(copyStory);
