@@ -31,9 +31,9 @@
           <div ng-show="waitForLogging && !isLoggedIn" class="login-block">
             <div>
               <div class="well">
-                <span class="btn btn-block btn-info" ng-click="loginOauth('facebook')"><i class="fa fa-facebook"></i> 페이스북으로 로그인</span>
+                <span class="btn btn-block btn-info" ng-click="loginOauth('facebook', true)"><i class="fa fa-facebook"></i> 페이스북으로 로그인</span>
                   <span style="color:gray;font-size:10px;">OR</span>
-                <form class="form" name="loginForm" ng-submit="login(loginForm)" novalidate>
+                <form class="form" name="loginForm" ng-submit="login(loginForm, true)" novalidate>
                     <input type="text" name="email" placeholder="email" class="form-control" ng-model="loginUser.email">
                     <input type="password" name="password" placeholder="password" class="form-control" ng-model="loginUser.password">
                     <button class="btn btn-success btn-block btn-login" type="submit">
@@ -51,7 +51,7 @@
               
               <div class="well">
                 <span style="color:gray;font-size:14px;">도래솔에 처음이세요?</span>
-                <form class="form" name="signupForm" ng-submit="signup(signupForm)" novalidate>
+                <form class="form" name="signupForm" ng-submit="signup(signupForm, true)" novalidate>
                   <div class="form-group" ng-class="{ 'has-success': signupForm.email.$valid && signupSubmitted,
                                                       'has-error': signupForm.email.$invalid && signupSubmitted }">
                     <input type="email" name="email" placeholder="email을 입력하세요" class="form-control" ng-model="signupUser.email"

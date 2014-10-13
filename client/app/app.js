@@ -113,13 +113,20 @@ angular.module('doresolApp', [
         });
       };
 
+      // 인증해야 되는 경우
       if (toState.authenticate){
+
+        var authRequired = false;
+
+        // 사용자가 계정이 없을 때
         if(!User.getCurrentUser()){
           event.preventDefault();
           _getUserAuth().then(_getUserData).then(Composite.setMyMemorials).then(function(value){
             $state.go(toState, toParams);
-            // $state.go(toState, toParams,{notify:false});
+
           },function(error){
+            authRequired = true;
+            if(!toParams.noPopUp && !$rootScope.modalOpen && authRequired) {
               $rootScope.modalOpen = true;
               $rootScope.toState = toState;
               $rootScope.toParams = toParams;
@@ -134,27 +141,12 @@ angular.module('doresolApp', [
               }, function(reason) {
                 // console.log('Modal promise rejected. Reason: ', reason);
               });
+            }
 
-              // ngDialog.openConfirm({
-              //   template: '<div class="ngdialog-message">
-              //               <h3>ngDialog modal example</h3>
-              //               <p>The <code>.openConfirm()</code> function returns a promise that is resolved when confirmed and rejected when otherwise closed. Modal dialogs by default do not close when clicked outside the dialog or when hitting escape. This can ofcourse be overridden when opening the dialog.</p>
-              //               <p>Confirm can take a value. Enter one here for example and see the console output: <input ng-model="confirmValue" /></p>
-              //             </div>
-              //             <div class="ngdialog-buttons">
-              //               <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm(confirmValue)">Confirm</button>
-              //               <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('button')">Cancel</button>
-              //             </div>',
-              //   plain: true
-              // }).then(function (value) {
-              //   console.log('Modal promise resolved. Value: ', value);
-              // }, function (reason) {
-              //   console.log('Modal promise rejected. Reason: ', reason);
-              // });
-
-            // $location.path('/');
           });
         }
+
+
       }
     });
   });

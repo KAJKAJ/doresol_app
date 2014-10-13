@@ -22,10 +22,10 @@ angular.module('doresolApp')
             if ($state.params.memorialId !== undefined) {
               $state.params.inviteeId = value.uid;
               Composite.addMember($state.params).then(function(){
-                $state.go("memorials");
+                $state.go("memorials", {popup: false});
               });
             } else {
-              $state.go("memorials");
+              $state.go("memorials",{popup: false});
             }
           });
 
