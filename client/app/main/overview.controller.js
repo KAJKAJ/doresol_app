@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('overviewCtrl', function ($scope, $modal, $http, ENV, $firebase, Memorial) {
+  .controller('overviewCtrl', function ($scope, $modal, $http, ENV, $firebase, Memorial,Util) {
+
+  $scope.isMobile = Util.isMobile();
 
   $scope.storiesArray = [];
   $scope.storiesArray['timeline'] = [];

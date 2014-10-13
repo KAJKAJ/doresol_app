@@ -4,7 +4,8 @@
 	<div class="overview-item">
 		<div class="row">
 			<div class="col-lg-6 col-lg-offset-3 text-center">
-		    <h1><strong>추억을 정리하고 나누어 보세요.</strong></h1>
+				<span ng-if="!isMobile"><h1><strong>추억을 정리하고 나누어 보세요.</strong></h1></span>
+				<span ng-if="isMobile"><h3><strong>추억을 정리하고 나누어 보세요.</strong></h3></span>
 		    <span class="text-muted">메모리얼을 생성하시면 아래와 같은 기능이 제공됩니다.</span>
 		  </div>
 	  </div>
@@ -20,14 +21,20 @@
 	    				<p class="feature-description">
 	    					추억이 담긴 사진들을 업로드 하고 슬라이드 쇼를 감상해 보세요.
 	    				</p>
-	    				<div class="feature-buttons">
+	    				<div class="feature-buttons" ng-if="!isMobile">
 	    					<span class="feature-preview" ng-click="openOverviewModal('video')">&nbsp;<span class="hover-cursor">미리 보기&nbsp;</span></span>
 	    				</div>
 	    			</div>	    			
 			    </div>
 			    <div class="feature-footer">
-				    <span class="feature-label hover-cursor" ng-click="openOverviewModal('video')">슬라이드 쇼</span>
-						<i class="fa fa-play-circle-o hover-cursor" style="float:right;" ng-click="openOverviewModal('video')"></i>
+			    	<span ng-if="!isMobile">
+					    <span class="feature-label hover-cursor" ng-click="openOverviewModal('video')">슬라이드 쇼</span>
+							<i class="fa fa-play-circle-o hover-cursor" style="float:right;" ng-click="openOverviewModal('video')"></i>
+						</span>
+						<span ng-if="isMobile">
+					    <span class="feature-label hover-cursor">슬라이드 쇼</span>
+							<i class="fa fa-play-circle-o hover-cursor" style="float:right;"></i>
+						</span>
 					</div>
 		    </div>
 	   </div>
@@ -39,14 +46,20 @@
 	    				<h2 class="feature-name">시간으로 보기</h2>
 	    				<p class="feature-description">
 								시간의 흐름으로 추억을 되짚어 보는건 어떨까요?	</p>
-	    				<div class="feature-buttons">
+	    				<div class="feature-buttons" ng-if="!isMobile">
 	    					<span class="feature-preview" ng-click="openOverviewModal('timeline')"><span class="hover-cursor">&nbsp;미리 보기&nbsp;</span></span>
 	    				</div>
 	    			</div>	    			
 			    </div>
 			    <div class="feature-footer">
-				    <span class="feature-label hover-cursor" ng-click="openOverviewModal('timeline')">시간으로 보기</span>
-						<i class="fa fa-clock-o hover-cursor" style="float:right;" ng-click="openOverviewModal('timeline')"></i>
+			    	<span ng-if="!isMobile">
+					    <span class="feature-label hover-cursor" ng-click="openOverviewModal('timeline')">시간으로 보기</span>
+							<i class="fa fa-clock-o hover-cursor" style="float:right;" ng-click="openOverviewModal('timeline')"></i>
+						</span>
+						<span ng-if="isMobile">
+					    <span class="feature-label hover-cursor">시간으로 보기</span>
+							<i class="fa fa-clock-o hover-cursor" style="float:right;"></i>
+						</span>
 			    </div>
 		    </div>
 	   </div>
@@ -59,14 +72,20 @@
 	    				<h2 class="feature-name">장소로 보기</h2>
 	    				<p class="feature-description">
 								추억의 장소를 따라가 보세요.</p>
-	    				<div class="feature-buttons">
+	    				<div class="feature-buttons" ng-if="!isMobile">
 	    					<span class="feature-preview" ng-click="openOverviewModal('storymap')"><span class="hover-cursor">&nbsp;미리 보기&nbsp;</span></span>
 	    				</div>
 	    			</div>	    			
 			    </div>
 			    <div class="feature-footer">
-				    <span class="feature-label hover-cursor" ng-click="openOverviewModal('storymap')">장소로 보기</span>
-						<i class="fa fa-map-marker hover-cursor" style="float:right;" ng-click="openOverviewModal('storymap')"></i>
+			    	<span ng-if="!isMobile">
+					    <span class="feature-label hover-cursor" ng-click="openOverviewModal('storymap')">장소로 보기</span>
+							<i class="fa fa-map-marker hover-cursor" style="float:right;" ng-click="openOverviewModal('storymap')"></i>
+						</span>
+						<span ng-if="isMobile">
+					    <span class="feature-label hover-cursor">장소로 보기</span>
+							<i class="fa fa-map-marker hover-cursor" style="float:right;"></i>
+						</span>
 			    </div>
 		    </div>
 	   </div>

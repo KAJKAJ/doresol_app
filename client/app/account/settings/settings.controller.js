@@ -2,6 +2,7 @@
 
 angular.module('doresolApp')
   .controller('SettingsCtrl', function ($scope, User, Auth, Util, Composite) {
+    $scope.isMobile = Util.isMobile();
     $scope.errors = {};
     $scope.currentUser = User.getCurrentUser();
     $scope.password = {};

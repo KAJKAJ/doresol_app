@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialCtrl', function ($scope,$stateParams,$state,Memorial,User) {
+  .controller('MemorialCtrl', function ($scope,$stateParams,$state,Memorial,User,Util) {
     $scope.$state = $state;
-    
+    $scope.isMobile = Util.isMobile();
+
   	$scope.memorialKey = $stateParams.id;
 		Memorial.setCurrentMemorial($scope.memorialKey);
 		$scope.memorial = Memorial.getCurrentMemorial();
@@ -44,6 +45,7 @@ angular.module('doresolApp')
 		});
 
 		var audio = document.getElementById("bg_music");
-		audio.volume = 0.3;
-
+		if(audio){
+			audio.volume = 0.3;
+		}	
   });

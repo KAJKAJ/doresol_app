@@ -168,7 +168,7 @@ angular.module('doresolApp')
     
     $scope.recentMemorials = [];
     var recentMemorialsRef =  new Firebase(ENV.FIREBASE_URI + '/memorials/');
-    var recentMemorials = recentMemorialsRef.limit(500);
+    var recentMemorials = recentMemorialsRef.limit(100);
 
     recentMemorials.on('child_added', function(value) { 
       var memorial = value.val();
