@@ -10,7 +10,7 @@
      >
 
   <div ng-include="'components/navbar/navbar.html'"></div>
-  <div class="alert alert-info alert-dismissable" style="padding-top:60px;">
+  <div class="alert alert-info alert-dismissable" style="padding-top:60px;" ng-if="isMobile">
     <h4><i class="fa fa-info-circle"></i> Info</h4> 모바일 웹에서는 프로필 사진을 변경 할 수 없습니다. 사진 변경을 원하시는 분은 PC로 접속해 주시길 바랍니다.
   </div>
   <div class="container contents" flow-prevent-drop>  
@@ -86,3 +86,4 @@
     </div>
   </div>
 </div>  
+<div ng-include="'components/footer/footer.html'"></div>

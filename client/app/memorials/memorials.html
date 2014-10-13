@@ -1,5 +1,5 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
-<div class="alert alert-info alert-dismissable" style="padding-top:60px;">
+<div class="alert alert-info alert-dismissable" style="padding-top:60px;" ng-if="isMobile">
   <h4><i class="fa fa-info-circle"></i> Info</h4> 모바일 웹에서는 새로운 메모리얼을 생성 할 수 없습니다. 새로운 메모리얼을 생성하길 원하시는 분은 PC로 접속해 주시길 바랍니다.
 </div>
 
@@ -9,8 +9,8 @@
         <h2><strong>가입한 메모리얼</strong></h2>
     </div>
 		<div masonry item-selector=".brick-memorials" preserve-order>
-			<div ng-if="!isMobile" class="brick-memorials col-md-3 col-sm-6 col-xs-12" style="padding-bottom:20px;">
-				<div class="brick-memorial-wrapper" ui-sref="memorial_create">
+			<div class="brick-memorials col-md-3 col-sm-6 col-xs-12" style="padding-bottom:20px;">
+				<div ng-if="!isMobile" class="brick-memorial-wrapper" ui-sref="memorial_create">
 					<div class="text-center" style="height:300px;border: 2px #1cc41c dashed;" tooltip-placement="top" tooltip="새로 만들기">
 						<span class="memorial-plus-btn text-success"><i class="fa fa-plus-circle fa-4x"></i></span>
 					</div>
@@ -119,3 +119,4 @@
 		</div>
 	</div>
 </div>
+<div ng-include="'components/footer/footer.html'"></div>
