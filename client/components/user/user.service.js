@@ -17,8 +17,9 @@ angular.module('doresolApp')
       var user = findById(userId);
 
       user.$loaded().then(function(value) {
-
         if(user.hasOwnProperty('uid')) {
+          // console.log(value);
+          delete value.$$conf;
           setCurrentUser(value);
           dfd.resolve(currentUser);
         } else {

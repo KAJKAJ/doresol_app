@@ -10,7 +10,7 @@
     <title> 추억 서비스, 도래솔</title>
     <link rel="SHORTCUT ICON" href="/assets/images/favicon_2.ico">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
       <!-- bower:css -->
@@ -39,8 +39,7 @@
     </script>
   </head>
   <body>
-    <!-- facebook -->
-    
+    <!--
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
@@ -49,7 +48,8 @@
       js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&appId=348465275320488&version=v2.0";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
-
+    -->
+    
     <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <!--[if lt IE 10]>
       <div>
@@ -121,6 +121,7 @@
       <script src="bower_components/angular-animate/angular-animate.js"></script>
       <script src="bower_components/ng-videosharing-embed/build/ng-videosharing-embed.min.js"></script>
       <script src="bower_components/ngDialog/js/ngDialog.js"></script>
+      <script src="bower_components/angular-easyfb/angular-easyfb.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
        <!-- build:js({.tmp,client}) app/app.js -->
@@ -160,6 +161,7 @@
           <script src="components/firebase-error/firebase-error.directive.js"></script>
           <script src="components/flow/image.directive.js"></script>
           <script src="components/flow/video.directive.js"></script>
+          <script src="components/footer/footer.controller.js"></script>
           <script src="components/memorial/memorial.service.js"></script>
           <script src="components/modal/modal.controller.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
@@ -216,6 +218,5 @@
       </script>
     
     <script src="config.js" />
-
 </body>
 </html>

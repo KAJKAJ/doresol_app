@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MemorialsCtrl', function ($scope, $resource, Auth, Memorial, User, $state) {
-	  $scope.user = User.getCurrentUser();
+  .controller('MemorialsCtrl', function ($scope, $resource, Auth, Memorial, User, $state,Util) {
+    $scope.isMobile = Util.isMobile();
+	$scope.user = User.getCurrentUser();
     
     $scope.myWaitingCnt = 0;
 

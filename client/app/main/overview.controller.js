@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('overviewCtrl', function ($scope, $modal, $http, ENV, $firebase, Memorial) {
+  .controller('overviewCtrl', function ($scope, $modal, $http, ENV, $firebase, Memorial,Util, ngDialog) {
+
+  $scope.isMobile = Util.isMobile();
 
   $scope.storiesArray = [];
   $scope.storiesArray['timeline'] = [];
@@ -28,6 +30,19 @@ angular.module('doresolApp')
       });
     });
   });
+
+  $scope.openInterviewModal = function(){
+    ngDialog.openConfirm({ 
+      template: '/app/main/overview_interview.html',
+      // controller: 'MainCtrl',
+      className: 'ngdialog-theme-large',
+      // scope: event.targetScope
+    }).then(function (value) {
+      // console.log('Modal promise resolved. Value: ', value);
+    }, function(reason) {
+      // console.log('Modal promise rejected. Reason: ', reason);
+    });
+  }
 
   $scope.assignStory = function(value) {
     $scope.storiesArray['timeline'].push(value.$id);

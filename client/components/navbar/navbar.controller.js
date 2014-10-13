@@ -30,7 +30,9 @@ angular.module('doresolApp')
     if(!$scope.currentUser){
       Auth.getCurrentUserFromFirebase().then(function(AuthValue){
         if(AuthValue){
+          // console.log(AuthValue);
           User.getCurrentUserFromFirebase(AuthValue.uid).then(function(userValue){
+            // console.log(userValue);
             Composite.setMyMemorials(userValue.uid);
             $scope.currentUser = User.getCurrentUser();
           });

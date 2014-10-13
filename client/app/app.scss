@@ -71,3 +71,11 @@ input.ng-invalid.ng-dirty {
 .text-left{
   text-align: left;
 }
+
+.col-xs-12{
+  @media screen and (max-width: 900px) {
+    padding-left:5px;
+    padding-right:5px;
+  }
+}
+

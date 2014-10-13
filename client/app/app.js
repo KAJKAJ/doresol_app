@@ -16,7 +16,8 @@ angular.module('doresolApp', [
   'ngAutocomplete',
   'ngAnimate',
   'videosharing-embed',
-  'ngDialog'
+  'ngDialog',
+  'ezfb'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -31,6 +32,19 @@ angular.module('doresolApp', [
     datepickerConfig.showWeeks = false;
     datepickerConfig.maxDate="9999-12-31";
   }])
+
+  .config(function (ezfbProvider) {
+    ezfbProvider.setLocale('ko_KR');
+    ezfbProvider.setInitParams({
+      // This is my FB app id for plunker demo app
+      appId: '348465275320488',
+
+      // Module default is `v1.0`.
+      // If you want to use Facebook platform `v2.0`, you'll have to add the following parameter.
+      // https://developers.facebook.com/docs/javascript/reference/FB.init/v2.0
+      version: 'v2.0'
+    });  
+  })
 
   .config(['ngDialogProvider', function (ngDialogProvider) {
     ngDialogProvider.setDefaults({

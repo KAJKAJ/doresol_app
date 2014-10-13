@@ -2,6 +2,7 @@
 
 angular.module('doresolApp')
   .controller('StorylineCtrl', function ($scope,$state,$stateParams,Memorial,ENV,$firebase,User,Composite,Comment,Util,$timeout,Story) {
+  	$scope.isMobile = Util.isMobile();
     $scope.memorialKey = $stateParams.id;
     $scope.memorial = Memorial.getCurrentMemorial();
     

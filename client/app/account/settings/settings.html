@@ -10,14 +10,16 @@
      >
 
   <div ng-include="'components/navbar/navbar.html'"></div>
-
+  <div class="alert alert-info alert-dismissable" style="padding-top:60px;" ng-if="isMobile">
+    <h4><i class="fa fa-info-circle"></i> Info</h4> 모바일 웹에서는 프로필 사진을 변경 할 수 없습니다. 사진 변경을 원하시는 분은 PC로 접속해 주시길 바랍니다.
+  </div>
   <div class="container contents" flow-prevent-drop>  
-    <div class="col-md-2">
+    <div class="col-lg-2">
       <form name="settingForm" ng-submit="changeProfile(settingForm)" novalidate>
         <div class="form-group text-center">
           <img ng-show="$flow.files[0]" flow-img="$flow.files[0]" class="img-responsive"/>
           <img ng-show="!$flow.files[0]" ng-src="{{currentUser.profile.file.url}}" class="img-responsive"/>
-          <div class="profile-img-upload-btn">
+          <div class="profile-img-upload-btn" ng-if="!isMobile">
             <span class="pull-left">&nbsp;</span>
             <span class="fa-stack fa-lg pull-left" flow-btn flow-attrs="{accept:'image/*'}" style="cursor:pointer;">
               <i class="fa fa-circle fa-stack-2x text-success"></i>
@@ -38,8 +40,9 @@
         <button type="submit" class="btn btn-block btn-success" ng-disabled="fileUploading||settingForm.$invalid">저장</button>   
       </form>
     </div>
+    <br/><br/>
 
-    <div class="col-md-10">
+    <div class="col-lg-10">
       <div class="block-section">
         <div class="block-title">
             <h2><strong>기본정보</strong></h2>
@@ -83,3 +86,4 @@
     </div>
   </div>
 </div>  
+<div ng-include="'components/footer/footer.html'"></div>

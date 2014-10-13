@@ -1,4 +1,4 @@
-<div class="col-sm-8">
+<div class="col-sm-8 col-xs-12">
   <!-- create new story -->
   <div class="block" ng-if="!isGuest">
       <div class="block-title">
@@ -24,7 +24,7 @@
         <textarea class="form-control" ng-model="newStory.text" rows="2" placeholder="전하고 싶은 이야기.." style="resize: vertical;margin: 1px 0px 10px;" ng-required="true"/>
         <div class="clearfix">
             <button type="submit" class="btn btn-sm btn-success pull-right" ng-disabled="newStoryForm.$invalid"><i class="fa fa-pencil"></i> 등록</button>
-            <div flow-init="{
+            <div ng-if="!isMobile" flow-init="{
                  singleFile: true,
                  target:'/api/fileuploads', 
                  testChunks: false,
