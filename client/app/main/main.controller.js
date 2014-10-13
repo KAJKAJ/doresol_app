@@ -116,7 +116,9 @@ angular.module('doresolApp')
              
              if($rootScope.toState) {
               $rootScope.toParams.noPopUp = noPopUp;
-              $state.go($rootScope.toState, $rootScope.toParams);
+              var tempState = $rootScope.toState;
+              $rootScope.toState = null;
+              $state.go(tempState, $rootScope.toParams);
              } else {
               $state.go("memorials", {noPopUp: noPopUp});
              }
@@ -131,7 +133,9 @@ angular.module('doresolApp')
 
             if($rootScope.toState) {
              $rootScope.toParams.noPopUp = noPopUp;
-             $state.go($rootScope.toState, $rootScope.toParams);
+              var tempState = $rootScope.toState;
+              $rootScope.toState = null;             
+             $state.go(tempState, $rootScope.toParams);
             } else {
              $state.go("memorials", {noPopUp: noPopUp});
             }
