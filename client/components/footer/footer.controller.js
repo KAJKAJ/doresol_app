@@ -2,5 +2,5 @@
 
 angular.module('doresolApp')
   .controller('FooterCtrl', function ($scope) {
-    console.log('footer');
+    // console.log('footer');
   });
