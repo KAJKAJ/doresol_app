@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div ng-if="isMobile">
+    <div ng-if="isMobile" ng-controller="ProfileCtrl">
       <div>
         <img ng-if="!$flow.files[0]" ng-src="{{memorial.file.url}}" class="img-responsive hover-opacity-8"/>
         <button ng-if="isGuest" class="btn btn-block btn-success" ng-click="subscribe()">가입하기</button>
