@@ -10,9 +10,11 @@ module.exports = function(app) {
 
   // Insert routes below
   app.use('/api/fileuploads', require('./api/fileupload'));
-  app.use('/api/memorials', require('./api/memorial'));
-  app.use('/api/things', require('./api/thing'));
-  app.use('/api/users', require('./api/user'));
+  app.use('/api/fileuploadsfromapp', require('./api/fileuploadsfromapp'));
+
+  // app.use('/api/memorials', require('./api/memorial'));
+  // app.use('/api/things', require('./api/thing'));
+  // app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth'));
   
