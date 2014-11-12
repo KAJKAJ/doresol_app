@@ -5,13 +5,16 @@ var fs = require('fs');
 
 var  path = require('path');
 
+var temporaryFolder = './tmp';
+
 exports.create = function(req, res) {
   console.log('upload from app');
   
   var file = req.files.file;
   var filePath = file.path;
+  console.log(filePath);
   var lastIndex = filePath.lastIndexOf("/");
-  var  tmpFileName = filePath.substr(lastIndex + 1);
+  var tmpFileName = filePath.substr(lastIndex + 1);
   var image = req.body;
       
   image.fileName = tmpFileName;
