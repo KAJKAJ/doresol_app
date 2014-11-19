@@ -596,7 +596,7 @@ module.exports = function (grunt) {
         'concurrent:server',
         'injector',
         'bowerInstall',
-        'ngconstant:beta',
+        'ngconstant:development',
         'autoprefixer',
         'express:dev',
         'wait',
@@ -629,7 +629,7 @@ module.exports = function (grunt) {
         'concurrent:server',
         'injector',
         'bowerInstall',
-        'ngconstant:beta',
+        'ngconstant:development',
         'autoprefixer'
       ]);
   });
