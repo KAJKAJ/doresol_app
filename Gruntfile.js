@@ -75,7 +75,7 @@ module.exports = function (grunt) {
     },
     express: {
       options: {
-        port: process.env.PORT || 9876
+        port: process.env.PORT || 6789
       },
       dev: {
         options: {
@@ -614,9 +614,10 @@ module.exports = function (grunt) {
         'ngconstant:development',
         'autoprefixer',
         'express:dev',
-        'wait',
-        // // 'open',
-        'watch'
+        'express-keepalive'
+        // 'wait',
+        // // // 'open',
+        // 'watch'
       ]);
     }
   });
