@@ -79,7 +79,7 @@ module.exports = function (grunt) {
       },
       dev: {
         options: {
-          script: 'server/app.js',
+          script: 'server/app_dev.js',
           debug: true
         }
       },
@@ -614,10 +614,9 @@ module.exports = function (grunt) {
         'ngconstant:development',
         'autoprefixer',
         'express:dev',
-        'express-keepalive'
-        // 'wait',
-        // // // 'open',
-        // 'watch'
+        'wait',
+        // // 'open',
+        'watch'
       ]);
     }
   });
