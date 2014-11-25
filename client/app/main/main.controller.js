@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doresolApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util, $sce, Qna, $modal, ngDialog) {
+  .controller('MainCtrl', function ($scope, $rootScope, $timeout, $http, Auth,Memorial,Composite,$state, ENV, $firebase, User, Util, $sce, Qna, $modal, ngDialog, $location) {
     $scope.muted = true;
     $scope.signupUser ={};
     $scope.loginUser = {};
@@ -10,6 +10,35 @@ angular.module('doresolApp')
 
     $scope.isLoggedIn = false;
     $scope.waitForLogging = true;
+
+    //temporary for subdomain
+    $scope.subDomain = null;
+    $scope.carouselInterval = 3000;
+    $scope.carouselSlides = [];
+    var hostName = $location.host().split(".");
+    switch(hostName[0]){
+      case "skycastle":
+        $scope.subDomain = "skycastle";
+        $scope.carouselSlides.push({
+          image:'assets/images/skycastle_carousel_1.png'
+        });
+        $scope.carouselSlides.push({
+          image:'assets/images/skycastle_carousel_2.png'
+        });
+        $scope.carouselSlides.push({
+          image:'assets/images/skycastle_carousel_3.png'
+        });
+        $scope.carouselSlides.push({
+          image:'assets/images/skycastle_carousel_4.png'
+        });
+        $scope.carouselSlides.push({
+          image:'assets/images/skycastle_carousel_5.png'
+        });
+      break;
+    }
+    
+
+
 
     $scope.$watch(function(){return User.getCurrentUser();}, 
       function (newValue) {

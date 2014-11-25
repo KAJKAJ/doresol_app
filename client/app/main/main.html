@@ -7,14 +7,14 @@
          <source type="video/ogg" src="https://s3-ap-northeast-1.amazonaws.com/doresolvideo/intro_video_1.ogg">
             Sorry, your browser does not support HTML5 video.
       </video> -->
-      <iframe src="//player.vimeo.com/video/105320016?title=0&byline=0&portrait=0&api=1&loop=true&player_id=intro" width="100%" height="700px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      <iframe ng-if="!subDomain" src="//player.vimeo.com/video/105320016?title=0&byline=0&portrait=0&api=1&loop=true&player_id=intro" width="100%" height="700px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-      <div id="intro_create_overlay">
+      <div id="intro_create_overlay" ng-if="!subDomain" >
         <div class="col-sm-12" ng-if="isLoggedIn">
           <h1 class="intro_create_title">추억, 사랑, 기억</h1>
           <h2 class="intro_create_sub_title">도래솔은 <br/> 사랑했지만 이젠 곁에 없는 이들을 추억하기 위한 <br/> <u><strong>온라인 추모</strong></u> 서비스입니다.</h2>
           <br><br>
-          <button type="button" class="btn btn-lg btn-success" ui-sref="memorial_create"><h4><img ng-src="/assets/images/doresol_logo_lightgreen.png" class="logo-image">&nbsp;메모리얼 생성하러 가기</h4></button>
+          <button ng-if="!subDomain" type="button" class="btn btn-lg btn-success" ui-sref="memorial_create"><h4><img ng-src="/assets/images/doresol_logo_lightgreen.png" class="logo-image">&nbsp;메모리얼 생성하러 가기</h4></button>
         </div>
         <br><br>
         <div class="col-sm-9" ng-if="waitForLogging && !isLoggedIn">
@@ -88,8 +88,10 @@
   </div>
   
   <!-- overview -->
-  <div ng-include="'app/main/overview.html'"></div>
+  <div ng-include="'app/main/overview.html'" ng-if="!subDomain"></div>
   <br/>
+
+  <div ng-include="'app/main/skycastle.html'" ng-if="subDomain === 'skycastle'"></div>
 
   <!-- 제작대행 -->
   <!-- <div ng-include="'app/main/album.html'"></div> -->
@@ -172,7 +174,7 @@
                 <!-- <span ng-if="memorial.ref_user == user.uid"><i class="fa fa-heart fa-2x text-danger" tooltip-placement="left" tooltip="Owner"></i></span>
                 <span ng-if="memorial.ref_user != user.uid" style="color:rgb(255, 215, 0);"><i class="fa fa-2x fa-star" tooltip-placement="left" tooltip="Member"></i></span> -->
               </div>
-              <div class="row" ng-if="memorial.$id == '-JYsA_x7fd-Nu6y5AXOj'">
+              <div class="row" ng-if="subDomain === 'skycastle'">
                   <div class="col-xs-12">
                     <img ng-src="/assets/images/skycastle.png" class="img-responsive">
                   </div>
@@ -219,7 +221,7 @@
       </div>
   </div>
   
-  <div class="row text-center">
+  <div class="row text-center" ng-if="!subDomain">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
       <button type="button" class="btn btn-lg btn-success" ui-sref="memorial_create"><h4><img ng-src="/assets/images/doresol_logo_lightgreen.png" class="logo-image">&nbsp;메모리얼 생성하러 가기</h4></button>
