@@ -35,6 +35,15 @@ angular.module('doresolApp')
           image:'assets/images/skycastle_carousel_5.png'
         });
       break;
+      case "seohopark":
+        $scope.subDomain = "seohopark";
+        $scope.carouselSlides.push({
+          image:'assets/images/seohopark_carousel_1.png'
+        });
+        $scope.carouselSlides.push({
+          image:'assets/images/seohopark_carousel_2.png'
+        });
+      break;
     }
     
 
