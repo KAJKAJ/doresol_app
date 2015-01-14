@@ -29,8 +29,8 @@
 
         <!-- <li ng-class="{active: isActive('/agency')}"><a href="/agency">제작대행</a></li> -->
 
-        <li ng-hide="currentUser" ng-class="{active: isActive('/signup')}"><a href="/signup">회원 가입</a></li>
-        <li ng-hide="currentUser" ng-class="{active: isActive('/login')}"><a href="/login">로그인</a></li>
+        <li ng-class="{active: isActive('/signup')}"><a href="/signup">회원 가입</a></li>
+        <li ng-class="{active: isActive('/signin')}"><a href="/signup">로그인</a></li>
 
         <li ng-class="{active: isActive('/customercare')}"><a href="/customercare">고객센터</a></li>
 

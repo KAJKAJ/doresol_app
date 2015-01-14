@@ -1,13 +1,42 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container contents">
-  <div class="row">
-    <div class="col-sm-12">
-      <h1>회원 가입</h1>
+  <div layout="row" layout-align="center center">
+    <h2>도래솔에 회원 가입하기</h2>
+  </div>
+  <md-content class="md-padding">
+    <md-input-container>
+      <label>Description</label>
+      <input md-maxlength="30" required name="description" ng-model="project.description">
+      <div ng-messages="projectForm.description.$error">
+        <div ng-message="required">This is required.</div>
+        <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+      </div>
+     </md-input-container>
+  </md-content>
+  <md-divider></md-divider>
+  <div layout="row" layout-align="space-around center">
+    <div layout="column">
+      <div>
+        <md-button>페이스북 계정으로 가입하기</md-button>
+      </div>
+      <div>
+        <md-button>카카오톡 계정으로 가입하기</md-button>
+      </div>
     </div>
-    <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="register(form)" novalidate>
+    <div>
+      <md-content class="md-padding" layout="row" layout-sm="column">
+        <md-input-container>
+          <label>Title</label>
+          <input ng-model="user.title">
+        </md-input-container>
+        <md-input-container>
+          <label>Email</label>
+          <input ng-model="user.email" type="email">
+        </md-input-container>
+      </md-content>
 
+      <form class="form" name="form" ng-submit="register(form)" novalidate>
         <div class="form-group" ng-class="{ 'has-success': form.email.$valid && submitted,
                                             'has-error': form.email.$invalid && submitted }">
           <label>Email</label>

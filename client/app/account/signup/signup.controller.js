@@ -19,7 +19,6 @@ angular.module('doresolApp')
             $state.go('memorials');
           }
 
-
         }, function(error){
           var errorCode = error.code;
           $scope.errors = {};

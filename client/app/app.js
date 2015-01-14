@@ -17,7 +17,9 @@ angular.module('doresolApp', [
   'ngAnimate',
   'videosharing-embed',
   'ngDialog',
-  'ezfb'
+  'ezfb',
+  'ngMaterial',
+  'ngMessages'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -129,7 +131,6 @@ angular.module('doresolApp', [
 
       // 인증해야 되는 경우
       if (toState.authenticate){
-
         var authRequired = false;
 
         // 사용자가 계정이 없을 때
@@ -141,20 +142,19 @@ angular.module('doresolApp', [
           },function(error){
             authRequired = true;
             if(!toParams.noPopUp && !$rootScope.modalOpen && authRequired) {
-              $rootScope.modalOpen = true;
               $rootScope.toState = toState;
               $rootScope.toParams = toParams;
-              
-              ngDialog.openConfirm({ 
-                template: '/app/account/login/login_modal.html',
-                controller: 'MainCtrl',
-                className: 'ngdialog-theme-default',
-                scope: event.targetScope
-              }).then(function (value) {
-                // console.log('Modal promise resolved. Value: ', value);
-              }, function(reason) {
-                // console.log('Modal promise rejected. Reason: ', reason);
-              });
+
+              // ngDialog.openConfirm({ 
+              //   template: '/app/account/login/login_modal.html',
+              //   controller: 'MainCtrl',
+              //   className: 'ngdialog-theme-default',
+              //   scope: event.targetScope
+              // }).then(function (value) {
+              //   // console.log('Modal promise resolved. Value: ', value);
+              // }, function(reason) {
+              //   // console.log('Modal promise rejected. Reason: ', reason);
+              // });
             }
 
           });
