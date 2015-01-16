@@ -2,14 +2,13 @@
 
 angular.module('doresolApp')
   .controller('LoginCtrl', function ($scope,Auth,$rootScope,User, $window,$state,Memorial,Composite) {
+    
     $scope.user = {};
     $scope.errors = {};
 
     $scope.inProgress = false;
-    
-    console.log($state.params);
 
-    $scope.goToMemorialsAfterLogin = function(value){
+    $scope.goToMemorialsAfterLogin = function(value) {
       Memorial.clearMyMemorial();
       Composite.setMyMemorials(value.uid).then(function(){
 
@@ -81,41 +80,47 @@ angular.module('doresolApp')
       }
     };
 
-    $scope.signup = function(signupForm) {
-      $scope.signupSubmitted = true;
+    $scope.signup = function(form) {
+      $scope.errors.other = '';
+      $scope.inProgress = true;
+      $scope.submitted = true;
 
-      if(signupForm.$valid) {
-        Auth.register($scope.user).then(function (value){
+      if(form.$valid) {
+        Auth.register($scope.user).then(function (value) {
           if($state.params.memorialId !== undefined) {
             $state.params.inviteeId = value.name();
-            Composite.addMember($state.params).then(function(){
+            Composite.addMember($state.params).then(function() {
               Auth.login({
-                email: $scope.signupUser.email,
-                password: $scope.signupUser.password
+                email: $scope.user.email,
+                password: $scope.user.password
               }).then(function(){
+                $scope.inProgress = false;
                 $scope.goToMemorialsAfterLogin(value);
               })
             });
           } else {
             Auth.login({
-                email: $scope.signupUser.email,
-                password: $scope.signupUser.password
+                email: $scope.user.email,
+                password: $scope.user.password
              }).then(function(){
+              $scope.inProgress = false;
               $scope.goToMemorialsAfterLogin(value);
             })
           }
 
         }, function(error){
+          $scope.inProgress = false;
           var errorCode = error.code;
-          $scope.signupErrors = {};
+          $scope.errors = {};
           switch(errorCode){
             case "EMAIL_TAKEN":
-              signupForm['email'].$setValidity('firebase',false);
-              $scope.signupErrors['email'] = '이미 등록된 이메일 주소입니다.';
+              // form.$setValidity('firebase',false);
+              $scope.errors.other = '이미 등록된 이메일 주소입니다.';
             break;
             default:
-              signupForm['email'].$setValidity('firebase',false);
-              $scope.signupErrors['email'] = errorCode;
+              // signupForm['email'].$setValidity('firebase',false);
+              $scope.errors.other = '이미 등록된 이메일 주소입니다.';
+              $scope.errors = errorCode;
             break;
           }
           

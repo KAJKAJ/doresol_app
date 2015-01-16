@@ -13,8 +13,8 @@ angular.module('doresolApp')
       })
       .state('signup', {
         url: '/signup',
-        templateUrl: 'app/account/signup/signup.html',
-        controller: 'SignupCtrl'
+        templateUrl: 'app/account/login/signup.html',
+        controller: 'LoginCtrl'
       })
       .state('signup.invites', {
         url: '/:memorialId/:inviterId',

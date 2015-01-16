@@ -5,7 +5,7 @@ angular.module('doresolApp')
     var auth = $firebaseSimpleLogin(new Firebase(ENV.FIREBASE_URI));
     var currentUser = null;
     
-    var getCurrentUserFromFirebase = function(){
+    var getCurrentUserFromFirebase = function() {
       var dfd = $q.defer();
       if(currentUser == null){
         auth.$getCurrentUser().then(function(value) {
@@ -14,7 +14,7 @@ angular.module('doresolApp')
         },function(error){
           dfd.reject(error);
         });
-      }else{
+      } else {
         dfd.resolve(currentUser);
       }
       return dfd.promise;
@@ -30,7 +30,7 @@ angular.module('doresolApp')
       return _register(user).then(User.create);
     }
 
-    var getCurrentUser = function(){
+    var getCurrentUser = function() {
       return currentUser;
     }
 

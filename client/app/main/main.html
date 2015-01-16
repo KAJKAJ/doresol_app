@@ -14,7 +14,7 @@
           <h1 class="intro_create_title">추억, 사랑, 기억</h1>
           <h2 class="intro_create_sub_title">도래솔은 <br/> 사랑했지만 이젠 곁에 없는 이들을 추억하기 위한 <br/> <u><strong>온라인 추모</strong></u> 서비스입니다.</h2>
           <br><br>
-          <button type="button" class="btn btn-lg btn-success" ui-sref="memorial_create"><h4><img ng-src="/assets/images/doresol_logo_lightgreen.png" class="logo-image">&nbsp;메모리얼 생성하러 가기</h4></button>
+          <md-button md-theme="green" class="md-raised md-primary" ui-sref="memorial_create"><h4><img ng-src="/assets/images/doresol_logo_lightgreen.png" class="logo-image">&nbsp;메모리얼 생성하러 가기</h4></md-button>
         </div>
       </div>
   </div>
@@ -71,23 +71,11 @@
             <div class="brick-memorial-wrapper">
               <!-- <div class="ribbon-wrapper"><div class="ribbon-green">NEWS</div></div> -->
               <div class="memorial-img">
-                <div ng-if="user">
-                  <a ui-sref="memorial.storymap({id:memorial.$id})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
-                    <div class="overlay">
-                       <i class="fa fa-5x fa-play"></i>
-                    </div>
-                  </a>
-                </div>
-                 <div ng-if="!user">
-                  <!-- <span ng-click="alertLogin()"><img ng-src="{{memorial.file.url}}" class="img-responsive"/> -->
-                    <a ui-sref="memorial.storymap({id:memorial.$id})"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
-                    <div class="overlay">
-                       <i class="fa fa-5x fa-play"></i>
-                    </div>
-                  </span>
-                </div>
-                <!-- <button ng-if="memorial.public" class="btn btn-xs btn-info" tooltip-placement="top" tooltip="공개"><i class="fa fa-unlock"></i></button>
-                <button ng-if="!memorial.public" class="btn btn-xs btn-danger" tooltip-placement="top" tooltip="비공개"><i class="fa fa-lock"></i></button> -->
+                <a ui-sref="memorial.storymap({id:memorial.$id, mode: 'video', isPublic: memorial.public })"><img ng-src="{{memorial.file.url}}" class="img-responsive"/>
+                  <div class="overlay">
+                     <i class="fa fa-5x fa-play"></i>
+                  </div>
+                </a>
                 <span class="memorial-header">
                   <span class="btn-public">
                     <i ng-if="memorial.public" class="fa fa-2x fa-unlock" tooltip-placement="top" tooltip="공개"></i>
@@ -101,48 +89,26 @@
               </div>
               <div class="row text-center">
                 <h3><strong>{{memorial.name}}</strong></h3>
-                <!-- <span ng-if="memorial.ref_user == user.uid"><i class="fa fa-heart fa-2x text-danger" tooltip-placement="left" tooltip="Owner"></i></span>
-                <span ng-if="memorial.ref_user != user.uid" style="color:rgb(255, 215, 0);"><i class="fa fa-2x fa-star" tooltip-placement="left" tooltip="Member"></i></span> -->
-              </div>
-              <div class="row" ng-if="memorial.$id == '-JYsA_x7fd-Nu6y5AXOj'">
-                  <div class="col-xs-12">
-                    <img ng-src="/assets/images/skycastle.png" class="img-responsive">
-                  </div>
               </div>
               <div class="row text-center">
-                  <div class="col-xs-4">
-                      <h3 class="widget-content-light">
-                          <div ng-if="user">
-                            <a ui-sref="memorial.storymap({id:memorial.$id})"><strong>{{memorial.count_timeline}}</strong><br></a>
-                          </div>
-                          <div ng-if="!user">
-                            <a ng-click="alertLogin()"><strong>{{memorial.count_timeline}}</strong><br></a>
-                          </div>
-                          <small>스토리</small>
-                      </h3>
-                  </div>
-                  <div class="col-xs-4">
-                      <h3 class="widget-content-light">
-                          <div ng-if="user">
-                            <a ui-sref="memorial.storyline({id:memorial.$id})"><strong>{{memorial.count_storyline}}</strong><br></a>
-                          </div>
-                          <div ng-if="!user">
-                            <a ng-click="alertLogin()"><strong>{{memorial.count_storyline}}</strong><br></a>
-                          </div>
-                          <small>방명록</small>
-                      </h3>
-                  </div>
-                  <div class="col-xs-4">
-                      <h3 class="widget-content-light">
-                          <div ng-if="user">
-                            <a ui-sref="memorial.member({id:memorial.$id})"><strong>{{memorial.count_member}}</strong><br></a>
-                          </div>
-                          <div ng-if="!user">
-                            <a ng-click="alertLogin()"><strong>{{memorial.count_member}}</strong><br></a>
-                          </div>
-                          <small>멤버</small>
-                      </h3>
-                  </div>
+                <div class="col-xs-4">
+                  <h3 class="widget-content-light">
+                    <a ui-sref="memorial.storymap({id:memorial.$id, mode: 'video', isPublic: memorial.public })"><strong>{{memorial.count_timeline}}</strong><br></a>
+                    <small>스토리</small>
+                  </h3>
+                </div>
+                <div class="col-xs-4">
+                  <h3 class="widget-content-light">
+                    <a ui-sref="memorial.storyline({id:memorial.$id, isPublic: memorial.public })"><strong>{{memorial.count_storyline}}</strong><br></a>
+                    <small>방명록</small>
+                  </h3>
+                </div>
+                <div class="col-xs-4">
+                  <h3 class="widget-content-light">
+                    <a ui-sref="memorial.member({id:memorial.$id, isPublic: memorial.public })"><strong>{{memorial.count_member}}</strong><br></a>
+                    <small>멤버</small>
+                  </h3>
+                </div>
               </div>
             </div>​
           </div>
@@ -154,8 +120,7 @@
   <div class="row text-center">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
-      <button type="button" class="btn btn-lg btn-success" ui-sref="memorial_create"><h4><img ng-src="/assets/images/doresol_logo_lightgreen.png" class="logo-image">&nbsp;메모리얼 생성하러 가기</h4></button>
-    </div>
+      <md-button md-theme="green" class="md-raised md-primary" ui-sref="memorial_create"><h4><img ng-src="/assets/images/doresol_logo_lightgreen.png" class="logo-image">&nbsp;메모리얼 생성하러 가기</h4></md-button>    </div>
     <div class="col-lg-3"></div>
   </div>
   <br>

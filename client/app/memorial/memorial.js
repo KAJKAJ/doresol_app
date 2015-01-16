@@ -18,31 +18,31 @@ angular.module('doresolApp')
       })
 
       .state('memorial.profile', {
-        url:'/profile',
+        url:'/profile/:isPublic',
         templateUrl: 'app/memorial/profile/profile.html',
         controller: 'ProfileCtrl',
         authenticate: true
       })
       .state('memorial.timeline', {
-        url:'/timeline',
+        url:'/timeline/:mode/:isPublic',
         templateUrl: 'app/memorial/timeline/timeline.html',
         controller: 'TimelineCtrl',
         authenticate: true
       })      
       .state('memorial.storyline', {
-        url:'/letter',
+        url:'/letter/:isPublic',
         templateUrl: 'app/memorial/storyline/storyline.html',
         controller: 'StorylineCtrl',
         authenticate: true
       })
       .state('memorial.storymap', {
-        url:'/story/:mode',
+        url:'/story/:mode/:isPublic',
         templateUrl: 'app/memorial/storymap/storymap.html',
         controller: 'StorymapCtrl',
         authenticate: true
       })
       .state('memorial.member', {
-        url:'/member',
+        url:'/member/:isPublic',
         templateUrl: 'app/memorial/member/member.html',
         controller: 'MemberCtrl',
         authenticate: true

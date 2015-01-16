@@ -37,9 +37,8 @@ angular.module('doresolApp')
 			if(!$scope.memorial.public && Memorial.isGuest()){
 				if($scope.user){
 					$state.go('request', {memorialId: $scope.memorialKey, requesterId: $scope.user.uid});
-				}else{
-					alert('회원가입이 필요합니다.');
-					$state.go('main');
+				} else {
+					$state.go('login');
 				}
 			}
 		});

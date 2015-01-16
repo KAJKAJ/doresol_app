@@ -1,11 +1,14 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="container contents">
+  <div layout="row">
+    <h2>도래솔에 로그인하기</h2>
+  </div>
   <div layout="row" layout-wrap layout-align="space-around center">
     <div flex="10"></div>
     <div flex="40" layout="column">
       <div layout="column" layout-align="center start">
-        <div><h3> 페이스북 계으로 로그인</h3></div>
+        <div><h3> 페이스북 계정으로 로그인</h3></div>
         <div><p> 페이스북 계정을 이용하여 로그인합니다. <br/>고객님의 담벼락에 글을 올리지 않습니다.</div>
         <md-button md-theme="indigo" class="md-raised md-primary" ng-click="loginOauth('facebook', true)"><i class="fa fa-facebook"></i>&nbsp;페이스북으로 로그인</md-button>
       </div><br/>

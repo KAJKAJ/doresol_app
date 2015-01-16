@@ -123,6 +123,14 @@ angular.module('doresolApp', [
         });
       };
 
+      console.log('from --- ');
+      console.log(fromState);
+      console.log(fromParams);
+
+      console.log('to --- ');
+      console.log(toState);
+      console.log(toParams);
+
       var _getUserData = function(userId){
         return User.getCurrentUserFromFirebase(userId).then(function(value){
           return value.uid;
@@ -130,36 +138,42 @@ angular.module('doresolApp', [
       };
 
       // 인증해야 되는 경우
-      if (toState.authenticate){
+      if (toState.authenticate && !toParams.isPublic){
         var authRequired = false;
 
+        console.log('isPublic is false');
+
         // 사용자가 계정이 없을 때
-        if(!User.getCurrentUser()){
+        if(!User.getCurrentUser()) {
+
           event.preventDefault();
           _getUserAuth().then(_getUserData).then(Composite.setMyMemorials).then(function(value){
             $state.go(toState, toParams);
 
           },function(error){
-            authRequired = true;
-            if(!toParams.noPopUp && !$rootScope.modalOpen && authRequired) {
-              $rootScope.toState = toState;
-              $rootScope.toParams = toParams;
 
-              // ngDialog.openConfirm({ 
-              //   template: '/app/account/login/login_modal.html',
-              //   controller: 'MainCtrl',
-              //   className: 'ngdialog-theme-default',
-              //   scope: event.targetScope
-              // }).then(function (value) {
-              //   // console.log('Modal promise resolved. Value: ', value);
-              // }, function(reason) {
-              //   // console.log('Modal promise rejected. Reason: ', reason);
-              // });
-            }
+            $rootScope.toState = toState;
+            $rootScope.toParams = toParams;
+
+            // console.log(toState);
+            // console.log(toParams);
+
+            // 공개일 때에는 
+            $state.go('login');
+
+            // ngDialog.openConfirm({ 
+            //   template: '/app/account/login/login_modal.html',
+            //   controller: 'MainCtrl',
+            //   className: 'ngdialog-theme-default',
+            //   scope: event.targetScope
+            // }).then(function (value) {
+            //   // console.log('Modal promise resolved. Value: ', value);
+            // }, function(reason) {
+            //   // console.log('Modal promise rejected. Reason: ', reason);
+            // });
 
           });
-        }
-
+        } 
 
       }
     });
